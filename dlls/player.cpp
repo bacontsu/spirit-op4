@@ -182,6 +182,7 @@ TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
 																		 //DEFINE_FIELD( CBasePlayer, m_fOnTarget, FIELD_BOOLEAN ), // Don't need to restore
 																		 //DEFINE_FIELD( CBasePlayer, m_nCustomSprayFrames, FIELD_INTEGER ), // Don't need to restore
 
+		DEFINE_FIELD(CBasePlayer, m_bHasIntroPlayed, FIELD_BOOLEAN),
 };
 
 LINK_ENTITY_TO_CLASS(player, CBasePlayer);
@@ -4277,9 +4278,13 @@ void CBasePlayer::UpdateClientData()
 	//TODO: will not work properly in multiplayer
 	if (gDisplayTitle)
 	{
-		MESSAGE_BEGIN(MSG_ONE, gmsgShowGameTitle, NULL, pev);
-		WRITE_BYTE(0);
-		MESSAGE_END();
+		if (!m_bHasIntroPlayed)
+		{
+			MESSAGE_BEGIN(MSG_ONE, gmsgShowGameTitle, NULL, pev);
+			WRITE_BYTE(0);
+			MESSAGE_END();
+			m_bHasIntroPlayed = true;
+		}
 		gDisplayTitle = false;
 	}
 

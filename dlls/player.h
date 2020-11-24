@@ -367,6 +367,8 @@ public:
 	float Rain_nextFadeUpdate;
 
 	int Rain_needsUpdate;
+
+	bool m_bHasIntroPlayed; // not my job to clean up this mess of a class definition
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)
