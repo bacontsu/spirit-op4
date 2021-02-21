@@ -15,6 +15,7 @@
 
 #include "CGamePlayerEquip.h"
 #include "entities/player/CBasePlayer.h"
+#include "gamerules/CGameRules.h"
 
 LINK_ENTITY_TO_CLASS(game_player_equip, CGamePlayerEquip);
 
@@ -32,7 +33,7 @@ void CGamePlayerEquip::KeyValue(KeyValueData* pkvd)
 
     if (!pkvd->fHandled)
     {
-        for (int i = 0; i < MAX_EQUIP; i++)
+        for (auto i = 0; i < MAX_EQUIP; i++)
         {
             if (!m_weaponNames[i])
             {
@@ -64,27 +65,28 @@ void CGamePlayerEquip::Touch(CBaseEntity* pOther)
 
 void CGamePlayerEquip::EquipPlayer(CBaseEntity* pEntity)
 {
-    CBasePlayer* pPlayer = NULL;
+    CBasePlayer* pPlayer = nullptr;
 
-    if (pEntity->IsPlayer())
+    if (pEntity && pEntity->IsPlayer())
     {
-        pPlayer = (CBasePlayer*)pEntity;
+        pPlayer = dynamic_cast<CBasePlayer*>(pEntity);
+    }
+    else if (!g_pGameRules->IsDeathmatch())
+    {
+        pPlayer = dynamic_cast<CBasePlayer*>(CBaseEntity::Instance(g_engfuncs.pfnPEntityOfEntIndex(1)));
     }
 
-    if (!pPlayer)
-        return;
+    if (!pPlayer) return;
 
-    for (int i = 0; i < MAX_EQUIP; i++)
+    for (auto i = 0; i < MAX_EQUIP; i++)
     {
-        if (!m_weaponNames[i])
-            break;
-        for (int j = 0; j < m_weaponCount[i]; j++)
+        if (!m_weaponNames[i]) break;
+        for (auto j = 0; j < m_weaponCount[i]; j++)
         {
             pPlayer->GiveNamedItem(STRING(m_weaponNames[i]));
         }
     }
 }
-
 
 void CGamePlayerEquip::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
