@@ -119,7 +119,6 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\dlls\entities\ammo\CBasePlayerAmmo.cpp" />
     <ClCompile Include="..\..\dlls\entities\ammo\CRpgAmmo.cpp" />
     <ClCompile Include="..\..\dlls\entities\ammo\CShotgunAmmo.cpp" />
-    <ClCompile Include="..\..\dlls\entities\base\CBaseDMStart.cpp" />
     <ClCompile Include="..\..\dlls\entities\base\CCineMonster.cpp" />
     <ClCompile Include="..\..\dlls\entities\base\CFlyingMonster.cpp" />
     <ClCompile Include="..\..\dlls\entities\base\CFurniture.cpp" />
@@ -295,6 +294,7 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\dlls\entities\npcs\CTurret.cpp" />
     <ClCompile Include="..\..\dlls\entities\npcs\CZombie.cpp" />
     <ClCompile Include="..\..\dlls\entities\npcs\CHornet.cpp" />
+    <ClCompile Include="..\..\dlls\entities\player\CBaseDMStart.cpp" />
     <ClCompile Include="..\..\dlls\entities\player\CBasePlayer.cpp" />
     <ClCompile Include="..\..\dlls\entities\player\CBasePlayerItem.cpp" />
     <ClCompile Include="..\..\dlls\entities\player\CRevertSaved.cpp" />
@@ -482,6 +482,7 @@ EXIT /B 0</Command>
     <ClInclude Include="..\..\dlls\entities\effects\CWeatherController.h" />
     <ClInclude Include="..\..\dlls\entities\effects\CWeatherPrecipitation.h" />
     <ClInclude Include="..\..\dlls\entities\effects\CWeatherWind.h" />
+    <ClInclude Include="..\..\dlls\entities\player\CBaseDMStart.h" />
     <ClInclude Include="..\..\dlls\entities\player\CBasePlayer.h" />
     <ClInclude Include="..\..\dlls\entities\player\CBasePlayerItem.h" />
     <ClInclude Include="..\..\dlls\entities\player\CBloodSplat.h" />
@@ -501,7 +502,6 @@ EXIT /B 0</Command>
     <ClInclude Include="..\..\dlls\CSound.h" />
     <ClInclude Include="..\..\dlls\defaultai.h" />
     <ClInclude Include="..\..\dlls\enginecallback.h" />
-    <ClInclude Include="..\..\dlls\entities\base\CBaseDMStart.h" />
     <ClInclude Include="..\..\dlls\entities\base\CCineMonster.h" />
     <ClInclude Include="..\..\dlls\entities\base\CFlyingMonster.h" />
     <ClInclude Include="..\..\dlls\entities\base\CFurniture.h" />

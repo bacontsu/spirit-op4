@@ -938,9 +938,6 @@
     <ClCompile Include="..\..\dlls\entities\npcs\CHornet.cpp">
       <Filter>Source Files\dlls\entities\npcs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\entities\base\CBaseDMStart.cpp">
-      <Filter>Source Files\dlls\entities\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\entities\base\CFurniture.cpp">
       <Filter>Source Files\dlls\entities\base</Filter>
     </ClCompile>
@@ -1207,6 +1204,9 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\voice_gamemgr.cpp">
       <Filter>Source Files\dlls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\entities\player\CBaseDMStart.cpp">
+      <Filter>Source Files\dlls\entities\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2062,9 +2062,6 @@
     <ClInclude Include="..\..\dlls\entities\npcs\CHornet.h">
       <Filter>Header Files\dlls\entities\npcs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\entities\base\CBaseDMStart.h">
-      <Filter>Header Files\dlls\entities\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\dlls\entities\base\CFurniture.h">
       <Filter>Header Files\dlls\entities\base</Filter>
     </ClInclude>
@@ -2346,6 +2343,9 @@
     </ClInclude>
     <ClInclude Include="..\..\shared\common_defs.h">
       <Filter>Header Files\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\entities\player\CBaseDMStart.h">
+      <Filter>Header Files\dlls\entities\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

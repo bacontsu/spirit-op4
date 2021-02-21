@@ -14,13 +14,11 @@
 ****/
 #pragma once
 
-#include "CPointEntity.h"
+#include "entities/base/CPointEntity.h"
 
 class CBaseDMStart : public CPointEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
     STATE GetState(CBaseEntity* pEntity) override;
-
-private:
 };
