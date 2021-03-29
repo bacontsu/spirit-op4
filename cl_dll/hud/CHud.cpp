@@ -625,7 +625,7 @@ int CHud::MsgFunc_SetFOV(const char* pszName, int iSize, void* pbuf)
     int def_fov = CVAR_GET_FLOAT("default_fov");
 
     //Weapon prediction already takes care of changing the fog. ( g_lastFOV ).
-	//But it doesn't restore correctly so this still needs to be used
+    //But it doesn't restore correctly so this still needs to be used
     /*
     if ( cl_lw && cl_lw->value )
         return 1;
@@ -707,6 +707,7 @@ float g_fFogFadeFraction;
 
 extern BEAM* pBeam;
 extern BEAM* pBeam2;
+extern TEMPENTITY* pFlare; // Vit_amiN
 
 extern float g_clampMinYaw, g_clampMaxYaw, g_clampMinPitch, g_clampMaxPitch;
 extern float g_clampTurnSpeed;
@@ -780,6 +781,7 @@ void CHud::MsgFunc_InitHUD(const char* pszName, int iSize, void* pbuf)
 
     //Probably not a good place to put this.
     pBeam = pBeam2 = NULL;
+    pFlare = NULL;
 
     g_gameStateManager.InitHud();
 }

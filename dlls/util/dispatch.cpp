@@ -185,6 +185,14 @@ void DispatchSave(edict_t* pent, SAVERESTOREDATA* pSaveData)
     }
 }
 
+void OnFreeEntPrivateData(edict_s* pEdict)
+{
+	if (pEdict && pEdict->pvPrivateData)
+	{
+		((CBaseEntity*)pEdict->pvPrivateData)->~CBaseEntity();
+	}
+}
+
 // Find the matching global entity.  Spit out an error if the designer made entities of
 // different classes with the same global name
 CBaseEntity* FindGlobalEntity(string_t classname, string_t globalname)

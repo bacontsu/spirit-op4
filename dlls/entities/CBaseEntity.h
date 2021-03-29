@@ -152,6 +152,8 @@ public:
     CBaseEntity* m_pGoalEnt; // path corner we are heading towards
     CBaseEntity* m_pLink; // used for temporary link-list operations.
 
+	virtual ~CBaseEntity() {}
+
     CBaseEntity* m_pMoveWith; // LRC- the entity I move with.
     int m_MoveWith; //LRC- Name of that entity
     CBaseEntity* m_pChildMoveWith; //LRC- one of the entities that's moving with me.
@@ -431,7 +433,14 @@ public:
         return pEnt;
     }
 
-    static CBaseEntity* Instance(entvars_t* pev) { return Instance(ENT(pev)); }
+    static CBaseEntity* Instance(entvars_t* pev)
+    {
+        if (!pev)
+            return Instance(ENT(0));
+
+        return Instance(ENT(pev));
+    }
+
     static CBaseEntity* Instance(int eoffset) { return Instance(ENT(eoffset)); }
 
     CBaseMonster* GetMonsterPointer(entvars_t* pevMonster)

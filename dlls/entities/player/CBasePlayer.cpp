@@ -739,12 +739,6 @@ void CBasePlayer::RemoveAllItems(BOOL removeSuit)
         m_rgAmmo[i] = 0;
 
     UpdateClientData();
-    // send Selected Weapon Message to our client
-    MESSAGE_BEGIN(MSG_ONE, gmsgCurWeapon, NULL, pev);
-    WRITE_BYTE(0);
-    WRITE_BYTE(0);
-    WRITE_BYTE(0);
-    MESSAGE_END();
 }
 
 //LRC
@@ -4017,6 +4011,8 @@ reflecting all of the HUD state info.
 */
 void CBasePlayer::UpdateClientData(void)
 {
+	const bool fullHUDInitRequired = m_fInitHUD != FALSE;
+
     if (m_fInitHUD) //AJH The HUD needs (re)initialising
     {
         m_fInitHUD = FALSE;
@@ -4289,6 +4285,18 @@ void CBasePlayer::UpdateClientData(void)
     {
         if (m_rgpPlayerItems[i]) // each item updates it's successors
             m_rgpPlayerItems[i]->UpdateClientData(this);
+    }
+
+    //Active item is becoming null, or we're sending all HUD state to client
+    //Only if we're not in Observer mode, which uses the target player's weapon
+    if (pev->iuser1 == OBS_NONE && !m_pActiveItem && ((m_pClientActiveItem != m_pActiveItem) || fullHUDInitRequired))
+    {
+        //Tell ammo hud that we have no weapon selected
+        MESSAGE_BEGIN(MSG_ONE, gmsgCurWeapon, NULL, pev);
+        WRITE_BYTE(0);
+        WRITE_BYTE(0);
+        WRITE_BYTE(0);
+        MESSAGE_END();
     }
 
     // Cache and client weapon change

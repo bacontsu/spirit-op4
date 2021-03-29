@@ -23,6 +23,8 @@ extern void PM_Move(struct playermove_s* ppmove, int server);
 extern void PM_Init(struct playermove_s* ppmove);
 extern char PM_FindTextureType(char* name);
 
+void OnFreeEntPrivateData(edict_s* pEdict);
+
 extern DLL_GLOBAL Vector g_vecAttackDir;
 
 static DLL_FUNCTIONS gFunctionTable =
@@ -89,6 +91,10 @@ static DLL_FUNCTIONS gFunctionTable =
     AllowLagCompensation, //pfnAllowLagCompensation
 };
 
+NEW_DLL_FUNCTIONS gNewDLLFunctions =
+{
+	OnFreeEntPrivateData,		//pfnOnFreeEntPrivateData
+};
 
 extern "C" {
 
@@ -116,4 +122,15 @@ extern "C" {
         return TRUE;
     }
 
+    int GetNewDLLFunctions(NEW_DLL_FUNCTIONS* pFunctionTable, int* interfaceVersion)
+    {
+	    if (!pFunctionTable || *interfaceVersion != NEW_DLL_FUNCTIONS_VERSION)
+	    {
+		    *interfaceVersion = NEW_DLL_FUNCTIONS_VERSION;
+		    return FALSE;
+	    }
+
+	    memcpy(pFunctionTable, &gNewDLLFunctions, sizeof(gNewDLLFunctions));
+	    return TRUE;
+    }
 }
