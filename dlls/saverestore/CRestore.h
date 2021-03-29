@@ -35,19 +35,19 @@ public:
     int ReadEntVars(const char* pname, entvars_t* pev); // entvars_t
     int ReadFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount);
     int ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount, int startField, int size, char* pName, void* pData);
-    int ReadInt(void);
-    short ReadShort(void);
+    int ReadInt();
+    short ReadShort();
     int ReadNamedInt(const char* pName);
     char* ReadNamedString(const char* pName);
-    int Empty(void) { return (m_pdata == NULL) || ((m_pdata->pCurrentData - m_pdata->pBaseData) >= m_pdata->bufferSize); }
+    int Empty() { return (m_pdata == NULL) || ((m_pdata->pCurrentData - m_pdata->pBaseData) >= m_pdata->bufferSize); }
     inline void SetGlobalMode(int global) { m_global = global; }
     void PrecacheMode(BOOL mode) { m_precache = mode; }
 
 private:
-    char* BufferPointer(void);
+    char* BufferPointer();
     void BufferReadBytes(char* pOutput, int size);
     void BufferSkipBytes(int bytes);
-    int BufferSkipZString(void);
+    int BufferSkipZString();
     int BufferCheckZString(const char* string);
 
     void BufferReadHeader(HEADER* pheader);

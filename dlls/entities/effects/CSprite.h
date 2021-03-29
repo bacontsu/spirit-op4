@@ -23,10 +23,10 @@
 class CSprite : public CPointEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
-    int ObjectCaps(void) override
+    int ObjectCaps() override
     {
         int flags = 0;
         if (pev->spawnflags & SF_SPRITE_TEMPORARY)
@@ -34,14 +34,14 @@ public:
         return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | flags;
     }
 
-    void DLLEXPORT AnimateThink(void);
-    void DLLEXPORT ExpandThink(void);
+    void DLLEXPORT AnimateThink();
+    void DLLEXPORT ExpandThink();
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void Animate(float frames);
     void Expand(float scaleSpeed, float fadeSpeed);
     void SpriteInit(const char* pSpriteName, const Vector& origin);
 
-    STATE GetState(void) override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; }
+    STATE GetState() override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; }
 
     inline void SetAttachment(edict_t* pEntity, int attachment)
     {
@@ -54,9 +54,9 @@ public:
         }
     }
 
-    void TurnOff(void);
-    void TurnOn(void);
-    inline float Frames(void) { return m_maxFrame; }
+    void TurnOff();
+    void TurnOn();
+    inline float Frames() { return m_maxFrame; }
 
     inline void SetTransparency(int rendermode, int r, int g, int b, int a, int fx)
     {
@@ -88,7 +88,7 @@ public:
         SetNextThink(0);
     }
 
-    void DLLEXPORT AnimateUntilDead(void);
+    void DLLEXPORT AnimateUntilDead();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

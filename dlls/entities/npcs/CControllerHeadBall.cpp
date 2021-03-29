@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(controller_head_ball, CControllerHeadBall);
 
-void CControllerHeadBall::Spawn(void)
+void CControllerHeadBall::Spawn()
 {
     Precache();
     // motor
@@ -49,7 +49,7 @@ void CControllerHeadBall::Spawn(void)
 }
 
 
-void CControllerHeadBall::Precache(void)
+void CControllerHeadBall::Precache()
 {
     PRECACHE_MODEL("sprites/xspark1.spr");
     PRECACHE_SOUND("debris/zap4.wav");
@@ -57,7 +57,7 @@ void CControllerHeadBall::Precache(void)
 }
 
 
-void CControllerHeadBall::HuntThink(void)
+void CControllerHeadBall::HuntThink()
 {
     SetNextThink(0.1);
 
@@ -133,7 +133,7 @@ void CControllerHeadBall::HuntThink(void)
 }
 
 
-void CControllerHeadBall::DieThink(void)
+void CControllerHeadBall::DieThink()
 {
     UTIL_Remove(this);
 }
@@ -158,7 +158,7 @@ void CControllerHeadBall::MovetoTarget(Vector vecTarget)
 }
 
 
-void CControllerHeadBall::Crawl(void)
+void CControllerHeadBall::Crawl()
 {
     Vector vecAim = Vector(RANDOM_FLOAT(-1, 1), RANDOM_FLOAT(-1, 1), RANDOM_FLOAT(-1, 1)).Normalize();
     Vector vecPnt = pev->origin + pev->velocity * 0.3 + vecAim * 64;

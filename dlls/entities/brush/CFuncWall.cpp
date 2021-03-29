@@ -18,18 +18,18 @@
 
 LINK_ENTITY_TO_CLASS(func_wall, CFuncWall);
 
-STATE CFuncWall::GetState(void)
+STATE CFuncWall::GetState()
 {
     return pev->frame ? STATE_ON : STATE_OFF;
 }
 
 // Bmodels don't go across transitions
-int    CFuncWall::ObjectCaps(void)
+int    CFuncWall::ObjectCaps()
 {
     return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 }
 
-void CFuncWall::Spawn(void)
+void CFuncWall::Spawn()
 {
     // If it can't move/go away, it's really part of the world
     if (!m_pMoveWith) //LRC

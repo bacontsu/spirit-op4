@@ -25,8 +25,8 @@
 class CMotionThread : public CPointEntity
 {
 public:
-    void Spawn(void) override; //AJH
-    void Think(void) override;
+    void Spawn() override; //AJH
+    void Think() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

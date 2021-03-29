@@ -26,11 +26,11 @@
 class CParticle : public CPointEntity
 {
 public:
-    void Spawn(void) override;
-    void Activate(void) override;
-    void Precache(void) override;
-    void DesiredAction(void) override;
-    void DLLEXPORT Think(void) override;
+    void Spawn() override;
+    void Activate() override;
+    void Precache() override;
+    void DesiredAction() override;
+    void DLLEXPORT Think() override;
 
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 };

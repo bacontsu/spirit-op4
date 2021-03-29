@@ -18,7 +18,7 @@
 LINK_ENTITY_TO_CLASS(trigger_transition, CTriggerVolume);
 
 // Define space that travels across a level transition
-void CTriggerVolume::Spawn(void)
+void CTriggerVolume::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;

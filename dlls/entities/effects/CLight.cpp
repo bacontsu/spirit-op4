@@ -104,7 +104,7 @@ void CLight::SetStyle(int iszPattern)
 }
 
 // regardless of what's been set by trigger_lightstyle ents, set the style I think I need
-void CLight::SetCorrectStyle(void)
+void CLight::SetCorrectStyle()
 {
     if (m_iStyle >= 32)
     {
@@ -144,7 +144,7 @@ void CLight::SetCorrectStyle(void)
     }
 }
 
-void CLight::Think(void)
+void CLight::Think()
 {
     switch (GetState())
     {
@@ -167,7 +167,7 @@ Default style is 0
 If targeted, it will toggle between on or off.
 */
 
-void CLight::Spawn(void)
+void CLight::Spawn()
 {
     if (FStringNull(pev->targetname))
     {

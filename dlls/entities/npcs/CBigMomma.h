@@ -26,29 +26,29 @@
 class CBigMomma : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
-    void Activate(void) override;
+    void Activate() override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 
     void RunTask(Task_t* pTask) override;
     void StartTask(Task_t* pTask) override;
-    Schedule_t* GetSchedule(void) override;
+    Schedule_t* GetSchedule() override;
     Schedule_t* GetScheduleOfType(int Type) override;
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
     void SetActivity(Activity NewActivity) override;
 
     void NodeStart(int iszNextNode);
-    void NodeReach(void);
-    BOOL ShouldGoToNode(void);
+    void NodeReach();
+    BOOL ShouldGoToNode();
 
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    void LayHeadcrab(void);
+    void LayHeadcrab();
 
-    int GetNodeSequence(void)
+    int GetNodeSequence()
     {
         CBaseEntity* pTarget = m_hTargetEnt;
         if (pTarget)
@@ -59,7 +59,7 @@ public:
     }
 
 
-    int GetNodePresequence(void)
+    int GetNodePresequence()
     {
         CInfoBM* pTarget = (CInfoBM*)(CBaseEntity*)m_hTargetEnt;
         if (pTarget)
@@ -69,7 +69,7 @@ public:
         return 0;
     }
 
-    float GetNodeDelay(void)
+    float GetNodeDelay()
     {
         CBaseEntity* pTarget = m_hTargetEnt;
         if (pTarget)
@@ -79,7 +79,7 @@ public:
         return 0;
     }
 
-    float GetNodeRange(void)
+    float GetNodeRange()
     {
         CBaseEntity* pTarget = m_hTargetEnt;
         if (pTarget)
@@ -89,7 +89,7 @@ public:
         return 1e6;
     }
 
-    float GetNodeYaw(void)
+    float GetNodeYaw()
     {
         CBaseEntity* pTarget = m_hTargetEnt;
         if (pTarget)
@@ -101,14 +101,14 @@ public:
     }
 
     // Restart the crab count on each new level
-    void OverrideReset(void) override
+    void OverrideReset() override
     {
         m_crabCount = 0;
     }
 
     void DeathNotice(entvars_t* pevChild) override;
 
-    BOOL CanLayCrab(void)
+    BOOL CanLayCrab()
     {
         if (m_crabTime < gpGlobals->time && m_crabCount < BIG_MAXCHILDREN)
         {
@@ -129,9 +129,9 @@ public:
         return FALSE;
     }
 
-    void LaunchMortar(void);
+    void LaunchMortar();
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         pev->absmin = pev->origin + Vector(-95, -95, 0);
         pev->absmax = pev->origin + Vector(95, 95, 190);

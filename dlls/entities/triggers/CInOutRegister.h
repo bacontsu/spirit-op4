@@ -31,10 +31,10 @@ public:
     BOOL IsRegistered(CBaseEntity* pValue);
     // remove all invalid entries from the list, trigger their targets as appropriate
     // returns the new list
-    CInOutRegister* Prune(void);
+    CInOutRegister* Prune();
     // adds a new entry to the list
     CInOutRegister* Add(CBaseEntity* pValue);
-    BOOL IsEmpty(void) { return m_pNext ? FALSE : TRUE; }
+    BOOL IsEmpty() { return m_pNext ? FALSE : TRUE; }
     CBaseEntity* GetFirstEntityFrom(CBaseEntity* pStartEntity);
 
     int Save(CSave& save) override;

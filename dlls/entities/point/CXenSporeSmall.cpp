@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(xen_spore_small, CXenSporeSmall);
 
-void CXenSporeSmall::Spawn(void)
+void CXenSporeSmall::Spawn()
 {
     pev->skin = 0;
     CXenSpore::Spawn();

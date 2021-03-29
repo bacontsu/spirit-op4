@@ -22,10 +22,10 @@
 class CGibShooter : public CBaseDelay
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
-    void DLLEXPORT ShootThink(void);
+    void DLLEXPORT ShootThink();
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     virtual CBaseEntity* CreateGib(Vector vecPos, Vector vecVel);

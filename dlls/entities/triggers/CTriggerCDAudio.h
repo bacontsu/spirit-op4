@@ -23,9 +23,9 @@
 class CTriggerCDAudio : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void PlayTrack(void);
+    void PlayTrack();
     void Touch(CBaseEntity* pOther) override;
 };

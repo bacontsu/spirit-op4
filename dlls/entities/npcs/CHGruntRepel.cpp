@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(monster_grunt_repel, CHGruntRepel);
 
-void CHGruntRepel::Spawn(void)
+void CHGruntRepel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
@@ -27,7 +27,7 @@ void CHGruntRepel::Spawn(void)
     SetUse(&CHGruntRepel::RepelUse);
 }
 
-void CHGruntRepel::Precache(void)
+void CHGruntRepel::Precache()
 {
     UTIL_PrecacheOther("monster_human_grunt");
     m_iSpriteTexture = PRECACHE_MODEL("sprites/rope.spr");

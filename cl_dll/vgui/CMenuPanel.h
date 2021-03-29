@@ -23,12 +23,12 @@ public:
     CMenuPanel(int iRemoveMe, int x, int y, int wide, int tall);
     CMenuPanel(int iTrans, int iRemoveMe, int x, int y, int wide, int tall);
 
-    virtual void Reset(void);
+    virtual void Reset();
     void SetNextMenu(CMenuPanel* pNextPanel);
     void SetMenuID(int iID);
     void SetActive(int iState);
-    virtual void Open(void);
-    virtual void Close(void);
+    virtual void Open();
+    virtual void Close();
 
     int ShouldBeRemoved() const { return m_iRemoveMe; }
     CMenuPanel* GetNextMenu() const { return m_pNextMenu; }

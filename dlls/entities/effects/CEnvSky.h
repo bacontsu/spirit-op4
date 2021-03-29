@@ -22,6 +22,6 @@
 class CEnvSky : public CBaseEntity
 {
 public:
-    void Activate(void) override;
-    void DesiredAction(void) override;
+    void Activate() override;
+    void DesiredAction() override;
 };

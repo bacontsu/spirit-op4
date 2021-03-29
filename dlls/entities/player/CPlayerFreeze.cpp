@@ -132,7 +132,7 @@ void CPlayerFreeze::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     }
 }
 
-void CPlayerFreeze::Think(void)
+void CPlayerFreeze::Think()
 {
     Use(m_hActivator, this, USE_ON, 0);
 }

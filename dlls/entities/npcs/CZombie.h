@@ -33,19 +33,19 @@
 class CZombie : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    int IgnoreConditions(void) override;
+    int IgnoreConditions() override;
 
     float m_flNextFlinch;
 
-    void PainSound(void) override;
-    void AlertSound(void) override;
-    void IdleSound(void) override;
-    void AttackSound(void);
+    void PainSound() override;
+    void AlertSound() override;
+    void IdleSound() override;
+    void AttackSound();
 
     static const char* pAttackSounds[];
     static const char* pIdleSounds[];

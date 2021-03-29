@@ -19,10 +19,10 @@
 // Body queue class here.... It's really just CBaseEntity
 class CCorpse : public CBaseEntity
 {
-    int ObjectCaps(void) override { return FCAP_DONT_SAVE; }
+    int ObjectCaps() override { return FCAP_DONT_SAVE; }
 };
 
 extern DLL_GLOBAL edict_t* g_pBodyQueueHead;
 
-void InitBodyQue(void);
+void InitBodyQue();
 void CopyToBodyQue(entvars_t* pev);

@@ -19,7 +19,7 @@
 
 DECLARE_MESSAGE(m_Battery, Battery)
 
-int CHudBattery::Init(void)
+int CHudBattery::Init()
 {
     m_iBat = 0;
     m_fFade = 0;
@@ -33,7 +33,7 @@ int CHudBattery::Init(void)
 };
 
 
-int CHudBattery::VidInit(void)
+int CHudBattery::VidInit()
 {
     int HUD_suit_empty = gHUD.GetSpriteIndex("suit_empty");
     int HUD_suit_full = gHUD.GetSpriteIndex("suit_full");

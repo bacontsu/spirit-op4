@@ -135,7 +135,7 @@ void CHalfLifeMultiplay::ClientUserInfoChanged(CBasePlayer* pPlayer, char* infob
 
 //=========================================================
 //=========================================================
-void CHalfLifeMultiplay::RefreshSkillData(void)
+void CHalfLifeMultiplay::RefreshSkillData()
 {
     // load all default values
     CGameRules::RefreshSkillData();
@@ -188,7 +188,7 @@ void CHalfLifeMultiplay::RefreshSkillData(void)
 
 //=========================================================
 //=========================================================
-void CHalfLifeMultiplay::Think(void)
+void CHalfLifeMultiplay::Think()
 {
     g_VoiceGameMgr.Update(gpGlobals->frametime);
 
@@ -279,21 +279,21 @@ void CHalfLifeMultiplay::Think(void)
 
 //=========================================================
 //=========================================================
-BOOL CHalfLifeMultiplay::IsMultiplayer(void)
+BOOL CHalfLifeMultiplay::IsMultiplayer()
 {
     return TRUE;
 }
 
 //=========================================================
 //=========================================================
-BOOL CHalfLifeMultiplay::IsDeathmatch(void)
+BOOL CHalfLifeMultiplay::IsDeathmatch()
 {
     return TRUE;
 }
 
 //=========================================================
 //=========================================================
-BOOL CHalfLifeMultiplay::IsCoOp(void)
+BOOL CHalfLifeMultiplay::IsCoOp()
 {
     return gpGlobals->coop;
 }
@@ -607,7 +607,7 @@ float CHalfLifeMultiplay::FlPlayerSpawnTime(CBasePlayer* pPlayer)
     return gpGlobals->time; //now!
 }
 
-BOOL CHalfLifeMultiplay::AllowAutoTargetCrosshair(void)
+BOOL CHalfLifeMultiplay::AllowAutoTargetCrosshair()
 {
     return (aimcrosshair.value != 0);
 }
@@ -1100,12 +1100,12 @@ Vector CHalfLifeMultiplay::VecAmmoRespawnSpot(CBasePlayerAmmo* pAmmo)
 
 //=========================================================
 //=========================================================
-float CHalfLifeMultiplay::FlHealthChargerRechargeTime(void)
+float CHalfLifeMultiplay::FlHealthChargerRechargeTime()
 {
     return 60;
 }
 
-float CHalfLifeMultiplay::FlHEVChargerRechargeTime(void)
+float CHalfLifeMultiplay::FlHEVChargerRechargeTime()
 {
     return 30;
 }
@@ -1154,19 +1154,19 @@ BOOL CHalfLifeMultiplay::PlayFootstepSounds(CBasePlayer* pl, float fvol)
     return FALSE;
 }
 
-BOOL CHalfLifeMultiplay::FAllowFlashlight(void)
+BOOL CHalfLifeMultiplay::FAllowFlashlight()
 {
     return flashlight.value != 0;
 }
 
 //=========================================================
 //=========================================================
-BOOL CHalfLifeMultiplay::FAllowMonsters(void)
+BOOL CHalfLifeMultiplay::FAllowMonsters()
 {
     return (allowmonsters.value != 0);
 }
 
-void CHalfLifeMultiplay::GoToIntermission(void)
+void CHalfLifeMultiplay::GoToIntermission()
 {
     if (g_fGameOver)
         return; // intermission has already been triggered, so ignore.
@@ -1467,7 +1467,7 @@ CountPlayers
 Determine the current # of active players on the server for map cycling logic
 ==============
 */
-int CountPlayers(void)
+int CountPlayers()
 {
     int num = 0;
 
@@ -1546,7 +1546,7 @@ ChangeLevel
 Server is changing to a new level, check mapcycle.txt for map name and setup info
 ==============
 */
-void CHalfLifeMultiplay::ChangeLevel(void)
+void CHalfLifeMultiplay::ChangeLevel()
 {
     static char szPreviousMapCycleFile[256];
     static mapcycle_t mapcycle;

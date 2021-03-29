@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_gravity, CTriggerGravity);
 
-void CTriggerGravity::Spawn(void)
+void CTriggerGravity::Spawn()
 {
     InitTrigger();
     SetTouch(&CTriggerGravity::GravityTouch);

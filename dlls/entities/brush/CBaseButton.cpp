@@ -59,14 +59,14 @@ LINK_ENTITY_TO_CLASS(func_button, CBaseButton);
 
 //LRC - moved here from cbase.h to use the spawnflags defined in this file
 // Buttons that don't take damage can be IMPULSE used
-int CBaseButton::ObjectCaps(void)
+int CBaseButton::ObjectCaps()
 {
     return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) |
         (pev->takedamage ? 0 : FCAP_IMPULSE_USE) |
         (pev->spawnflags & SF_BUTTON_ONLYDIRECT ? FCAP_ONLYDIRECT_USE : 0);
 }
 
-void CBaseButton::Precache(void)
+void CBaseButton::Precache()
 {
     const char* pszSound;
 
@@ -306,7 +306,7 @@ void CBaseButton::Spawn()
 }
 
 //LRC
-void CBaseButton::PostSpawn(void)
+void CBaseButton::PostSpawn()
 {
     if (m_pMoveWith)
         m_vecPosition1 = pev->origin - m_pMoveWith->pev->origin;
@@ -321,7 +321,7 @@ void CBaseButton::PostSpawn(void)
         m_vecPosition2 = m_vecPosition1;
 }
 
-void CBaseButton::ButtonSpark(void)
+void CBaseButton::ButtonSpark()
 {
     SetThink(&CBaseButton::ButtonSpark);
     SetNextThink(0.1 + RANDOM_FLOAT(0, 1.5)); // spark again at random interval
@@ -362,7 +362,7 @@ void CBaseButton::ButtonUse_IgnorePlayer(CBaseEntity* pActivator, CBaseEntity* p
         ButtonUse(pActivator, pCaller, useType, value);
 }
 
-CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch(void)
+CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch()
 {
     // Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
     if (m_toggle_state == TS_GOING_UP ||
@@ -462,7 +462,7 @@ void CBaseButton::ButtonActivate()
 //
 // Button has reached the "in/up" position.  Activate its "targets", and pause before "popping out".
 //
-void CBaseButton::TriggerAndWait(void)
+void CBaseButton::TriggerAndWait()
 {
     ASSERT(m_toggle_state == TS_GOING_UP);
 
@@ -510,7 +510,7 @@ void CBaseButton::TriggerAndWait(void)
 //
 // Starts the button moving "out/down".
 //
-void CBaseButton::ButtonReturn(void)
+void CBaseButton::ButtonReturn()
 {
     ASSERT(m_toggle_state == TS_AT_TOP);
     m_toggle_state = TS_GOING_DOWN;
@@ -541,7 +541,7 @@ void CBaseButton::ButtonReturn(void)
 //
 // Button has returned to start state.  Quiesce it.
 //
-void CBaseButton::ButtonBackHome(void)
+void CBaseButton::ButtonBackHome()
 {
     ASSERT(m_toggle_state == TS_GOING_DOWN);
     m_toggle_state = TS_AT_BOTTOM;

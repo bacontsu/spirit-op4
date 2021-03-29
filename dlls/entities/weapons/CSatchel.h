@@ -28,22 +28,22 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 #endif
 
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
     int AddDuplicate(CBasePlayerItem* pOriginal) override;
-    BOOL CanDeploy(void) override;
-    BOOL Deploy(void) override;
-    BOOL IsUseable(void) override;
+    BOOL CanDeploy() override;
+    BOOL Deploy() override;
+    BOOL IsUseable() override;
 
     void Holster(int skiplocal = 0) override;
-    void WeaponIdle(void) override;
-    void Throw(void);
+    void WeaponIdle() override;
+    void Throw();
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

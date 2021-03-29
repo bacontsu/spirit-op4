@@ -20,7 +20,7 @@ LINK_ENTITY_TO_CLASS(info_texlights, CNullEntity); // don't complain about Merl'
 LINK_ENTITY_TO_CLASS(info_compile_parameters, CNullEntity);
 
 // Null Entity, remove on startup
-void CNullEntity::Spawn(void)
+void CNullEntity::Spawn()
 {
     REMOVE_ENTITY(ENT(pev));
 }

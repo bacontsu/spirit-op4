@@ -29,8 +29,8 @@
 class CTriggerHurt : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
-    void DLLEXPORT RadiationThink(void);
+    void Spawn() override;
+    void DLLEXPORT RadiationThink();
     void DLLEXPORT HurtTouch(CBaseEntity* pOther);
     void KeyValue(KeyValueData* pkvd) override;
 };

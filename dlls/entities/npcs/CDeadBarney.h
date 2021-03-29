@@ -29,8 +29,8 @@
 class CDeadBarney : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    int Classify(void) override { return CLASS_PLAYER_ALLY; }
+    void Spawn() override;
+    int Classify() override { return CLASS_PLAYER_ALLY; }
 
     void KeyValue(KeyValueData* pkvd) override;
 

@@ -29,7 +29,7 @@ TYPEDESCRIPTION CTriggerRotTest::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CTriggerRotTest, CBaseDelay);
 
-void CTriggerRotTest::PostSpawn(void)
+void CTriggerRotTest::PostSpawn()
 {
     m_pMarker = UTIL_FindEntityByTargetname(NULL, STRING(pev->target));
     m_pReference = UTIL_FindEntityByTargetname(NULL, STRING(pev->netname));
@@ -41,7 +41,7 @@ void CTriggerRotTest::PostSpawn(void)
     SetNextThink(1);
 }
 
-void CTriggerRotTest::Think(void)
+void CTriggerRotTest::Think()
 {
     //    ALERT(at_console, "Using angle = %.2f\n", pev->armorvalue);
     if (m_pReference)

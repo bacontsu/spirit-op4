@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(env_fade, CFade);
 
-void CFade::Spawn(void)
+void CFade::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -94,7 +94,7 @@ void CFade::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType,
 }
 
 //LRC: a bolt-on state!
-void CFade::Think(void)
+void CFade::Think()
 {
     if (m_iState == STATE_TURN_ON)
     {

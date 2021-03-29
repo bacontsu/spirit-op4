@@ -45,7 +45,7 @@ Set "sounds" to one of the following:
 2) chain slow
 */
 
-void CFuncPlat::Setup(void)
+void CFuncPlat::Setup()
 {
     //pev->noiseMovement = MAKE_STRING("plats/platmove1.wav");
     //pev->noiseStopMoving = MAKE_STRING("plats/platstop1.wav");
@@ -168,7 +168,7 @@ void CFuncPlat::PlatUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 //
 // Platform is at top, now starts moving down.
 //
-void CFuncPlat::GoDown(void)
+void CFuncPlat::GoDown()
 {
     if (pev->noiseMovement)
         EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
@@ -183,7 +183,7 @@ void CFuncPlat::GoDown(void)
 //
 // Platform has hit bottom.  Stops and waits forever.
 //
-void CFuncPlat::HitBottom(void)
+void CFuncPlat::HitBottom()
 {
     if (pev->noiseMovement)
         STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
@@ -199,7 +199,7 @@ void CFuncPlat::HitBottom(void)
 //
 // Platform is at bottom, now starts moving up
 //
-void CFuncPlat::GoUp(void)
+void CFuncPlat::GoUp()
 {
     if (pev->noiseMovement)
         EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
@@ -214,7 +214,7 @@ void CFuncPlat::GoUp(void)
 //
 // Platform has hit top.  Pauses, then starts back down again.
 //
-void CFuncPlat::HitTop(void)
+void CFuncPlat::HitTop()
 {
     if (pev->noiseMovement)
         STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement));

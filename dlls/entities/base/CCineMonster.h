@@ -30,13 +30,13 @@ spawnflags - (stop if blocked, stop if player seen)
 class CCineMonster : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void Blocked(CBaseEntity* pOther) override;
     void Touch(CBaseEntity* pOther) override;
-    int ObjectCaps(void) override { return (CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-    void Activate(void) override;
+    int ObjectCaps() override { return (CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+    void Activate() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
@@ -44,23 +44,23 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 
     //LRC: states for script entities
-    STATE GetState(void) override { return m_iState; }
+    STATE GetState() override { return m_iState; }
     STATE m_iState;
 
-    // void DLLEXPORT CineSpawnThink( void );
-    void DLLEXPORT CineThink(void);
-    void DLLEXPORT InitIdleThink(void); //LRC
-    void Pain(void);
-    void Die(void);
+    // void DLLEXPORT CineSpawnThink();
+    void DLLEXPORT CineThink();
+    void DLLEXPORT InitIdleThink(); //LRC
+    void Pain();
+    void Die();
     void DelayStart(int state);
     CBaseMonster* FindEntity(const char* sName, CBaseEntity* pActivator);
-    virtual void PossessEntity(void);
+    virtual void PossessEntity();
 
-    inline BOOL IsAction(void) { return FClassnameIs(pev, "scripted_action"); } //LRC
+    inline BOOL IsAction() { return FClassnameIs(pev, "scripted_action"); } //LRC
 
     //LRC: Should the monster do a precise attack for this scripted_action?
     // (Do a precise attack if we'll be turning to face the target, but we haven't just walked to the target.)
-    BOOL PreciseAttack(void)
+    BOOL PreciseAttack()
     {
         //    if (m_fTurnType != 1) { ALERT(at_console,"preciseattack fails check 1\n"); return FALSE; }
         //    if (m_fMoveTo == 0) { ALERT(at_console,"preciseattack fails check 2\n"); return FALSE; }
@@ -71,13 +71,13 @@ public:
     }
 
     void ReleaseEntity(CBaseMonster* pEntity);
-    void CancelScript(void);
+    void CancelScript();
     virtual BOOL StartSequence(CBaseMonster* pTarget, int iszSeq, BOOL completeOnEmpty);
     void SequenceDone(CBaseMonster* pMonster);
     virtual void FixScriptMonsterSchedule(CBaseMonster* pMonster);
-    BOOL CanInterrupt(void);
+    BOOL CanInterrupt();
     void AllowInterrupt(BOOL fAllow);
-    int IgnoreConditions(void) override;
+    int IgnoreConditions() override;
 
     int m_iszIdle; // string index for idle animation
     int m_iszPlay; // string index for scripted animation

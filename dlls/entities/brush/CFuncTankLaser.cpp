@@ -27,7 +27,7 @@ TYPEDESCRIPTION CFuncTankLaser::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CFuncTankLaser, CFuncTank);
 
-void CFuncTankLaser::Activate(void)
+void CFuncTankLaser::Activate()
 {
     if (!GetLaser())
     {
@@ -54,7 +54,7 @@ void CFuncTankLaser::KeyValue(KeyValueData* pkvd)
 }
 
 
-CLaser* CFuncTankLaser::GetLaser(void)
+CLaser* CFuncTankLaser::GetLaser()
 {
     if (m_pLaser)
         return m_pLaser;
@@ -78,7 +78,7 @@ CLaser* CFuncTankLaser::GetLaser(void)
 }
 
 
-void CFuncTankLaser::Think(void)
+void CFuncTankLaser::Think()
 {
     if (m_pLaser && (gpGlobals->time > m_laserTime))
         m_pLaser->TurnOff();

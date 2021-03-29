@@ -43,7 +43,7 @@ public:
     void Spawn() override;
     void Precache() override;
 
-    //    virtual void    Blocked( void );
+    //    virtual void    Blocked();
     void DLLEXPORT GoUp() override;
     void DLLEXPORT GoDown() override;
 

@@ -19,17 +19,17 @@
 class CFlockingFlyerFlock : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
-    void SpawnFlock(void);
+    void SpawnFlock();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
     // Sounds are shared by the flock
-    static void PrecacheFlockSounds(void);
+    static void PrecacheFlockSounds();
 
     int m_cFlockSize;
     float m_flFlockRadius;

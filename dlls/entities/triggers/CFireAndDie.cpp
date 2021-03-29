@@ -17,19 +17,19 @@
 
 LINK_ENTITY_TO_CLASS(fireanddie, CFireAndDie);
 
-void CFireAndDie::Spawn(void)
+void CFireAndDie::Spawn()
 {
     pev->classname = MAKE_STRING("fireanddie");
     // Don't call Precache() - it should be called on restore
 }
 
-void CFireAndDie::Precache(void)
+void CFireAndDie::Precache()
 {
     // This gets called on restore
     SetNextThink(m_flDelay);
 }
 
-void CFireAndDie::Think(void)
+void CFireAndDie::Think()
 {
     SUB_UseTargets(this, USE_TOGGLE, 0);
     UTIL_Remove(this);

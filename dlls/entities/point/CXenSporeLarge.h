@@ -18,7 +18,7 @@
 
 class CXenSporeLarge : public CXenSpore
 {
-    void Spawn(void) override;
+    void Spawn() override;
 
     static const Vector m_hullSizes[];
 };

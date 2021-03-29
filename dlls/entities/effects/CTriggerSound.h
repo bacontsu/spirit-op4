@@ -23,13 +23,13 @@ class CTriggerSound : public CBaseDelay
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
+    void Spawn() override;
     void Touch(CBaseEntity* pOther) override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
-    int ObjectCaps(void) override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     float m_flRoomtype;
     string_t m_iszMaster;

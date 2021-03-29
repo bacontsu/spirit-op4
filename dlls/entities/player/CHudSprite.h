@@ -23,8 +23,8 @@
 //==============================================================
 class CHudSprite : public CBaseEntity
 {
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    STATE GetState(void) override { return pev->spawnflags & SF_HUDSPR_ACTIVE ? STATE_ON : STATE_OFF; }
-    void Think(void) override;
+    STATE GetState() override { return pev->spawnflags & SF_HUDSPR_ACTIVE ? STATE_ON : STATE_OFF; }
+    void Think() override;
 };

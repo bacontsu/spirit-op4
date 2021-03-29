@@ -24,5 +24,5 @@ public:
     {
     }
 
-    void paintBackground(void) override;
+    void paintBackground() override;
 };

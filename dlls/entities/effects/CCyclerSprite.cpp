@@ -26,7 +26,7 @@ TYPEDESCRIPTION CCyclerSprite::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CCyclerSprite, CBaseEntity);
 
-void CCyclerSprite::Spawn(void)
+void CCyclerSprite::Spawn()
 {
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_NONE;
@@ -44,7 +44,7 @@ void CCyclerSprite::Spawn(void)
     m_maxFrame = (float)MODEL_FRAMES(pev->modelindex) - 1;
 }
 
-void CCyclerSprite::Think(void)
+void CCyclerSprite::Think()
 {
     if (ShouldAnimate())
         Animate(pev->framerate * (gpGlobals->time - m_lastTime));

@@ -154,7 +154,7 @@ int __MsgFunc_CamData(const char* pszName, int iSize, void* pbuf)
 }
 
 // TFFree Command Menu
-void __CmdFunc_OpenCommandMenu(void)
+void __CmdFunc_OpenCommandMenu()
 {
     if (gViewPort)
     {
@@ -162,7 +162,7 @@ void __CmdFunc_OpenCommandMenu(void)
     }
 }
 
-void __CmdFunc_CloseCommandMenu(void)
+void __CmdFunc_CloseCommandMenu()
 {
     if (gViewPort)
     {
@@ -170,7 +170,7 @@ void __CmdFunc_CloseCommandMenu(void)
     }
 }
 
-void __CmdFunc_ForceCloseCommandMenu(void)
+void __CmdFunc_ForceCloseCommandMenu()
 {
     if (gViewPort)
     {
@@ -178,7 +178,7 @@ void __CmdFunc_ForceCloseCommandMenu(void)
     }
 }
 
-void __CmdFunc_StopMP3(void)
+void __CmdFunc_StopMP3()
 {
     gMP3.StopMP3();
 }
@@ -303,7 +303,7 @@ int __MsgFunc_AllowSpec(const char* pszName, int iSize, void* pbuf)
 
 
 // This is called every time the DLL is loaded
-void CHud::Init(void)
+void CHud::Init()
 {
 #ifdef ENGINE_DEBUG
     gEngfuncs.Con_Printf("## CHud::Init\n");
@@ -455,7 +455,7 @@ int CHud::GetSpriteIndex(const char* SpriteName)
     return -1; // invalid sprite
 }
 
-void CHud::VidInit(void)
+void CHud::VidInit()
 {
 #ifdef ENGINE_DEBUG
     gEngfuncs.Con_Printf("## CHud::VidInit (hi from me)\n");
@@ -594,7 +594,7 @@ HUD_GetFOV
 Returns last FOV
 =====================
 */
-float HUD_GetFOV(void)
+float HUD_GetFOV()
 {
     if (gEngfuncs.pDemoAPI->IsRecording())
     {
@@ -690,7 +690,7 @@ void CHud::AddHudElem(CHudBase* phudelem)
     ptemp->pNext = pdl;
 }
 
-float CHud::GetSensitivity(void)
+float CHud::GetSensitivity()
 {
     return m_flMouseSensitivity;
 }
@@ -741,7 +741,7 @@ int CHud::MsgFunc_ResetHUD(const char* pszName, int iSize, void* pbuf)
     return 1;
 }
 
-//void CAM_ToFirstPerson(void);
+//void CAM_ToFirstPerson();
 
 void CHud::MsgFunc_ViewMode(const char* pszName, int iSize, void* pbuf)
 {
@@ -1003,12 +1003,12 @@ int grgLogoFrame[MAX_LOGO_FRAMES] =
 
 extern int g_iVisibleMouse;
 
-float HUD_GetFOV(void);
+float HUD_GetFOV();
 
 extern cvar_t* sensitivity;
 
 // Think
-void CHud::Think(void)
+void CHud::Think()
 {
     m_scrinfo.iSize = sizeof(m_scrinfo);
     GetScreenInfo(&m_scrinfo);

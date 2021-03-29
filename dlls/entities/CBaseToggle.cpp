@@ -164,7 +164,7 @@ void CBaseToggle::LinearMove(Vector vecInput, float flSpeed, float flAccel, floa
     //    }
 }
 
-void CBaseToggle::LinearMoveNow(void) // AJH Now supports acceleration
+void CBaseToggle::LinearMoveNow() // AJH Now supports acceleration
 {
     //    ALERT(at_console, "LMNow %s\n", STRING(pev->targetname));
 
@@ -282,7 +282,7 @@ void CBaseToggle::LinearMoveNow(void) // AJH Now supports acceleration
 After moving, set origin to exact final destination, call "move done" function
 ============
 */
-/*void CBaseToggle :: LinearMoveDone( void )
+/*void CBaseToggle :: LinearMoveDone()
 {
     Vector vecDiff;
     if (m_pMoveWith)
@@ -302,14 +302,14 @@ After moving, set origin to exact final destination, call "move done" function
     }
 }*/
 
-void CBaseToggle::LinearMoveDone(void)
+void CBaseToggle::LinearMoveDone()
 {
     SetThink(&CBaseToggle::LinearMoveDoneNow);
     //    ALERT(at_console, "LMD: desiredThink %s\n", STRING(pev->targetname));
     UTIL_DesiredThink(this);
 }
 
-void CBaseToggle::LinearMoveDoneNow(void)
+void CBaseToggle::LinearMoveDoneNow()
 {
     Vector vecDest;
 
@@ -334,7 +334,7 @@ void CBaseToggle::LinearMoveDoneNow(void)
         (this->*m_pfnCallWhenMoveDone)();
 }
 
-BOOL CBaseToggle::IsLockedByMaster(void)
+BOOL CBaseToggle::IsLockedByMaster()
 {
     if (UTIL_IsMasterTriggered(m_sMaster, m_hActivator))
         return FALSE;
@@ -343,7 +343,7 @@ BOOL CBaseToggle::IsLockedByMaster(void)
 }
 
 //LRC- mapping toggle-states to global states
-STATE CBaseToggle::GetState(void)
+STATE CBaseToggle::GetState()
 {
     switch (m_toggle_state)
     {
@@ -417,7 +417,7 @@ void CBaseToggle::AngularMoveNow()
     UTIL_SetAvelocity(this, vecDestDelta / flTravelTime);
 }
 
-void CBaseToggle::AngularMoveDone(void)
+void CBaseToggle::AngularMoveDone()
 {
     SetThink(&CBaseToggle::AngularMoveDoneNow);
     //    ALERT(at_console, "LMD: desiredThink %s\n", STRING(pev->targetname));
@@ -429,7 +429,7 @@ void CBaseToggle::AngularMoveDone(void)
 After rotating, set angle to exact final angle, call "move done" function
 ============
 */
-void CBaseToggle::AngularMoveDoneNow(void)
+void CBaseToggle::AngularMoveDoneNow()
 {
     //    ALERT(at_console, "AngularMoveDone %f\n", pev->ltime);
     UTIL_SetAvelocity(this, g_vecZero);

@@ -22,7 +22,7 @@
 class CRulePointEntity : public CRuleEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     //LRC 1.8 - they don't cross transitions
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };

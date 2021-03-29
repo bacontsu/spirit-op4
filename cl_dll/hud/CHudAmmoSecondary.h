@@ -19,9 +19,9 @@
 class CHudAmmoSecondary : public CHudBase
 {
 public:
-    int Init(void) override;
-    int VidInit(void) override;
-    void Reset(void) override;
+    int Init() override;
+    int VidInit() override;
+    void Reset() override;
     int Draw(float flTime) override;
 
     int MsgFunc_SecAmmoVal(const char* pszName, int iSize, void* pbuf);

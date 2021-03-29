@@ -25,11 +25,11 @@
 class CEnvFootsteps : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-    STATE GetState(void) override;
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    STATE GetState() override;
     STATE GetState(CBaseEntity* pEnt) override;
     void PrecacheNoise(const char* szNoise);
 };

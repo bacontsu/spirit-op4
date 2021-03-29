@@ -20,11 +20,11 @@
 class CRenderFxFader : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void DLLEXPORT FadeThink(void);
+    void Spawn() override;
+    void DLLEXPORT FadeThink();
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     static TYPEDESCRIPTION m_SaveData[];
 

@@ -54,12 +54,12 @@ TeamFortressViewport* gViewPort = NULL;
 CSysModule* g_hParticleManModule = NULL;
 IParticleMan* g_pParticleMan = NULL;
 
-void CL_LoadParticleMan(void);
-void CL_UnloadParticleMan(void);
+void CL_LoadParticleMan();
+void CL_UnloadParticleMan();
 
-void InitInput(void);
-void Game_HookEvents(void);
-void IN_Commands(void);
+void InitInput();
+void Game_HookEvents();
+void IN_Commands();
 
 /*
 ================================
@@ -170,7 +170,7 @@ so the HUD can reinitialize itself.
 ==========================
 */
 
-int DLLEXPORT HUD_VidInit(void)
+int DLLEXPORT HUD_VidInit()
 {
     //	RecClHudVidInit();
     gHUD.VidInit();
@@ -190,7 +190,7 @@ the hud variables.
 ==========================
 */
 
-void DLLEXPORT HUD_Init(void)
+void DLLEXPORT HUD_Init()
 {
     //	RecClHudInit();
     InitInput();
@@ -248,7 +248,7 @@ Called at start and end of demos to restore to "non"HUD state.
 ==========================
 */
 
-void DLLEXPORT HUD_Reset(void)
+void DLLEXPORT HUD_Reset()
 {
     //	RecClHudReset();
 
@@ -328,7 +328,7 @@ void DLLEXPORT HUD_ChatInputPosition(int* x, int* y)
     }
 }
 
-void CL_UnloadParticleMan(void)
+void CL_UnloadParticleMan()
 {
     Sys_UnloadModule(g_hParticleManModule);
 
@@ -336,7 +336,7 @@ void CL_UnloadParticleMan(void)
     g_hParticleManModule = NULL;
 }
 
-void CL_LoadParticleMan(void)
+void CL_LoadParticleMan()
 {
     char szPDir[512];
 

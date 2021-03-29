@@ -45,7 +45,7 @@ void CCrowbar::Spawn()
 }
 
 
-void CCrowbar::Precache(void)
+void CCrowbar::Precache()
 {
     PRECACHE_MODEL("models/v_crowbar.mdl");
     PRECACHE_MODEL("models/w_crowbar.mdl");
@@ -147,7 +147,7 @@ void CCrowbar::Smack()
 }
 
 
-void CCrowbar::SwingAgain(void)
+void CCrowbar::SwingAgain()
 {
     Swing(0);
 }

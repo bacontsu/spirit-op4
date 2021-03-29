@@ -30,14 +30,14 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override { return CLASS_ALIEN_MILITARY; }
-    int BloodColor(void) override { return BLOOD_COLOR_YELLOW; }
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override { return CLASS_ALIEN_MILITARY; }
+    int BloodColor() override { return BLOOD_COLOR_YELLOW; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
-    void GibMonster(void) override;
+    void GibMonster() override;
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         pev->absmin = pev->origin + Vector(-16 * N_SCALE, -16 * N_SCALE, -48 * N_SCALE);
         pev->absmax = pev->origin + Vector(16 * N_SCALE, 16 * N_SCALE, 28 * N_SCALE);
@@ -45,31 +45,31 @@ public:
 
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
 
-    void DLLEXPORT StartupThink(void);
-    void DLLEXPORT HuntThink(void);
+    void DLLEXPORT StartupThink();
+    void DLLEXPORT HuntThink();
     void DLLEXPORT CrashTouch(CBaseEntity* pOther);
-    void DLLEXPORT DyingThink(void);
+    void DLLEXPORT DyingThink();
     void DLLEXPORT StartupUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT NullThink(void);
+    void DLLEXPORT NullThink();
     void DLLEXPORT CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
-    void FloatSequence(void);
-    void NextActivity(void);
+    void FloatSequence();
+    void NextActivity();
 
-    void Flight(void);
+    void Flight();
 
-    BOOL AbsorbSphere(void);
-    BOOL EmitSphere(void);
+    BOOL AbsorbSphere();
+    BOOL EmitSphere();
     void TargetSphere(USE_TYPE useType, float value);
     CBaseEntity* RandomTargetname(const char* szName);
-    void ShootBalls(void);
+    void ShootBalls();
     void MakeFriend(Vector vecPos);
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
 
-    void PainSound(void) override;
-    void DeathSound(void) override;
+    void PainSound() override;
+    void DeathSound() override;
 
     static const char* pAttackSounds[]; // vocalization: play sometimes when he launches an attack
     static const char* pBallSounds[]; // the sound of the lightening ball launch

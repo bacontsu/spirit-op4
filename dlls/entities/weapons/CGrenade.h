@@ -23,7 +23,7 @@
 class CGrenade : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 
     typedef enum { SATCHEL_DETONATE = 0, SATCHEL_RELEASE } SATCHELCODE;
 
@@ -34,19 +34,19 @@ public:
 
     void Explode(Vector vecSrc, Vector vecAim);
     void Explode(TraceResult* pTrace, int bitsDamageType);
-    void DLLEXPORT Smoke(void);
+    void DLLEXPORT Smoke();
 
     void DLLEXPORT BounceTouch(CBaseEntity* pOther);
     void DLLEXPORT SlideTouch(CBaseEntity* pOther);
     void DLLEXPORT ExplodeTouch(CBaseEntity* pOther);
-    void DLLEXPORT DangerSoundThink(void);
-    void DLLEXPORT PreDetonate(void);
-    void DLLEXPORT Detonate(void);
+    void DLLEXPORT DangerSoundThink();
+    void DLLEXPORT PreDetonate();
+    void DLLEXPORT Detonate();
     void DLLEXPORT DetonateUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT TumbleThink(void);
+    void DLLEXPORT TumbleThink();
 
-    virtual void BounceSound(void);
-    int BloodColor(void) override { return DONT_BLEED; }
+    virtual void BounceSound();
+    int BloodColor() override { return DONT_BLEED; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
     BOOL m_fRegisteredSound; // whether or not this grenade has issued its DANGER sound to the world sound list yet.

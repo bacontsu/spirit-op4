@@ -20,6 +20,6 @@ class CWorldItem : public CBaseEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
+    void Spawn() override;
     int m_iType;
 };

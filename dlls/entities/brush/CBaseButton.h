@@ -59,7 +59,7 @@ public:
 
     enum BUTTON_CODE { BUTTON_NOTHING, BUTTON_ACTIVATE, BUTTON_RETURN };
 
-    BUTTON_CODE ButtonResponseToTouch(void);
+    BUTTON_CODE ButtonResponseToTouch();
 
     static TYPEDESCRIPTION m_SaveData[];
     int ObjectCaps() override;

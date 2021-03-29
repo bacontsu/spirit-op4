@@ -22,20 +22,20 @@ class CLight : public CPointEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void Think(void) override;
+    void Think() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
-    STATE GetState(void) override { return m_iState; } //LRC
+    STATE GetState() override { return m_iState; } //LRC
 
     static TYPEDESCRIPTION m_SaveData[];
 
-    int GetStyle(void) { return m_iszCurrentStyle; } //LRC
+    int GetStyle() { return m_iszCurrentStyle; } //LRC
     void SetStyle(int iszPattern); //LRC
 
-    void SetCorrectStyle(void); //LRC
+    void SetCorrectStyle(); //LRC
 
 private:
     STATE m_iState; // current state

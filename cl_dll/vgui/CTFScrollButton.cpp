@@ -41,7 +41,7 @@ CTFScrollButton::CTFScrollButton(int iArrow, const char* text, int x, int y, int
     addInputSignal(pISignal);
 }
 
-void CTFScrollButton::paint(void)
+void CTFScrollButton::paint()
 {
     if (!m_pTGA)
         return;
@@ -59,7 +59,7 @@ void CTFScrollButton::paint(void)
     m_pTGA->doPaint(this);
 }
 
-void CTFScrollButton::paintBackground(void)
+void CTFScrollButton::paintBackground()
 {
     /*
         if ( isArmed() )

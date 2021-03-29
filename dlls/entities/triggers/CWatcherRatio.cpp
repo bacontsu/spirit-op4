@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(watcher_number, CWatcherRatio);
 
-void CWatcherRatio::Spawn(void)
+void CWatcherRatio::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->spawnflags |= SF_WATCHERRATIO_FIRSTUPDATE;
@@ -28,7 +28,7 @@ void CWatcherRatio::Spawn(void)
     }
 }
 
-void CWatcherRatio::Think(void)
+void CWatcherRatio::Think()
 {
     SetNextThink(0.1);
 

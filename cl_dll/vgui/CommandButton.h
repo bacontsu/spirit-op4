@@ -30,7 +30,7 @@ public:
     CommandButton(const char* text, int x, int y, int wide, int tall, bool bNoHighlight = false);
     CommandButton(int iPlayerClass, const char* text, int x, int y, int wide, int tall, bool bFlat);
 
-    void Init(void);
+    void Init();
 
     // Menu Handling
     void AddSubMenu(CCommandMenu* pNewMenu);
@@ -40,7 +40,7 @@ public:
         m_pSubLabel = pSubLabel;
     }
 
-    virtual int IsNotValid(void)
+    virtual int IsNotValid()
     {
         return false;
     }
@@ -49,7 +49,7 @@ public:
     int GetPlayerClass() const { return m_iPlayerClass; }
     CCommandMenu* GetSubMenu() const { return m_pSubMenu; }
 
-    CCommandMenu* getParentMenu(void);
+    CCommandMenu* getParentMenu();
     void setParentMenu(CCommandMenu* pParentMenu);
 
     // Overloaded vgui functions
@@ -57,11 +57,11 @@ public:
     virtual void setText(const char* text);
     void paintBackground() override;
 
-    void cursorEntered(void);
-    void cursorExited(void);
+    void cursorEntered();
+    void cursorExited();
 
     void setBoundKey(char boundKey);
-    char getBoundKey(void);
+    char getBoundKey();
 
 public:
     bool m_bNoHighlight;
@@ -80,5 +80,5 @@ private:
 
     SchemeHandle_t m_hTextScheme;
 
-    void RecalculateText(void);
+    void RecalculateText();
 };

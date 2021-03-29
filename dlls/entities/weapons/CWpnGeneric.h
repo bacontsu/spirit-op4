@@ -19,17 +19,17 @@
 class CWpnGeneric : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     int GetItemInfo(ItemInfo* p) override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
 
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
-    BOOL Deploy(void) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
-    void WeaponIdle(void) override;
-    void Precache(void) override;
-    void Reload(void) override;
+    void WeaponIdle() override;
+    void Precache() override;
+    void Reload() override;
 private:
     int m_iShell;
 
@@ -42,9 +42,9 @@ public:
         BOOL m_fNVG;//NightVision Status
         CLaserSpot *m_pSpot;
         int m_fSpotActive;
-        void UpdateSpot( void );
+        void UpdateSpot();
     */
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

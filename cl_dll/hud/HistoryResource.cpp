@@ -81,7 +81,7 @@ void HistoryResource::AddToHistory(int iType, const char* szName, int iCount)
 }
 
 
-void HistoryResource::CheckClearHistory(void)
+void HistoryResource::CheckClearHistory()
 {
 	for (int i = 0; i < MAX_HISTORY; i++)
 	{

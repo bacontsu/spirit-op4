@@ -31,7 +31,7 @@ TYPEDESCRIPTION CEnvShooter::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CEnvShooter, CGibShooter);
 LINK_ENTITY_TO_CLASS(env_shooter, CEnvShooter);
 
-void CEnvShooter::Spawn(void)
+void CEnvShooter::Spawn()
 {
     int iBody = pev->body;
     CGibShooter::Spawn();
@@ -106,7 +106,7 @@ void CEnvShooter::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CEnvShooter::Precache(void)
+void CEnvShooter::Precache()
 {
     if (pev->model)
         m_iGibModelIndex = PRECACHE_MODEL((char*)STRING(pev->model));

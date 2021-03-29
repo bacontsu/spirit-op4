@@ -10,7 +10,7 @@
 class CMP3
 {
 private:
-    float (_stdcall * VER)(void); //AJH get fmod dll version
+    float (_stdcall * VER)(); //AJH get fmod dll version
     signed char (_stdcall * SCL)(FSOUND_STREAM* stream);
     signed char (_stdcall * SOP)(int outputtype);
     signed char (_stdcall * SBS)(int len_ms);
@@ -20,7 +20,7 @@ private:
     FSOUND_STREAM* (_stdcall * SO)(const char* filename, unsigned int mode, int offset, int memlength); //AJH use new fmod
     int (_stdcall * SPLAY)(int channel, FSOUND_STREAM* stream);
     signed char(__stdcall* SETVOLUME)(int channel, int volume);
-    void (_stdcall * CLOSE)(void);
+    void (_stdcall * CLOSE)();
 
     FSOUND_STREAM* m_Stream;
     int m_iIsPlaying;

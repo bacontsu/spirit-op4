@@ -35,7 +35,7 @@ public:
 
     void DesiredAction() override; //LRC - used to be called Next!
 
-    //    void DLLEXPORT Next( void );
+    //    void DLLEXPORT Next();
     void DLLEXPORT PostponeNext();
     void DLLEXPORT Find();
     void DLLEXPORT NearestPath();

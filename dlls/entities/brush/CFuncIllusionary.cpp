@@ -36,7 +36,7 @@ void CFuncIllusionary::KeyValue(KeyValueData* pkvd)
         CBaseToggle::KeyValue(pkvd);
 }
 
-void CFuncIllusionary::Spawn(void)
+void CFuncIllusionary::Spawn()
 {
     pev->angles = g_vecZero;
     pev->movetype = MOVETYPE_NONE;

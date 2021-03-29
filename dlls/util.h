@@ -99,7 +99,7 @@ extern Vector        UTIL_AxisRotationToVec    (const Vector &vec, float angle);
 //LRC 1.8 - renamed CBaseAlias
 class CBaseMutableAlias;
 extern void            UTIL_AddToAliasList( CBaseMutableAlias *pAlias );
-extern void            UTIL_FlushAliases( void );
+extern void            UTIL_FlushAliases();
 
 
 // returns a CBaseEntity pointer to a player by index.  Only returns if the player is spawned and connected
@@ -140,7 +140,7 @@ extern void            UTIL_TraceLine            (const Vector &vecStart, const 
 extern void            UTIL_TraceLine            (const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t *pentIgnore, TraceResult *ptr);
 enum { point_hull=0, human_hull=1, large_hull=2, head_hull=3 };
 extern void            UTIL_TraceHull            (const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, int hullNumber, edict_t *pentIgnore, TraceResult *ptr);
-extern TraceResult    UTIL_GetGlobalTrace        (void);
+extern TraceResult    UTIL_GetGlobalTrace        ();
 extern void            UTIL_TraceModel            (const Vector &vecStart, const Vector &vecEnd, int hullNumber, edict_t *pentModel, TraceResult *ptr);
 extern Vector        UTIL_GetAimVector        (edict_t* pent, float flSpeed);
 extern int            UTIL_PointContents        (const Vector &vec);
@@ -148,7 +148,7 @@ extern int            UTIL_PointContents        (const Vector &vec);
 extern int            UTIL_IsMasterTriggered    (string_t sMaster, CBaseEntity *pActivator);
 extern void            UTIL_BloodStream( const Vector &origin, const Vector &direction, int color, int amount );
 extern void            UTIL_BloodDrips( const Vector &origin, const Vector &direction, int color, int amount );
-extern Vector        UTIL_RandomBloodVector( void );
+extern Vector        UTIL_RandomBloodVector();
 extern BOOL            UTIL_ShouldShowBlood( int bloodColor );
 extern void            UTIL_BloodDecalTrace( TraceResult *pTrace, int bloodColor );
 extern void            UTIL_DecalTrace( TraceResult *pTrace, int decalNumber );
@@ -290,7 +290,7 @@ extern DLL_GLOBAL int            g_Language;
 int UTIL_SharedRandomLong( unsigned int seed, int low, int high );
 float UTIL_SharedRandomFloat( unsigned int seed, float low, float high );
 
-float UTIL_WeaponTimeBase( void );
+float UTIL_WeaponTimeBase();
 
 
 // LRC- for aliases and groups

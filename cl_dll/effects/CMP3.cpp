@@ -64,7 +64,7 @@ int CMP3::Shutdown()
         return 0;
 }
 
-int CMP3::StopMP3(void)
+int CMP3::StopMP3()
 {
     SCL(m_Stream);
     m_iIsPlaying = 0;

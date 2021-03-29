@@ -28,13 +28,13 @@
 
 LINK_ENTITY_TO_CLASS(beam, CBeam);
 
-void CBeam::Spawn(void)
+void CBeam::Spawn()
 {
     pev->solid = SOLID_NOT;                            // Remove model & collisions
     Precache();
 }
 
-void CBeam::Precache(void)
+void CBeam::Precache()
 {
     if (pev->owner)
         SetStartEntity(ENTINDEX(pev->owner));
@@ -56,7 +56,7 @@ void CBeam::SetEndEntity(int entityIndex)
 
 
 // These don't take attachments into account
-const Vector& CBeam::GetStartPos(void)
+const Vector& CBeam::GetStartPos()
 {
     if (GetType() == BEAM_ENTS)
     {
@@ -67,7 +67,7 @@ const Vector& CBeam::GetStartPos(void)
 }
 
 
-const Vector& CBeam::GetEndPos(void)
+const Vector& CBeam::GetEndPos()
 {
     int type = GetType();
     if (type == BEAM_POINTS || type == BEAM_HOSE)
@@ -154,7 +154,7 @@ void CBeam::EntsInit(int startIndex, int endIndex)
 }
 
 
-void CBeam::RelinkBeam(void)
+void CBeam::RelinkBeam()
 {
     const Vector& startPos = GetStartPos(), & endPos = GetEndPos();
 
@@ -172,7 +172,7 @@ void CBeam::RelinkBeam(void)
 }
 
 #if 0
-void CBeam::SetObjectCollisionBox(void)
+void CBeam::SetObjectCollisionBox()
 {
     const Vector& startPos = GetStartPos(), & endPos = GetEndPos();
 

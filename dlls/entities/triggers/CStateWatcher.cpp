@@ -70,14 +70,14 @@ void CStateWatcher::KeyValue(KeyValueData* pkvd)
     }
 }
 
-void CStateWatcher::Spawn(void)
+void CStateWatcher::Spawn()
 {
     pev->solid = SOLID_NOT;
     if (pev->target)
         SetNextThink(0.5);
 }
 
-STATE CStateWatcher::GetState(void)
+STATE CStateWatcher::GetState()
 {
     if (EvalLogic(NULL))
         return STATE_ON;
@@ -97,7 +97,7 @@ STATE CStateWatcher::GetState(CBaseEntity* pActivator)
         return STATE_OFF;
 }
 
-void CStateWatcher::Think(void)
+void CStateWatcher::Think()
 {
     SetNextThink(0.1);
     int oldflag = pev->spawnflags & SF_SWATCHER_VALID;

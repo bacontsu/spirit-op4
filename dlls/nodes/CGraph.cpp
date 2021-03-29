@@ -25,7 +25,7 @@ CGraph WorldGraph;
 // memory currently in use by the world graph, NULLs 
 // all pointers, and zeros the node count.
 //=========================================================
-void CGraph::InitGraph(void)
+void CGraph::InitGraph()
 {
     // Make the graph unavailable
     //
@@ -84,7 +84,7 @@ void CGraph::InitGraph(void)
 // reasonable number of nodes so we can build the path which
 // will be saved to disk.
 //=========================================================
-int CGraph::AllocNodes(void)
+int CGraph::AllocNodes()
 {
     //  malloc all of the nodes
     WorldGraph.m_pNodes = (CNode*)calloc(sizeof(CNode), MAX_NODES);
@@ -1681,7 +1681,7 @@ int CGraph::FSaveGraph(char* szMapName)
 // this is done after loading the graph from disk, whereupon
 // the pointers are not valid.
 //=========================================================
-int CGraph::FSetGraphPointers(void)
+int CGraph::FSetGraphPointers()
 {
     int i;
     CBaseEntity* pLinkEnt;
@@ -1917,7 +1917,7 @@ void CGraph::HashChoosePrimes(int TableSize)
 //
 #define UNNUMBERED_NODE -1
 
-void CGraph::SortNodes(void)
+void CGraph::SortNodes()
 {
     // We are using m_iPreviousNode to be the new node number.
     // After assigning new node numbers to everything, we move
@@ -1981,7 +1981,7 @@ void CGraph::SortNodes(void)
     }
 }
 
-void CGraph::BuildLinkLookups(void)
+void CGraph::BuildLinkLookups()
 {
     m_nHashLinks = 3 * m_cLinks / 2 + 3;
 
@@ -2017,7 +2017,7 @@ void CGraph::BuildLinkLookups(void)
 #endif
 }
 
-void CGraph::BuildRegionTables(void)
+void CGraph::BuildRegionTables()
 {
     if (m_di) free(m_di);
 
@@ -2166,7 +2166,7 @@ void CGraph::BuildRegionTables(void)
     memset(m_Cache, 0, sizeof(m_Cache));
 }
 
-void CGraph::ComputeStaticRoutingTables(void)
+void CGraph::ComputeStaticRoutingTables()
 {
     int nRoutes = m_cNodes * m_cNodes;
 #define FROM_TO(x,y) ((x)*m_cNodes+(y))
@@ -2470,7 +2470,7 @@ void CGraph::ComputeStaticRoutingTables(void)
 
 // Test those routing tables. Doesn't really work, yet.
 //
-void CGraph::TestRoutingTables(void)
+void CGraph::TestRoutingTables()
 {
     int* pMyPath = new int[m_cNodes];
     int* pMyPath2 = new int[m_cNodes];

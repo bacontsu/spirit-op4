@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(trip_beam, CTripBeam);
 
-void CTripBeam::Spawn(void)
+void CTripBeam::Spawn()
 {
     CLightning::Spawn();
     SetTouch(&CTripBeam::TriggerTouch);

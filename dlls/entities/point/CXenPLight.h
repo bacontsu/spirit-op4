@@ -23,13 +23,13 @@
 class CXenPLight : public CActAnimating
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void Touch(CBaseEntity* pOther) override;
-    void Think(void) override;
+    void Think() override;
 
-    void LightOn(void);
-    void LightOff(void);
+    void LightOn();
+    void LightOff();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

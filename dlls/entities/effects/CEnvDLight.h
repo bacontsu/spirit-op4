@@ -25,16 +25,16 @@
 class CEnvDLight : public CPointEntity
 {
 public:
-    void PostSpawn(void) override;
+    void PostSpawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void Think(void) override;
-    void DesiredAction(void) override;
+    void Think() override;
+    void DesiredAction() override;
     virtual void MakeLight(int iTime);
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    STATE GetState(void) override
+    STATE GetState() override
     {
         if (pev->spawnflags & SF_DLIGHT_STARTON)
             return STATE_ON;

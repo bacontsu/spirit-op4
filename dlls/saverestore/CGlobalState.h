@@ -37,8 +37,8 @@ class CGlobalState
 {
 public:
     CGlobalState();
-    void Reset(void);
-    void ClearStates(void);
+    void Reset();
+    void ClearStates();
     void EntityAdd(string_t globalname, string_t mapName, GLOBALESTATE state);
     void EntitySetState(string_t globalname, GLOBALESTATE state);
     void EntityUpdate(string_t globalname, string_t mapname);
@@ -50,7 +50,7 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 
     //#ifdef _DEBUG
-    void DumpGlobals(void);
+    void DumpGlobals();
     //#endif
 
 private:

@@ -107,7 +107,7 @@ void CFuncTrain::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
 }
 
 
-void CFuncTrain::Wait(void)
+void CFuncTrain::Wait()
 {
     //    ALERT(at_console, "Wait t %s, m %s\n", STRING(pev->target), STRING(pev->message));
     if (m_pSequence)
@@ -169,7 +169,7 @@ void CFuncTrain::Wait(void)
 //
 // Train next - path corner needs to change to next target 
 //
-void CFuncTrain::Next(void)
+void CFuncTrain::Next()
 {
     CBaseEntity* pTarg;
 
@@ -353,7 +353,7 @@ void CFuncTrain::Next(void)
 }
 
 //LRC- called by Activate. (but not when a game is loaded.)
-void CFuncTrain::PostSpawn(void)
+void CFuncTrain::PostSpawn()
 {
     CBaseEntity* pTarget = UTIL_FindEntityByTargetname(NULL, STRING(pev->target));
     entvars_t* pevTarg;
@@ -413,7 +413,7 @@ void CFuncTrain::PostSpawn(void)
     //    ALERT(at_console, "func_train postspawn: origin %f %f %f\n", pev->origin.x, pev->origin.y, pev->origin.z);
 }
 
-void CFuncTrain::ThinkDoNext(void)
+void CFuncTrain::ThinkDoNext()
 {
     SetNextThink(0.1);
     //    ALERT(at_console, "TDN ");
@@ -452,7 +452,7 @@ sounds
 1) ratchet metal
 */
 
-void CFuncTrain::Spawn(void)
+void CFuncTrain::Spawn()
 {
     Precache();
     if (pev->speed == 0)
@@ -490,7 +490,7 @@ void CFuncTrain::Spawn(void)
 }
 
 //LRC - making movement sounds which continue after a game is loaded.
-void CFuncTrain::SoundSetup(void)
+void CFuncTrain::SoundSetup()
 {
     EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
     SetNextThink(m_fStoredThink - pev->ltime);
@@ -500,7 +500,7 @@ void CFuncTrain::SoundSetup(void)
 }
 
 //LRC
-void CFuncTrain::ThinkCorrection(void)
+void CFuncTrain::ThinkCorrection()
 {
     if (m_fStoredThink && pev->nextthink != m_fPevNextThink)
     {
@@ -511,7 +511,7 @@ void CFuncTrain::ThinkCorrection(void)
     CBasePlatTrain::ThinkCorrection();
 }
 
-void CFuncTrain::Precache(void)
+void CFuncTrain::Precache()
 {
     CBasePlatTrain::Precache();
 
@@ -554,7 +554,7 @@ void CFuncTrain::Precache(void)
 #endif
 }
 
-void CFuncTrain::OverrideReset(void)
+void CFuncTrain::OverrideReset()
 {
     CBaseEntity* pTarg;
 

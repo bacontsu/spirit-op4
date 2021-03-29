@@ -29,7 +29,7 @@ TYPEDESCRIPTION CSquidSpit::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CSquidSpit, CBaseEntity);
 
-void CSquidSpit::Spawn(void)
+void CSquidSpit::Spawn()
 {
     pev->movetype = MOVETYPE_FLY;
     pev->classname = MAKE_STRING("squidspit");
@@ -47,7 +47,7 @@ void CSquidSpit::Spawn(void)
     m_maxFrame = (float)MODEL_FRAMES(pev->modelindex) - 1;
 }
 
-void CSquidSpit::Animate(void)
+void CSquidSpit::Animate()
 {
     SetNextThink(0.1);
 

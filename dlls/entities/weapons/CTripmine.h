@@ -33,23 +33,23 @@ enum tripmine_e {
 class CTripmine : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         //!!!BUGBUG - fix the model!
         pev->absmin = pev->origin + Vector(-16, -16, -5);
         pev->absmax = pev->origin + Vector(16, 16, 28);
     }
 
-    void PrimaryAttack(void) override;
-    BOOL Deploy(void) override;
+    void PrimaryAttack() override;
+    BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
-    void WeaponIdle(void) override;
+    void WeaponIdle() override;
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

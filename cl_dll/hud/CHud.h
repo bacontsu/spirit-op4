@@ -128,9 +128,9 @@ public:
     CHudStatusIcons m_StatusIcons;
     CHudParticle m_Particle; // (LRC) -- 30/08/02 November235: Particles to Order
 
-    void Init(void);
-    void VidInit(void);
-    void Think(void);
+    void Init();
+    void VidInit();
+    void Think();
     int Redraw(float flTime, int intermission);
     int UpdateClientData(client_data_t* cdata, float time);
 

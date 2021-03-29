@@ -23,7 +23,7 @@ void CLadder::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CLadder::Precache(void)
+void CLadder::Precache()
 {
     // Do all of this in here because we need to 'convert' old saved games
     pev->solid = SOLID_NOT;
@@ -41,7 +41,7 @@ void CLadder::Precache(void)
 }
 
 
-void CLadder::Spawn(void)
+void CLadder::Spawn()
 {
     Precache();
 

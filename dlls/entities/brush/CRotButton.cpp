@@ -34,7 +34,7 @@ void CRotButton::KeyValue( KeyValueData *pkvd )
         CBaseButton::KeyValue( pkvd );
 }
 
-void CRotButton::Spawn( void )
+void CRotButton::Spawn()
 {
     const char *pszSound;
     //----------------------------------------------------

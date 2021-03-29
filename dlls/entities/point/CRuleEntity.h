@@ -19,7 +19,7 @@
 class CRuleEntity : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
 
     int Save(CSave& save) override;

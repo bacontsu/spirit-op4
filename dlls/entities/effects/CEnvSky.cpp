@@ -20,7 +20,7 @@ LINK_ENTITY_TO_CLASS(env_sky, CEnvSky);
 
 extern int gmsgSetSky;
 
-void CEnvSky::Activate(void)
+void CEnvSky::Activate()
 {
     UTIL_DesiredAction(this);
     pev->effects |= EF_NODRAW;

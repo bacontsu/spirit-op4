@@ -44,7 +44,7 @@ TYPEDESCRIPTION CSqueakGrenade::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CSqueakGrenade, CGrenade);
 
-int CSqueakGrenade::Classify(void)
+int CSqueakGrenade::Classify()
 {
     if (m_iClass) return m_iClass;
 
@@ -68,7 +68,7 @@ int CSqueakGrenade::Classify(void)
     return CLASS_ALIEN_BIOWEAPON;
 }
 
-void CSqueakGrenade::Spawn(void)
+void CSqueakGrenade::Spawn()
 {
     Precache();
     // motor
@@ -106,7 +106,7 @@ void CSqueakGrenade::Spawn(void)
     ResetSequenceInfo();
 }
 
-void CSqueakGrenade::Precache(void)
+void CSqueakGrenade::Precache()
 {
     PRECACHE_MODEL("models/w_squeak.mdl");
     PRECACHE_SOUND("squeek/sqk_blast1.wav");
@@ -150,13 +150,13 @@ void CSqueakGrenade::Killed(entvars_t* pevAttacker, int iGib)
     CBaseMonster::Killed(pevAttacker, GIB_ALWAYS);
 }
 
-void CSqueakGrenade::GibMonster(void)
+void CSqueakGrenade::GibMonster()
 {
     EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);
 }
 
 
-void CSqueakGrenade::HuntThink(void)
+void CSqueakGrenade::HuntThink()
 {
     // ALERT( at_console, "think\n" );
 

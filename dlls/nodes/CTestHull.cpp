@@ -54,7 +54,7 @@ void CTestHull::Spawn(entvars_t* pevMasterNode)
 // TestHull::DropDelay - spawns TestHull on top of 
 // the 0th node and drops it to the ground.
 //=========================================================
-void CTestHull::DropDelay(void)
+void CTestHull::DropDelay()
 {
     //    UTIL_CenterPrintAll( "Node Graph out of Date. Rebuilding..." );
 
@@ -71,7 +71,7 @@ void CTestHull::DropDelay(void)
 // hull will be placed up the bad node's location and will generate
 // particles
 //=========================================================
-void CTestHull::ShowBadNode(void)
+void CTestHull::ShowBadNode()
 {
     pev->movetype = MOVETYPE_FLY;
     pev->angles.y = pev->angles.y + 4;
@@ -89,7 +89,7 @@ void CTestHull::ShowBadNode(void)
 
 extern BOOL gTouchDisabled;
 
-void CTestHull::CallBuildNodeGraph(void)
+void CTestHull::CallBuildNodeGraph()
 {
     // TOUCH HACK -- Don't allow this entity to call anyone's "touch" function
     gTouchDisabled = TRUE;
@@ -106,7 +106,7 @@ void CTestHull::CallBuildNodeGraph(void)
 // hull that walks between each node and each of its links
 // to ensure that a monster can actually fit through the space
 //=========================================================
-void CTestHull::BuildNodeGraph(void)
+void CTestHull::BuildNodeGraph()
 {
     TraceResult tr;
     FILE* file;
@@ -580,7 +580,7 @@ void CTestHull::BuildNodeGraph(void)
 //=========================================================
 // returns a hardcoded path.
 //=========================================================
-void CTestHull::PathFind(void)
+void CTestHull::PathFind()
 {
     int iPath[50];
     int iPathSize;

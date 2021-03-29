@@ -44,7 +44,7 @@ void CNodeEnt::KeyValue(KeyValueData* pkvd)
 
 //=========================================================
 //=========================================================
-void CNodeEnt::Spawn(void)
+void CNodeEnt::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     pev->solid = SOLID_NOT; // always solid_not 

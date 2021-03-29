@@ -19,7 +19,7 @@
 #include "Exports.h"
 #include "CGameStateManager.h"
 
-int CL_IsThirdPerson(void);
+int CL_IsThirdPerson();
 void CL_CameraOffset(float* ofs);
 
 void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams);
@@ -179,7 +179,7 @@ typedef struct pitchdrift_s
 
 static pitchdrift_t pd;
 
-void V_StartPitchDrift(void)
+void V_StartPitchDrift()
 {
     if (pd.laststop == gEngfuncs.GetClientTime())
     {
@@ -194,7 +194,7 @@ void V_StartPitchDrift(void)
     }
 }
 
-void V_StopPitchDrift(void)
+void V_StopPitchDrift()
 {
     pd.laststop = gEngfuncs.GetClientTime();
     pd.nodrift = 1;
@@ -420,8 +420,8 @@ V_CalcRefdef
 
 ==================
 */
-extern void RenderFog(void); //LRC
-extern void ClearToFogColor(void); //LRC
+extern void RenderFog(); //LRC
+extern void ClearToFogColor(); //LRC
 
 void V_CalcNormalRefdef(struct ref_params_s* pparams)
 {
@@ -1749,22 +1749,22 @@ void V_PunchAxis(int axis, float punch)
     ev_punchangle[axis] = punch;
 }
 
-void CMD_ThirdPerson(void) //G-Cont
+void CMD_ThirdPerson() //G-Cont
 {
     gHUD.m_iCameraMode = 1;
 }
 
-void CMD_FirstPerson(void) //G-Cont
+void CMD_FirstPerson() //G-Cont
 {
     gHUD.m_iCameraMode = 0;
 }
 
-void CMD_DrawPlayer(void) //AJH Draw player in firstperson mode 
+void CMD_DrawPlayer() //AJH Draw player in firstperson mode 
 {
     gHUD.m_iCameraMode = 2;
 }
 
-void CMD_HidePlayer(void) //AJH Draw player in firstperson mode 
+void CMD_HidePlayer() //AJH Draw player in firstperson mode 
 {
     gHUD.m_iCameraMode &= ~2;
 }
@@ -1774,7 +1774,7 @@ void CMD_HidePlayer(void) //AJH Draw player in firstperson mode
 V_Init
 =============
 */
-void V_Init(void)
+void V_Init()
 {
     gEngfuncs.pfnAddCommand("centerview", V_StartPitchDrift);
 

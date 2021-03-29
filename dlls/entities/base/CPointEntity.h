@@ -19,7 +19,7 @@
 class CPointEntity : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    void Spawn() override;
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 private:
 };

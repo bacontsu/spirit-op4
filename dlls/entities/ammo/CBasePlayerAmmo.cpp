@@ -19,7 +19,7 @@
 
 extern int gEvilImpulse101;
 
-void CBasePlayerAmmo::Spawn(void)
+void CBasePlayerAmmo::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->solid = SOLID_TRIGGER;
@@ -62,7 +62,7 @@ void CBasePlayerAmmo::DefaultTouch(CBaseEntity* pOther)
     }
 }
 
-CBaseEntity* CBasePlayerAmmo::Respawn(void)
+CBaseEntity* CBasePlayerAmmo::Respawn()
 {
     pev->effects |= EF_NODRAW;
     SetTouch(NULL);
@@ -75,7 +75,7 @@ CBaseEntity* CBasePlayerAmmo::Respawn(void)
     return this;
 }
 
-void CBasePlayerAmmo::Materialize(void)
+void CBasePlayerAmmo::Materialize()
 {
     if (pev->effects & EF_NODRAW)
     {

@@ -15,7 +15,7 @@
 
 #include "CRulePointEntity.h"
 
-void CRulePointEntity::Spawn(void)
+void CRulePointEntity::Spawn()
 {
     CRuleEntity::Spawn();
     pev->frame = 0;

@@ -144,7 +144,7 @@ void CCineMonster::KeyValue(KeyValueData* pkvd)
     }
 }
 
-void CCineMonster::Spawn(void)
+void CCineMonster::Spawn()
 {
     // pev->solid = SOLID_TRIGGER;
     // UTIL_SetSize(pev, Vector(-8, -8, -8), Vector(8, 8, 8));
@@ -228,7 +228,7 @@ void CCineMonster::Touch(CBaseEntity* pOther)
 //
 // ********** Cinematic DIE **********
 //
-void CCineMonster::Die(void)
+void CCineMonster::Die()
 {
     SetThink(&CCineMonster::SUB_Remove);
 }
@@ -236,7 +236,7 @@ void CCineMonster::Die(void)
 //
 // ********** Cinematic PAIN **********
 //
-void CCineMonster::Pain(void)
+void CCineMonster::Pain()
 {
 }
 
@@ -291,7 +291,7 @@ CBaseMonster* CCineMonster::FindEntity(const char* sName, CBaseEntity* pActivato
 }
 
 // make the entity enter a scripted sequence
-void CCineMonster::PossessEntity(void)
+void CCineMonster::PossessEntity()
 {
     CBaseEntity* pEntity = m_hTargetEnt;
     CBaseMonster* pTarget = NULL;
@@ -409,7 +409,7 @@ void CCineMonster::PossessEntity(void)
 
 
 // at the beginning of the level, set up the idle animation. --LRC
-void CCineMonster::InitIdleThink(void)
+void CCineMonster::InitIdleThink()
 {
     if ((m_hTargetEnt = FindEntity(STRING(m_iszEntity), NULL)) != NULL)
     {
@@ -425,7 +425,7 @@ void CCineMonster::InitIdleThink(void)
     }
 }
 
-void CCineMonster::CineThink(void)
+void CCineMonster::CineThink()
 {
     //    ALERT(at_console, "Sequence think, activator %s\n", STRING(m_hActivator->pev->targetname));
     if ((m_hTargetEnt = FindEntity(STRING(m_iszEntity), m_hActivator)) != NULL)
@@ -547,7 +547,7 @@ void CCineMonster::AllowInterrupt(BOOL fAllow)
 }
 
 
-BOOL CCineMonster::CanInterrupt(void)
+BOOL CCineMonster::CanInterrupt()
 {
     if (!m_interruptable)
         return FALSE;
@@ -561,7 +561,7 @@ BOOL CCineMonster::CanInterrupt(void)
 }
 
 
-int CCineMonster::IgnoreConditions(void)
+int CCineMonster::IgnoreConditions()
 {
     if (CanInterrupt())
         return 0;
@@ -604,7 +604,7 @@ void ScriptEntityCancel(edict_t* pentCine)
 }
 
 // find all the cinematic entities with my targetname and stop them from playing
-void CCineMonster::CancelScript(void)
+void CCineMonster::CancelScript()
 {
     ALERT(at_aiconsole, "Cancelling script: %s\n", STRING(m_iszPlay));
 
@@ -656,7 +656,7 @@ void CCineMonster::DelayStart(int state)
 
 
 // Find an entity that I'm interested in and precache the sounds he'll need in the sequence.
-void CCineMonster::Activate(void)
+void CCineMonster::Activate()
 {
     CBaseEntity* pEntity;
     CBaseMonster* pTarget;

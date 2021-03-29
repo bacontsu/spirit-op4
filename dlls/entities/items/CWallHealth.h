@@ -23,15 +23,15 @@ class CWallHealth : public CBaseToggle
 {
 public:
     void Spawn() override;
-    void Precache(void) override;
-    void DLLEXPORT Off(void);
-    void DLLEXPORT Recharge(void);
+    void Precache() override;
+    void DLLEXPORT Off();
+    void DLLEXPORT Recharge();
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int ObjectCaps(void) override { return (CBaseToggle::ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return (CBaseToggle::ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
-    STATE GetState(void) override;
+    STATE GetState() override;
 
     static TYPEDESCRIPTION m_SaveData[];
 

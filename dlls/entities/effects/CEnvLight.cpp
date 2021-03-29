@@ -55,7 +55,7 @@ void CEnvLight::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CEnvLight::Spawn(void)
+void CEnvLight::Spawn()
 {
     char szVector[64];
     UTIL_MakeAimVectors(pev->angles);

@@ -40,9 +40,9 @@ public:
     int m_iSpectCmdMenu;
 
     void AddButton(CommandButton* pButton);
-    void RemoveAllButtons(void);
+    void RemoveAllButtons();
     bool KeyInput(int keyNum);
-    void ClearButtonsOfArmedState(void);
+    void ClearButtonsOfArmedState();
     CommandButton* FindButtonWithSubmenu(CCommandMenu* pSubMenu);
 
     bool RecalculateVisibles(int iNewYPos, bool bHideAll);

@@ -180,7 +180,7 @@ BOOL CBasePlayerWeapon::AddSecondaryAmmo(int iCount, char* szName, int iMax)
     return iIdAmmo > 0 ? TRUE : FALSE;
 }
 
-BOOL CBasePlayerWeapon::PlayEmptySound(void)
+BOOL CBasePlayerWeapon::PlayEmptySound()
 {
     if (m_iPlayEmptySound)
     {
@@ -191,7 +191,7 @@ BOOL CBasePlayerWeapon::PlayEmptySound(void)
     return 0;
 }
 
-void CBasePlayerWeapon::ResetEmptySound(void)
+void CBasePlayerWeapon::ResetEmptySound()
 {
     m_iPlayEmptySound = 1;
 }
@@ -216,7 +216,7 @@ void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int skiplocal, int body)
     MESSAGE_END();
 }
 
-BOOL CBasePlayerWeapon::CanDeploy(void)
+BOOL CBasePlayerWeapon::CanDeploy()
 {
     BOOL bHasAmmo = 0;
 
@@ -258,7 +258,7 @@ BOOL CBasePlayerWeapon::CanDeploy(void)
 // (does it have ammo loaded? do I have any ammo for the 
 // weapon?, etc)
 //=========================================================
-BOOL CBasePlayerWeapon::IsUseable(void)
+BOOL CBasePlayerWeapon::IsUseable()
 {
     return CanDeploy();
 }
@@ -318,7 +318,7 @@ BOOL CanAttack(float attack_time, float curtime, BOOL isPredicted)
     }
 }
 
-void CBasePlayerWeapon::ItemPostFrame(void)
+void CBasePlayerWeapon::ItemPostFrame()
 {
     if ((m_fInReload) && (m_pPlayer->m_flNextAttack <= UTIL_WeaponTimeBase()))
     {
@@ -459,7 +459,7 @@ int CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer)
 //=========================================================
 // RetireWeapon - no more ammo for this gun, put it away.
 //=========================================================
-void CBasePlayerWeapon::RetireWeapon(void)
+void CBasePlayerWeapon::RetireWeapon()
 {
     Holster();
     // first, no viewmodel at all.
@@ -479,19 +479,19 @@ void CBasePlayerWeapon::Holster(int skiplocal /* = 0 */)
 
 //=========================================================
 //=========================================================
-int CBasePlayerWeapon::PrimaryAmmoIndex(void)
+int CBasePlayerWeapon::PrimaryAmmoIndex()
 {
     return m_iPrimaryAmmoType;
 }
 
 //=========================================================
 //=========================================================
-int CBasePlayerWeapon::SecondaryAmmoIndex(void)
+int CBasePlayerWeapon::SecondaryAmmoIndex()
 {
     return m_iSecondaryAmmoType;
 }
 
-void CBasePlayerWeapon::PrintState(void)
+void CBasePlayerWeapon::PrintState()
 {
     ALERT(at_debug, "primary:  %f\n", m_flNextPrimaryAttack);
     ALERT(at_debug, "idle   :  %f\n", m_flTimeWeaponIdle);

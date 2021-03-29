@@ -20,6 +20,6 @@
 class CInfoTarget : public CPointEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 };

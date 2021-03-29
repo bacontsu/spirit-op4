@@ -18,11 +18,11 @@
 
 class CAirtank : public CGrenade
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT TankThink(void);
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT TankThink();
     void DLLEXPORT TankTouch(CBaseEntity* pOther);
-    int BloodColor(void) override { return DONT_BLEED; }
+    int BloodColor() override { return DONT_BLEED; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
     int Save(CSave& save) override;

@@ -19,7 +19,7 @@ DLL_GLOBAL edict_t* g_pBodyQueueHead;
 
 LINK_ENTITY_TO_CLASS(bodyque, CCorpse);
 
-void InitBodyQue(void)
+void InitBodyQue()
 {
     string_t istrClassname = MAKE_STRING("bodyque");
 

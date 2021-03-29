@@ -39,18 +39,18 @@ class CMultiManager : public CBaseEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
-    void DLLEXPORT UseThink(void);
-    void DLLEXPORT ManagerThink(void);
+    void Spawn() override;
+    void DLLEXPORT UseThink();
+    void DLLEXPORT ManagerThink();
     void DLLEXPORT ManagerUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 #if _DEBUG
-    void DLLEXPORT ManagerReport(void);
+    void DLLEXPORT ManagerReport();
 #endif
 
     BOOL HasTarget(string_t targetname) override;
 
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
@@ -58,7 +58,7 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 
     STATE m_iState;
-    STATE GetState(void) override { return m_iState; }
+    STATE GetState() override { return m_iState; }
 
     int m_cTargets; // the total number of targets in this manager's fire list.
     int m_index; // Current target
@@ -89,9 +89,9 @@ public:
     EHANDLE m_hActivator;
 private:
     USE_TYPE m_triggerType; //LRC
-    inline BOOL IsClone(void) { return (pev->spawnflags & SF_MULTIMAN_CLONE) ? TRUE : FALSE; }
+    inline BOOL IsClone() { return (pev->spawnflags & SF_MULTIMAN_CLONE) ? TRUE : FALSE; }
 
-    inline BOOL ShouldClone(void)
+    inline BOOL ShouldClone()
     {
         if (IsClone())
             return FALSE;
@@ -99,5 +99,5 @@ private:
         return (pev->spawnflags & SF_MULTIMAN_THREAD) ? TRUE : FALSE;
     }
 
-    CMultiManager* Clone(void);
+    CMultiManager* Clone();
 };

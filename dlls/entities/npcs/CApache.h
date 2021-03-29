@@ -23,30 +23,30 @@ class CApache : public CBaseMonster
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override { return CLASS_HUMAN_MILITARY; }
-    int BloodColor(void) override { return DONT_BLEED; }
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override { return CLASS_HUMAN_MILITARY; }
+    int BloodColor() override { return DONT_BLEED; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
-    void GibMonster(void) override;
+    void GibMonster() override;
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         pev->absmin = pev->origin + Vector(-300, -300, -172);
         pev->absmax = pev->origin + Vector(300, 300, 8);
     }
 
-    void DLLEXPORT HuntThink(void);
+    void DLLEXPORT HuntThink();
     void DLLEXPORT FlyTouch(CBaseEntity* pOther);
     void DLLEXPORT CrashTouch(CBaseEntity* pOther);
-    void DLLEXPORT DyingThink(void);
+    void DLLEXPORT DyingThink();
     void DLLEXPORT StartupUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT NullThink(void);
+    void DLLEXPORT NullThink();
 
-    void ShowDamage(void);
-    void Flight(void);
-    void FireRocket(void);
-    BOOL FireGun(void);
+    void ShowDamage();
+    void Flight();
+    void FireRocket();
+    BOOL FireGun();
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;

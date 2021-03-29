@@ -29,7 +29,7 @@ public:
     void Touch(CBaseEntity* pOther) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
-    inline BOOL UseOnly(void) { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) ? TRUE : FALSE; }
+    inline BOOL UseOnly() { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) ? TRUE : FALSE; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

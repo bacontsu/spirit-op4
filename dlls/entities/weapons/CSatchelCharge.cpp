@@ -39,14 +39,14 @@ LINK_ENTITY_TO_CLASS(monster_satchel, CSatchelCharge);
 // Deactivate - do whatever it is we do to an orphaned 
 // satchel when we don't want it in the world anymore.
 //=========================================================
-void CSatchelCharge::Deactivate(void)
+void CSatchelCharge::Deactivate()
 {
     pev->solid = SOLID_NOT;
     UTIL_Remove(this);
 }
 
 
-void CSatchelCharge::Spawn(void)
+void CSatchelCharge::Spawn()
 {
     Precache();
     // motor
@@ -102,7 +102,7 @@ void CSatchelCharge::SatchelSlide(CBaseEntity* pOther)
 }
 
 
-void CSatchelCharge::SatchelThink(void)
+void CSatchelCharge::SatchelThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -130,7 +130,7 @@ void CSatchelCharge::SatchelThink(void)
     }
 }
 
-void CSatchelCharge::Precache(void)
+void CSatchelCharge::Precache()
 {
     PRECACHE_MODEL("models/grenade.mdl");
     PRECACHE_SOUND("weapons/g_bounce1.wav");
@@ -138,7 +138,7 @@ void CSatchelCharge::Precache(void)
     PRECACHE_SOUND("weapons/g_bounce3.wav");
 }
 
-void CSatchelCharge::BounceSound(void)
+void CSatchelCharge::BounceSound()
 {
     switch (RANDOM_LONG(0, 2))
     {

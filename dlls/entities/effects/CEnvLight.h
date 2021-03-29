@@ -20,5 +20,5 @@ class CEnvLight : public CLight
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
+    void Spawn() override;
 };

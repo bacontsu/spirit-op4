@@ -32,7 +32,7 @@ public:
     virtual int ExtractAmmo(CBasePlayerWeapon* pWeapon); //{ return TRUE; };            // Return TRUE if you can add ammo to yourself when picked up
     virtual int ExtractClipAmmo(CBasePlayerWeapon* pWeapon); // { return TRUE; };            // Return TRUE if you can add ammo to yourself when picked up
 
-    virtual int AddWeapon(void)
+    virtual int AddWeapon()
     {
         ExtractAmmo(this);
         return TRUE;
@@ -42,42 +42,42 @@ public:
     BOOL AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
     BOOL AddSecondaryAmmo(int iCount, char* szName, int iMaxCarry);
 
-    void UpdateItemInfo(void) override
+    void UpdateItemInfo() override
     {
     } // updates HUD state
 
     int m_iPlayEmptySound;
     int m_fFireOnEmpty; // True when the gun is empty and the player is still holding down the
     // attack key(s)
-    virtual BOOL PlayEmptySound(void);
-    virtual void ResetEmptySound(void);
+    virtual BOOL PlayEmptySound();
+    virtual void ResetEmptySound();
 
     virtual void SendWeaponAnim(int iAnim, int skiplocal = 1, int body = 0); // skiplocal is 1 if client is predicting weapon animations
 
-    BOOL CanDeploy(void) override;
-    virtual BOOL IsUseable(void);
+    BOOL CanDeploy() override;
+    virtual BOOL IsUseable();
     BOOL DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int skiplocal = 0, int body = 0);
     int DefaultReload(int iClipSize, int iAnim, float fDelay, int body = 0);
 
-    void ItemPostFrame(void) override; // called each frame by the player PostThink
+    void ItemPostFrame() override; // called each frame by the player PostThink
     // called by CBasePlayerWeapons ItemPostFrame()
-    virtual void PrimaryAttack(void) {} // do "+ATTACK"
-    virtual void SecondaryAttack(void) {} // do "+ATTACK2"
-    virtual void Reload(void) {} // do "+RELOAD"
-    virtual void WeaponIdle(void) {} // called when no buttons pressed
+    virtual void PrimaryAttack() {} // do "+ATTACK"
+    virtual void SecondaryAttack() {} // do "+ATTACK2"
+    virtual void Reload() {} // do "+RELOAD"
+    virtual void WeaponIdle() {} // called when no buttons pressed
     int UpdateClientData(CBasePlayer* pPlayer) override; // sends hud info to client dll, if things have changed
-    virtual void RetireWeapon(void);
-    virtual BOOL ShouldWeaponIdle(void) { return FALSE; }
+    virtual void RetireWeapon();
+    virtual BOOL ShouldWeaponIdle() { return FALSE; }
     void Holster(int skiplocal = 0) override;
-    virtual BOOL UseDecrement(void) { return FALSE; }
+    virtual BOOL UseDecrement() { return FALSE; }
     virtual void OnAmmoOrClipChanged() {} // Called when ammo is forcably changed (e.g. by player_weaponstrip)
 
     int PrimaryAmmoIndex() override;
     int SecondaryAmmoIndex() override;
 
-    void PrintState(void);
+    void PrintState();
 
-    CBasePlayerItem* GetWeaponPtr(void) override { return (CBasePlayerItem*)this; }
+    CBasePlayerItem* GetWeaponPtr() override { return (CBasePlayerItem*)this; }
     float GetNextAttackDelay(float delay);
 
     float m_flPumpTime;

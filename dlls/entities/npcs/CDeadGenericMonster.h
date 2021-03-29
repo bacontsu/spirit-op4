@@ -22,16 +22,16 @@
 class CDeadGenericMonster : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override { return CLASS_PLAYER_ALLY; }
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override { return CLASS_PLAYER_ALLY; }
     void KeyValue(KeyValueData* pkvd) override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    int HasCustomGibs(void) override { return m_iszGibModel; }
+    int HasCustomGibs() override { return m_iszGibModel; }
 
     int m_iszGibModel;
 };

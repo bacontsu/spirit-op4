@@ -26,6 +26,6 @@
 class CPlayerFreeze : public CBaseDelay
 {
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void Think(void) override;
-    STATE GetState(void) override { return pev->spawnflags & SF_ACTIVE ? STATE_ON : STATE_OFF; }
+    void Think() override;
+    STATE GetState() override { return pev->spawnflags & SF_ACTIVE ? STATE_ON : STATE_OFF; }
 };

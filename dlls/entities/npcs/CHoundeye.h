@@ -20,28 +20,28 @@
 class CHoundeye : public CSquadMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    void SetYawSpeed(void) override;
-    void WarmUpSound(void);
-    void AlertSound(void) override;
-    void DeathSound(void) override;
-    void WarnSound(void);
-    void PainSound(void) override;
-    void IdleSound(void) override;
+    void SetYawSpeed() override;
+    void WarmUpSound();
+    void AlertSound() override;
+    void DeathSound() override;
+    void WarnSound();
+    void PainSound() override;
+    void IdleSound() override;
     void StartTask(Task_t* pTask) override;
     void RunTask(Task_t* pTask) override;
-    void SonicAttack(void);
-    void PrescheduleThink(void) override;
+    void SonicAttack();
+    void PrescheduleThink() override;
     void SetActivity(Activity NewActivity) override;
-    void WriteBeamColor(void);
+    void WriteBeamColor();
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
     BOOL FValidateHintType(short sHint) override;
-    BOOL FCanActiveIdle(void) override;
+    BOOL FCanActiveIdle() override;
     Schedule_t* GetScheduleOfType(int Type) override;
-    Schedule_t* GetSchedule(void) override;
+    Schedule_t* GetSchedule() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

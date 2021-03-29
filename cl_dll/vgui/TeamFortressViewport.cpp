@@ -71,7 +71,7 @@ int g_iUser3 = 0;
 #define SBOARD_INDENT_Y_400		20
 
 
-void IN_ResetMouse(void);
+void IN_ResetMouse();
 extern CMenuPanel* CMessageWindowPanel_Create(const char* szMOTD, const char* szTitle, int iShadeFullscreen, int iRemoveMe, int x, int y, int wide, int tall);
 extern float* GetClientColor(int clientIndex);
 
@@ -238,7 +238,7 @@ TeamFortressViewport::TeamFortressViewport(int x, int y, int wide, int tall) : P
 //-----------------------------------------------------------------------------
 // Purpose: Called everytime a new level is started. Viewport clears out it's data.
 //-----------------------------------------------------------------------------
-void TeamFortressViewport::Initialize(void)
+void TeamFortressViewport::Initialize()
 {
     // Force each menu to Initialize
     if (m_pTeamMenu)
@@ -691,7 +691,7 @@ void TeamFortressViewport::HideCommandMenu()
 //-----------------------------------------------------------------------------
 // Purpose: Bring up the scoreboard
 //-----------------------------------------------------------------------------
-void TeamFortressViewport::ShowScoreBoard(void)
+void TeamFortressViewport::ShowScoreBoard()
 {
     if (m_pScoreBoard)
     {
@@ -707,7 +707,7 @@ void TeamFortressViewport::ShowScoreBoard(void)
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the scoreboard is up
 //-----------------------------------------------------------------------------
-bool TeamFortressViewport::IsScoreBoardVisible(void)
+bool TeamFortressViewport::IsScoreBoardVisible()
 {
     if (m_pScoreBoard)
         return m_pScoreBoard->isVisible();
@@ -718,7 +718,7 @@ bool TeamFortressViewport::IsScoreBoardVisible(void)
 //-----------------------------------------------------------------------------
 // Purpose: Hide the scoreboard
 //-----------------------------------------------------------------------------
-void TeamFortressViewport::HideScoreBoard(void)
+void TeamFortressViewport::HideScoreBoard()
 {
     // Prevent removal of scoreboard during intermission
     if (gHUD.m_iIntermission)
@@ -982,7 +982,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 }
 
 //======================================================================
-void TeamFortressViewport::CreateScoreBoard(void)
+void TeamFortressViewport::CreateScoreBoard()
 {
     int xdent = SBOARD_INDENT_X, ydent = SBOARD_INDENT_Y;
     if (ScreenWidth == 512)
@@ -1206,7 +1206,7 @@ void TeamFortressViewport::HideTopMenu()
 }
 
 // Return TRUE if the HUD's allowed to print text messages
-bool TeamFortressViewport::AllowedToPrintText(void)
+bool TeamFortressViewport::AllowedToPrintText()
 {
     // Prevent text messages when fullscreen menus are up
     if (m_pCurrentMenu && g_iPlayerClass == 0)
@@ -1304,7 +1304,7 @@ void TeamFortressViewport::UpdateHighlights()
         m_pCurrentCommandMenu->MakeVisible(NULL);
 }
 
-void TeamFortressViewport::GetAllPlayersInfo(void)
+void TeamFortressViewport::GetAllPlayersInfo()
 {
     for (int i = 1; i < MAX_PLAYERS; i++)
     {

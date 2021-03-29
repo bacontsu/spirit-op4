@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(xen_hair, CXenHair);
 
-void CXenHair::Spawn(void)
+void CXenHair::Spawn()
 {
     Precache();
     SET_MODEL(edict(), "models/hair.mdl");
@@ -36,13 +36,13 @@ void CXenHair::Spawn(void)
     SetNextThink(RANDOM_FLOAT(0.1, 0.4)); // Load balance these a bit
 }
 
-void CXenHair::Think(void)
+void CXenHair::Think()
 {
     StudioFrameAdvance();
     SetNextThink(0.5);
 }
 
-void CXenHair::Precache(void)
+void CXenHair::Precache()
 {
     PRECACHE_MODEL("models/hair.mdl");
 }

@@ -24,7 +24,7 @@
 class CNodeViewer : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 
     int m_iBaseNode;
     int m_iDraw;
@@ -37,5 +37,5 @@ public:
 
     void FindNodeConnections(int iNode);
     void AddNode(int iFrom, int iTo);
-    void DLLEXPORT DrawThink(void);
+    void DLLEXPORT DrawThink();
 };

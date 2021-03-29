@@ -28,7 +28,7 @@ void CWorldItem::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-void CWorldItem::Spawn(void)
+void CWorldItem::Spawn()
 {
     CBaseEntity* pEntity = NULL;
 

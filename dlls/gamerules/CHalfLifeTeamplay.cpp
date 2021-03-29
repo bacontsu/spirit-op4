@@ -64,7 +64,7 @@ CHalfLifeTeamplay::CHalfLifeTeamplay()
     RecountTeams();
 }
 
-void CHalfLifeTeamplay::Think(void)
+void CHalfLifeTeamplay::Think()
 {
     ///// Check game rules /////
     static int last_frags;
@@ -384,7 +384,7 @@ void CHalfLifeTeamplay::PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, e
 //=========================================================
 // IsTeamplay
 //=========================================================
-BOOL CHalfLifeTeamplay::IsTeamplay(void)
+BOOL CHalfLifeTeamplay::IsTeamplay()
 {
     return TRUE;
 }
@@ -494,7 +494,7 @@ BOOL CHalfLifeTeamplay::IsValidTeam(const char* pTeamName)
     return (GetTeamIndex(pTeamName) != -1) ? TRUE : FALSE;
 }
 
-const char* CHalfLifeTeamplay::TeamWithFewestPlayers(void)
+const char* CHalfLifeTeamplay::TeamWithFewestPlayers()
 {
     int i;
     int minPlayers = MAX_TEAMS;

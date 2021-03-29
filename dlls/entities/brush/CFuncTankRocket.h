@@ -19,6 +19,6 @@
 class CFuncTankRocket : public CFuncTank
 {
 public:
-    void Precache(void) override;
+    void Precache() override;
     void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker) override;
 };

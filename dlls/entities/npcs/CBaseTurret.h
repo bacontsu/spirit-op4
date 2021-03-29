@@ -45,45 +45,45 @@ typedef enum
 class CBaseTurret : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
     void DLLEXPORT TurretUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
-    int Classify(void) override;
+    int Classify() override;
 
-    int BloodColor(void) override { return DONT_BLEED; }
+    int BloodColor() override { return DONT_BLEED; }
 
-    void GibMonster(void) override
+    void GibMonster() override
     {
     } // UNDONE: Throw turret gibs?
 
     // Think functions
 
-    void DLLEXPORT ActiveThink(void);
-    void DLLEXPORT SearchThink(void);
-    void DLLEXPORT AutoSearchThink(void);
-    void DLLEXPORT TurretDeath(void);
+    void DLLEXPORT ActiveThink();
+    void DLLEXPORT SearchThink();
+    void DLLEXPORT AutoSearchThink();
+    void DLLEXPORT TurretDeath();
 
-    virtual void DLLEXPORT SpinDownCall(void) { m_iSpin = 0; }
-    virtual void DLLEXPORT SpinUpCall(void) { m_iSpin = 1; }
+    virtual void DLLEXPORT SpinDownCall() { m_iSpin = 0; }
+    virtual void DLLEXPORT SpinUpCall() { m_iSpin = 1; }
 
-    // void SpinDown(void);
-    // float DLLEXPORT SpinDownCall( void ) { return SpinDown(); }
+    // void SpinDown();
+    // float DLLEXPORT SpinDownCall() { return SpinDown(); }
 
-    // virtual float SpinDown(void) { return 0;}
-    // virtual float Retire(void) { return 0;}
+    // virtual float SpinDown() { return 0;}
+    // virtual float Retire() { return 0;}
 
-    void DLLEXPORT Deploy(void);
-    void DLLEXPORT Retire(void);
+    void DLLEXPORT Deploy();
+    void DLLEXPORT Retire();
 
-    void DLLEXPORT Initialize(void);
+    void DLLEXPORT Initialize();
 
-    virtual void Ping(void);
-    virtual void EyeOn(void);
-    virtual void EyeOff(void);
+    virtual void Ping();
+    virtual void EyeOn();
+    virtual void EyeOff();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
@@ -92,7 +92,7 @@ public:
 
     // other functions
     void SetTurretAnim(TURRET_ANIM anim);
-    int MoveTurret(void);
+    int MoveTurret();
 
     virtual void Shoot(Vector& vecSrc, Vector& vecDirToEnemy) {}
 

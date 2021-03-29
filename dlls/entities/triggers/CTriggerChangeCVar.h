@@ -25,10 +25,10 @@ class CTriggerChangeCVar : public CBaseEntity
 {
 public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void DLLEXPORT Think(void) override;
+    void DLLEXPORT Think() override;
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     static TYPEDESCRIPTION m_SaveData[];
 

@@ -19,7 +19,7 @@
 
 DECLARE_MESSAGE(m_Geiger, Geiger)
 
-int CHudGeiger::Init(void)
+int CHudGeiger::Init()
 {
     HOOK_MESSAGE(Geiger);
 
@@ -33,7 +33,7 @@ int CHudGeiger::Init(void)
     return 1;
 };
 
-int CHudGeiger::VidInit(void)
+int CHudGeiger::VidInit()
 {
     return 1;
 };

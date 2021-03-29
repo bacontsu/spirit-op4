@@ -89,7 +89,7 @@ void CSittingScientist::Spawn()
     DROP_TO_FLOOR(ENT(pev));
 }
 
-void CSittingScientist::Precache(void)
+void CSittingScientist::Precache()
 {
     m_baseSequence = LookupSequence("sitlookleft");
     TalkInit();
@@ -98,7 +98,7 @@ void CSittingScientist::Precache(void)
 //=========================================================
 // ID as a passive human
 //=========================================================
-int CSittingScientist::Classify(void)
+int CSittingScientist::Classify()
 {
     return m_iClass ? m_iClass : CLASS_HUMAN_PASSIVE;
 }
@@ -116,7 +116,7 @@ int CSittingScientist::FriendNumber(int arrayNumber)
 //=========================================================
 // sit, do stuff
 //=========================================================
-void CSittingScientist::SittingThink(void)
+void CSittingScientist::SittingThink()
 {
     CBaseEntity* pent;
 
@@ -225,7 +225,7 @@ void CSittingScientist::SetAnswerQuestion(CTalkMonster* pSpeaker)
 // FIdleSpeak
 // ask question of nearby friend, or make statement
 //=========================================================
-int CSittingScientist::FIdleSpeak(void)
+int CSittingScientist::FIdleSpeak()
 {
     // try to start a conversation, or make statement
     int pitch;

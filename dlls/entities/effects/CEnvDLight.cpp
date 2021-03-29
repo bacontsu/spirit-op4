@@ -29,7 +29,7 @@ IMPLEMENT_SAVERESTORE(CEnvDLight, CPointEntity);
 
 int CEnvDLight::ms_iNextFreeKey = 1;
 
-void CEnvDLight::PostSpawn(void)
+void CEnvDLight::PostSpawn()
 {
     // each env_dlight uses its own key to reference the light on the client
     m_iKey = ms_iNextFreeKey;
@@ -41,7 +41,7 @@ void CEnvDLight::PostSpawn(void)
     }
 }
 
-void CEnvDLight::DesiredAction(void)
+void CEnvDLight::DesiredAction()
 {
     pev->spawnflags &= ~SF_DLIGHT_STARTON;
     Use(this, this, USE_ON, 0);
@@ -111,7 +111,7 @@ void CEnvDLight::MakeLight(BOOL bActive)
     MESSAGE_END();
 }
 
-void CEnvDLight::Think(void)
+void CEnvDLight::Think()
 {
     // turn off the light
     MakeLight(false);

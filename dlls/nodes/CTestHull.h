@@ -24,12 +24,12 @@ class CTestHull : public CBaseMonster
 {
 public:
     void Spawn(entvars_t* pevMasterNode);
-    int ObjectCaps(void) override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-    void DLLEXPORT CallBuildNodeGraph(void);
-    void BuildNodeGraph(void);
-    void DLLEXPORT ShowBadNode(void);
-    void DLLEXPORT DropDelay(void);
-    void DLLEXPORT PathFind(void);
+    int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    void DLLEXPORT CallBuildNodeGraph();
+    void BuildNodeGraph();
+    void DLLEXPORT ShowBadNode();
+    void DLLEXPORT DropDelay();
+    void DLLEXPORT PathFind();
 
     Vector vecBadNodeOrigin;
 };

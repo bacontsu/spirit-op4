@@ -127,7 +127,7 @@ void CGameText::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 }
 
 //LRC
-void CGameText::TriggerThink(void)
+void CGameText::TriggerThink()
 {
     //    ALERT(at_console, "GameText uses targets\n");
     SUB_UseTargets(m_pActivator, USE_TOGGLE, 0);

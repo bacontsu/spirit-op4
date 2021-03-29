@@ -27,16 +27,16 @@ class CSpeaker : public CBaseEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void DLLEXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT SpeakerThink(void);
+    void DLLEXPORT SpeakerThink();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    int ObjectCaps(void) override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+    int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
     int m_preset; // preset number
 };

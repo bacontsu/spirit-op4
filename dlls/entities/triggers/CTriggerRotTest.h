@@ -22,9 +22,9 @@
 class CTriggerRotTest : public CBaseDelay
 {
 public:
-    void PostSpawn(void) override;
+    void PostSpawn() override;
     //    void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-    void Think(void) override;
+    void Think() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

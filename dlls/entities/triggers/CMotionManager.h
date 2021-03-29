@@ -32,7 +32,7 @@ public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
     void Affect(CBaseEntity* pTarget, CBaseEntity* pActivator);
-    void PostSpawn(void) override;
+    void PostSpawn() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

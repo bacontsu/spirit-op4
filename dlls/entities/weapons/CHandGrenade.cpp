@@ -51,7 +51,7 @@ void CHandGrenade::Spawn()
 }
 
 
-void CHandGrenade::Precache(void)
+void CHandGrenade::Precache()
 {
     PRECACHE_MODEL("models/w_grenade.mdl");
     PRECACHE_MODEL("models/v_grenade.mdl");
@@ -82,7 +82,7 @@ BOOL CHandGrenade::Deploy()
     return DefaultDeploy("models/v_grenade.mdl", "models/p_grenade.mdl", HANDGRENADE_DRAW, "crowbar");
 }
 
-BOOL CHandGrenade::CanHolster(void)
+BOOL CHandGrenade::CanHolster()
 {
     // can only holster hand grenades when not primed!
     return (m_flStartThrow == 0);
@@ -120,7 +120,7 @@ void CHandGrenade::PrimaryAttack()
 }
 
 
-void CHandGrenade::WeaponIdle(void)
+void CHandGrenade::WeaponIdle()
 {
     if (m_flReleaseThrow == 0 && m_flStartThrow)
         m_flReleaseThrow = gpGlobals->time;

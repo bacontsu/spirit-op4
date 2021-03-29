@@ -75,7 +75,7 @@ void CTurret::Shoot(Vector& vecSrc, Vector& vecDirToEnemy)
 }
 
 
-void CTurret::SpinUpCall(void)
+void CTurret::SpinUpCall()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -114,7 +114,7 @@ void CTurret::SpinUpCall(void)
 }
 
 
-void CTurret::SpinDownCall(void)
+void CTurret::SpinDownCall()
 {
     if (m_iSpin)
     {

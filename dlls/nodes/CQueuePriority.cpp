@@ -19,7 +19,7 @@
 //=========================================================
 // CQueue constructor
 //=========================================================
-CQueuePriority::CQueuePriority(void)
+CQueuePriority::CQueuePriority()
 {
     m_cSize = 0;
 }
@@ -89,7 +89,7 @@ void CQueuePriority::Heap_SiftDown(int iSubRoot)
     m_heap[parent] = Ref;
 }
 
-void CQueuePriority::Heap_SiftUp(void)
+void CQueuePriority::Heap_SiftUp()
 {
     int child = m_cSize - 1;
     while (child)

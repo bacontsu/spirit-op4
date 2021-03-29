@@ -25,6 +25,6 @@ class CLadder : public CBaseTrigger
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 };

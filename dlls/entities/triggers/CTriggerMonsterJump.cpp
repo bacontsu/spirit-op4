@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_monsterjump, CTriggerMonsterJump);
 
-void CTriggerMonsterJump::Spawn(void)
+void CTriggerMonsterJump::Spawn()
 {
     SetMovedir(pev);
 
@@ -37,7 +37,7 @@ void CTriggerMonsterJump::Spawn(void)
 }
 
 
-void CTriggerMonsterJump::Think(void)
+void CTriggerMonsterJump::Think()
 {
     pev->solid = SOLID_NOT; // kill the trigger for now !!!UNDONE
     UTIL_SetOrigin(this, pev->origin); // Unlink from trigger list

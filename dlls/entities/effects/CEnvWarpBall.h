@@ -22,9 +22,9 @@
 class CEnvWarpBall : public CBaseEntity
 {
 public:
-    void Precache(void) override;
-    void Spawn(void) override { Precache(); }
-    void Think(void) override;
+    void Precache() override;
+    void Spawn() override { Precache(); }
+    void Think() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };

@@ -20,28 +20,28 @@
 class CHeadCrab : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void RunTask(Task_t* pTask) override;
     void StartTask(Task_t* pTask) override;
-    void SetYawSpeed(void) override;
+    void SetYawSpeed() override;
     void DLLEXPORT LeapTouch(CBaseEntity* pOther);
-    Vector Center(void) override;
+    Vector Center() override;
     Vector BodyTarget(const Vector& posSrc) override;
-    void PainSound(void) override;
-    void DeathSound(void) override;
-    void IdleSound(void) override;
-    void AlertSound(void) override;
-    void PrescheduleThink(void) override;
-    int Classify(void) override;
+    void PainSound() override;
+    void DeathSound() override;
+    void IdleSound() override;
+    void AlertSound() override;
+    void PrescheduleThink() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
     BOOL CheckRangeAttack2(float flDot, float flDist) override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 
-    virtual float GetDamageAmount(void) { return gSkillData.headcrabDmgBite; }
-    virtual int GetVoicePitch(void) { return 100; }
-    virtual float GetSoundVolue(void) { return 1.0; }
+    virtual float GetDamageAmount() { return gSkillData.headcrabDmgBite; }
+    virtual int GetVoicePitch() { return 100; }
+    virtual float GetSoundVolue() { return 1.0; }
     Schedule_t* GetScheduleOfType(int Type) override;
 
     CUSTOM_SCHEDULES;

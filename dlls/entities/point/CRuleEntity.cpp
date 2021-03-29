@@ -22,7 +22,7 @@ TYPEDESCRIPTION CRuleEntity::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CRuleEntity, CBaseEntity);
 
-void CRuleEntity::Spawn(void)
+void CRuleEntity::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;

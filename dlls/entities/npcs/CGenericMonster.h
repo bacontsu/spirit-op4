@@ -23,23 +23,23 @@
 class CGenericMonster : public CTalkMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    int ISoundMask(void) override;
+    int ISoundMask() override;
     void KeyValue(KeyValueData* pkvd) override;
-    void Torch(void);
-    void MakeGas(void);
-    void UpdateGas(void);
-    void KillGas(void);
+    void Torch();
+    void MakeGas();
+    void UpdateGas();
+    void KillGas();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    int HasCustomGibs(void) override { return m_iszGibModel; }
+    int HasCustomGibs() override { return m_iszGibModel; }
 
     CBeam* m_pBeam;
     int m_iszGibModel;

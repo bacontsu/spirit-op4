@@ -33,14 +33,14 @@ class CTrainSequence : public CBaseEntity
 {
 public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void EndThink(void);
-    void TimeOutThink(void);
+    void EndThink();
+    void TimeOutThink();
     void KeyValue(KeyValueData* pkvd) override;
-    STATE GetState(void) override;
-    int ObjectCaps(void) override;
+    STATE GetState() override;
+    int ObjectCaps() override;
 
-    void StopSequence(void);
-    void ArrivalNotify(void);
+    void StopSequence();
+    void ArrivalNotify();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

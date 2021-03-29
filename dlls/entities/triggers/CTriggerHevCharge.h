@@ -27,7 +27,7 @@
 class CTriggerHevCharge : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void DLLEXPORT ChargeTouch(CBaseEntity* pOther);
-    void DLLEXPORT AnnounceThink(void);
+    void DLLEXPORT AnnounceThink();
 };

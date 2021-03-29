@@ -20,15 +20,15 @@ class CCycler : public CBaseMonster
 {
 public:
     void GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vecMax);
-    int ObjectCaps(void) override { return (CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE); }
+    int ObjectCaps() override { return (CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE); }
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
     //void Pain( float flDamage );
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     // Don't treat as a live target
-    BOOL IsAlive(void) override { return FALSE; }
+    BOOL IsAlive() override { return FALSE; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

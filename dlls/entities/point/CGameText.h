@@ -33,11 +33,11 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    inline BOOL MessageToAll(void) { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS); }
+    inline BOOL MessageToAll() { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS); }
     inline void MessageSet(const char* pMessage) { pev->message = ALLOC_STRING(pMessage); }
-    inline const char* MessageGet(void) { return STRING(pev->message); }
+    inline const char* MessageGet() { return STRING(pev->message); }
 
-    void DLLEXPORT TriggerThink(void);
+    void DLLEXPORT TriggerThink();
 
 private:
 

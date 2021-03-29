@@ -23,10 +23,10 @@
 class CXenTree : public CActAnimating
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void Touch(CBaseEntity* pOther) override;
-    void Think(void) override;
+    void Think() override;
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override
     {
@@ -35,8 +35,8 @@ public:
     }
 
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    void Attack(void);
-    int Classify(void) override { return CLASS_BARNACLE; }
+    void Attack();
+    int Classify() override { return CLASS_BARNACLE; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

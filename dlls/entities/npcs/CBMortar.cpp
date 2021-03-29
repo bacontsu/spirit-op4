@@ -32,7 +32,7 @@ IMPLEMENT_SAVERESTORE(CBMortar, CBaseEntity);
 
 
 // UNDONE: right now this is pretty much a copy of the squid spit with minor changes to the way it does damage
-void CBMortar::Spawn(void)
+void CBMortar::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->classname = MAKE_STRING("bmortar");
@@ -68,7 +68,7 @@ void MortarSpray(const Vector& position, const Vector& direction, int spriteMode
     MESSAGE_END();
 }
 
-void CBMortar::Animate(void)
+void CBMortar::Animate()
 {
     SetNextThink(0.1);
 

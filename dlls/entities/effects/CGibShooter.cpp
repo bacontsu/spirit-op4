@@ -38,7 +38,7 @@ IMPLEMENT_SAVERESTORE(CGibShooter, CBaseDelay);
 LINK_ENTITY_TO_CLASS(gibshooter, CGibShooter);
 
 
-void CGibShooter::Precache(void)
+void CGibShooter::Precache()
 {
     if (g_Language == LANGUAGE_GERMAN)
     {
@@ -120,7 +120,7 @@ void CGibShooter::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
     SetNextThink(0);
 }
 
-void CGibShooter::Spawn(void)
+void CGibShooter::Spawn()
 {
     Precache();
 
@@ -195,7 +195,7 @@ CBaseEntity* CGibShooter::CreateGib(Vector vecPos, Vector vecVel)
 }
 
 
-void CGibShooter::ShootThink(void)
+void CGibShooter::ShootThink()
 {
     int i;
     if (m_flDelay == 0) // LRC - delay is 0, fire them all at once.

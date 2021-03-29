@@ -19,8 +19,8 @@
 class CRat : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
 };

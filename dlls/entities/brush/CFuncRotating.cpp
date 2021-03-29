@@ -191,7 +191,7 @@ void CFuncRotating::Spawn()
     Precache();
 }
 
-void CFuncRotating::Precache(void)
+void CFuncRotating::Precache()
 {
     char* szSoundFile = (char*)STRING(pev->message);
 
@@ -325,7 +325,7 @@ void CFuncRotating::RampPitchVol(int fUp)
 //
 // SpinUp - accelerates a non-moving func_rotating up to it's speed
 //
-void CFuncRotating::SpinUp(void)
+void CFuncRotating::SpinUp()
 {
     //Vector    vecAVel;//rotational velocity
 
@@ -358,7 +358,7 @@ void CFuncRotating::SpinUp(void)
 //
 // SpinDown - decelerates a moving func_rotating to a standstill.
 //
-void CFuncRotating::SpinDown(void)
+void CFuncRotating::SpinDown()
 {
     SetNextThink(0.1);
 
@@ -387,7 +387,7 @@ void CFuncRotating::SpinDown(void)
     }
 }
 
-void CFuncRotating::Rotate(void)
+void CFuncRotating::Rotate()
 {
     SetNextThink(10);
 }

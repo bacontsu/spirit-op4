@@ -138,7 +138,7 @@ void CBaseTurret::Precache()
 }
 
 
-void CBaseTurret::Initialize(void)
+void CBaseTurret::Initialize()
 {
     m_iOn = 0;
     m_fBeserk = 0;
@@ -201,7 +201,7 @@ void CBaseTurret::TurretUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 }
 
 
-void CBaseTurret::Ping(void)
+void CBaseTurret::Ping()
 {
     // make the pinging noise every second while searching
     if (m_flPingTime == 0)
@@ -245,7 +245,7 @@ void CBaseTurret::EyeOff()
 }
 
 
-void CBaseTurret::ActiveThink(void)
+void CBaseTurret::ActiveThink()
 {
     int fAttack = 0;
     Vector vecDirToEnemy;
@@ -400,7 +400,7 @@ void CBaseTurret::ActiveThink(void)
 }
 
 
-void CBaseTurret::Deploy(void)
+void CBaseTurret::Deploy()
 {
     SetNextThink(0.1);
     StudioFrameAdvance();
@@ -438,7 +438,7 @@ void CBaseTurret::Deploy(void)
     m_flLastSight = gpGlobals->time + m_flMaxWait;
 }
 
-void CBaseTurret::Retire(void)
+void CBaseTurret::Retire()
 {
     // make the turret level
     m_vecGoalAngles.x = 0;
@@ -527,7 +527,7 @@ void CBaseTurret::SetTurretAnim(TURRET_ANIM anim)
 // After a set amount of time, the barrel will spin down. After m_flMaxWait, the turret will
 // retact.
 //
-void CBaseTurret::SearchThink(void)
+void CBaseTurret::SearchThink()
 {
     // ensure rethink
     SetTurretAnim(TURRET_ANIM_SPIN);
@@ -590,7 +590,7 @@ void CBaseTurret::SearchThink(void)
 // This think function will deploy the turret when something comes into range. This is for
 // automatically activated turrets.
 //
-void CBaseTurret::AutoSearchThink(void)
+void CBaseTurret::AutoSearchThink()
 {
     // ensure rethink
     StudioFrameAdvance();
@@ -620,7 +620,7 @@ void CBaseTurret::AutoSearchThink(void)
 }
 
 
-void CBaseTurret::TurretDeath(void)
+void CBaseTurret::TurretDeath()
 {
     BOOL iActive = FALSE;
 
@@ -746,7 +746,7 @@ int CBaseTurret::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
     return 1;
 }
 
-int CBaseTurret::MoveTurret(void)
+int CBaseTurret::MoveTurret()
 {
     int state = 0;
     // any x movement?
@@ -831,7 +831,7 @@ int CBaseTurret::MoveTurret(void)
 //
 // ID as a machine
 //
-int CBaseTurret::Classify(void)
+int CBaseTurret::Classify()
 {
     if (m_iClass) return m_iClass;
     if (m_iOn || m_iAutoStart)

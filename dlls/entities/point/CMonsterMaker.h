@@ -31,16 +31,16 @@
 class CMonsterMaker : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
     void DLLEXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
     void DLLEXPORT CyclicUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT MakerThink(void);
-    void DLLEXPORT MakeMonsterThink(void);
+    void DLLEXPORT MakerThink();
+    void DLLEXPORT MakeMonsterThink();
     void DeathNotice(entvars_t* pevChild) override; // monster maker children use this to tell the monster maker that they have died.
-    void TryMakeMonster(void); //LRC - to allow for a spawndelay
-    CBaseMonster* MakeMonster(void); //LRC - actually make a monster (and return the new creation)
+    void TryMakeMonster(); //LRC - to allow for a spawndelay
+    CBaseMonster* MakeMonster(); //LRC - actually make a monster (and return the new creation)
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

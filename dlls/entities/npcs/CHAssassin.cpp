@@ -84,14 +84,14 @@ IMPLEMENT_SAVERESTORE(CHAssassin, CBaseMonster);
 //=========================================================
 // DieSound
 //=========================================================
-void CHAssassin::DeathSound(void)
+void CHAssassin::DeathSound()
 {
 }
 
 //=========================================================
 // IdleSound
 //=========================================================
-void CHAssassin::IdleSound(void)
+void CHAssassin::IdleSound()
 {
 }
 
@@ -99,7 +99,7 @@ void CHAssassin::IdleSound(void)
 // ISoundMask - returns a bit mask indicating which types
 // of sounds this monster regards. 
 //=========================================================
-int CHAssassin::ISoundMask(void)
+int CHAssassin::ISoundMask()
 {
     return bits_SOUND_WORLD |
         bits_SOUND_COMBAT |
@@ -112,7 +112,7 @@ int CHAssassin::ISoundMask(void)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CHAssassin::Classify(void)
+int CHAssassin::Classify()
 {
     return m_iClass ? m_iClass : CLASS_HUMAN_MILITARY;
 }
@@ -121,7 +121,7 @@ int CHAssassin::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CHAssassin::SetYawSpeed(void)
+void CHAssassin::SetYawSpeed()
 {
     int ys;
 
@@ -143,7 +143,7 @@ void CHAssassin::SetYawSpeed(void)
 //=========================================================
 // Shoot
 //=========================================================
-void CHAssassin::Shoot(void)
+void CHAssassin::Shoot()
 {
     if (m_hEnemy == NULL && !m_pCine) //LRC
     {
@@ -715,7 +715,7 @@ BOOL CHAssassin::CheckRangeAttack2(float flDot, float flDist)
 //=========================================================
 // RunAI
 //=========================================================
-void CHAssassin::RunAI(void)
+void CHAssassin::RunAI()
 {
     CBaseMonster::RunAI();
 
@@ -841,7 +841,7 @@ void CHAssassin::RunTask(Task_t* pTask)
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t* CHAssassin::GetSchedule(void)
+Schedule_t* CHAssassin::GetSchedule()
 {
     switch (m_MonsterState)
     {

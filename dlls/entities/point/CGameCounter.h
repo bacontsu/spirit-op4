@@ -26,18 +26,18 @@
 class CGameCounter : public CRulePointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    inline BOOL RemoveOnFire(void) { return (pev->spawnflags & SF_GAMECOUNT_FIREONCE) ? TRUE : FALSE; }
-    inline BOOL ResetOnFire(void) { return (pev->spawnflags & SF_GAMECOUNT_RESET) ? TRUE : FALSE; }
+    inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNT_FIREONCE) ? TRUE : FALSE; }
+    inline BOOL ResetOnFire() { return (pev->spawnflags & SF_GAMECOUNT_RESET) ? TRUE : FALSE; }
 
-    inline void CountUp(void) { pev->frags++; }
-    inline void CountDown(void) { pev->frags--; }
-    inline void ResetCount(void) { pev->frags = pev->dmg; }
-    inline int CountValue(void) { return pev->frags; }
-    inline int LimitValue(void) { return pev->health; }
+    inline void CountUp() { pev->frags++; }
+    inline void CountDown() { pev->frags--; }
+    inline void ResetCount() { pev->frags = pev->dmg; }
+    inline int CountValue() { return pev->frags; }
+    inline int LimitValue() { return pev->health; }
 
-    inline BOOL HitLimit(void) { return CountValue() == LimitValue(); }
+    inline BOOL HitLimit() { return CountValue() == LimitValue(); }
 
 private:
 

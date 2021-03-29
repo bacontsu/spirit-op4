@@ -34,7 +34,7 @@ TYPEDESCRIPTION CEnvShockwave::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CEnvShockwave, CBaseEntity);
 
-void CEnvShockwave::Precache(void)
+void CEnvShockwave::Precache()
 {
     m_iSpriteTexture = PRECACHE_MODEL((char*)STRING(pev->netname));
 }

@@ -52,7 +52,7 @@ void CTriggerChangeCVar::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     }
 }
 
-void CTriggerChangeCVar::Think(void)
+void CTriggerChangeCVar::Think()
 {
     char szCommand[256];
 

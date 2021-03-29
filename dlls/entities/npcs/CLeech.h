@@ -46,11 +46,11 @@
 class CLeech : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
-    void DLLEXPORT SwimThink(void);
-    void DLLEXPORT DeadThink(void);
+    void DLLEXPORT SwimThink();
+    void DLLEXPORT DeadThink();
 
     void Touch(CBaseEntity* pOther) override
     {
@@ -65,27 +65,27 @@ public:
         }
     }
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         pev->absmin = pev->origin + Vector(-8, -8, 0);
         pev->absmax = pev->origin + Vector(8, 8, 2);
     }
 
-    void AttackSound(void);
-    void AlertSound(void) override;
-    void UpdateMotion(void);
+    void AttackSound();
+    void AlertSound() override;
+    void UpdateMotion();
     float ObstacleDistance(CBaseEntity* pTarget);
-    void MakeVectors(void);
-    void RecalculateWaterlevel(void);
-    void SwitchLeechState(void);
+    void MakeVectors();
+    void RecalculateWaterlevel();
+    void SwitchLeechState();
 
     // Base entity functions
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    int BloodColor(void) override { return DONT_BLEED; }
+    int BloodColor() override { return DONT_BLEED; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
-    void Activate(void) override;
+    void Activate() override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
-    int Classify(void) override { return CLASS_INSECT; }
+    int Classify() override { return CLASS_INSECT; }
     int IRelationship(CBaseEntity* pTarget) override;
 
     int Save(CSave& save) override;

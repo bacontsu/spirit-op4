@@ -20,10 +20,10 @@
 class CLocusAlias : public CBaseMutableAlias
 {
 public:
-    void PostSpawn(void) override;
+    void PostSpawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     CBaseEntity* FollowAlias(CBaseEntity* pFrom) override;
-    void FlushChanges(void) override;
+    void FlushChanges() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

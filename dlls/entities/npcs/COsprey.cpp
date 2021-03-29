@@ -66,7 +66,7 @@ TYPEDESCRIPTION COsprey::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE(COsprey, CBaseMonster);
 
-void COsprey::Spawn(void)
+void COsprey::Spawn()
 {
     Precache();
     // motor
@@ -112,7 +112,7 @@ void COsprey::Spawn(void)
 }
 
 
-void COsprey::Precache(void)
+void COsprey::Precache()
 {
     UTIL_PrecacheOther("monster_human_grunt");
 
@@ -138,7 +138,7 @@ void COsprey::CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     SetNextThink(0.1);
 }
 
-void COsprey::FindAllThink(void)
+void COsprey::FindAllThink()
 {
     CBaseEntity* pEntity = NULL;
 
@@ -167,7 +167,7 @@ void COsprey::FindAllThink(void)
 }
 
 
-void COsprey::DeployThink(void)
+void COsprey::DeployThink()
 {
     UTIL_MakeAimVectors(pev->angles);
 
@@ -257,7 +257,7 @@ CBaseMonster* COsprey::MakeGrunt(Vector vecSrc)
 }
 
 
-void COsprey::HoverThink(void)
+void COsprey::HoverThink()
 {
     int i;
     for (i = 0; i < 4; i++)
@@ -323,7 +323,7 @@ void COsprey::UpdateGoal()
 }
 
 
-void COsprey::FlyThink(void)
+void COsprey::FlyThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -486,7 +486,7 @@ void COsprey::CrashTouch(CBaseEntity* pOther)
 }
 
 
-void COsprey::DyingThink(void)
+void COsprey::DyingThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -674,7 +674,7 @@ void COsprey::DyingThink(void)
 }
 
 
-void COsprey::ShowDamage(void)
+void COsprey::ShowDamage()
 {
     if (m_iDoLeftSmokePuff > 0 || RANDOM_LONG(0, 99) > m_flLeftHealth)
     {

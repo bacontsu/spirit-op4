@@ -38,12 +38,12 @@ public:
     int m_iCurrentTarget; //AJH the current target that is being aliased
 
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void Spawn(void) override;
+    void Spawn() override;
     STATE GetState() override { return (pev->spawnflags & SF_ALIAS_OFF) ? STATE_OFF : STATE_ON; }
 
     CBaseEntity* FollowAlias(CBaseEntity* pFrom) override;
     void ChangeValue(int iszValue) override;
-    void FlushChanges(void) override;
+    void FlushChanges() override;
     void KeyValue(struct KeyValueData_s*) override; //AJH
 
     int Save(CSave& save) override;

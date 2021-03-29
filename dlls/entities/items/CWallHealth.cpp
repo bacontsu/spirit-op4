@@ -140,7 +140,7 @@ void CWallHealth::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
     m_flNextCharge = gpGlobals->time + 0.1;
 }
 
-void CWallHealth::Recharge(void)
+void CWallHealth::Recharge()
 {
     EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/medshot4.wav", 1.0, ATTN_NORM);
     m_iJuice = gSkillData.healthchargerCapacity;
@@ -153,7 +153,7 @@ void CWallHealth::Recharge(void)
     SetThink(&CWallHealth::SUB_DoNothing);
 }
 
-void CWallHealth::Off(void)
+void CWallHealth::Off()
 {
     // Stop looping sound.
     if (m_iOn > 1)
@@ -170,7 +170,7 @@ void CWallHealth::Off(void)
         SetThink(&CWallHealth::SUB_DoNothing);
 }
 
-STATE CWallHealth::GetState(void)
+STATE CWallHealth::GetState()
 {
     if (m_iOn == 2)
         return STATE_IN_USE;

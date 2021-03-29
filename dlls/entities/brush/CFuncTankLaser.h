@@ -20,11 +20,11 @@
 class CFuncTankLaser : public CFuncTank
 {
 public:
-    void Activate(void) override;
+    void Activate() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker) override;
-    void Think(void) override;
-    CLaser* GetLaser(void);
+    void Think() override;
+    CLaser* GetLaser();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

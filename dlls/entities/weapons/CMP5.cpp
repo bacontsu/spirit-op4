@@ -51,7 +51,7 @@ void CMP5::Spawn()
 }
 
 
-void CMP5::Precache(void)
+void CMP5::Precache()
 {
     PRECACHE_MODEL("models/v_9mmAR.mdl");
     PRECACHE_MODEL("models/w_9mmAR.mdl");
@@ -208,7 +208,7 @@ void CMP5::PrimaryAttack()
 }
 
 
-void CMP5::SecondaryAttack(void)
+void CMP5::SecondaryAttack()
 {
     // don't fire underwater
     if (m_pPlayer->pev->waterlevel == 3 && m_pPlayer->pev->watertype > CONTENT_FLYFIELD)
@@ -262,7 +262,7 @@ void CMP5::SecondaryAttack(void)
     m_pPlayer->pev->punchangle.x -= 10;
 }
 
-void CMP5::Reload(void)
+void CMP5::Reload()
 {
     if (m_pPlayer->ammo_9mm <= 0)
         return;
@@ -271,7 +271,7 @@ void CMP5::Reload(void)
 }
 
 
-void CMP5::WeaponIdle(void)
+void CMP5::WeaponIdle()
 {
     ResetEmptySound();
 

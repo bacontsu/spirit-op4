@@ -19,8 +19,8 @@
 
 class CTripmineGrenade : public CGrenade
 {
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
@@ -29,14 +29,14 @@ class CTripmineGrenade : public CGrenade
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 
-    void DLLEXPORT WarningThink(void);
-    void DLLEXPORT PowerupThink(void);
-    void DLLEXPORT BeamBreakThink(void);
-    void DLLEXPORT DelayDeathThink(void);
+    void DLLEXPORT WarningThink();
+    void DLLEXPORT PowerupThink();
+    void DLLEXPORT BeamBreakThink();
+    void DLLEXPORT DelayDeathThink();
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
-    void MakeBeam(void);
-    void KillBeam(void);
+    void MakeBeam();
+    void KillBeam();
 
     float m_flPowerUp;
     Vector m_vecDir;

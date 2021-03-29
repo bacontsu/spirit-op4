@@ -58,17 +58,17 @@ static Vector gTankSpread[] =
 class CFuncTank : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void PostSpawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void PostSpawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void Think(void) override;
-    void TrackTarget(void);
-    CBaseEntity* BestVisibleEnemy(void);
+    void Think() override;
+    void TrackTarget();
+    CBaseEntity* BestVisibleEnemy();
     int IRelationship(CBaseEntity* pTarget);
 
-    int Classify(void) override { return m_iTankClass; }
+    int Classify() override { return m_iTankClass; }
 
     void TryFire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
     virtual void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
@@ -78,31 +78,31 @@ public:
         return pTarget->BodyTarget(pev->origin);
     }
 
-    void StartRotSound(void);
-    void StopRotSound(void);
-    STATE GetState(void) override { return m_iActive ? STATE_ON : STATE_OFF; } //Support this stuff for watcher
+    void StartRotSound();
+    void StopRotSound();
+    STATE GetState() override { return m_iActive ? STATE_ON : STATE_OFF; } //Support this stuff for watcher
     int m_iActive;
 
     // Bmodels don't go across transitions
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-    inline BOOL IsActive(void) { return (pev->spawnflags & SF_TANK_ACTIVE) ? TRUE : FALSE; }
+    inline BOOL IsActive() { return (pev->spawnflags & SF_TANK_ACTIVE) ? TRUE : FALSE; }
 
-    inline void TankActivate(void)
+    inline void TankActivate()
     {
         pev->spawnflags |= SF_TANK_ACTIVE;
         SetNextThink(0.1);
         m_fireLast = 0;
     }
 
-    inline void TankDeactivate(void)
+    inline void TankDeactivate()
     {
         pev->spawnflags &= ~SF_TANK_ACTIVE;
         m_fireLast = 0;
         StopRotSound();
     }
 
-    inline BOOL CanFire(void) { return (gpGlobals->time - m_lastSightTime) < m_persist; }
+    inline BOOL CanFire() { return (gpGlobals->time - m_lastSightTime) < m_persist; }
     BOOL InRange(float range);
 
     // Acquire a target.  pPlayer is a player in the PVS
@@ -110,7 +110,7 @@ public:
 
     void TankTrace(const Vector& vecStart, const Vector& vecForward, const Vector& vecSpread, TraceResult& tr);
 
-    Vector BarrelPosition(void)
+    Vector BarrelPosition()
     {
         Vector forward, right, up;
         UTIL_MakeVectorsPrivate(pev->angles, forward, right, up);
@@ -126,7 +126,7 @@ public:
     //    BOOL OnControls( entvars_t *pevTest );
     BOOL StartControl(CBasePlayer* pController, CFuncTankControls* pControls);
     void StopControl(CFuncTankControls* pControls);
-    //    void ControllerPostFrame( void );
+    //    void ControllerPostFrame();
 
     CFuncTankControls* m_pControls; //LRC - tankcontrols is used as a go-between.
 
@@ -176,7 +176,7 @@ protected:
 
     int m_iTankClass; // Behave As
 
-    void CFuncTank::UpdateSpot(void);
+    void CFuncTank::UpdateSpot();
     //    CLaserSpot*  m_pViewTarg;    // Player view indicator
 
     CPointEntity* m_pFireProxy; //LRC - locus position for custom shots

@@ -22,12 +22,12 @@
 class CGMan : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    int ISoundMask(void) override;
+    int ISoundMask() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

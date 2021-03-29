@@ -22,8 +22,8 @@ class CTFScrollButton : public CommandButton
 public:
     CTFScrollButton(int iArrow, const char* text, int x, int y, int wide, int tall);
 
-    void paint(void) override;
-    void paintBackground(void) override;
+    void paint() override;
+    void paintBackground() override;
 
 private:
     vgui::BitmapTGA* m_pTGA;

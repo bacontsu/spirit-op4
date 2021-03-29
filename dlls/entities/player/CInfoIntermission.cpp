@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(info_intermission, CInfoIntermission);
 
-void CInfoIntermission::Spawn(void)
+void CInfoIntermission::Spawn()
 {
     UTIL_SetOrigin(this, pev->origin);
     pev->solid = SOLID_NOT;
@@ -28,7 +28,7 @@ void CInfoIntermission::Spawn(void)
     SetNextThink(2); // let targets spawn!
 }
 
-void CInfoIntermission::Think(void)
+void CInfoIntermission::Think()
 {
     CBaseEntity* pTarget;
 

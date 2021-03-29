@@ -20,18 +20,18 @@ class CRevertSaved : public CPointEntity
 {
 public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void DLLEXPORT MessageThink(void);
-    void DLLEXPORT LoadThink(void);
+    void DLLEXPORT MessageThink();
+    void DLLEXPORT LoadThink();
     void KeyValue(KeyValueData* pkvd) override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    inline float Duration(void) { return pev->dmg_take; }
-    inline float HoldTime(void) { return pev->dmg_save; }
-    inline float MessageTime(void) { return m_messageTime; }
-    inline float LoadTime(void) { return m_loadTime; }
+    inline float Duration() { return pev->dmg_take; }
+    inline float HoldTime() { return pev->dmg_save; }
+    inline float MessageTime() { return m_messageTime; }
+    inline float LoadTime() { return m_loadTime; }
 
     inline void SetDuration(float duration) { pev->dmg_take = duration; }
     inline void SetHoldTime(float hold) { pev->dmg_save = hold; }

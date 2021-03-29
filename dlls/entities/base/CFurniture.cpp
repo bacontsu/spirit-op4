@@ -20,7 +20,7 @@ LINK_ENTITY_TO_CLASS(monster_furniture, CFurniture);
 //=========================================================
 // Furniture is killed
 //=========================================================
-void CFurniture::Die(void)
+void CFurniture::Die()
 {
     SetThink(&CFurniture::SUB_Remove);
     SetNextThink(0);
@@ -55,7 +55,7 @@ void CFurniture::Spawn()
 //=========================================================
 // ID's Furniture as neutral (noone will attack it)
 //=========================================================
-int CFurniture::Classify(void)
+int CFurniture::Classify()
 {
     return m_iClass ? m_iClass : CLASS_NONE;
 }

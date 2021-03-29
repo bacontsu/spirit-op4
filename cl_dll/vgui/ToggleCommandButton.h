@@ -38,7 +38,7 @@ public:
     void keyReleased(vgui::KeyCode code, Panel* panel) override {}
     void keyFocusTicked(Panel* panel) override {}
 
-    void paint(void) override;
+    void paint() override;
 
 private:
     struct cvar_s* m_cvar;

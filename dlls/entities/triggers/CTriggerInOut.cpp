@@ -42,7 +42,7 @@ void CTriggerInOut::KeyValue(KeyValueData* pkvd)
         CBaseTrigger::KeyValue(pkvd);
 }
 
-void CTriggerInOut::Spawn(void)
+void CTriggerInOut::Spawn()
 {
     InitTrigger();
     // create a null-terminator for the registry
@@ -63,7 +63,7 @@ void CTriggerInOut::Touch(CBaseEntity* pOther)
         SetNextThink(0.1);
 }
 
-void CTriggerInOut::Think(void)
+void CTriggerInOut::Think()
 {
     // Prune handles all Intersects tests and fires targets as appropriate
     m_pRegister = m_pRegister->Prune();

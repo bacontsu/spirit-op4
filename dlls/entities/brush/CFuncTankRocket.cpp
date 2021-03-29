@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(func_tankrocket, CFuncTankRocket);
 
-void CFuncTankRocket::Precache(void)
+void CFuncTankRocket::Precache()
 {
     UTIL_PrecacheOther("rpg_rocket");
     CFuncTank::Precache();

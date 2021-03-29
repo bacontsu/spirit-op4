@@ -21,6 +21,6 @@
 //=========================================================
 class CInfoIntermission : public CPointEntity
 {
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
 };

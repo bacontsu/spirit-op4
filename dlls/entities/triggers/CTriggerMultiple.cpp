@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_multiple, CTriggerMultiple);
 
-void CTriggerMultiple::Spawn(void)
+void CTriggerMultiple::Spawn()
 {
     if (m_flWait == 0)
         m_flWait = 0.2;
@@ -103,7 +103,7 @@ void CTriggerMultiple::ActivateMultiTrigger(CBaseEntity* pActivator)
 }
 
 // the wait time has passed, so set back up for another activation
-void CTriggerMultiple::MultiWaitOver(void)
+void CTriggerMultiple::MultiWaitOver()
 {
     //    if (pev->max_health)
     //        {

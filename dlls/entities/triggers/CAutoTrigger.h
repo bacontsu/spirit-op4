@@ -25,10 +25,10 @@ class CAutoTrigger : public CBaseDelay
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Activate(void) override;
-    void DesiredAction(void) override;
+    void Activate() override;
+    void DesiredAction() override;
 
-    int ObjectCaps(void) override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
 

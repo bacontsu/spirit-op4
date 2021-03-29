@@ -19,12 +19,12 @@
 class CFuncMortarField : public CBaseToggle
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
 
     // Bmodels don't go across transitions
-    int ObjectCaps(void) override;
+    int ObjectCaps() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

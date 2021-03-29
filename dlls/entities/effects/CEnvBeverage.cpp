@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(env_beverage, CEnvBeverage);
 
-void CEnvBeverage::Precache(void)
+void CEnvBeverage::Precache()
 {
     PRECACHE_MODEL("models/can.mdl");
     PRECACHE_SOUND("weapons/g_bounce3.wav");
@@ -54,7 +54,7 @@ void CEnvBeverage::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
     pev->health--;
 }
 
-void CEnvBeverage::Spawn(void)
+void CEnvBeverage::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;

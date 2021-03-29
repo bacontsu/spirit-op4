@@ -26,7 +26,7 @@ void CBloodSplat::Spawn(entvars_t* pevOwner)
     SetNextThink(0.1);
 }
 
-void CBloodSplat::Spray(void)
+void CBloodSplat::Spray()
 {
     TraceResult tr;
 

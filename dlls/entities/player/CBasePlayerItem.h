@@ -23,7 +23,7 @@ class CBasePlayerItem : public CBaseAnimating
 {
 public:
 
-    void SetObjectCollisionBox(void) override;
+    void SetObjectCollisionBox() override;
 #ifndef CLIENT_DLL                              //AJH for lockable weapons
     void KeyValue(KeyValueData* pkvd) override; //
 #endif                                          //
@@ -34,31 +34,31 @@ public:
 
     virtual int AddToPlayer(CBasePlayer* pPlayer); // return TRUE if the item you want the item added to the player inventory
     virtual int AddDuplicate(CBasePlayerItem* pItem) { return FALSE; } // return TRUE if you want your duplicate removed from world
-    void DLLEXPORT DestroyItem(void);
+    void DLLEXPORT DestroyItem();
     void DLLEXPORT DefaultTouch(CBaseEntity* pOther); // default weapon touch
-    void DLLEXPORT FallThink(void); // when an item is first spawned, this think is run to determine when the object has hit the ground.
-    void DLLEXPORT Materialize(void); // make a weapon visible and tangible
-    void DLLEXPORT AttemptToMaterialize(void); // the weapon desires to become visible and tangible, if the game rules allow for it
-    CBaseEntity* Respawn(void) override; // copy a weapon
-    void FallInit(void);
-    void CheckRespawn(void);
+    void DLLEXPORT FallThink(); // when an item is first spawned, this think is run to determine when the object has hit the ground.
+    void DLLEXPORT Materialize(); // make a weapon visible and tangible
+    void DLLEXPORT AttemptToMaterialize(); // the weapon desires to become visible and tangible, if the game rules allow for it
+    CBaseEntity* Respawn() override; // copy a weapon
+    void FallInit();
+    void CheckRespawn();
     virtual int GetItemInfo(ItemInfo* p) { return 0; } // returns 0 if struct not filled out
-    virtual BOOL CanDeploy(void) { return TRUE; }
+    virtual BOOL CanDeploy() { return TRUE; }
 
     virtual BOOL Deploy() // returns is deploy was successful
     {
         return TRUE;
     }
 
-    virtual BOOL CanHolster(void) { return TRUE; } // can this weapon be put away right now?
+    virtual BOOL CanHolster() { return TRUE; } // can this weapon be put away right now?
     virtual void Holster(int skiplocal = 0);
-    virtual void UpdateItemInfo(void) {}
+    virtual void UpdateItemInfo() {}
 
-    virtual void ItemPreFrame(void) {} // called each frame by the player PreThink
-    virtual void ItemPostFrame(void) {} // called each frame by the player PostThink
+    virtual void ItemPreFrame() {} // called each frame by the player PreThink
+    virtual void ItemPostFrame() {} // called each frame by the player PostThink
 
-    virtual void Drop(void);
-    virtual void Kill(void);
+    virtual void Drop();
+    virtual void Kill();
     virtual void AttachToPlayer(CBasePlayer* pPlayer);
 
     virtual int PrimaryAmmoIndex() { return -1; }
@@ -66,7 +66,7 @@ public:
 
     virtual int UpdateClientData(CBasePlayer* pPlayer) { return 0; }
 
-    virtual CBasePlayerItem* GetWeaponPtr(void) { return NULL; }
+    virtual CBasePlayerItem* GetWeaponPtr() { return NULL; }
 
     static ItemInfo ItemInfoArray[MAX_WEAPONS];
     static AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];
@@ -77,9 +77,9 @@ public:
     CBasePlayerItem* m_pNext;
     int m_iId; // WEAPON_???
 #ifndef CLIENT_DLL//AJH Test Debug
-    void Spawn(void) override;
+    void Spawn() override;
 #endif//AJH
-    virtual int iItemSlot(void)
+    virtual int iItemSlot()
     {
         ItemInfo II;
         if (GetItemInfo(&II))
@@ -88,15 +88,15 @@ public:
             return 0; // return 0 to MAX_ITEMS_SLOTS, used in hud
     }
 
-    int iItemPosition(void) { return ItemInfoArray[m_iId].iPosition; }
-    const char* pszAmmo1(void) { return ItemInfoArray[m_iId].pszAmmo1; }
-    int iMaxAmmo1(void) { return ItemInfoArray[m_iId].iMaxAmmo1; }
-    const char* pszAmmo2(void) { return ItemInfoArray[m_iId].pszAmmo2; }
-    int iMaxAmmo2(void) { return ItemInfoArray[m_iId].iMaxAmmo2; }
-    const char* pszName(void) { return ItemInfoArray[m_iId].pszName; }
-    int iMaxClip(void) { return ItemInfoArray[m_iId].iMaxClip; }
-    int iWeight(void) { return ItemInfoArray[m_iId].iWeight; }
-    int iFlags(void) { return ItemInfoArray[m_iId].iFlags; }
+    int iItemPosition() { return ItemInfoArray[m_iId].iPosition; }
+    const char* pszAmmo1() { return ItemInfoArray[m_iId].pszAmmo1; }
+    int iMaxAmmo1() { return ItemInfoArray[m_iId].iMaxAmmo1; }
+    const char* pszAmmo2() { return ItemInfoArray[m_iId].pszAmmo2; }
+    int iMaxAmmo2() { return ItemInfoArray[m_iId].iMaxAmmo2; }
+    const char* pszName() { return ItemInfoArray[m_iId].pszName; }
+    int iMaxClip() { return ItemInfoArray[m_iId].iMaxClip; }
+    int iWeight() { return ItemInfoArray[m_iId].iWeight; }
+    int iFlags() { return ItemInfoArray[m_iId].iFlags; }
 
     // int        m_iIdPrimary;                                        // Unique Id for primary ammo
     // int        m_iIdSecondary;                                        // Unique Id for secondary ammo

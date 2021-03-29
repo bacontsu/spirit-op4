@@ -25,7 +25,7 @@ TYPEDESCRIPTION CWreckage::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CWreckage, CBaseMonster);
 
-void CWreckage::Spawn(void)
+void CWreckage::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -51,7 +51,7 @@ void CWreckage::Precache()
         PRECACHE_MODEL((char*)STRING(pev->model));
 }
 
-void CWreckage::Think(void)
+void CWreckage::Think()
 {
     StudioFrameAdvance();
     SetNextThink(0.2);

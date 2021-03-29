@@ -34,7 +34,7 @@ LINK_ENTITY_TO_CLASS(monster_hgrunt_dead, CDeadHGrunt);
 //=========================================================
 // ********** DeadHGrunt SPAWN **********
 //=========================================================
-void CDeadHGrunt::Spawn(void)
+void CDeadHGrunt::Spawn()
 {
     int oldBody;
 

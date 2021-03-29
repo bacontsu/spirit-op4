@@ -63,7 +63,7 @@ void CFlockingFlyerFlock::Precache()
 }
 
 
-void CFlockingFlyerFlock::PrecacheFlockSounds(void)
+void CFlockingFlyerFlock::PrecacheFlockSounds()
 {
     PRECACHE_SOUND("boid/boid_alert1.wav");
     PRECACHE_SOUND("boid/boid_alert2.wav");
@@ -74,7 +74,7 @@ void CFlockingFlyerFlock::PrecacheFlockSounds(void)
 
 //=========================================================
 //=========================================================
-void CFlockingFlyerFlock::SpawnFlock(void)
+void CFlockingFlyerFlock::SpawnFlock()
 {
     float R = m_flFlockRadius;
     int iCount;

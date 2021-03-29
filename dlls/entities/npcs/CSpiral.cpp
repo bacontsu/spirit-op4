@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(streak_spiral, CSpiral);
 
-void CSpiral::Spawn(void)
+void CSpiral::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     SetNextThink(0);
@@ -48,7 +48,7 @@ CSpiral* CSpiral::Create(const Vector& origin, float height, float radius, float
 
 #define SPIRAL_INTERVAL        0.1 //025
 
-void CSpiral::Think(void)
+void CSpiral::Think()
 {
     float time = gpGlobals->time - pev->dmgtime;
 

@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_bounce, CTriggerBounce);
 
-void CTriggerBounce::Spawn(void)
+void CTriggerBounce::Spawn()
 {
     SetMovedir(pev);
     InitTrigger();

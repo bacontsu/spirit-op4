@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(func_conveyor, CFuncConveyor);
 
-void CFuncConveyor::Spawn(void)
+void CFuncConveyor::Spawn()
 {
     SetMovedir(pev);
     CFuncWall::Spawn();

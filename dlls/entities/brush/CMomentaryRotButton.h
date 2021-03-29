@@ -26,17 +26,17 @@
 class CMomentaryRotButton : public CBaseToggle
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
-    int ObjectCaps(void) override;
+    int ObjectCaps() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void DLLEXPORT Off(void);
-    void DLLEXPORT Return(void);
+    void DLLEXPORT Off();
+    void DLLEXPORT Return();
     void UpdateSelf(float value);
     void UpdateSelfReturn(float value);
     void UpdateAllButtons(float value, int start);
 
-    void PlaySound(void);
+    void PlaySound();
     void UpdateTarget(float value);
 
     static CMomentaryRotButton* Instance(edict_t* pent);

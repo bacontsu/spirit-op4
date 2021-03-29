@@ -21,15 +21,15 @@
 class CTriggerMultiple : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 
-    void Precache(void) override
+    void Precache() override
     {
         if (!FStringNull(pev->noise))
             PRECACHE_SOUND((char*)STRING(pev->noise));
     }
 
     void DLLEXPORT MultiTouch(CBaseEntity* pOther);
-    void DLLEXPORT MultiWaitOver(void);
+    void DLLEXPORT MultiWaitOver();
     void ActivateMultiTrigger(CBaseEntity* pActivator);
 };

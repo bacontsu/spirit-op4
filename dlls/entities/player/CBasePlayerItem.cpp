@@ -35,7 +35,7 @@ TYPEDESCRIPTION CBasePlayerItem::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CBasePlayerItem, CBaseAnimating);
 
-void CBasePlayerItem::SetObjectCollisionBox(void)
+void CBasePlayerItem::SetObjectCollisionBox()
 {
     pev->absmin = pev->origin + Vector(-24, -24, 0);
     pev->absmax = pev->origin + Vector(24, 24, 16);
@@ -59,7 +59,7 @@ int CBasePlayerItem::AddToPlayer(CBasePlayer* pPlayer)
     return TRUE;
 }
 
-void CBasePlayerItem::DestroyItem(void)
+void CBasePlayerItem::DestroyItem()
 {
     if (m_pPlayer)
     {
@@ -120,7 +120,7 @@ void CBasePlayerItem::DefaultTouch(CBaseEntity* pOther)
 // to trigger and set it in a large box that helps the
 // player get it.
 //=========================================================
-void CBasePlayerItem::FallThink(void)
+void CBasePlayerItem::FallThink()
 {
     SetNextThink(0.1);
 
@@ -145,7 +145,7 @@ void CBasePlayerItem::FallThink(void)
 //=========================================================
 // Materialize - make a CBasePlayerItem visible and tangible
 //=========================================================
-void CBasePlayerItem::Materialize(void)
+void CBasePlayerItem::Materialize()
 {
     if (pev->effects & EF_NODRAW)
     {
@@ -166,7 +166,7 @@ void CBasePlayerItem::Materialize(void)
 // AttemptToMaterialize - the item is trying to rematerialize,
 // should it do so now or wait longer?
 //=========================================================
-void CBasePlayerItem::AttemptToMaterialize(void)
+void CBasePlayerItem::AttemptToMaterialize()
 {
     float time = g_pGameRules->FlWeaponTryRespawn(this);
 
@@ -183,7 +183,7 @@ void CBasePlayerItem::AttemptToMaterialize(void)
 // Respawn- this item is already in the world, but it is
 // invisible and intangible. Make it visible and tangible.
 //=========================================================
-CBaseEntity* CBasePlayerItem::Respawn(void)
+CBaseEntity* CBasePlayerItem::Respawn()
 {
     // make a copy of this weapon that is invisible and inaccessible to players (no touch function). The weapon spawn/respawn code
     // will decide when to make the weapon visible and touchable.
@@ -212,7 +212,7 @@ CBaseEntity* CBasePlayerItem::Respawn(void)
 //=========================================================
 // Sets up movetype, size, solidtype for a new weapon. 
 //=========================================================
-void CBasePlayerItem::FallInit(void)
+void CBasePlayerItem::FallInit()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->solid = SOLID_BBOX;
@@ -230,7 +230,7 @@ void CBasePlayerItem::FallInit(void)
 // CheckRespawn - a player is taking this weapon, should 
 // it respawn?
 //=========================================================
-void CBasePlayerItem::CheckRespawn(void)
+void CBasePlayerItem::CheckRespawn()
 {
     switch (g_pGameRules->WeaponShouldRespawn(this))
     {
@@ -249,14 +249,14 @@ void CBasePlayerItem::Holster(int skiplocal /* = 0 */)
     m_pPlayer->pev->weaponmodel = 0;
 }
 
-void CBasePlayerItem::Drop(void)
+void CBasePlayerItem::Drop()
 {
     SetTouch(NULL);
     SetThink(&CBasePlayerItem::SUB_Remove);
     SetNextThink(0.1);
 }
 
-void CBasePlayerItem::Kill(void)
+void CBasePlayerItem::Kill()
 {
     SetTouch(NULL);
     SetThink(&CBasePlayerItem::SUB_Remove);
@@ -276,7 +276,7 @@ void CBasePlayerItem::AttachToPlayer(CBasePlayer* pPlayer)
     SetTouch(NULL);
 }
 
-void CBasePlayerItem::Spawn(void)
+void CBasePlayerItem::Spawn()
 {
     pev->animtime = gpGlobals->time + 0.1;
     CBaseAnimating::Spawn();

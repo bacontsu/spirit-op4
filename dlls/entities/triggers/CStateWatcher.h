@@ -39,12 +39,12 @@
 class CStateWatcher : public CBaseToggle
 {
 public:
-    void Spawn(void) override;
-    void DLLEXPORT Think(void) override;
+    void Spawn() override;
+    void DLLEXPORT Think() override;
     void KeyValue(KeyValueData* pkvd) override;
-    STATE GetState(void) override;
+    STATE GetState() override;
     STATE GetState(CBaseEntity* pActivator) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

@@ -18,7 +18,7 @@
 LINK_ENTITY_TO_CLASS(infodecal, CDecal);
 
 // UNDONE:  These won't get sent to joining players in multi-player
-void CDecal::Spawn(void)
+void CDecal::Spawn()
 {
     if (pev->skin < 0 || (gpGlobals->deathmatch && FBitSet(pev->spawnflags, SF_DECAL_NOTINDEATHMATCH)))
     {
@@ -66,7 +66,7 @@ void CDecal::TriggerDecal(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 }
 
 
-void CDecal::StaticDecal(void)
+void CDecal::StaticDecal()
 {
     TraceResult trace;
     int entityIndex, modelIndex;

@@ -22,8 +22,8 @@
 class CDeadScientist : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    int Classify(void) override { return CLASS_HUMAN_PASSIVE; }
+    void Spawn() override;
+    int Classify() override { return CLASS_HUMAN_PASSIVE; }
 
     void KeyValue(KeyValueData* pkvd) override;
     int m_iPose; // which sequence to display

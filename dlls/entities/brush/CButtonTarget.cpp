@@ -31,7 +31,7 @@ void CButtonTarget::KeyValue(KeyValueData* pkvd) //AJH
         CBaseEntity::KeyValue(pkvd);
 }
 
-void CButtonTarget::Spawn(void)
+void CButtonTarget::Spawn()
 {
     pev->movetype = MOVETYPE_PUSH;
     if (pev->spawnflags & SF_BTARGET_SOLIDNOT)
@@ -76,7 +76,7 @@ void CButtonTarget::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
         SUB_UseTargets(pActivator, USE_OFF, 0);
 }
 
-int CButtonTarget::ObjectCaps(void)
+int CButtonTarget::ObjectCaps()
 {
     int caps = CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 

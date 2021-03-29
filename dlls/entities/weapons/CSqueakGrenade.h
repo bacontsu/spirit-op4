@@ -18,14 +18,14 @@
 
 class CSqueakGrenade : public CGrenade
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override;
     void DLLEXPORT SuperBounceTouch(CBaseEntity* pOther);
-    void DLLEXPORT HuntThink(void);
-    int BloodColor(void) override { return BLOOD_COLOR_YELLOW; }
+    void DLLEXPORT HuntThink();
+    int BloodColor() override { return BLOOD_COLOR_YELLOW; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
-    void GibMonster(void) override;
+    void GibMonster() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

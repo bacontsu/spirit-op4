@@ -20,24 +20,24 @@
 class CHAssassin : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
-    int ISoundMask(void) override;
-    void Shoot(void);
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
+    int ISoundMask() override;
+    void Shoot();
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    Schedule_t* GetSchedule(void) override;
+    Schedule_t* GetSchedule() override;
     Schedule_t* GetScheduleOfType(int Type) override;
     BOOL CheckMeleeAttack1(float flDot, float flDist) override; // jump
     // BOOL CheckMeleeAttack2 ( float flDot, float flDist );
     BOOL CheckRangeAttack1(float flDot, float flDist) override; // shoot
     BOOL CheckRangeAttack2(float flDot, float flDist) override; // throw grenade
     void StartTask(Task_t* pTask) override;
-    void RunAI(void) override;
+    void RunAI() override;
     void RunTask(Task_t* pTask) override;
-    void DeathSound(void) override;
-    void IdleSound(void) override;
+    void DeathSound() override;
+    void IdleSound() override;
     CUSTOM_SCHEDULES;
 
     int Save(CSave& save) override;

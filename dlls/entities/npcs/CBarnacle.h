@@ -22,13 +22,13 @@
 class CBarnacle : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     CBaseEntity* TongueTouchEnt(float* pflLength);
-    int Classify(void) override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    void DLLEXPORT BarnacleThink(void);
-    void DLLEXPORT WaitTillDead(void);
+    void DLLEXPORT BarnacleThink();
+    void DLLEXPORT WaitTillDead();
     void Killed(entvars_t* pevAttacker, int iGib) override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     int Save(CSave& save) override;

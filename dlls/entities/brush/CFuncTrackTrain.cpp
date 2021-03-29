@@ -57,7 +57,7 @@ void CFuncTrackTrain::SetTrack(CPathTrack* track)
     m_ppath = track->Nearest(pev->origin);
 }
 
-void CFuncTrackTrain::Spawn(void)
+void CFuncTrackTrain::Spawn()
 {
     if (pev->speed == 0)
         m_speed = 100;
@@ -105,7 +105,7 @@ void CFuncTrackTrain::Spawn(void)
     Precache();
 }
 
-void CFuncTrackTrain::Precache(void)
+void CFuncTrackTrain::Precache()
 {
     if (m_flVolume == 0.0)
         m_flVolume = 1.0;
@@ -303,7 +303,7 @@ void CFuncTrackTrain::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 #define TRAIN_MAXPITCH        200
 #define TRAIN_MAXSPEED        1000    // approx max speed for sound pitch calculation
 
-void CFuncTrackTrain::StopSound(void)
+void CFuncTrackTrain::StopSound()
 {
     // if sound playing, stop it
     if (m_soundPlaying && pev->noise)
@@ -334,7 +334,7 @@ void CFuncTrackTrain::StopSound(void)
 // NOTE: when train goes through transition, m_soundPlaying should go to 0, 
 // which will cause the looped sound to restart.
 
-void CFuncTrackTrain::UpdateSound(void)
+void CFuncTrackTrain::UpdateSound()
 {
     float flpitch;
 
@@ -379,13 +379,13 @@ void CFuncTrackTrain::UpdateSound(void)
     }
 }
 
-void CFuncTrackTrain::PostponeNext(void)
+void CFuncTrackTrain::PostponeNext()
 {
     //UTIL_DesiredAction(this);
     DesiredAction(); //this simply fix LAARGE BUG with func_traktrain in spirit ;) g-cont
 }
 
-void CFuncTrackTrain::DesiredAction(void) // Next( void )
+void CFuncTrackTrain::DesiredAction() // Next()
 {
     float time = 0.5;
 
@@ -668,7 +668,7 @@ void CFuncTrackTrain::DesiredAction(void) // Next( void )
 }
 
 
-void CFuncTrackTrain::DeadEnd(void)
+void CFuncTrackTrain::DeadEnd()
 {
     // Fire the dead-end target if there is one
     CPathTrack* pTrack, * pNext;
@@ -748,7 +748,7 @@ BOOL CFuncTrackTrain::OnControls(entvars_t* pevTest)
 }
 
 
-void CFuncTrackTrain::Find(void)
+void CFuncTrackTrain::Find()
 {
     m_ppath = (CPathTrack*)UTIL_FindEntityByTargetname(NULL, STRING(pev->target));
     if (!m_ppath)
@@ -795,7 +795,7 @@ void CFuncTrackTrain::Find(void)
     UpdateSound();
 }
 
-void CFuncTrackTrain::NearestPath(void)
+void CFuncTrackTrain::NearestPath()
 {
     CBaseEntity* pTrack = NULL;
     CBaseEntity* pNearest = NULL;
@@ -843,7 +843,7 @@ void CFuncTrackTrain::NearestPath(void)
 }
 
 
-void CFuncTrackTrain::OverrideReset(void)
+void CFuncTrackTrain::OverrideReset()
 {
     NextThink(0.1, FALSE);
     SetThink(&CFuncTrackTrain::NearestPath);

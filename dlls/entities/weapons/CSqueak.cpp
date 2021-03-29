@@ -44,7 +44,7 @@ void CSqueak::Spawn()
 }
 
 
-void CSqueak::Precache(void)
+void CSqueak::Precache()
 {
     PRECACHE_MODEL("models/w_sqknest.mdl");
     PRECACHE_MODEL("models/v_squeak.mdl");
@@ -166,12 +166,12 @@ void CSqueak::PrimaryAttack()
 }
 
 
-void CSqueak::SecondaryAttack(void)
+void CSqueak::SecondaryAttack()
 {
 }
 
 
-void CSqueak::WeaponIdle(void)
+void CSqueak::WeaponIdle()
 {
     if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
         return;

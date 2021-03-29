@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(env_particle, CParticle);
 
-void CParticle::Spawn(void)
+void CParticle::Spawn()
 {
     pev->solid = SOLID_NOT;
 
@@ -40,23 +40,23 @@ void CParticle::Spawn(void)
 }
 
 
-void CParticle::Precache(void)
+void CParticle::Precache()
 {
     PRECACHE_MODEL("sprites/null.spr");
 }
 
-void CParticle::Activate(void)
+void CParticle::Activate()
 {
     CPointEntity::Activate();
     UTIL_DesiredAction(this);
 }
 
-void CParticle::DesiredAction(void)
+void CParticle::DesiredAction()
 {
     pev->nextthink = gpGlobals->time + 0.1;
 }
 
-void CParticle::Think(void)
+void CParticle::Think()
 {
     MESSAGE_BEGIN(MSG_ALL, gmsgParticle);
     WRITE_SHORT(entindex());

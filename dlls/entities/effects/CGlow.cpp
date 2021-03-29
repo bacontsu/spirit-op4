@@ -25,7 +25,7 @@ TYPEDESCRIPTION CGlow::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CGlow, CPointEntity);
 
-void CGlow::Spawn(void)
+void CGlow::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -43,7 +43,7 @@ void CGlow::Spawn(void)
 }
 
 
-void CGlow::Think(void)
+void CGlow::Think()
 {
     Animate(pev->framerate * (gpGlobals->time - m_lastTime));
 

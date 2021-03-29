@@ -29,38 +29,38 @@ class TeamFortressViewport : public vgui::Panel
 {
 public:
     TeamFortressViewport(int x, int y, int wide, int tall);
-    void Initialize(void);
+    void Initialize();
 
     int CreateCommandMenu(const char* menuFile, int direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset);
-    void CreateScoreBoard(void);
+    void CreateScoreBoard();
     CommandButton* CreateCustomButton(char* pButtonText, char* pButtonName, int iYOffset);
     CCommandMenu* CreateDisguiseSubmenu(CommandButton* pButton, CCommandMenu* pParentMenu, const char* commandText, int iYOffset, int iXOffset = 0);
 
-    void UpdateCursorState(void);
+    void UpdateCursorState();
     void UpdateCommandMenu(int menuIndex);
-    void UpdateOnPlayerInfo(void);
-    void UpdateHighlights(void);
-    void UpdateSpectatorPanel(void);
+    void UpdateOnPlayerInfo();
+    void UpdateHighlights();
+    void UpdateSpectatorPanel();
 
     int KeyInput(int down, int keynum, const char* pszCurrentBinding);
-    void GetAllPlayersInfo(void);
+    void GetAllPlayersInfo();
     void DeathMsg(int killer, int victim);
 
     void ShowCommandMenu(int menuIndex);
-    void InputSignalHideCommandMenu(void);
-    void HideCommandMenu(void);
+    void InputSignalHideCommandMenu();
+    void HideCommandMenu();
     void SetCurrentCommandMenu(CCommandMenu* pNewMenu);
     void SetCurrentMenu(CMenuPanel* pMenu);
 
-    void ShowScoreBoard(void);
-    void HideScoreBoard(void);
-    bool IsScoreBoardVisible(void);
+    void ShowScoreBoard();
+    void HideScoreBoard();
+    bool IsScoreBoardVisible();
 
-    bool AllowedToPrintText(void);
+    bool AllowedToPrintText();
 
     void ShowVGUIMenu(int iMenu);
-    void HideVGUIMenu(void);
-    void HideTopMenu(void);
+    void HideVGUIMenu();
+    void HideTopMenu();
 
     CMenuPanel* CreateTextWindow(int iTextToShow);
 
@@ -99,8 +99,8 @@ public:
 
     virtual void paintBackground();
 
-    CSchemeManager* GetSchemeManager(void) { return &m_SchemeManager; }
-    ScorePanel* GetScoreBoard(void) const { return m_pScoreBoard; }
+    CSchemeManager* GetSchemeManager() { return &m_SchemeManager; }
+    ScorePanel* GetScoreBoard() const { return m_pScoreBoard; }
 
     void* operator new(size_t stAllocateBlock);
 
@@ -135,9 +135,9 @@ private:
     int m_iUser3;
 
     // VGUI Menus
-    void CreateTeamMenu(void);
-    CMenuPanel* ShowTeamMenu(void);
-    void CreateSpectatorMenu(void);
+    void CreateTeamMenu();
+    CMenuPanel* ShowTeamMenu();
+    void CreateSpectatorMenu();
 
     // Scheme handler
     CSchemeManager m_SchemeManager;

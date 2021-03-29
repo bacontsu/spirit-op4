@@ -120,7 +120,7 @@ void CMultiManager::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CMultiManager::Spawn(void)
+void CMultiManager::Spawn()
 {
     CBaseEntity* pTarget;
     pTarget = UTIL_FindEntityByTargetname(NULL, STRING(pev->targetname));
@@ -190,7 +190,7 @@ BOOL CMultiManager::HasTarget(string_t targetname)
     return FALSE;
 }
 
-void CMultiManager::UseThink(void)
+void CMultiManager::UseThink()
 {
     SetThink(&CMultiManager::ManagerThink);
     SetUse(&CMultiManager::ManagerUse);
@@ -199,7 +199,7 @@ void CMultiManager::UseThink(void)
 
 // Designers were using this to fire targets that may or may not exist --
 // so I changed it to use the standard target fire code, made it a little simpler.
-void CMultiManager::ManagerThink(void)
+void CMultiManager::ManagerThink()
 {
     //LRC- different manager modes
     if (m_iMode)
@@ -376,7 +376,7 @@ void CMultiManager::ManagerThink(void)
     }
 }
 
-CMultiManager* CMultiManager::Clone(void)
+CMultiManager* CMultiManager::Clone()
 {
     CMultiManager* pMulti = GetClassPtr((CMultiManager*)NULL);
 
@@ -518,7 +518,7 @@ void CMultiManager::ManagerUse(CBaseEntity* pActivator, CBaseEntity* pCaller, US
 }
 
 #if _DEBUG
-void CMultiManager::ManagerReport(void)
+void CMultiManager::ManagerReport()
 {
     int cIndex;
 

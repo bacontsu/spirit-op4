@@ -32,12 +32,12 @@ TYPEDESCRIPTION CRenderFxFader::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CRenderFxFader, CBaseEntity);
 
-void CRenderFxFader::Spawn(void)
+void CRenderFxFader::Spawn()
 {
     SetThink(&CRenderFxFader::FadeThink);
 }
 
-void CRenderFxFader::FadeThink(void)
+void CRenderFxFader::FadeThink()
 {
     if (((CBaseEntity*)m_hTarget) == NULL)
     {

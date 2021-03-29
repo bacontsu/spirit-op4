@@ -45,7 +45,7 @@ IMPLEMENT_SAVERESTORE(CBarnacle, CBaseMonster);
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CBarnacle::Classify(void)
+int CBarnacle::Classify()
 {
     return m_iClass ? m_iClass : CLASS_ALIEN_MONSTER;
 }
@@ -117,7 +117,7 @@ int CBarnacle::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float
 
 //=========================================================
 //=========================================================
-void CBarnacle::BarnacleThink(void)
+void CBarnacle::BarnacleThink()
 {
     CBaseEntity* pTouchEnt;
     CBaseMonster* pVictim;
@@ -336,7 +336,7 @@ void CBarnacle::Killed(entvars_t* pevAttacker, int iGib)
 
 //=========================================================
 //=========================================================
-void CBarnacle::WaitTillDead(void)
+void CBarnacle::WaitTillDead()
 {
     SetNextThink(0.1);
 

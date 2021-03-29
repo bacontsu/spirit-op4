@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_teleport, CTriggerTeleport);
 
-void CTriggerTeleport::Spawn(void)
+void CTriggerTeleport::Spawn()
 {
     InitTrigger();
 

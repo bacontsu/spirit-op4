@@ -24,18 +24,18 @@ class CSprite;
 class CLaser : public CBeam
 {
 public:
-    void Spawn(void) override;
-    void PostSpawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void PostSpawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
 
-    void TurnOn(void);
-    void TurnOff(void);
-    STATE GetState(void) override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; }
+    void TurnOn();
+    void TurnOff();
+    STATE GetState() override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; }
 
     void FireAtPoint(Vector startpos, TraceResult& point);
 
-    void DLLEXPORT StrikeThink(void);
+    void DLLEXPORT StrikeThink();
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

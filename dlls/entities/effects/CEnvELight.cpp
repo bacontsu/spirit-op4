@@ -29,7 +29,7 @@ TYPEDESCRIPTION CEnvELight::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CEnvELight, CEnvDLight);
 
-void CEnvELight::PostSpawn(void)
+void CEnvELight::PostSpawn()
 {
     // each env_elight uses its own key to reference the light on the client
     m_iKey = ms_iNextFreeKey;

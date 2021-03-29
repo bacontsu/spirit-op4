@@ -24,15 +24,15 @@
 class CTriggerCamera : public CBaseDelay
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void DLLEXPORT FollowTarget(void);
-    void Move(void);
+    void DLLEXPORT FollowTarget();
+    void Move();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
     static TYPEDESCRIPTION m_SaveData[];
 
     EHANDLE m_hPlayer;

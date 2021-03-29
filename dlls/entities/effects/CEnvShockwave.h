@@ -25,8 +25,8 @@
 class CEnvShockwave : public CPointEntity
 {
 public:
-    void Precache(void) override;
-    void Spawn(void) override { Precache(); }
+    void Precache() override;
+    void Spawn() override { Precache(); }
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
     int Save(CSave& save) override;

@@ -356,7 +356,7 @@ DEFINE_CUSTOM_SCHEDULES(CScientist)
 IMPLEMENT_CUSTOM_SCHEDULES(CScientist, CTalkMonster);
 
 
-void CScientist::DeclineFollowing(void)
+void CScientist::DeclineFollowing()
 {
     Talk(10);
     m_hTalkTarget = m_hEnemy;
@@ -364,7 +364,7 @@ void CScientist::DeclineFollowing(void)
 }
 
 
-void CScientist::Scream(void)
+void CScientist::Scream()
 {
     if (FOkToSpeak())
     {
@@ -375,7 +375,7 @@ void CScientist::Scream(void)
 }
 
 
-Activity CScientist::GetStoppedActivity(void)
+Activity CScientist::GetStoppedActivity()
 {
     if (m_hEnemy != NULL)
         return ACT_EXCITED;
@@ -518,7 +518,7 @@ void CScientist::RunTask(Task_t* pTask)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CScientist::Classify(void)
+int CScientist::Classify()
 {
     return m_iClass ? m_iClass : CLASS_HUMAN_PASSIVE;
 }
@@ -528,7 +528,7 @@ int CScientist::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CScientist::SetYawSpeed(void)
+void CScientist::SetYawSpeed()
 {
     int ys;
 
@@ -586,7 +586,7 @@ void CScientist::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CScientist::Spawn(void)
+void CScientist::Spawn()
 {
     Precache();
 
@@ -629,7 +629,7 @@ void CScientist::Spawn(void)
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CScientist::Precache(void)
+void CScientist::Precache()
 {
     if (pev->model)
         PRECACHE_MODEL((char*)STRING(pev->model)); //LRC
@@ -729,7 +729,7 @@ int CScientist::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 // of sounds this monster regards. In the base class implementation,
 // monsters care about all sounds, but no scents.
 //=========================================================
-int CScientist::ISoundMask(void)
+int CScientist::ISoundMask()
 {
     return	bits_SOUND_WORLD |
         bits_SOUND_COMBAT |
@@ -743,7 +743,7 @@ int CScientist::ISoundMask(void)
 //=========================================================
 // PainSound
 //=========================================================
-void CScientist::PainSound(void)
+void CScientist::PainSound()
 {
     if (gpGlobals->time < m_painTime)
         return;
@@ -768,7 +768,7 @@ void CScientist::PainSound(void)
 //=========================================================
 // DeathSound 
 //=========================================================
-void CScientist::DeathSound(void)
+void CScientist::DeathSound()
 {
     PainSound();
 }
@@ -849,7 +849,7 @@ Schedule_t* CScientist::GetScheduleOfType(int Type)
     return CTalkMonster::GetScheduleOfType(Type);
 }
 
-Schedule_t* CScientist::GetSchedule(void)
+Schedule_t* CScientist::GetSchedule()
 {
     // so we don't keep calling through the EHANDLE stuff
     CBaseEntity* pEnemy = m_hEnemy;
@@ -964,7 +964,7 @@ Schedule_t* CScientist::GetSchedule(void)
     return CTalkMonster::GetSchedule();
 }
 
-MONSTERSTATE CScientist::GetIdealState(void)
+MONSTERSTATE CScientist::GetIdealState()
 {
     switch (m_MonsterState)
     {
@@ -1026,7 +1026,7 @@ MONSTERSTATE CScientist::GetIdealState(void)
 }
 
 
-BOOL CScientist::CanHeal(void)
+BOOL CScientist::CanHeal()
 {
     if ((m_healTime > gpGlobals->time) || (m_hTargetEnt == NULL) || (m_hTargetEnt->pev->health > (m_hTargetEnt->pev->max_health * 0.5)))
         return FALSE;
@@ -1034,7 +1034,7 @@ BOOL CScientist::CanHeal(void)
     return TRUE;
 }
 
-void CScientist::Heal(void)
+void CScientist::Heal()
 {
     if (!CanHeal())
         return;

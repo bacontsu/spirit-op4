@@ -14,7 +14,7 @@
 ****/
 #pragma once
 
-extern void GameDLLInit(void);
+extern void GameDLLInit();
 
 extern cvar_t displaysoundlist;
 

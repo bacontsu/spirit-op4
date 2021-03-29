@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(env_warpball, CEnvWarpBall);
 
-void CEnvWarpBall::Precache(void)
+void CEnvWarpBall::Precache()
 {
     PRECACHE_MODEL("sprites/lgtning.spr");
     PRECACHE_MODEL("sprites/Fexplo1.spr");
@@ -69,7 +69,7 @@ void CEnvWarpBall::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
     SetNextThink(0.5);
 }
 
-void CEnvWarpBall::Think(void)
+void CEnvWarpBall::Think()
 {
     EMIT_SOUND(edict(), CHAN_ITEM, "debris/beamstart7.wav", 1, ATTN_NORM);
     SUB_UseTargets(this, USE_TOGGLE, 0);

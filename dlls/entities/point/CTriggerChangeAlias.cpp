@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_changealias, CTriggerChangeAlias);
 
-void CTriggerChangeAlias::Spawn(void)
+void CTriggerChangeAlias::Spawn()
 {
 }
 

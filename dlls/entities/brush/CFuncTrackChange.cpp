@@ -34,12 +34,12 @@ TYPEDESCRIPTION    CFuncTrackChange::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CFuncTrackChange, CFuncPlatRot);
 
-BOOL CFuncTrackChange::IsTogglePlat(void)
+BOOL CFuncTrackChange::IsTogglePlat()
 {
     return TRUE;
 }
 
-void CFuncTrackChange::Spawn(void)
+void CFuncTrackChange::Spawn()
 {
     Setup();
     if (FBitSet(pev->spawnflags, SF_TRACK_DONT_MOVE))
@@ -68,7 +68,7 @@ void CFuncTrackChange::Spawn(void)
     Precache();
 }
 
-void CFuncTrackChange::Precache(void)
+void CFuncTrackChange::Precache()
 {
     // Can't trigger sound
     PRECACHE_SOUND("buttons/button11.wav");
@@ -112,13 +112,13 @@ void CFuncTrackChange::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CFuncTrackChange::OverrideReset(void)
+void CFuncTrackChange::OverrideReset()
 {
     pev->nextthink = pev->ltime + 1.0;
     SetThink(&CFuncTrackChange::Find);
 }
 
-void CFuncTrackChange::Find(void)
+void CFuncTrackChange::Find()
 {
     // Find track entities
     CBaseEntity* pTarget;
@@ -226,7 +226,7 @@ void CFuncTrackChange::UpdateTrain(Vector& dest)
     //    ALERT(at_console, "set trainvel %f %f %f\n", m_train->pev->velocity.x, m_train->pev->velocity.y, m_train->pev->velocity.z);
 }
 
-void CFuncTrackChange::GoDown(void)
+void CFuncTrackChange::GoDown()
 {
     if (m_code == TRAIN_BLOCKING)
         return;
@@ -274,7 +274,7 @@ void CFuncTrackChange::GoDown(void)
 //
 // Platform is at bottom, now starts moving up
 //
-void CFuncTrackChange::GoUp(void)
+void CFuncTrackChange::GoUp()
 {
     if (m_code == TRAIN_BLOCKING)
         return;
@@ -374,7 +374,7 @@ void CFuncTrackChange::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 //
 // Platform has hit bottom.  Stops and waits forever.
 //
-void CFuncTrackChange::HitBottom(void)
+void CFuncTrackChange::HitBottom()
 {
     CFuncPlatRot::HitBottom();
     if (m_code == TRAIN_FOLLOWING)
@@ -394,7 +394,7 @@ void CFuncTrackChange::HitBottom(void)
 //
 // Platform has hit bottom.  Stops and waits forever.
 //
-void CFuncTrackChange::HitTop(void)
+void CFuncTrackChange::HitTop()
 {
     CFuncPlatRot::HitTop();
     if (m_code == TRAIN_FOLLOWING)

@@ -23,10 +23,10 @@ public:
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT FollowThink(void);
-    void DLLEXPORT IgniteThink(void);
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT FollowThink();
+    void DLLEXPORT IgniteThink();
     void DLLEXPORT RocketTouch(CBaseEntity* pOther);
     static CRpgRocket* CreateRpgRocket(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner, CRpg* pLauncher);
 

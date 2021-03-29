@@ -62,7 +62,7 @@ void CEnvFog::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-STATE CEnvFog::GetState(void)
+STATE CEnvFog::GetState()
 {
     if (pev->spawnflags & SF_FOG_ACTIVE)
     {
@@ -80,7 +80,7 @@ STATE CEnvFog::GetState(void)
     }
 }
 
-void CEnvFog::Spawn(void)
+void CEnvFog::Spawn()
 {
     pev->effects |= EF_NODRAW;
 
@@ -102,7 +102,7 @@ void CEnvFog::Spawn(void)
     if (m_iEndDist == 0) m_iEndDist = 1;
 }
 
-void CEnvFog::Precache(void)
+void CEnvFog::Precache()
 {
     if (pev->spawnflags & SF_FOG_ACTIVE)
     {
@@ -113,7 +113,7 @@ void CEnvFog::Precache(void)
 
 extern int gmsgSetFog;
 
-void CEnvFog::TurnOn(void)
+void CEnvFog::TurnOn()
 {
     //    ALERT(at_console, "Fog turnon %f\n", gpGlobals->time);
 
@@ -138,7 +138,7 @@ void CEnvFog::TurnOn(void)
     }
 }
 
-void CEnvFog::TurnOff(void)
+void CEnvFog::TurnOff()
 {
     //    ALERT(at_console, "Fog turnoff\n");
 
@@ -163,19 +163,19 @@ void CEnvFog::TurnOff(void)
 // the engine seems to ignore the nextthink time when starting up.
 // So this function gets called immediately after the precache finishes,
 // regardless of what nextthink time is specified.
-void CEnvFog::ResumeThink(void)
+void CEnvFog::ResumeThink()
 {
     //    ALERT(at_console, "Fog resume %f\n", gpGlobals->time);
     SetThink(&CEnvFog::Resume2Think);
     SetNextThink(0.1);
 }
 
-void CEnvFog::Resume2Think(void)
+void CEnvFog::Resume2Think()
 {
     SendData(pev->rendercolor, m_iFadeIn, m_iStartDist, m_iEndDist);
 }
 
-void CEnvFog::FadeInDone(void)
+void CEnvFog::FadeInDone()
 {
     pev->spawnflags &= ~SF_FOG_FADING;
     SendData(pev->rendercolor, 0, m_iStartDist, m_iEndDist);
@@ -187,7 +187,7 @@ void CEnvFog::FadeInDone(void)
     }
 }
 
-void CEnvFog::FadeOutDone(void)
+void CEnvFog::FadeOutDone()
 {
     pev->spawnflags &= ~SF_FOG_FADING;
     //LRC 1.8 we don't need to resend...    SendData( pev->rendercolor, 0, m_iStartDist, m_iEndDist);

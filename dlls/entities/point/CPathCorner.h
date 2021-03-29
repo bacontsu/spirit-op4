@@ -22,7 +22,7 @@ class CPathCorner : public CPointEntity
 public:
     void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
-    float GetDelay(void) override { return m_flWait; }
+    float GetDelay() override { return m_flWait; }
     //    void Touch( CBaseEntity *pOther );
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

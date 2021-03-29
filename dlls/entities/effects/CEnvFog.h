@@ -25,14 +25,14 @@
 class CEnvFog : public CPointEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT ResumeThink(void);
-    void DLLEXPORT Resume2Think(void);
-    void DLLEXPORT TurnOn(void);
-    void DLLEXPORT TurnOff(void);
-    void DLLEXPORT FadeInDone(void);
-    void DLLEXPORT FadeOutDone(void);
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT ResumeThink();
+    void DLLEXPORT Resume2Think();
+    void DLLEXPORT TurnOn();
+    void DLLEXPORT TurnOff();
+    void DLLEXPORT FadeInDone();
+    void DLLEXPORT FadeOutDone();
     void SendData(Vector col, int fFadeTime, int StartDist, int iEndDist);
     void KeyValue(KeyValueData* pkvd) override;
     int Save(CSave& save) override;
@@ -40,7 +40,7 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
-    STATE GetState(void) override;
+    STATE GetState() override;
 
     int m_iStartDist;
     int m_iEndDist;

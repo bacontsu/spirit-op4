@@ -113,7 +113,7 @@ const char* CHeadCrab::pBiteSounds[] =
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CHeadCrab::Classify(void)
+int CHeadCrab::Classify()
 {
     return m_iClass ? m_iClass : CLASS_ALIEN_PREY;
 }
@@ -123,7 +123,7 @@ int CHeadCrab::Classify(void)
 // bounding box is much larger than the actual creature so 
 // this is needed for targeting
 //=========================================================
-Vector CHeadCrab::Center(void)
+Vector CHeadCrab::Center()
 {
     return Vector(pev->origin.x, pev->origin.y, pev->origin.z + 6);
 }
@@ -138,7 +138,7 @@ Vector CHeadCrab::BodyTarget(const Vector& posSrc)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CHeadCrab::SetYawSpeed(void)
+void CHeadCrab::SetYawSpeed()
 {
     int ys;
 
@@ -332,7 +332,7 @@ void CHeadCrab::LeapTouch(CBaseEntity* pOther)
 //=========================================================
 // PrescheduleThink
 //=========================================================
-void CHeadCrab::PrescheduleThink(void)
+void CHeadCrab::PrescheduleThink()
 {
     // make the crab coo a little bit in combat state
     if (m_MonsterState == MONSTERSTATE_COMBAT && RANDOM_FLOAT(0, 5) < 0.1)
@@ -404,7 +404,7 @@ int CHeadCrab::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float
 //=========================================================
 #define CRAB_ATTN_IDLE (float)1.5
 
-void CHeadCrab::IdleSound(void)
+void CHeadCrab::IdleSound()
 {
     EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pIdleSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
@@ -412,7 +412,7 @@ void CHeadCrab::IdleSound(void)
 //=========================================================
 // AlertSound 
 //=========================================================
-void CHeadCrab::AlertSound(void)
+void CHeadCrab::AlertSound()
 {
     EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pAlertSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
@@ -420,7 +420,7 @@ void CHeadCrab::AlertSound(void)
 //=========================================================
 // AlertSound 
 //=========================================================
-void CHeadCrab::PainSound(void)
+void CHeadCrab::PainSound()
 {
     EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pPainSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
@@ -428,7 +428,7 @@ void CHeadCrab::PainSound(void)
 //=========================================================
 // DeathSound 
 //=========================================================
-void CHeadCrab::DeathSound(void)
+void CHeadCrab::DeathSound()
 {
     EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pDeathSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }

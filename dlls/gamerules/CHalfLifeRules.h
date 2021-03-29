@@ -23,20 +23,20 @@
 class CHalfLifeRules : public CGameRules
 {
 public:
-    CHalfLifeRules(void);
+    CHalfLifeRules();
 
     // GR_Think
-    void Think(void) override;
+    void Think() override;
     BOOL IsAllowedToSpawn(CBaseEntity* pEntity) override;
-    BOOL FAllowFlashlight(void) override { return TRUE; }
+    BOOL FAllowFlashlight() override { return TRUE; }
 
     BOOL FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon) override;
     BOOL GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon) override;
 
     // Functions to verify the single/multiplayer status of a game
-    BOOL IsMultiplayer(void) override;
-    BOOL IsDeathmatch(void) override;
-    BOOL IsCoOp(void) override;
+    BOOL IsMultiplayer() override;
+    BOOL IsDeathmatch() override;
+    BOOL IsCoOp() override;
 
     // Client connection/disconnection
     BOOL ClientConnected(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128]) override;
@@ -52,7 +52,7 @@ public:
     BOOL FPlayerCanRespawn(CBasePlayer* pPlayer) override;
     float FlPlayerSpawnTime(CBasePlayer* pPlayer) override;
 
-    BOOL AllowAutoTargetCrosshair(void) override;
+    BOOL AllowAutoTargetCrosshair() override;
 
     // Client kills/scoring
     int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) override;
@@ -86,7 +86,7 @@ public:
     Vector VecAmmoRespawnSpot(CBasePlayerAmmo* pAmmo) override;
 
     // Healthcharger respawn control
-    float FlHealthChargerRechargeTime(void) override;
+    float FlHealthChargerRechargeTime() override;
 
     // What happens to a dead player's weapons
     int DeadPlayerWeapons(CBasePlayer* pPlayer) override;
@@ -95,7 +95,7 @@ public:
     int DeadPlayerAmmo(CBasePlayer* pPlayer) override;
 
     // Monsters
-    BOOL FAllowMonsters(void) override;
+    BOOL FAllowMonsters() override;
 
     // Teamplay stuff    
     const char* GetTeamID(CBaseEntity* pEntity) override { return ""; }

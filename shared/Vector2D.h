@@ -24,7 +24,7 @@
 class Vector2D
 {
 public:
-    Vector2D(void)
+    Vector2D()
     {
         x = y = 0;
     }

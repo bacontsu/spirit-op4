@@ -25,7 +25,7 @@ class ParticleSystem
 public:
     ParticleSystem(int entindex, char* szFilename); //int iParticles );
     //	ParticleSystem( int iParticles );
-    ~ParticleSystem(void);
+    ~ParticleSystem();
     void AllocateParticles(int iParticles);
     void CalculateDistance();
 

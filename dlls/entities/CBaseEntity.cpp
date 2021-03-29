@@ -28,7 +28,7 @@
 #include "util/sound.h"
 
 // This updates global tables that need to know about entities being removed
-void CBaseEntity::UpdateOnRemove(void)
+void CBaseEntity::UpdateOnRemove()
 {
     int i;
     CBaseEntity* pTemp;
@@ -110,7 +110,7 @@ void CBaseEntity::UpdateOnRemove(void)
 }
 
 // Convenient way to delay removing oneself
-void CBaseEntity::SUB_Remove(void)
+void CBaseEntity::SUB_Remove()
 {
     UpdateOnRemove();
     if (pev->health > 0)
@@ -125,7 +125,7 @@ void CBaseEntity::SUB_Remove(void)
 
 
 // Convenient way to explicitly do nothing (passed to functions that require a method)
-void CBaseEntity::SUB_DoNothing(void)
+void CBaseEntity::SUB_DoNothing()
 {
     //    if (pev->ltime)
     //        ALERT(at_console, "Doing Nothing %f\n", pev->ltime);
@@ -166,7 +166,7 @@ void CBaseEntity::SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, floa
 //
 // DON'T USE ME FOR GIBS AND STUFF IN MULTIPLAYER! 
 // SET A FUTURE THINK AND A RENDERMODE!!
-void CBaseEntity::SUB_StartFadeOut(void)
+void CBaseEntity::SUB_StartFadeOut()
 {
     if (pev->rendermode == kRenderNormal)
     {
@@ -181,7 +181,7 @@ void CBaseEntity::SUB_StartFadeOut(void)
     SetThink(&CBaseEntity::SUB_FadeOut);
 }
 
-void CBaseEntity::SUB_FadeOut(void)
+void CBaseEntity::SUB_FadeOut()
 {
     if (pev->renderamt > 7)
     {
@@ -596,7 +596,7 @@ void CBaseEntity::TraceBleed(float flDamage, Vector vecDir, TraceResult* ptr, in
 
 
 //LRC
-void CBaseEntity::Activate(void)
+void CBaseEntity::Activate()
 {
     //LRC - rebuild the new assistlist as the game starts
     if (m_iLFlags & LF_ASSISTLIST)
@@ -617,7 +617,7 @@ void CBaseEntity::Activate(void)
 }
 
 //LRC- called by activate() to support movewith
-void CBaseEntity::InitMoveWith(void)
+void CBaseEntity::InitMoveWith()
 {
     if (!m_MoveWith) return;
 
@@ -675,7 +675,7 @@ void CBaseEntity::InitMoveWith(void)
 }
 
 //LRC
-void CBaseEntity::DontThink(void)
+void CBaseEntity::DontThink()
 {
     m_fNextThink = 0;
     if (m_pMoveWith == NULL && m_pChildMoveWith == NULL)
@@ -690,7 +690,7 @@ void CBaseEntity::DontThink(void)
 //LRC
 // PUSH entities won't have their velocity applied unless they're thinking.
 // make them do so for the foreseeable future.
-void CBaseEntity::SetEternalThink(void)
+void CBaseEntity::SetEternalThink()
 {
     if (pev->movetype == MOVETYPE_PUSH)
     {
@@ -764,7 +764,7 @@ void CBaseEntity::AbsoluteNextThink(float time, BOOL correctSpeed)
 // on a depressingly frequent basis.)
 // for some reason, this doesn't always produce perfect movement - but it's close
 // enough for government work. (the player doesn't get stuck, at least.)
-void CBaseEntity::ThinkCorrection(void)
+void CBaseEntity::ThinkCorrection()
 {
     if (pev->nextthink != m_fPevNextThink)
     {
@@ -862,7 +862,7 @@ void CBaseEntity::Killed(entvars_t* pevAttacker, int iGib)
 }
 
 
-CBaseEntity* CBaseEntity::GetNextTarget(void)
+CBaseEntity* CBaseEntity::GetNextTarget()
 {
     if (FStringNull(pev->target))
         return NULL;
@@ -935,7 +935,7 @@ int CBaseEntity::Restore(CRestore& restore)
     return status;
 }
 
-void CBaseEntity::SetObjectCollisionBox(void)
+void CBaseEntity::SetObjectCollisionBox()
 {
     ::SetObjectCollisionBox(pev);
 }
@@ -953,7 +953,7 @@ int CBaseEntity::Intersects(CBaseEntity* pOther)
     return 1;
 }
 
-void CBaseEntity::MakeDormant(void)
+void CBaseEntity::MakeDormant()
 {
     SetBits(pev->flags, FL_DORMANT);
 
@@ -969,12 +969,12 @@ void CBaseEntity::MakeDormant(void)
     UTIL_SetOrigin(this, pev->origin);
 }
 
-int CBaseEntity::IsDormant(void)
+int CBaseEntity::IsDormant()
 {
     return FBitSet(pev->flags, FL_DORMANT);
 }
 
-BOOL CBaseEntity::IsInWorld(void)
+BOOL CBaseEntity::IsInWorld()
 {
     // position 
     if (pev->origin.x >= 4096) return FALSE;

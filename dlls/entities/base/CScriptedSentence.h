@@ -24,13 +24,13 @@
 class CScriptedSentence : public CBaseToggle
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void DLLEXPORT FindThink(void);
-    void DLLEXPORT DelayThink(void);
-    void DLLEXPORT DurationThink(void);
-    int ObjectCaps(void) override { return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+    void DLLEXPORT FindThink();
+    void DLLEXPORT DelayThink();
+    void DLLEXPORT DurationThink();
+    int ObjectCaps() override { return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
     STATE GetState() override { return m_playing ? STATE_ON : STATE_OFF; }
 

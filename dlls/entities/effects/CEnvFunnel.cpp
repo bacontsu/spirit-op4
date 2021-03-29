@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(env_funnel, CEnvFunnel);
 
-void CEnvFunnel::Precache(void)
+void CEnvFunnel::Precache()
 {
     //LRC
     if (pev->netname)
@@ -56,7 +56,7 @@ void CEnvFunnel::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
     }
 }
 
-void CEnvFunnel::Spawn(void)
+void CEnvFunnel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;

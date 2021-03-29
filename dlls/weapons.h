@@ -173,7 +173,7 @@ extern DLL_GLOBAL  short        g_sModelIndexBubbles;    // holds the index for 
 extern DLL_GLOBAL  short        g_sModelIndexBloodDrop;  // holds the sprite index for blood drops
 extern DLL_GLOBAL  short        g_sModelIndexBloodSpray; // holds the sprite index for blood spray (bigger)
 
-extern void ClearMultiDamage(void);
+extern void ClearMultiDamage();
 extern void ApplyMultiDamage(entvars_t* pevInflictor, entvars_t* pevAttacker );
 extern void AddMultiDamage( entvars_t *pevInflictor, CBaseEntity *pEntity, float flDamage, int bitsDamageType);
 
@@ -219,6 +219,6 @@ extern MULTIDAMAGE gMultiDamage;
 #define VECTOR_CONE_20DEGREES    Vector( 0.17365, 0.17365, 0.17365 )
 
 #ifdef CLIENT_DLL
-bool bIsMultiplayer ( void );
+bool bIsMultiplayer ();
 void LoadVModel ( const char *szViewModel, CBasePlayer *m_pPlayer );
 #endif

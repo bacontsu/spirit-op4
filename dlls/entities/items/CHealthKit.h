@@ -18,7 +18,7 @@
 
 class CHealthKit : public CItem
 {
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     BOOL MyTouch(CBasePlayer* pPlayer) override;
 };

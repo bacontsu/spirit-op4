@@ -21,7 +21,7 @@
 
 
 // HACKHACK -- The gib velocity equations don't work
-void CGib::LimitVelocity(void)
+void CGib::LimitVelocity()
 {
     float length = pev->velocity.Length();
 
@@ -249,7 +249,7 @@ void CGib::SpawnRandomGibs(entvars_t* pevVictim, int cGibs, int notfirst, const 
 // bouncing to emit their scent. That's what this function
 // does.
 //=========================================================
-void CGib::WaitTillLand(void)
+void CGib::WaitTillLand()
 {
     if (!IsInWorld())
     {

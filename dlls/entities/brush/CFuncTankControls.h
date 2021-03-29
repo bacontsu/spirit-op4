@@ -32,7 +32,7 @@ public:
     int ObjectCaps() override;
     void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    //    void Think( void );
+    //    void Think();
     void KeyValue(KeyValueData* pkvd) override;
     STATE GetState() override { return m_active ? STATE_ON : STATE_OFF; }
 

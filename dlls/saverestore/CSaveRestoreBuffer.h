@@ -22,9 +22,9 @@
 class CSaveRestoreBuffer
 {
 public:
-    CSaveRestoreBuffer(void);
+    CSaveRestoreBuffer();
     CSaveRestoreBuffer(SAVERESTOREDATA* pdata);
-    ~CSaveRestoreBuffer(void);
+    ~CSaveRestoreBuffer();
 
     int EntityIndex(entvars_t* pevLookup);
     int EntityIndex(edict_t* pentLookup);

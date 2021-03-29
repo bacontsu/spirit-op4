@@ -19,12 +19,12 @@
 class CBabyCrab : public CHeadCrab
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    float GetDamageAmount(void) override { return gSkillData.headcrabDmgBite * 0.3; }
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    float GetDamageAmount() override { return gSkillData.headcrabDmgBite * 0.3; }
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
     Schedule_t* GetScheduleOfType(int Type) override;
-    int GetVoicePitch(void) override { return PITCH_NORM + RANDOM_LONG(40, 50); }
-    float GetSoundVolue(void) override { return 0.8; }
+    int GetVoicePitch() override { return PITCH_NORM + RANDOM_LONG(40, 50); }
+    float GetSoundVolue() override { return 0.8; }
 };

@@ -23,34 +23,34 @@
 class CAGrunt : public CSquadMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
-    int ISoundMask(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
+    int ISoundMask() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         pev->absmin = pev->origin + Vector(-32, -32, 0);
         pev->absmax = pev->origin + Vector(32, 32, 85);
     }
 
-    Schedule_t* GetSchedule(void) override;
+    Schedule_t* GetSchedule() override;
     Schedule_t* GetScheduleOfType(int Type) override;
-    BOOL FCanCheckAttacks(void) override;
+    BOOL FCanCheckAttacks() override;
     BOOL CheckMeleeAttack1(float flDot, float flDist) override;
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
     void StartTask(Task_t* pTask) override;
-    void AlertSound(void) override;
-    void DeathSound(void) override;
-    void PainSound(void) override;
-    void AttackSound(void);
-    void PrescheduleThink(void) override;
+    void AlertSound() override;
+    void DeathSound() override;
+    void PainSound() override;
+    void AttackSound();
+    void PrescheduleThink() override;
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
     int IRelationship(CBaseEntity* pTarget) override;
-    void StopTalking(void);
-    BOOL ShouldSpeak(void);
+    void StopTalking();
+    BOOL ShouldSpeak();
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
     CUSTOM_SCHEDULES;

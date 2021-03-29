@@ -34,12 +34,12 @@ TYPEDESCRIPTION CMotionThread::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CMotionThread, CPointEntity);
 
-void CMotionThread::Spawn(void) //AJH
+void CMotionThread::Spawn() //AJH
 {
     pev->classname = MAKE_STRING("motion_thread"); //We need this for save/restore to work
 }
 
-void CMotionThread::Think(void)
+void CMotionThread::Think()
 {
     //SetBits(pev->spawnflags, SF_MOTION_DEBUG);
     if (m_hLocus == NULL || m_hTarget == NULL)

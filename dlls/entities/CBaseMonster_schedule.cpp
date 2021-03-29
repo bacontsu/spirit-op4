@@ -30,7 +30,7 @@
 // FHaveSchedule - Returns TRUE if monster's m_pSchedule
 // is anything other than NULL.
 //=========================================================
-BOOL CBaseMonster::FHaveSchedule(void)
+BOOL CBaseMonster::FHaveSchedule()
 {
     if (m_pSchedule == NULL)
     {
@@ -44,7 +44,7 @@ BOOL CBaseMonster::FHaveSchedule(void)
 // ClearSchedule - blanks out the caller's schedule pointer
 // and index.
 //=========================================================
-void CBaseMonster::ClearSchedule(void)
+void CBaseMonster::ClearSchedule()
 {
     m_iTaskStatus = TASKSTATUS_NEW;
     m_pSchedule = NULL;
@@ -55,7 +55,7 @@ void CBaseMonster::ClearSchedule(void)
 // FScheduleDone - Returns TRUE if the caller is on the
 // last task in the schedule
 //=========================================================
-BOOL CBaseMonster::FScheduleDone(void)
+BOOL CBaseMonster::FScheduleDone()
 {
     ASSERT(m_pSchedule != NULL);
 
@@ -132,7 +132,7 @@ void CBaseMonster::ChangeSchedule(Schedule_t* pNewSchedule)
 //=========================================================
 // NextScheduledTask - increments the ScheduleIndex
 //=========================================================
-void CBaseMonster::NextScheduledTask(void)
+void CBaseMonster::NextScheduledTask()
 {
     ASSERT(m_pSchedule != NULL);
 
@@ -152,7 +152,7 @@ void CBaseMonster::NextScheduledTask(void)
 // bits that are currently set and also set in the current
 // schedule's Interrupt mask.
 //=========================================================
-int CBaseMonster::IScheduleFlags(void)
+int CBaseMonster::IScheduleFlags()
 {
     if (!m_pSchedule)
     {
@@ -168,7 +168,7 @@ int CBaseMonster::IScheduleFlags(void)
 // schedule is still the proper schedule to be executing,
 // taking into account all conditions
 //=========================================================
-BOOL CBaseMonster::FScheduleValid(void)
+BOOL CBaseMonster::FScheduleValid()
 {
     if (m_pSchedule == NULL)
     {
@@ -202,7 +202,7 @@ BOOL CBaseMonster::FScheduleValid(void)
 // ensures that the monster leaves this function with a valid
 // schedule!
 //=========================================================
-void CBaseMonster::MaintainSchedule(void)
+void CBaseMonster::MaintainSchedule()
 {
     Schedule_t* pNewSchedule;
     int i;
@@ -545,7 +545,7 @@ void CBaseMonster::RunTask(Task_t* pTask)
 // the monster is facing and determines whether or not to
 // select one of the 180 turn animations.
 //=========================================================
-void CBaseMonster::SetTurnActivity(void)
+void CBaseMonster::SetTurnActivity()
 {
     float flYD;
     flYD = FlYawDiff();
@@ -1329,7 +1329,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 // GetTask - returns a pointer to the current 
 // scheduled task. NULL if there's a problem.
 //=========================================================
-Task_t* CBaseMonster::GetTask(void)
+Task_t* CBaseMonster::GetTask()
 {
     if (m_iScheduleIndex < 0 || m_iScheduleIndex >= m_pSchedule->cTasks)
     {
@@ -1348,7 +1348,7 @@ Task_t* CBaseMonster::GetTask(void)
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t* CBaseMonster::GetSchedule(void)
+Schedule_t* CBaseMonster::GetSchedule()
 {
     switch (m_MonsterState)
     {

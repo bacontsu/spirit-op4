@@ -20,13 +20,13 @@
 class CWeaponCycler : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
-    int iItemSlot(void) override { return 1; }
+    void Spawn() override;
+    int iItemSlot() override { return 1; }
     int GetItemInfo(ItemInfo* p) override { return 0; }
 
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
-    BOOL Deploy(void) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
     int m_iszModel;
     int m_iModel;

@@ -38,7 +38,7 @@ void CTriggerSetPatrol::KeyValue(KeyValueData* pkvd)
         CBaseDelay::KeyValue(pkvd);
 }
 
-void CTriggerSetPatrol::Spawn(void)
+void CTriggerSetPatrol::Spawn()
 {
 }
 

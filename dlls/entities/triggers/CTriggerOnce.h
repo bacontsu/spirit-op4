@@ -21,5 +21,5 @@
 class CTriggerOnce : public CTriggerMultiple
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 };

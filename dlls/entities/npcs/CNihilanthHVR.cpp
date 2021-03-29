@@ -32,7 +32,7 @@ TYPEDESCRIPTION CNihilanthHVR::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CNihilanthHVR, CBaseMonster);
 
 
-void CNihilanthHVR::Spawn(void)
+void CNihilanthHVR::Spawn()
 {
     Precache();
 
@@ -42,7 +42,7 @@ void CNihilanthHVR::Spawn(void)
 }
 
 
-void CNihilanthHVR::Precache(void)
+void CNihilanthHVR::Precache()
 {
     PRECACHE_MODEL("sprites/flare6.spr");
     PRECACHE_MODEL("sprites/nhth1.spr");
@@ -99,7 +99,7 @@ CBaseEntity* CNihilanthHVR::RandomClassname(const char* szName)
     return pEntity;
 }
 
-void CNihilanthHVR::HoverThink(void)
+void CNihilanthHVR::HoverThink()
 {
     SetNextThink(0.1);
 
@@ -184,7 +184,7 @@ void CNihilanthHVR::ZapInit(CBaseEntity* pEnemy)
     EMIT_SOUND_DYN(edict(), CHAN_WEAPON, "debris/zap4.wav", 1, ATTN_NORM, 0, 100);
 }
 
-void CNihilanthHVR::ZapThink(void)
+void CNihilanthHVR::ZapThink()
 {
     SetNextThink(0.05);
 
@@ -327,7 +327,7 @@ void CNihilanthHVR::GreenBallInit()
 }
 
 
-void CNihilanthHVR::TeleportThink(void)
+void CNihilanthHVR::TeleportThink()
 {
     SetNextThink(0.1);
 
@@ -374,7 +374,7 @@ void CNihilanthHVR::TeleportThink(void)
 }
 
 
-void CNihilanthHVR::AbsorbInit(void)
+void CNihilanthHVR::AbsorbInit()
 {
     SetThink(&CNihilanthHVR::DissipateThink);
     pev->renderamt = 255;
@@ -420,7 +420,7 @@ void CNihilanthHVR::TeleportTouch(CBaseEntity* pOther)
 }
 
 
-void CNihilanthHVR::DissipateThink(void)
+void CNihilanthHVR::DissipateThink()
 {
     SetNextThink(0.1);
 
@@ -528,7 +528,7 @@ void CNihilanthHVR::MovetoTarget(Vector vecTarget)
 }
 
 
-void CNihilanthHVR::Crawl(void)
+void CNihilanthHVR::Crawl()
 {
     Vector vecAim = Vector(RANDOM_FLOAT(-1, 1), RANDOM_FLOAT(-1, 1), RANDOM_FLOAT(-1, 1)).Normalize();
     Vector vecPnt = pev->origin + pev->velocity * 0.2 + vecAim * 128;

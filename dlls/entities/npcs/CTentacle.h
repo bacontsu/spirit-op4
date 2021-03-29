@@ -30,7 +30,7 @@
 class CTentacle : public CBaseMonster
 {
 public:
-    CTentacle(void);
+    CTentacle();
 
     void Spawn() override;
     void Precache() override;
@@ -41,37 +41,37 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 
     // Don't allow the tentacle to go across transitions!!!
-    int ObjectCaps(void) override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-    void SetObjectCollisionBox(void) override
+    void SetObjectCollisionBox() override
     {
         pev->absmin = pev->origin + Vector(-400, -400, 0);
         pev->absmax = pev->origin + Vector(400, 400, 850);
     }
 
-    void DLLEXPORT Cycle(void);
+    void DLLEXPORT Cycle();
     void DLLEXPORT CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT Start(void);
-    void DLLEXPORT DieThink(void);
+    void DLLEXPORT Start();
+    void DLLEXPORT DieThink();
 
-    void DLLEXPORT Test(void);
+    void DLLEXPORT Test();
 
     void DLLEXPORT HitTouch(CBaseEntity* pOther);
 
-    float HearingSensitivity(void) override { return 2.0; }
+    float HearingSensitivity() override { return 2.0; }
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
-    MONSTERSTATE GetIdealState(void) override { return MONSTERSTATE_IDLE; }
+    MONSTERSTATE GetIdealState() override { return MONSTERSTATE_IDLE; }
     int CanPlaySequence(int interruptFlags) override { return TRUE; }
 
-    int Classify(void) override;
+    int Classify() override;
 
     int Level(float dz);
-    int MyLevel(void);
-    float MyHeight(void);
+    int MyLevel();
+    float MyHeight();
 
     float m_flInitialYaw;
     int m_iGoalAnim;

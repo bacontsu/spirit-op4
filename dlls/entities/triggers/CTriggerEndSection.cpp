@@ -33,7 +33,7 @@ void CTriggerEndSection::EndSectionUse(CBaseEntity* pActivator, CBaseEntity* pCa
     UTIL_Remove(this);
 }
 
-void CTriggerEndSection::Spawn(void)
+void CTriggerEndSection::Spawn()
 {
     if (g_pGameRules->IsDeathmatch())
     {

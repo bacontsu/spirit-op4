@@ -40,7 +40,7 @@ void CEnvExplosion::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-void CEnvExplosion::Spawn(void)
+void CEnvExplosion::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->effects = EF_NODRAW;
@@ -163,7 +163,7 @@ void CEnvExplosion::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     }
 }
 
-void CEnvExplosion::Smoke(void)
+void CEnvExplosion::Smoke()
 {
     if (!(pev->spawnflags & SF_ENVEXPLOSION_NOSMOKE))
     {

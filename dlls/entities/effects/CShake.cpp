@@ -29,7 +29,7 @@ LINK_ENTITY_TO_CLASS(env_shake, CShake);
 #define SF_SHAKE_DISRUPT    0x0002        // Disrupt controls
 #define SF_SHAKE_INAIR        0x0004        // Shake players in air
 
-void CShake::Spawn(void)
+void CShake::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;

@@ -27,21 +27,21 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
     void CircleInit(CBaseEntity* pTarget);
-    void AbsorbInit(void);
+    void AbsorbInit();
     void TeleportInit(CNihilanth* pOwner, CBaseEntity* pEnemy, CBaseEntity* pTarget, CBaseEntity* pTouch);
-    void GreenBallInit(void);
+    void GreenBallInit();
     void ZapInit(CBaseEntity* pEnemy);
 
-    void DLLEXPORT HoverThink(void);
+    void DLLEXPORT HoverThink();
     BOOL CircleTarget(Vector vecTarget);
-    void DLLEXPORT DissipateThink(void);
+    void DLLEXPORT DissipateThink();
 
-    void DLLEXPORT ZapThink(void);
-    void DLLEXPORT TeleportThink(void);
+    void DLLEXPORT ZapThink();
+    void DLLEXPORT TeleportThink();
     void DLLEXPORT TeleportTouch(CBaseEntity* pOther);
 
     void DLLEXPORT RemoveTouch(CBaseEntity* pOther);
@@ -53,10 +53,10 @@ public:
     // void DLLEXPORT SphereUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
     void MovetoTarget(Vector vecTarget);
-    virtual void Crawl(void);
+    virtual void Crawl();
 
-    void Zap(void);
-    void Teleport(void);
+    void Zap();
+    void Teleport();
 
     float m_flIdealVel;
     Vector m_vecIdeal;

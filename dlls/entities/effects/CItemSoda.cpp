@@ -18,14 +18,14 @@
 
 LINK_ENTITY_TO_CLASS(item_sodacan, CItemSoda);
 
-void CItemSoda::Precache(void)
+void CItemSoda::Precache()
 {
     // added for Nemo1024  --LRC
     PRECACHE_MODEL("models/can.mdl");
     PRECACHE_SOUND("weapons/g_bounce3.wav");
 }
 
-void CItemSoda::Spawn(void)
+void CItemSoda::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
@@ -38,7 +38,7 @@ void CItemSoda::Spawn(void)
     SetNextThink(0.5);
 }
 
-void CItemSoda::CanThink(void)
+void CItemSoda::CanThink()
 {
     EMIT_SOUND(ENT(pev), CHAN_WEAPON, "weapons/g_bounce3.wav", 1, ATTN_NORM);
 

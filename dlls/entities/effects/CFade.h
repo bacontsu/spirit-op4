@@ -27,15 +27,15 @@
 class CFade : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
 
-    STATE GetState(void) override { return m_iState; } // LRC
-    void Think(void) override; //LRC
+    STATE GetState() override { return m_iState; } // LRC
+    void Think() override; //LRC
 
-    inline float Duration(void) { return pev->dmg_take; }
-    inline float HoldTime(void) { return pev->dmg_save; }
+    inline float Duration() { return pev->dmg_take; }
+    inline float HoldTime() { return pev->dmg_save; }
 
     inline void SetDuration(float duration) { pev->dmg_take = duration; }
     inline void SetHoldTime(float hold) { pev->dmg_save = hold; }

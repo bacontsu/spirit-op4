@@ -19,8 +19,8 @@
 class CGlow : public CPointEntity
 {
 public:
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
     void Animate(float frames);
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

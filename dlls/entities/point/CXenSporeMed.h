@@ -18,5 +18,5 @@
 
 class CXenSporeMed : public CXenSpore
 {
-    void Spawn(void) override;
+    void Spawn() override;
 };

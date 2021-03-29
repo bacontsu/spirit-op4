@@ -21,7 +21,7 @@ client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes
 
 WeaponsResource gWR;
 
-void WeaponsResource::LoadAllWeaponSprites(void)
+void WeaponsResource::LoadAllWeaponSprites()
 {
     for (int i = 0; i < MAX_WEAPONS; i++)
     {

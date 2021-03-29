@@ -37,13 +37,13 @@ void CWatcherCount::KeyValue(KeyValueData* pkvd)
         CBaseToggle::KeyValue(pkvd);
 }
 
-void CWatcherCount::Spawn(void)
+void CWatcherCount::Spawn()
 {
     pev->solid = SOLID_NOT;
     SetNextThink(0.5);
 }
 
-void CWatcherCount::Think(void)
+void CWatcherCount::Think()
 {
     SetNextThink(0.1);
     int iCount = 0;

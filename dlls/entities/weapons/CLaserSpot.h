@@ -18,14 +18,14 @@
 
 class CLaserSpot : public CBaseEntity
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    int ObjectCaps(void) override { return FCAP_DONT_SAVE; }
+    void Spawn() override;
+    void Precache() override;
+    int ObjectCaps() override { return FCAP_DONT_SAVE; }
 
 public:
     void Suspend(float flSuspendTime);
-    void DLLEXPORT Revive(void);
+    void DLLEXPORT Revive();
 
-    static CLaserSpot* CreateSpot(void);
+    static CLaserSpot* CreateSpot();
     static CLaserSpot* CreateSpot(const char* spritename);
 };

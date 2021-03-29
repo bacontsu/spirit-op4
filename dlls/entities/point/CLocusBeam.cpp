@@ -99,7 +99,7 @@ void CLocusBeam::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-void CLocusBeam::Precache(void)
+void CLocusBeam::Precache()
 {
     PRECACHE_MODEL((char*)STRING(m_iszSprite));
 }
@@ -171,7 +171,7 @@ void CLocusBeam::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
     }
 }
 
-void CLocusBeam::Spawn(void)
+void CLocusBeam::Spawn()
 {
     Precache();
     m_iFlags = 0;

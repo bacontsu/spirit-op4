@@ -134,7 +134,7 @@ void CNodeViewer::AddNode(int iFrom, int iTo)
 }
 
 
-void CNodeViewer::DrawThink(void)
+void CNodeViewer::DrawThink()
 {
     SetNextThink(0);
 

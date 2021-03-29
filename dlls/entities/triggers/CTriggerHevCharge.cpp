@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_hevcharge, CTriggerHevCharge);
 
-void CTriggerHevCharge::Spawn(void)
+void CTriggerHevCharge::Spawn()
 {
     InitTrigger();
     SetTouch(&CTriggerHevCharge::ChargeTouch);

@@ -25,19 +25,19 @@
 //=================================================================
 class CEnvModel : public CBaseAnimating
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT Think(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT Think() override;
     void KeyValue(KeyValueData* pkvd) override;
-    STATE GetState(void) override;
+    STATE GetState() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void SetSequence(void);
+    void SetSequence();
 
     string_t m_iszSequence_On;
     string_t m_iszSequence_Off;

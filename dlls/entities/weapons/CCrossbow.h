@@ -22,21 +22,21 @@
 class CCrossbow : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
 
-    void FireBolt(void);
-    void FireSniperBolt(void);
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
+    void FireBolt();
+    void FireSniperBolt();
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
     BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
-    void Reload(void) override;
-    void WeaponIdle(void) override;
+    void Reload() override;
+    void WeaponIdle() override;
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

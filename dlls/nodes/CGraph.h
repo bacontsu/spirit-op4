@@ -103,25 +103,25 @@ public:
     int HandleLinkEnt(int iNode, entvars_t* pevLinkEnt, int afCapMask, NODEQUERY queryType);
     entvars_t* LinkEntForLink(CLink* pLink, CNode* pNode);
     void ShowNodeConnections(int iNode);
-    void InitGraph(void);
-    int AllocNodes(void);
+    void InitGraph();
+    int AllocNodes();
 
     int CheckNODFile(char* szMapName);
     int FLoadGraph(char* szMapName);
     int FSaveGraph(char* szMapName);
-    int FSetGraphPointers(void);
+    int FSetGraphPointers();
     void CheckNode(Vector vecOrigin, int iNode);
 
-    void BuildRegionTables(void);
-    void ComputeStaticRoutingTables(void);
-    void TestRoutingTables(void);
+    void BuildRegionTables();
+    void ComputeStaticRoutingTables();
+    void TestRoutingTables();
 
     void HashInsert(int iSrcNode, int iDestNode, int iKey);
     void HashSearch(int iSrcNode, int iDestNode, int& iKey);
     void HashChoosePrimes(int TableSize);
-    void BuildLinkLookups(void);
+    void BuildLinkLookups();
 
-    void SortNodes(void);
+    void SortNodes();
 
     int HullIndex(const CBaseEntity* pEntity); // what hull the monster uses
     int NodeType(const CBaseEntity* pEntity); // what node type the monster uses

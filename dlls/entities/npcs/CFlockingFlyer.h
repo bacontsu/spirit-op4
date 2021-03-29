@@ -27,36 +27,36 @@
 class CFlockingFlyer : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SpawnCommonCode(void);
-    void DLLEXPORT IdleThink(void);
-    void BoidAdvanceFrame(void);
-    void DLLEXPORT FormFlock(void);
-    void DLLEXPORT Start(void);
-    void DLLEXPORT FlockLeaderThink(void);
-    void DLLEXPORT FlockFollowerThink(void);
-    void DLLEXPORT FallHack(void);
-    void MakeSound(void);
-    void AlertFlock(void);
-    void SpreadFlock(void);
-    void SpreadFlock2(void);
+    void Spawn() override;
+    void Precache() override;
+    void SpawnCommonCode();
+    void DLLEXPORT IdleThink();
+    void BoidAdvanceFrame();
+    void DLLEXPORT FormFlock();
+    void DLLEXPORT Start();
+    void DLLEXPORT FlockLeaderThink();
+    void DLLEXPORT FlockFollowerThink();
+    void DLLEXPORT FallHack();
+    void MakeSound();
+    void AlertFlock();
+    void SpreadFlock();
+    void SpreadFlock2();
     void Killed(entvars_t* pevAttacker, int iGib) override;
-    void Poop(void);
-    BOOL FPathBlocked(void);
+    void Poop();
+    BOOL FPathBlocked();
     //void KeyValue( KeyValueData *pkvd );
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    int IsLeader(void) { return m_pSquadLeader == this; }
-    int InSquad(void) { return m_pSquadLeader != NULL; }
-    int SquadCount(void);
+    int IsLeader() { return m_pSquadLeader == this; }
+    int InSquad() { return m_pSquadLeader != NULL; }
+    int SquadCount();
     void SquadRemove(CFlockingFlyer* pRemove);
-    void SquadUnlink(void);
+    void SquadUnlink();
     void SquadAdd(CFlockingFlyer* pAdd);
-    void SquadDisband(void);
+    void SquadDisband();
 
     CFlockingFlyer* m_pSquadLeader;
     CFlockingFlyer* m_pSquadNext;

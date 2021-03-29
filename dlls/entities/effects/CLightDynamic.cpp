@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(light_glow, CLightDynamic);
 
-void CLightDynamic::Spawn(void)
+void CLightDynamic::Spawn()
 {
     Precache();
 
@@ -32,7 +32,7 @@ void CLightDynamic::Spawn(void)
     }
 }
 
-void CLightDynamic::Precache(void)
+void CLightDynamic::Precache()
 {
     PRECACHE_MODEL("sprites/null.spr");
 }
@@ -49,7 +49,7 @@ void CLightDynamic::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     }
 }
 
-void CLightDynamic::SetEffects(void)
+void CLightDynamic::SetEffects()
 {
     if (pev->health)
     {
@@ -67,7 +67,7 @@ void CLightDynamic::SetEffects(void)
     }
 }
 
-STATE CLightDynamic::GetState(void)
+STATE CLightDynamic::GetState()
 {
     if (pev->health)
         return STATE_ON;

@@ -215,7 +215,7 @@ int TrainSpeed(int iSpeed, int iMax)
     return iRet;
 }
 
-void CBasePlayer::Pain(void)
+void CBasePlayer::Pain()
 {
     float flRndSound; //sound randomizer
 
@@ -229,7 +229,7 @@ void CBasePlayer::Pain(void)
         EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pl_pain7.wav", 1, ATTN_NORM);
 }
 
-void CBasePlayer::DeathSound(void)
+void CBasePlayer::DeathSound()
 {
     // water death sounds
     /*
@@ -570,7 +570,7 @@ int CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
 //
 // This is pretty brute force :(
 //=========================================================
-void CBasePlayer::PackDeadPlayerItems(void)
+void CBasePlayer::PackDeadPlayerItems()
 {
     int iWeaponRules;
     int iAmmoRules;
@@ -1282,12 +1282,12 @@ void CBasePlayer::WaterMove()
 }
 
 // TRUE if the player is attached to a ladder
-BOOL CBasePlayer::IsOnLadder(void)
+BOOL CBasePlayer::IsOnLadder()
 {
     return (pev->movetype == MOVETYPE_FLY);
 }
 
-void CBasePlayer::PlayerDeathThink(void)
+void CBasePlayer::PlayerDeathThink()
 {
     float flForward;
 
@@ -1379,7 +1379,7 @@ void CBasePlayer::PlayerDeathThink(void)
 // StartDeathCam - find an intermission spot and send the
 // player off into observer mode
 //=========================================================
-void CBasePlayer::StartDeathCam(void)
+void CBasePlayer::StartDeathCam()
 {
     CBaseEntity *pSpot, *pNewSpot;
     int iRand;
@@ -1508,7 +1508,7 @@ void CBasePlayer::StartObserver(Vector vecPosition, Vector vecViewAngle)
 // 
 // PlayerUse - handles USE keypress
 //
-void CBasePlayer::PlayerUse(void)
+void CBasePlayer::PlayerUse()
 {
     if (IsObserver())
         return;
@@ -1723,7 +1723,7 @@ void CBasePlayer::Duck()
 //
 // ID's player as such.
 //
-int CBasePlayer::Classify(void)
+int CBasePlayer::Classify()
 {
     return CLASS_PLAYER;
 }
@@ -1871,7 +1871,7 @@ void CBasePlayer::UpdateStatusBar()
     }
 }
 
-void CBasePlayer::PreThink(void)
+void CBasePlayer::PreThink()
 {
     int buttonsChanged = (m_afButtonLast ^ pev->button); // These buttons have changed this frame
 
@@ -2269,7 +2269,7 @@ Things powered by the battery
 */
 
 // if in range of radiation source, ping geiger counter
-void CBasePlayer::UpdateGeigerCounter(void)
+void CBasePlayer::UpdateGeigerCounter()
 {
     BYTE range;
 
@@ -2481,7 +2481,7 @@ static void CheckPowerups(entvars_t* pev)
 // UpdatePlayerSound - updates the position of the player's
 // reserved sound slot in the sound list.
 //=========================================================
-void CBasePlayer::UpdatePlayerSound(void)
+void CBasePlayer::UpdatePlayerSound()
 {
     int iBodyVolume;
     int iVolume;
@@ -2884,7 +2884,7 @@ ReturnSpot:
     return pSpot->edict();
 }
 
-void CBasePlayer::Spawn(void)
+void CBasePlayer::Spawn()
 {
     //    ALERT(at_console, "PLAYER spawns at time %f\n", gpGlobals->time);
 
@@ -2990,7 +2990,7 @@ void CBasePlayer::Spawn(void)
     g_pGameRules->PlayerSpawn(this);
 }
 
-void CBasePlayer::Precache(void)
+void CBasePlayer::Precache()
 {
     // in the event that the player JUST spawned, and the level node graph
     // was loaded, fix all of the node graph pointers before the game starts.
@@ -3045,7 +3045,7 @@ int CBasePlayer::Save(CSave& save)
 //
 // Marks everything as new so the player will resend this to the hud.
 //
-void CBasePlayer::RenewItems(void)
+void CBasePlayer::RenewItems()
 {
 }
 
@@ -3235,7 +3235,7 @@ void CBasePlayer::SelectItem(const char* pstr)
     }
 }
 
-void CBasePlayer::SelectLastItem(void)
+void CBasePlayer::SelectLastItem()
 {
     if (!m_pLastItem)
     {
@@ -3270,7 +3270,7 @@ void CBasePlayer::SelectLastItem(void)
 //==============================================
 // HasWeapons - do I have any weapons at all?
 //==============================================
-BOOL CBasePlayer::HasWeapons(void)
+BOOL CBasePlayer::HasWeapons()
 {
     int i;
 
@@ -3289,7 +3289,7 @@ void CBasePlayer::SelectPrevItem(int iItem)
 {
 }
 
-const char* CBasePlayer::TeamID(void)
+const char* CBasePlayer::TeamID()
 {
     if (pev == NULL) // Not fully connected yet
         return "";
@@ -3332,12 +3332,12 @@ CBaseEntity* FindEntityForward(CBaseEntity* pMe)
     return NULL;
 }
 
-BOOL CBasePlayer::FlashlightIsOn(void)
+BOOL CBasePlayer::FlashlightIsOn()
 {
     return FBitSet(pev->effects, EF_DIMLIGHT);
 }
 
-void CBasePlayer::FlashlightTurnOn(void)
+void CBasePlayer::FlashlightTurnOn()
 {
     if (!g_pGameRules->FAllowFlashlight())
     {
@@ -3358,7 +3358,7 @@ void CBasePlayer::FlashlightTurnOn(void)
     }
 }
 
-void CBasePlayer::FlashlightTurnOff(void)
+void CBasePlayer::FlashlightTurnOff()
 {
     if (FlashlightIsOn())
         EMIT_SOUND_DYN(ENT(pev), CHAN_WEAPON, SOUND_FLASHLIGHT_OFF, 1.0, ATTN_NORM, 0, PITCH_NORM);
@@ -3381,7 +3381,7 @@ so that the client side .dll can behave correctly.
 Reset stuff so that the state is transmitted.
 ===============
 */
-void CBasePlayer::ForceClientDllUpdate(void)
+void CBasePlayer::ForceClientDllUpdate()
 {
     m_iClientHealth = -1;
     m_iClientBattery = -1;
@@ -3960,7 +3960,7 @@ int CBasePlayer::GetAmmoIndex(const char* psz)
 
 // Called from UpdateClientData
 // makes sure the client has all the necessary ammo info,  if values have changed
-void CBasePlayer::SendAmmoUpdate(void)
+void CBasePlayer::SendAmmoUpdate()
 {
     for (int i = 0; i < MAX_AMMO_SLOTS; i++)
     {
@@ -4009,7 +4009,7 @@ ForceClientDllUpdate to ensure the demo gets messages
 reflecting all of the HUD state info.
 =========================================================
 */
-void CBasePlayer::UpdateClientData(void)
+void CBasePlayer::UpdateClientData()
 {
 	const bool fullHUDInitRequired = m_fInitHUD != FALSE;
 
@@ -4333,7 +4333,7 @@ void CBasePlayer::UpdateClientData(void)
 // FBecomeProne - Overridden for the player to set the proper
 // physics flags when a barnacle grabs player.
 //=========================================================
-BOOL CBasePlayer::FBecomeProne(void)
+BOOL CBasePlayer::FBecomeProne()
 {
     m_afPhysicsFlags |= PFLAG_ONBARNACLE;
     return TRUE;
@@ -4353,7 +4353,7 @@ void CBasePlayer::BarnacleVictimBitten(entvars_t* pevBarnacle)
 // BarnacleVictimReleased - overridden for player who has
 // physics flags concerns.
 //=========================================================
-void CBasePlayer::BarnacleVictimReleased(void)
+void CBasePlayer::BarnacleVictimReleased()
 {
     m_afPhysicsFlags &= ~PFLAG_ONBARNACLE;
 }
@@ -4362,7 +4362,7 @@ void CBasePlayer::BarnacleVictimReleased(void)
 // Illumination
 // return player light level plus virtual muzzle flash
 //=========================================================
-int CBasePlayer::Illumination(void)
+int CBasePlayer::Illumination()
 {
     int iIllum = CBaseEntity::Illumination();
 
@@ -4644,7 +4644,7 @@ GetCustomDecalFrames
   Returns the # of custom frames this player's custom clan logo contains.
 =============
 */
-int CBasePlayer::GetCustomDecalFrames(void)
+int CBasePlayer::GetCustomDecalFrames()
 {
     return m_nCustomSprayFrames;
 }

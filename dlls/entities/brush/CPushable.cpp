@@ -32,12 +32,12 @@ int CPushable::ObjectCaps()
     return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE;
 }
 
-float CPushable::MaxSpeed(void)
+float CPushable::MaxSpeed()
 {
     return m_maxSpeed;
 }
 
-void CPushable::Spawn(void)
+void CPushable::Spawn()
 {
     Vector vecMins = pev->mins;
     Vector vecMaxs = pev->maxs;
@@ -69,7 +69,7 @@ void CPushable::Spawn(void)
 }
 
 
-void CPushable::Precache(void)
+void CPushable::Precache()
 {
     for (int i = 0; i < 3; i++)
         PRECACHE_SOUND(m_soundNames[i]);
@@ -239,7 +239,7 @@ void CPushable::Move(CBaseEntity* pOther, int push)
 }
 
 #if 0
-void CPushable::StopSound(void)
+void CPushable::StopSound()
 {
     Vector dist = pev->oldorigin - pev->origin;
     if (dist.Length() <= 0)
@@ -255,7 +255,7 @@ int CPushable::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float
     return 1;
 }
 
-void CPushable::DoRespawn(void)
+void CPushable::DoRespawn()
 {
     //AJH Fix for respawnable breakable pushables (BY HAWK777)
     pev->solid = SOLID_BBOX;

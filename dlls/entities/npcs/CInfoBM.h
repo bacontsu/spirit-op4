@@ -20,7 +20,7 @@
 class CInfoBM : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
 
     // name in pev->targetname

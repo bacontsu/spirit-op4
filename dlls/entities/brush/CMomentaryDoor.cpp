@@ -45,7 +45,7 @@ bool CMomentaryDoor::CalcNumber(CBaseEntity* pLocus, float* OUTresult)
     return true;
 }
 
-void CMomentaryDoor::Spawn( void )
+void CMomentaryDoor::Spawn()
 {
     SetMovedir (pev);
 
@@ -87,7 +87,7 @@ void CMomentaryDoor::Spawn( void )
     
 }
 
-void CMomentaryDoor::Precache( void )
+void CMomentaryDoor::Precache()
 {
 
 // set the door's "in-motion" sound
@@ -256,7 +256,7 @@ void CMomentaryDoor::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 //
 // The door has reached needed position.
 //
-void CMomentaryDoor::DoorMoveDone( void )
+void CMomentaryDoor::DoorMoveDone()
 {
     m_iState = STATE_OFF;
     STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving) );

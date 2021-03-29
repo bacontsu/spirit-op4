@@ -21,17 +21,17 @@
 class CHandGrenade : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
 
-    void PrimaryAttack(void) override;
-    BOOL Deploy(void) override;
-    BOOL CanHolster(void) override;
+    void PrimaryAttack() override;
+    BOOL Deploy() override;
+    BOOL CanHolster() override;
     void Holster(int skiplocal = 0) override;
-    void WeaponIdle(void) override;
+    void WeaponIdle() override;
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

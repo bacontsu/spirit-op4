@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_autosave, CTriggerSave);
 
-void CTriggerSave::Spawn(void)
+void CTriggerSave::Spawn()
 {
     if (g_pGameRules->IsDeathmatch())
     {

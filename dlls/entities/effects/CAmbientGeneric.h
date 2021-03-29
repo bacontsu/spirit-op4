@@ -70,18 +70,18 @@ class CAmbientGeneric : public CBaseEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
-    //    void PostSpawn( void );
-    void Precache(void) override;
+    void Spawn() override;
+    //    void PostSpawn();
+    void Precache() override;
     void DLLEXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT StartPlayFrom(void);
-    void DLLEXPORT RampThink(void);
-    void InitModulationParms(void);
+    void DLLEXPORT StartPlayFrom();
+    void DLLEXPORT RampThink();
+    void InitModulationParms();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
-    int ObjectCaps(void) override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+    int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
     float m_flAttenuation; // attenuation value
     dynpitchvol_t m_dpv;

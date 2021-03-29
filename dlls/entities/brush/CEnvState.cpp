@@ -37,7 +37,7 @@ STATE CEnvState::GetState()
     return m_iState;
 }
 
-void CEnvState::Spawn( void )
+void CEnvState::Spawn()
 {
     if (pev->spawnflags & SF_ENVSTATE_START_ON)
         m_iState = STATE_ON;
@@ -147,7 +147,7 @@ void CEnvState::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
     }
 }
 
-void CEnvState::Think( void )
+void CEnvState::Think()
 {
     if (m_iState == STATE_TURN_ON)
     {

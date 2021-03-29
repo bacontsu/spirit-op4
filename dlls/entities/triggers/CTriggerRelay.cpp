@@ -71,7 +71,7 @@ void CTriggerRelay::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CTriggerRelay::Spawn(void)
+void CTriggerRelay::Spawn()
 {
     if (FStringNull(m_triggerType)) //G-Cont. Hmm... In original Half-life, all nice works without this stuff
         m_triggerType = USE_ON;

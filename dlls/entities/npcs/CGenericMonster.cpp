@@ -69,7 +69,7 @@ void CGenericMonster::KeyValue(KeyValueData* pkvd)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CGenericMonster::Classify(void)
+int CGenericMonster::Classify()
 {
     return m_iClass ? m_iClass : CLASS_PLAYER_ALLY;
 }
@@ -78,7 +78,7 @@ int CGenericMonster::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CGenericMonster::SetYawSpeed(void)
+void CGenericMonster::SetYawSpeed()
 {
     int ys;
 
@@ -141,7 +141,7 @@ void CGenericMonster::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // ISoundMask - generic monster can't hear.
 //=========================================================
-int CGenericMonster::ISoundMask(void)
+int CGenericMonster::ISoundMask()
 {
     return bits_SOUND_NONE;
 }
@@ -241,7 +241,7 @@ enum
 // =========================================================
 // TORCH SUPPORT
 // =========================================================
-void CGenericMonster::Torch(void)
+void CGenericMonster::Torch()
 {
     Vector vecGunPos;
     Vector vecGunAngles;
@@ -254,11 +254,11 @@ void CGenericMonster::Torch(void)
     SetBlending(0, angDir.x);
 }
 
-void CGenericMonster::UpdateGas(void)
+void CGenericMonster::UpdateGas()
 {
 }
 
-void CGenericMonster::MakeGas(void)
+void CGenericMonster::MakeGas()
 {
     Vector posGun, angleGun;
     TraceResult tr;
@@ -297,7 +297,7 @@ void CGenericMonster::MakeGas(void)
     }
 }
 
-void CGenericMonster::KillGas(void)
+void CGenericMonster::KillGas()
 {
     if (m_pBeam)
     {

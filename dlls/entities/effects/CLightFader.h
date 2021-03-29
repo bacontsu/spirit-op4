@@ -19,8 +19,8 @@
 class CLightFader : public CPointEntity
 {
 public:
-    void DLLEXPORT FadeThink(void);
-    void DLLEXPORT WaitThink(void);
+    void DLLEXPORT FadeThink();
+    void DLLEXPORT WaitThink();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

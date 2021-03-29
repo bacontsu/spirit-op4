@@ -18,13 +18,13 @@
 
 class CSatchelCharge : public CGrenade
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    void BounceSound(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void BounceSound() override;
 
     void DLLEXPORT SatchelSlide(CBaseEntity* pOther);
-    void DLLEXPORT SatchelThink(void);
+    void DLLEXPORT SatchelThink();
 
 public:
-    void Deactivate(void);
+    void Deactivate();
 };

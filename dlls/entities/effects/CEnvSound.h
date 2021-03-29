@@ -20,9 +20,9 @@ class CEnvSound : public CPointEntity
 {
 public:
     void KeyValue(KeyValueData* pkvd) override;
-    void Spawn(void) override;
+    void Spawn() override;
 
-    void Think(void) override;
+    void Think() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

@@ -18,8 +18,8 @@
 
 class CEnvShooter : public CGibShooter
 {
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
 
     int Save(CSave& save) override;

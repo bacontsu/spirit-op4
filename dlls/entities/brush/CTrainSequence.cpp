@@ -45,7 +45,7 @@ TYPEDESCRIPTION CTrainSequence::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CTrainSequence, CBaseEntity);
 
-int CTrainSequence::ObjectCaps(void)
+int CTrainSequence::ObjectCaps()
 {
     return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION);
 }

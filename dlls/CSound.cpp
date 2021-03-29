@@ -19,7 +19,7 @@
 //=========================================================
 // CSound - Clear - zeros all fields for a sound
 //=========================================================
-void CSound::Clear(void)
+void CSound::Clear()
 {
     m_vecOrigin = g_vecZero;
     m_iType = 0;
@@ -33,7 +33,7 @@ void CSound::Clear(void)
 // Reset - clears the volume, origin, and type for a sound,
 // but doesn't expire or unlink it. 
 //=========================================================
-void CSound::Reset(void)
+void CSound::Reset()
 {
     m_vecOrigin = g_vecZero;
     m_iType = 0;
@@ -44,7 +44,7 @@ void CSound::Reset(void)
 //=========================================================
 // FIsSound - returns TRUE if the sound is an Audible sound
 //=========================================================
-BOOL CSound::FIsSound(void)
+BOOL CSound::FIsSound()
 {
     if (m_iType & (bits_SOUND_COMBAT | bits_SOUND_WORLD | bits_SOUND_PLAYER | bits_SOUND_DANGER))
     {
@@ -57,7 +57,7 @@ BOOL CSound::FIsSound(void)
 //=========================================================
 // FIsScent - returns TRUE if the sound is actually a scent
 //=========================================================
-BOOL CSound::FIsScent(void)
+BOOL CSound::FIsScent()
 {
     if (m_iType & (bits_SOUND_CARCASS | bits_SOUND_MEAT | bits_SOUND_GARBAGE))
     {

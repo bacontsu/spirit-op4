@@ -29,7 +29,7 @@ TYPEDESCRIPTION CBubbling::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CBubbling, CBaseEntity);
 
 
-void CBubbling::Spawn(void)
+void CBubbling::Spawn()
 {
     Precache();
     SET_MODEL(ENT(pev), STRING(pev->model)); // Set size
@@ -55,7 +55,7 @@ void CBubbling::Spawn(void)
         m_state = 0;
 }
 
-void CBubbling::Precache(void)
+void CBubbling::Precache()
 {
     m_bubbleModel = PRECACHE_MODEL("sprites/bubble.spr"); // Precache bubble sprite
 }
@@ -100,7 +100,7 @@ void CBubbling::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CBubbling::FizzThink(void)
+void CBubbling::FizzThink()
 {
     MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, VecBModelOrigin(pev));
     WRITE_BYTE(TE_FIZZ);

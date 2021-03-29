@@ -68,7 +68,7 @@ void CMotionManager::KeyValue(KeyValueData* pkvd)
         CPointEntity::KeyValue(pkvd);
 }
 
-void CMotionManager::PostSpawn(void)
+void CMotionManager::PostSpawn()
 {
     pThread = GetClassPtr((CMotionThread*)NULL);
     if (FStringNull(pev->targetname))

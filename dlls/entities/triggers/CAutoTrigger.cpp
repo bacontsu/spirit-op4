@@ -58,7 +58,7 @@ void CAutoTrigger::KeyValue(KeyValueData* pkvd)
         CBaseDelay::KeyValue(pkvd);
 }
 
-void CAutoTrigger::Activate(void)
+void CAutoTrigger::Activate()
 {
     //    ALERT(at_console, "trigger_auto targetting \"%s\": activate\n", STRING(pev->target));
     UTIL_DesiredAction(this); //LRC - don't think until the player has spawned.
@@ -66,7 +66,7 @@ void CAutoTrigger::Activate(void)
     CBaseDelay::Activate();
 }
 
-void CAutoTrigger::DesiredAction(void)
+void CAutoTrigger::DesiredAction()
 {
     //    ALERT(at_console, "trigger_auto targetting \"%s\": Fire at time %f\n", STRING(pev->target), gpGlobals->time);
     if (!m_globalstate || gGlobalState.EntityGetState(m_globalstate) == GLOBAL_ON)

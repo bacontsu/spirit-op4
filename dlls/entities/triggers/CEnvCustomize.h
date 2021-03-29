@@ -36,17 +36,17 @@
 class CEnvCustomize : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void PostSpawn(void) override;
-    void DesiredAction(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void PostSpawn() override;
+    void DesiredAction() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     void Affect(CBaseEntity* pTarget, USE_TYPE useType);
     int GetActionFor(int iField, int iActive, USE_TYPE useType, char* szDebug);
     void SetBoneController(float fController, int cnum, CBaseEntity* pTarget);
 
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     void KeyValue(KeyValueData* pkvd) override;
     int Save(CSave& save) override;

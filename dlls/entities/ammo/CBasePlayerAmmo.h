@@ -19,10 +19,10 @@
 class CBasePlayerAmmo : public CBasePlayerItem //AJH
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void DLLEXPORT DefaultTouch(CBaseEntity* pOther); // default weapon touch
     virtual BOOL AddAmmo(CBaseEntity* pOther) { return TRUE; }
 
-    CBaseEntity* Respawn(void) override;
-    void DLLEXPORT Materialize(void);
+    CBaseEntity* Respawn() override;
+    void DLLEXPORT Materialize();
 };

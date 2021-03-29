@@ -22,20 +22,20 @@
 class CCrowbar : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT SwingAgain(void);
-    void DLLEXPORT Smack(void);
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT SwingAgain();
+    void DLLEXPORT Smack();
     int GetItemInfo(ItemInfo* p) override;
 
-    void PrimaryAttack(void) override;
+    void PrimaryAttack() override;
     int Swing(int fFirst);
-    BOOL Deploy(void) override;
+    BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
     int m_iSwing;
     TraceResult m_trHit;
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

@@ -102,7 +102,7 @@ void CBaseDelay::SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float
     }
 }
 
-void CBaseDelay::DelayThink(void)
+void CBaseDelay::DelayThink()
 {
     CBaseEntity* pActivator = NULL;
 

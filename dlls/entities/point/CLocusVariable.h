@@ -19,7 +19,7 @@
 class CLocusVariable : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     bool CalcVelocity(CBaseEntity* pLocus, Vector* OUTresult) override

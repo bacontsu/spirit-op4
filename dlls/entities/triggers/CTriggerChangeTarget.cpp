@@ -37,7 +37,7 @@ void CTriggerChangeTarget::KeyValue(KeyValueData* pkvd)
         CBaseDelay::KeyValue(pkvd);
 }
 
-void CTriggerChangeTarget::Spawn(void)
+void CTriggerChangeTarget::Spawn()
 {
 }
 

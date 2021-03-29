@@ -46,14 +46,14 @@ public:
     CTeamMenuPanel(int iTrans, int iRemoveMe, int x, int y, int wide, int tall);
 
     bool SlotInput(int iSlot) override;
-    void Open(void) override;
-    virtual void Update(void);
+    void Open() override;
+    virtual void Update();
     void SetActiveInfo(int iInput) override;
-    void paintBackground(void) override;
+    void paintBackground() override;
 
-    virtual void Initialize(void);
+    virtual void Initialize();
 
-    void Reset(void) override
+    void Reset() override
     {
         CMenuPanel::Reset();
         m_iCurrentInfo = 0;

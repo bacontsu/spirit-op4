@@ -28,11 +28,11 @@
 class CTriggerOnSight : public CBaseDelay
 {
 public:
-    void Spawn(void) override;
-    void Think(void) override;
-    BOOL VisionCheck(void);
+    void Spawn() override;
+    void Think() override;
+    BOOL VisionCheck();
     BOOL CanSee(CBaseEntity* pLooker, CBaseEntity* pSeen);
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     STATE GetState() override;
 };

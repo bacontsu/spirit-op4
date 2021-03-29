@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(spark_shower, CShower);
 
-void CShower::Spawn(void)
+void CShower::Spawn()
 {
     pev->velocity = RANDOM_FLOAT(200, 300) * pev->angles;
     pev->velocity.x += RANDOM_FLOAT(-100.f, 100.f);
@@ -39,7 +39,7 @@ void CShower::Spawn(void)
 }
 
 
-void CShower::Think(void)
+void CShower::Think()
 {
     UTIL_Sparks(pev->origin);
 

@@ -85,7 +85,7 @@ BOOL FEnvSoundInRange(entvars_t* pev, entvars_t* pevTarget, float* pflRange)
 
 // CONSIDER: if player in water state, autoset roomtype to 14,15 or 16. 
 
-void CEnvSound::Think(void)
+void CEnvSound::Think()
 {
     // get pointer to client if visible; FIND_CLIENT_IN_PVS will
     // cycle through visible clients on consecutive calls.

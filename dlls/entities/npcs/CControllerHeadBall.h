@@ -21,13 +21,13 @@
 //=========================================================
 class CControllerHeadBall : public CBaseMonster
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT HuntThink(void);
-    void DLLEXPORT DieThink(void);
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT HuntThink();
+    void DLLEXPORT DieThink();
     void DLLEXPORT BounceTouch(CBaseEntity* pOther);
     void MovetoTarget(Vector vecTarget);
-    void Crawl(void);
+    void Crawl();
     int m_iTrail;
     int m_flNextAttack;
     Vector m_vecIdeal;

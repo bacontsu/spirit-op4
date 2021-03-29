@@ -17,12 +17,12 @@
 
 CGlobalState gGlobalState;
 
-CGlobalState::CGlobalState(void)
+CGlobalState::CGlobalState()
 {
     Reset();
 }
 
-void CGlobalState::Reset(void)
+void CGlobalState::Reset()
 {
     m_pList = NULL;
     m_listCount = 0;
@@ -49,7 +49,7 @@ globalentity_t* CGlobalState::Find(string_t globalname)
     return pTest;
 }
 
-void CGlobalState::DumpGlobals(void)
+void CGlobalState::DumpGlobals()
 {
     static const char* estates[] = {"Off", "On", "Dead"};
     globalentity_t* pTest;
@@ -164,7 +164,7 @@ void CGlobalState::EntityUpdate(string_t globalname, string_t mapname)
         strcpy(pEnt->levelName, STRING(mapname));
 }
 
-void CGlobalState::ClearStates(void)
+void CGlobalState::ClearStates()
 {
     globalentity_t* pFree = m_pList;
     while (pFree)

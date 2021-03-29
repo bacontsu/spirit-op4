@@ -20,9 +20,9 @@ class CActAnimating : public CBaseAnimating
 {
 public:
     void SetActivity(Activity act);
-    inline Activity GetActivity(void) { return m_Activity; }
+    inline Activity GetActivity() { return m_Activity; }
 
-    int ObjectCaps(void) override { return CBaseAnimating::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseAnimating::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

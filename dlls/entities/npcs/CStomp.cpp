@@ -33,7 +33,7 @@ CStomp* CStomp::StompCreate(const Vector& origin, const Vector& end, float speed
     return pStomp;
 }
 
-void CStomp::Spawn(void)
+void CStomp::Spawn()
 {
     SetNextThink(0);
     pev->classname = MAKE_STRING("garg_stomp");
@@ -46,7 +46,7 @@ void CStomp::Spawn(void)
     EMIT_SOUND_DYN(edict(), CHAN_BODY, GARG_STOMP_BUZZ_SOUND, 1, ATTN_NORM, 0, PITCH_NORM * 0.55);
 }
 
-void CStomp::Think(void)
+void CStomp::Think()
 {
     TraceResult tr;
 

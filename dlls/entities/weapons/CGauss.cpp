@@ -55,7 +55,7 @@ IMPLEMENT_SAVERESTORE(CGauss, CBasePlayerWeapon);
 
 #endif
 
-float CGauss::GetFullChargeTime(void)
+float CGauss::GetFullChargeTime()
 {
 #ifdef CLIENT_DLL
     if (bIsMultiplayer())
@@ -85,7 +85,7 @@ void CGauss::Spawn()
 }
 
 
-void CGauss::Precache(void)
+void CGauss::Precache()
 {
     PRECACHE_MODEL("models/w_gauss.mdl");
     PRECACHE_MODEL("models/v_gauss.mdl");
@@ -319,7 +319,7 @@ void CGauss::SecondaryAttack()
 // of weaponidle() and make its own function then to try to
 // merge this into Fire(), which has some identical variable names 
 //=========================================================
-void CGauss::StartFire(void)
+void CGauss::StartFire()
 {
     float flDamage;
 
@@ -551,7 +551,7 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 }
 
 
-void CGauss::WeaponIdle(void)
+void CGauss::WeaponIdle()
 {
     ResetEmptySound();
 

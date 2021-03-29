@@ -22,12 +22,12 @@
 class CStack
 {
 public:
-    CStack(void);
+    CStack();
     void Push(int value);
-    int Pop(void);
-    int Top(void);
-    int Empty(void) { return m_level == 0; }
-    int Size(void) { return m_level; }
+    int Pop();
+    int Top();
+    int Empty() { return m_level == 0; }
+    int Size() { return m_level; }
     void CopyToArray(int* piArray);
 
 private:

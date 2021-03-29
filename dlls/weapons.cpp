@@ -50,7 +50,7 @@ Collects multiple small damages into a single damage
 //
 // ClearMultiDamage - resets the global multi damage accumulator
 //
-void ClearMultiDamage(void)
+void ClearMultiDamage()
 {
     gMultiDamage.pEntity = NULL;
     gMultiDamage.amount    = 0;
@@ -238,7 +238,7 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 }
 
 // called by worldspawn
-void W_Precache(void)
+void W_Precache()
 {
     memset( CBasePlayerItem::ItemInfoArray, 0, sizeof(CBasePlayerItem::ItemInfoArray) );
     memset( CBasePlayerItem::AmmoInfoArray, 0, sizeof(CBasePlayerItem::AmmoInfoArray) );

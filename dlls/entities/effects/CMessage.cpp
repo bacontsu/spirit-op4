@@ -19,7 +19,7 @@
 LINK_ENTITY_TO_CLASS(env_message, CMessage);
 
 
-void CMessage::Spawn(void)
+void CMessage::Spawn()
 {
     Precache();
 
@@ -53,7 +53,7 @@ void CMessage::Spawn(void)
 }
 
 
-void CMessage::Precache(void)
+void CMessage::Precache()
 {
     if (pev->noise)
         PRECACHE_SOUND((char*)STRING(pev->noise));

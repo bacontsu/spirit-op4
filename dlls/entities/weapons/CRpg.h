@@ -27,27 +27,27 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 #endif
 
-    void Spawn(void) override;
-    void Precache(void) override;
-    void Reload(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void Reload() override;
     int GetItemInfo(ItemInfo* p) override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
 
-    BOOL Deploy(void) override;
-    BOOL CanHolster(void) override;
+    BOOL Deploy() override;
+    BOOL CanHolster() override;
     void Holster(int skiplocal = 0) override;
 
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
-    void WeaponIdle(void) override;
-    void UpdateSpot(void);
-    BOOL ShouldWeaponIdle(void) override { return TRUE; }
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    void WeaponIdle() override;
+    void UpdateSpot();
+    BOOL ShouldWeaponIdle() override { return TRUE; }
 
     CLaserSpot* m_pSpot;
     int m_fSpotActive;
     int m_cActiveRockets; // how many missiles in flight from this launcher right now?
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

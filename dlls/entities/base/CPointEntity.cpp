@@ -21,7 +21,7 @@ LINK_ENTITY_TO_CLASS(info_landmark, CPointEntity);
 LINK_ENTITY_TO_CLASS(info_teleport_destination, CPointEntity);
 
 // Landmark class
-void CPointEntity::Spawn(void)
+void CPointEntity::Spawn()
 {
     pev->solid = SOLID_NOT;
 }

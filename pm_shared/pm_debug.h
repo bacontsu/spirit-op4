@@ -16,9 +16,9 @@
 #define PM_DEBUG_H
 #pragma once
 
-void PM_ViewEntity( void );
+void PM_ViewEntity();
 void PM_DrawBBox(vec3_pm_t mins, vec3_pm_t maxs, vec3_pm_t origin, int pcolor, float life);
 void PM_ParticleLine(vec3_pm_t start, vec3_pm_t end, int pcolor, float life, float vert);
-void PM_ShowClipBox( void );
+void PM_ShowClipBox();
 
 #endif // PMOVEDBG_H

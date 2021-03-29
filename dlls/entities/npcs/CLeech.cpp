@@ -66,7 +66,7 @@ const char* CLeech::pAlertSounds[] =
 };
 
 
-void CLeech::Spawn(void)
+void CLeech::Spawn()
 {
     Precache();
     if (pev->model)
@@ -101,14 +101,14 @@ void CLeech::Spawn(void)
 }
 
 
-void CLeech::Activate(void)
+void CLeech::Activate()
 {
     RecalculateWaterlevel();
     CBaseMonster::Activate();
 }
 
 
-void CLeech::RecalculateWaterlevel(void)
+void CLeech::RecalculateWaterlevel()
 {
     // Calculate boundaries
     Vector vecTest = pev->origin - Vector(0, 0, 400);
@@ -132,7 +132,7 @@ void CLeech::RecalculateWaterlevel(void)
 }
 
 
-void CLeech::SwitchLeechState(void)
+void CLeech::SwitchLeechState()
 {
     m_stateTime = gpGlobals->time + RANDOM_FLOAT(3, 6);
     if (m_MonsterState == MONSTERSTATE_COMBAT)
@@ -165,7 +165,7 @@ int CLeech::IRelationship(CBaseEntity* pTarget)
 }
 
 
-void CLeech::AttackSound(void)
+void CLeech::AttackSound()
 {
     if (gpGlobals->time > m_attackSoundTime)
     {
@@ -175,13 +175,13 @@ void CLeech::AttackSound(void)
 }
 
 
-void CLeech::AlertSound(void)
+void CLeech::AlertSound()
 {
     EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pAlertSounds[RANDOM_LONG(0, ARRAYSIZE(pAlertSounds) - 1)], 1.0, ATTN_NORM * 0.5, 0, PITCH_NORM);
 }
 
 
-void CLeech::Precache(void)
+void CLeech::Precache()
 {
     int i;
 
@@ -255,7 +255,7 @@ void CLeech::HandleAnimEvent(MonsterEvent_t* pEvent)
 }
 
 
-void CLeech::MakeVectors(void)
+void CLeech::MakeVectors()
 {
     Vector tmp = pev->angles;
     tmp.x = -tmp.x;
@@ -319,7 +319,7 @@ float CLeech::ObstacleDistance(CBaseEntity* pTarget)
 }
 
 
-void CLeech::DeadThink(void)
+void CLeech::DeadThink()
 {
     if (m_fSequenceFinished)
     {
@@ -354,7 +354,7 @@ void CLeech::DeadThink(void)
 }
 
 
-void CLeech::UpdateMotion(void)
+void CLeech::UpdateMotion()
 {
     float flapspeed = (pev->speed - m_flAccelerate) / LEECH_ACCELERATE;
     m_flAccelerate = m_flAccelerate * 0.8 + pev->speed * 0.2;
@@ -458,7 +458,7 @@ void CLeech::UpdateMotion(void)
 }
 
 
-void CLeech::SwimThink(void)
+void CLeech::SwimThink()
 {
     TraceResult tr;
     float flLeftSide;

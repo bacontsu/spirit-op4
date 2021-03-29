@@ -29,7 +29,7 @@ void CSprayCan::Spawn(entvars_t* pevOwner)
     EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/sprayer.wav", 1, ATTN_NORM);
 }
 
-void CSprayCan::Think(void)
+void CSprayCan::Think()
 {
     TraceResult tr;
     int playernum;

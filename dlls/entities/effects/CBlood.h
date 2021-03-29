@@ -25,12 +25,12 @@
 class CBlood : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
 
-    inline int Color(void) { return pev->impulse; }
-    inline float BloodAmount(void) { return pev->dmg; }
+    inline int Color() { return pev->impulse; }
+    inline float BloodAmount() { return pev->dmg; }
 
     inline void SetColor(int color) { pev->impulse = color; }
     inline void SetBloodAmount(float amount) { pev->dmg = amount; }

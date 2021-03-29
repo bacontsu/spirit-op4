@@ -22,16 +22,16 @@
 //=========================================================
 class CWeaponBox : public CBaseEntity
 {
-    void Precache(void) override;
-    void Spawn(void) override;
+    void Precache() override;
+    void Spawn() override;
     void Touch(CBaseEntity* pOther) override;
     void KeyValue(KeyValueData* pkvd) override;
-    BOOL IsEmpty(void);
+    BOOL IsEmpty();
     int GiveAmmo(int iCount, const char* szName, int iMax, int* pIndex = NULL);
-    void SetObjectCollisionBox(void) override;
+    void SetObjectCollisionBox() override;
 
 public:
-    void DLLEXPORT Kill(void);
+    void DLLEXPORT Kill();
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];

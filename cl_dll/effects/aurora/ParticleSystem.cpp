@@ -109,7 +109,7 @@ void ParticleSystem::AllocateParticles(int iParticles)
     pLast->nextpart = NULL;
 }
 
-ParticleSystem::~ParticleSystem(void)
+ParticleSystem::~ParticleSystem()
 {
     delete[] m_pAllParticles;
 

@@ -88,7 +88,7 @@ void CBasePlatTrain::KeyValue(KeyValueData* pkvd)
 #define noiseMoving noise
 #define noiseArrived noise1
 
-void CBasePlatTrain::Precache(void)
+void CBasePlatTrain::Precache()
 {
     // set the plat's "in-motion" sound
     if (FStringNull(pev->noiseMoving))

@@ -19,8 +19,8 @@
 // Spark Shower
 class CShower : public CBaseEntity
 {
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
     void Touch(CBaseEntity* pOther) override;
-    int ObjectCaps(void) override { return FCAP_DONT_SAVE; }
+    int ObjectCaps() override { return FCAP_DONT_SAVE; }
 };

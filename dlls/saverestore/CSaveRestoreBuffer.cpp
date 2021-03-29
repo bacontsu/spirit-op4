@@ -18,7 +18,7 @@
 
 
 // Base class includes common SAVERESTOREDATA pointer, and manages the entity table
-CSaveRestoreBuffer::CSaveRestoreBuffer(void)
+CSaveRestoreBuffer::CSaveRestoreBuffer()
 {
     m_pdata = NULL;
 }
@@ -30,7 +30,7 @@ CSaveRestoreBuffer::CSaveRestoreBuffer(SAVERESTOREDATA* pdata)
 }
 
 
-CSaveRestoreBuffer::~CSaveRestoreBuffer(void)
+CSaveRestoreBuffer::~CSaveRestoreBuffer()
 {
 }
 

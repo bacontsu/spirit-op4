@@ -41,7 +41,7 @@ TYPEDESCRIPTION CTriggerCamera::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CTriggerCamera, CBaseDelay);
 
-void CTriggerCamera::Spawn(void)
+void CTriggerCamera::Spawn()
 {
     pev->movetype = MOVETYPE_NOCLIP;
     pev->solid = SOLID_NOT; // Remove model & collisions

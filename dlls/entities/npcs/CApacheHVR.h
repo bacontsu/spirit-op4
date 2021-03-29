@@ -18,10 +18,10 @@
 
 class CApacheHVR : public CGrenade
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    void DLLEXPORT IgniteThink(void);
-    void DLLEXPORT AccelerateThink(void);
+    void Spawn() override;
+    void Precache() override;
+    void DLLEXPORT IgniteThink();
+    void DLLEXPORT AccelerateThink();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

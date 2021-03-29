@@ -28,7 +28,7 @@ void CTargetCDAudio::KeyValue(KeyValueData* pkvd)
         CPointEntity::KeyValue(pkvd);
 }
 
-void CTargetCDAudio::Spawn(void)
+void CTargetCDAudio::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -43,7 +43,7 @@ void CTargetCDAudio::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 }
 
 // only plays for ONE client, so only use in single play!
-void CTargetCDAudio::Think(void)
+void CTargetCDAudio::Think()
 {
     edict_t* pClient;
 
@@ -60,7 +60,7 @@ void CTargetCDAudio::Think(void)
         Play();
 }
 
-void CTargetCDAudio::Play(void)
+void CTargetCDAudio::Play()
 {
     PlayCDTrack((int)pev->health, (int)pev->message);
     UTIL_Remove(this);

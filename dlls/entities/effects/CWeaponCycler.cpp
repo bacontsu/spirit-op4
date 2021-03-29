@@ -56,7 +56,7 @@ void CWeaponCycler::PrimaryAttack()
 }
 
 
-void CWeaponCycler::SecondaryAttack(void)
+void CWeaponCycler::SecondaryAttack()
 {
     float flFrameRate, flGroundSpeed;
 

@@ -17,7 +17,7 @@
 
 using namespace vgui;
 
-void CTFSlider::paintBackground(void)
+void CTFSlider::paintBackground()
 {
     int wide, tall, nobx, noby;
     getPaintSize(wide, tall);

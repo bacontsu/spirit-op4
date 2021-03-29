@@ -59,7 +59,7 @@ IMPLEMENT_SAVERESTORE(CRpg, CBasePlayerWeapon);
 #endif
 
 
-void CRpg::Reload(void)
+void CRpg::Reload()
 {
     int iResult;
 
@@ -132,7 +132,7 @@ void CRpg::Spawn()
 }
 
 
-void CRpg::Precache(void)
+void CRpg::Precache()
 {
     PRECACHE_MODEL("models/w_rpg.mdl");
     PRECACHE_MODEL("models/v_rpg.mdl");
@@ -190,7 +190,7 @@ BOOL CRpg::Deploy()
 }
 
 
-BOOL CRpg::CanHolster(void)
+BOOL CRpg::CanHolster()
 {
     if (m_fSpotActive && m_cActiveRockets)
     {
@@ -283,7 +283,7 @@ void CRpg::SecondaryAttack()
 }
 
 
-void CRpg::WeaponIdle(void)
+void CRpg::WeaponIdle()
 {
     UpdateSpot();
 
@@ -323,7 +323,7 @@ void CRpg::WeaponIdle(void)
 }
 
 
-void CRpg::UpdateSpot(void)
+void CRpg::UpdateSpot()
 {
 #ifndef CLIENT_DLL
     if (m_fSpotActive)

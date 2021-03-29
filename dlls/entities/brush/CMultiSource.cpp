@@ -126,7 +126,7 @@ void CMultiSource::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
 }
 
 //LRC- while we're in STATE_OFF, mastered entities can't do anything.
-STATE CMultiSource::GetState(void)
+STATE CMultiSource::GetState()
 {
     // Is everything triggered?
     int i = 0;
@@ -151,7 +151,7 @@ STATE CMultiSource::GetState(void)
     return STATE_OFF;
 }
 
-void CMultiSource::Register(void)
+void CMultiSource::Register()
 {
     m_iTotal = 0;
     memset(m_rgEntities, 0, MS_MAX_TARGETS * sizeof(EHANDLE));

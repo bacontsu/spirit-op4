@@ -50,7 +50,7 @@ CRpgRocket* CRpgRocket::CreateRpgRocket(Vector vecOrigin, Vector vecAngles, CBas
 
 //=========================================================
 //=========================================================
-void CRpgRocket::Spawn(void)
+void CRpgRocket::Spawn()
 {
     Precache();
     // motor
@@ -94,7 +94,7 @@ void CRpgRocket::RocketTouch(CBaseEntity* pOther)
 
 //=========================================================
 //=========================================================
-void CRpgRocket::Precache(void)
+void CRpgRocket::Precache()
 {
     PRECACHE_MODEL("models/rpgrocket.mdl");
     m_iTrail = PRECACHE_MODEL("sprites/smoke.spr");
@@ -102,7 +102,7 @@ void CRpgRocket::Precache(void)
 }
 
 
-void CRpgRocket::IgniteThink(void)
+void CRpgRocket::IgniteThink()
 {
     // pev->movetype = MOVETYPE_TOSS;
 
@@ -135,7 +135,7 @@ void CRpgRocket::IgniteThink(void)
 }
 
 
-void CRpgRocket::FollowThink(void)
+void CRpgRocket::FollowThink()
 {
     CBaseEntity* pOther = NULL;
     Vector vecTarget;

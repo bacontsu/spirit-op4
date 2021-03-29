@@ -189,7 +189,7 @@ void CBarney::RunTask(Task_t* pTask)
 // ISoundMask - returns a bit mask indicating which types
 // of sounds this monster regards. 
 //=========================================================
-int CBarney::ISoundMask(void)
+int CBarney::ISoundMask()
 {
     return bits_SOUND_WORLD |
         bits_SOUND_COMBAT |
@@ -204,7 +204,7 @@ int CBarney::ISoundMask(void)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CBarney::Classify(void)
+int CBarney::Classify()
 {
     return m_iClass ? m_iClass : CLASS_PLAYER_ALLY;
 }
@@ -212,7 +212,7 @@ int CBarney::Classify(void)
 //=========================================================
 // ALertSound - barney says "Freeze!"
 //=========================================================
-void CBarney::AlertSound(void)
+void CBarney::AlertSound()
 {
     if (m_hEnemy != NULL)
     {
@@ -237,7 +237,7 @@ void CBarney::AlertSound(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBarney::SetYawSpeed(void)
+void CBarney::SetYawSpeed()
 {
     int ys;
 
@@ -295,7 +295,7 @@ BOOL CBarney::CheckRangeAttack1(float flDot, float flDist)
 // BarneyFirePistol - shoots one round from the pistol at
 // the enemy barney is facing.
 //=========================================================
-void CBarney::BarneyFirePistol(void)
+void CBarney::BarneyFirePistol()
 {
     Vector vecShootOrigin;
 
@@ -585,7 +585,7 @@ int CBarney::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float f
 //=========================================================
 // PainSound
 //=========================================================
-void CBarney::PainSound(void)
+void CBarney::PainSound()
 {
     if (gpGlobals->time < m_painTime)
         return;
@@ -606,7 +606,7 @@ void CBarney::PainSound(void)
 //=========================================================
 // DeathSound 
 //=========================================================
-void CBarney::DeathSound(void)
+void CBarney::DeathSound()
 {
     switch (RANDOM_LONG(0, 2))
     {
@@ -728,7 +728,7 @@ Schedule_t* CBarney::GetScheduleOfType(int Type)
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t* CBarney::GetSchedule(void)
+Schedule_t* CBarney::GetSchedule()
 {
     if (HasConditions(bits_COND_HEAR_SOUND))
     {
@@ -818,13 +818,13 @@ Schedule_t* CBarney::GetSchedule(void)
     return CTalkMonster::GetSchedule();
 }
 
-MONSTERSTATE CBarney::GetIdealState(void)
+MONSTERSTATE CBarney::GetIdealState()
 {
     return CTalkMonster::GetIdealState();
 }
 
 
-void CBarney::DeclineFollowing(void)
+void CBarney::DeclineFollowing()
 {
     PlaySentence(m_szGrp[TLK_DECLINE], 2, VOL_NORM, ATTN_NORM); //LRC
 }

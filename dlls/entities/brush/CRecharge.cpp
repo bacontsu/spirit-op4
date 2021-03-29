@@ -156,7 +156,7 @@ void CRecharge::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
     m_flNextCharge = gpGlobals->time + 0.1;
 }
 
-void CRecharge::Recharge(void)
+void CRecharge::Recharge()
 {
     m_iJuice = gSkillData.suitchargerCapacity;
     pev->frame = 0;
@@ -168,7 +168,7 @@ void CRecharge::Recharge(void)
     SetThink(&CRecharge::SUB_DoNothing);
 }
 
-void CRecharge::Off(void)
+void CRecharge::Off()
 {
     // Stop looping sound.
     if (m_iOn > 1)
@@ -185,7 +185,7 @@ void CRecharge::Off(void)
         SetThink(&CRecharge::SUB_DoNothing);
 }
 
-STATE CRecharge::GetState(void)
+STATE CRecharge::GetState()
 {
     if (m_iOn == 2)
         return STATE_IN_USE;

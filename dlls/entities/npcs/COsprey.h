@@ -24,30 +24,30 @@ public:
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
-    int ObjectCaps(void) override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override { return CLASS_MACHINE; }
-    int BloodColor(void) override { return DONT_BLEED; }
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override { return CLASS_MACHINE; }
+    int BloodColor() override { return DONT_BLEED; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
-    void UpdateGoal(void);
-    BOOL HasDead(void);
-    void DLLEXPORT FlyThink(void);
-    void DLLEXPORT DeployThink(void);
-    void Flight(void);
+    void UpdateGoal();
+    BOOL HasDead();
+    void DLLEXPORT FlyThink();
+    void DLLEXPORT DeployThink();
+    void Flight();
     void DLLEXPORT HitTouch(CBaseEntity* pOther);
-    void DLLEXPORT FindAllThink(void);
-    void DLLEXPORT HoverThink(void);
+    void DLLEXPORT FindAllThink();
+    void DLLEXPORT HoverThink();
     CBaseMonster* MakeGrunt(Vector vecSrc);
     void DLLEXPORT CrashTouch(CBaseEntity* pOther);
-    void DLLEXPORT DyingThink(void);
+    void DLLEXPORT DyingThink();
     void DLLEXPORT CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
     // int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
-    void ShowDamage(void);
+    void ShowDamage();
 
     CBaseEntity* m_pGoalEnt;
     Vector m_vel1;

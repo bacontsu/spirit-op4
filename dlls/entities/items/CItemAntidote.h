@@ -19,8 +19,8 @@
 class CItemAntidote : public CItem
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     BOOL MyTouch(CBasePlayer* pPlayer) override;
     void CItemAntidote::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 };

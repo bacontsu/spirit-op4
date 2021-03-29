@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(game_score, CGameScore);
 
-void CGameScore::Spawn(void)
+void CGameScore::Spawn()
 {
     CRulePointEntity::Spawn();
 }

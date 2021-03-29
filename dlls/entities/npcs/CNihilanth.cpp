@@ -101,7 +101,7 @@ const char* CNihilanth::pDeathSounds[] =
 };
 
 
-void CNihilanth::Spawn(void)
+void CNihilanth::Spawn()
 {
     Precache();
     // motor
@@ -155,7 +155,7 @@ void CNihilanth::Spawn(void)
 }
 
 
-void CNihilanth::Precache(void)
+void CNihilanth::Precache()
 {
     if (pev->model)
         PRECACHE_MODEL((char*)STRING(pev->model)); //LRC
@@ -177,7 +177,7 @@ void CNihilanth::Precache(void)
 }
 
 
-void CNihilanth::PainSound(void)
+void CNihilanth::PainSound()
 {
     if (m_flNextPainSound > gpGlobals->time)
         return;
@@ -194,13 +194,13 @@ void CNihilanth::PainSound(void)
     }
 }
 
-void CNihilanth::DeathSound(void)
+void CNihilanth::DeathSound()
 {
     EMIT_SOUND(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pDeathSounds), 1.0, 0.1);
 }
 
 
-void CNihilanth::NullThink(void)
+void CNihilanth::NullThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.5);
@@ -215,7 +215,7 @@ void CNihilanth::StartupUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 }
 
 
-void CNihilanth::StartupThink(void)
+void CNihilanth::StartupThink()
 {
     m_irritation = 0;
     m_flAdj = 512;
@@ -252,7 +252,7 @@ void CNihilanth::Killed(entvars_t* pevAttacker, int iGib)
     CBaseMonster::Killed(pevAttacker, iGib);
 }
 
-void CNihilanth::DyingThink(void)
+void CNihilanth::DyingThink()
 {
     SetNextThink(0.1);
     DispatchAnimEvents();
@@ -382,13 +382,13 @@ void CNihilanth::CrashTouch(CBaseEntity* pOther)
 }
 
 
-void CNihilanth::GibMonster(void)
+void CNihilanth::GibMonster()
 {
     // EMIT_SOUND_DYN(edict(), CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);        
 }
 
 
-void CNihilanth::FloatSequence(void)
+void CNihilanth::FloatSequence()
 {
     if (m_irritation >= 2)
     {
@@ -417,7 +417,7 @@ void CNihilanth::FloatSequence(void)
 }
 
 
-void CNihilanth::ShootBalls(void)
+void CNihilanth::ShootBalls()
 {
     if (m_flShootEnd > gpGlobals->time)
     {
@@ -665,7 +665,7 @@ void CNihilanth::NextActivity()
     FloatSequence();
 }
 
-void CNihilanth::HuntThink(void)
+void CNihilanth::HuntThink()
 {
     SetNextThink(0.1);
     DispatchAnimEvents();
@@ -730,7 +730,7 @@ void CNihilanth::HuntThink(void)
 }
 
 
-void CNihilanth::Flight(void)
+void CNihilanth::Flight()
 {
     // estimate where I'll be facing in one seconds
     UTIL_MakeAimVectors(pev->angles + m_avelocity);
@@ -798,7 +798,7 @@ void CNihilanth::Flight(void)
 }
 
 
-BOOL CNihilanth::AbsorbSphere(void)
+BOOL CNihilanth::AbsorbSphere()
 {
     for (int i = 0; i < N_SPHERES; i++)
     {
@@ -815,7 +815,7 @@ BOOL CNihilanth::AbsorbSphere(void)
 }
 
 
-BOOL CNihilanth::EmitSphere(void)
+BOOL CNihilanth::EmitSphere()
 {
     m_iActiveSpheres = 0;
     int empty = 0;

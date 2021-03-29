@@ -19,5 +19,5 @@
 class CNullEntity : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 };

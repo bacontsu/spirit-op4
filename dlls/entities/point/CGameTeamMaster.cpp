@@ -80,7 +80,7 @@ BOOL CGameTeamMaster::IsTriggered(CBaseEntity* pActivator)
 }
 
 
-const char* CGameTeamMaster::TeamID(void)
+const char* CGameTeamMaster::TeamID()
 {
     if (m_teamIndex < 0) // Currently set to "no team"
         return "";

@@ -18,17 +18,17 @@
 
 LINK_ENTITY_TO_CLASS(test_effect, CTestEffect);
 
-void CTestEffect::Spawn(void)
+void CTestEffect::Spawn()
 {
     Precache();
 }
 
-void CTestEffect::Precache(void)
+void CTestEffect::Precache()
 {
     PRECACHE_MODEL("sprites/lgtning.spr");
 }
 
-void CTestEffect::TestThink(void)
+void CTestEffect::TestThink()
 {
     int i;
     float t = (gpGlobals->time - m_flStartTime);

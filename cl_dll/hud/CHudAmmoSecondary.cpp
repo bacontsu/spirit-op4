@@ -20,7 +20,7 @@
 DECLARE_MESSAGE(m_AmmoSecondary, SecAmmoVal);
 DECLARE_MESSAGE(m_AmmoSecondary, SecAmmoIcon);
 
-int CHudAmmoSecondary::Init(void)
+int CHudAmmoSecondary::Init()
 {
     HOOK_MESSAGE(SecAmmoVal);
     HOOK_MESSAGE(SecAmmoIcon);
@@ -36,12 +36,12 @@ int CHudAmmoSecondary::Init(void)
     return 1;
 }
 
-void CHudAmmoSecondary::Reset(void)
+void CHudAmmoSecondary::Reset()
 {
     m_fFade = 0;
 }
 
-int CHudAmmoSecondary::VidInit(void)
+int CHudAmmoSecondary::VidInit()
 {
     return 1;
 }

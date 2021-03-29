@@ -23,5 +23,5 @@
 class CRuleBrushEntity : public CRuleEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 };

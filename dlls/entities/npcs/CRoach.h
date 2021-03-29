@@ -29,10 +29,10 @@
 class CRoach : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    void DLLEXPORT MonsterThink(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    void DLLEXPORT MonsterThink() override;
     void Move(float flInterval) override;
     void PickNewDest(int iCondition);
     void DLLEXPORT Touch(CBaseEntity* pOther) override;
@@ -40,9 +40,9 @@ public:
 
     float m_flLastLightLevel;
     float m_flNextSmellTime;
-    int Classify(void) override;
+    int Classify() override;
     void Look(int iDistance) override;
-    int ISoundMask(void) override;
+    int ISoundMask() override;
 
     // UNDONE: These don't necessarily need to be save/restored, but if we add more data, it may
     BOOL m_fLightHacked;

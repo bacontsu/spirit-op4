@@ -89,7 +89,7 @@ void CInfoAlias::KeyValue(KeyValueData* pkvd) //AJH
     }
 }
 
-void CInfoAlias::Spawn(void)
+void CInfoAlias::Spawn()
 {
     if (m_iMode == 0)
     {
@@ -186,7 +186,7 @@ void CInfoAlias::ChangeValue(int iszValue)
     UTIL_AddToAliasList(this);
 }
 
-void CInfoAlias::FlushChanges(void)
+void CInfoAlias::FlushChanges()
 {
     pev->message = pev->noise;
     if (pev->spawnflags & SF_ALIAS_DEBUG)

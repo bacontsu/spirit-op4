@@ -19,6 +19,6 @@
 class CSmoker : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
 };

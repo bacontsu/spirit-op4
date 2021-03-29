@@ -147,7 +147,7 @@ enum HGRUNT_SENTENCE_TYPES
 // may still fail but in most cases, well after the grunt has 
 // started moving.
 //=========================================================
-void CHGrunt::SpeakSentence(void)
+void CHGrunt::SpeakSentence()
 {
     if (m_iSentence == HGRUNT_SENT_NONE)
     {
@@ -180,7 +180,7 @@ int CHGrunt::IRelationship(CBaseEntity* pTarget)
 //=========================================================
 // GibMonster - make gun fly through the air.
 //=========================================================
-void CHGrunt::GibMonster(void)
+void CHGrunt::GibMonster()
 {
     Vector vecGunPos;
     Vector vecGunAngles;
@@ -224,7 +224,7 @@ void CHGrunt::GibMonster(void)
 // hear the DANGER sound that is made by hand grenades and
 // other dangerous items.
 //=========================================================
-int CHGrunt::ISoundMask(void)
+int CHGrunt::ISoundMask()
 {
     return bits_SOUND_WORLD |
         bits_SOUND_COMBAT |
@@ -235,7 +235,7 @@ int CHGrunt::ISoundMask(void)
 //=========================================================
 // someone else is talking - don't speak
 //=========================================================
-BOOL CHGrunt::FOkToSpeak(void)
+BOOL CHGrunt::FOkToSpeak()
 {
     // if someone else is talking, don't speak
     if (gpGlobals->time <= CTalkMonster::g_talkWaitTime)
@@ -259,7 +259,7 @@ BOOL CHGrunt::FOkToSpeak(void)
 
 //=========================================================
 //=========================================================
-void CHGrunt::JustSpoke(void)
+void CHGrunt::JustSpoke()
 {
     CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(1.5, 2.0);
     m_iSentence = HGRUNT_SENT_NONE;
@@ -269,7 +269,7 @@ void CHGrunt::JustSpoke(void)
 // PrescheduleThink - this function runs after conditions
 // are collected and before scheduling code is run.
 //=========================================================
-void CHGrunt::PrescheduleThink(void)
+void CHGrunt::PrescheduleThink()
 {
     if (InSquad() && m_hEnemy != NULL)
     {
@@ -301,7 +301,7 @@ void CHGrunt::PrescheduleThink(void)
 // this is a bad bug. Friendly machine gun fire avoidance
 // will unecessarily prevent the throwing of a grenade as well.
 //=========================================================
-BOOL CHGrunt::FCanCheckAttacks(void)
+BOOL CHGrunt::FCanCheckAttacks()
 {
     if (!HasConditions(bits_COND_ENEMY_TOOFAR))
     {
@@ -548,7 +548,7 @@ int CHGrunt::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float f
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CHGrunt::SetYawSpeed(void)
+void CHGrunt::SetYawSpeed()
 {
     int ys;
 
@@ -591,7 +591,7 @@ void CHGrunt::SetYawSpeed(void)
     pev->yaw_speed = ys;
 }
 
-void CHGrunt::IdleSound(void)
+void CHGrunt::IdleSound()
 {
     if (FOkToSpeak() && (g_fGruntQuestion || RANDOM_LONG(0, 1)))
     {
@@ -634,7 +634,7 @@ void CHGrunt::IdleSound(void)
 // CheckAmmo - overridden for the grunt because he actually
 // uses ammo! (base class doesn't)
 //=========================================================
-void CHGrunt::CheckAmmo(void)
+void CHGrunt::CheckAmmo()
 {
     if (m_cAmmoLoaded <= 0)
     {
@@ -646,14 +646,14 @@ void CHGrunt::CheckAmmo(void)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CHGrunt::Classify(void)
+int CHGrunt::Classify()
 {
     return m_iClass ? m_iClass : CLASS_HUMAN_MILITARY;
 }
 
 //=========================================================
 //=========================================================
-CBaseEntity* CHGrunt::Kick(void)
+CBaseEntity* CHGrunt::Kick()
 {
     TraceResult tr;
 
@@ -692,7 +692,7 @@ Vector CHGrunt::GetGunPosition()
 //=========================================================
 // Shoot
 //=========================================================
-void CHGrunt::Shoot(void)
+void CHGrunt::Shoot()
 {
     if (m_hEnemy == NULL && m_pCine == NULL) //LRC - scripts may fire when you have no enemy
     {
@@ -738,7 +738,7 @@ void CHGrunt::Shoot(void)
 //=========================================================
 // Shoot
 //=========================================================
-void CHGrunt::Shotgun(void)
+void CHGrunt::Shotgun()
 {
     if (m_hEnemy == NULL && m_pCine == NULL)
     {
@@ -1148,7 +1148,7 @@ void CHGrunt::RunTask(Task_t* pTask)
 //=========================================================
 // PainSound
 //=========================================================
-void CHGrunt::PainSound(void)
+void CHGrunt::PainSound()
 {
     if (gpGlobals->time > m_flNextPainTime)
     {
@@ -1190,7 +1190,7 @@ void CHGrunt::PainSound(void)
 //=========================================================
 // DeathSound 
 //=========================================================
-void CHGrunt::DeathSound(void)
+void CHGrunt::DeathSound()
 {
     switch (RANDOM_LONG(0, 2))
     {
@@ -1966,7 +1966,7 @@ void CHGrunt::SetActivity(Activity NewActivity)
 //=========================================================
 // Get Schedule!
 //=========================================================
-Schedule_t* CHGrunt::GetSchedule(void)
+Schedule_t* CHGrunt::GetSchedule()
 {
     // clear old sentence
     m_iSentence = HGRUNT_SENT_NONE;

@@ -78,7 +78,7 @@ void CChangeLevel::KeyValue(KeyValueData* pkvd)
 When the player touches this, he gets sent to the map listed in the "map" variable.  Unless the NO_INTERMISSION flag is set, the view will go to the info_intermission spot and display stats.
 */
 
-void CChangeLevel::Spawn(void)
+void CChangeLevel::Spawn()
 {
     if (FStrEq(m_szMapName, ""))
         ALERT(at_debug, "a trigger_changelevel doesn't have a map");
@@ -97,7 +97,7 @@ void CChangeLevel::Spawn(void)
 }
 
 
-void CChangeLevel::ExecuteChangeLevel(void)
+void CChangeLevel::ExecuteChangeLevel()
 {
     MESSAGE_BEGIN(MSG_ALL, SVC_CDTRACK);
     WRITE_BYTE(3);
@@ -385,7 +385,7 @@ int CChangeLevel::ChangeList(LEVELLIST* pLevelList, int maxList)
 go to the next level for deathmatch
 only called if a time or frag limit has expired
 */
-void NextLevel(void)
+void NextLevel()
 {
     CBaseEntity* pEnt;
     CChangeLevel* pChange;

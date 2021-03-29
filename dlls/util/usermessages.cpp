@@ -66,7 +66,7 @@ int gmsgCamData; // for trigger_viewset
 int gmsgWeather = 0;
 int gmsgServerState = 0; // used for pause/menu detection
 
-void LinkUserMessages(void)
+void LinkUserMessages()
 {
     // Already taken care of?
     if (gmsgCurWeapon)

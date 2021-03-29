@@ -25,30 +25,30 @@
 class CBullsquid : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int ISoundMask(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int ISoundMask() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    void IdleSound(void) override;
-    void PainSound(void) override;
-    void DeathSound(void) override;
-    void AlertSound(void) override;
-    void AttackSound(void);
+    void IdleSound() override;
+    void PainSound() override;
+    void DeathSound() override;
+    void AlertSound() override;
+    void AttackSound();
     void StartTask(Task_t* pTask) override;
     void RunTask(Task_t* pTask) override;
     BOOL CheckMeleeAttack1(float flDot, float flDist) override;
     BOOL CheckMeleeAttack2(float flDot, float flDist) override;
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
-    void RunAI(void) override;
+    void RunAI() override;
     BOOL FValidateHintType(short sHint) override;
-    Schedule_t* GetSchedule(void) override;
+    Schedule_t* GetSchedule() override;
     Schedule_t* GetScheduleOfType(int Type) override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     int IRelationship(CBaseEntity* pTarget) override;
-    int IgnoreConditions(void) override;
-    MONSTERSTATE GetIdealState(void) override;
+    int IgnoreConditions() override;
+    MONSTERSTATE GetIdealState() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

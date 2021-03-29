@@ -23,7 +23,7 @@
 class CTriggerMonsterJump : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Touch(CBaseEntity* pOther) override;
-    void Think(void) override;
+    void Think() override;
 };

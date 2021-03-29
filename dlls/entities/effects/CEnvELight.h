@@ -22,7 +22,7 @@
 class CEnvELight : public CEnvDLight
 {
 public:
-    void PostSpawn(void) override;
+    void PostSpawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void MakeLight(int iTime) override;
 

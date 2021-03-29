@@ -32,7 +32,7 @@ IMPLEMENT_SAVERESTORE(CWeaponBox, CBaseEntity);
 //=========================================================
 //
 //=========================================================
-void CWeaponBox::Precache(void)
+void CWeaponBox::Precache()
 {
     PRECACHE_MODEL("models/w_weaponbox.mdl");
 }
@@ -57,7 +57,7 @@ void CWeaponBox::KeyValue(KeyValueData* pkvd)
 //=========================================================
 // CWeaponBox - Spawn 
 //=========================================================
-void CWeaponBox::Spawn(void)
+void CWeaponBox::Spawn()
 {
     Precache();
 
@@ -73,7 +73,7 @@ void CWeaponBox::Spawn(void)
 // CWeaponBox - Kill - the think function that removes the
 // box from the world.
 //=========================================================
-void CWeaponBox::Kill(void)
+void CWeaponBox::Kill()
 {
     CBasePlayerItem* pWeapon;
     int i;
@@ -324,7 +324,7 @@ BOOL CWeaponBox::HasWeapon(CBasePlayerItem* pCheckItem)
 //=========================================================
 // CWeaponBox::IsEmpty - is there anything in this box?
 //=========================================================
-BOOL CWeaponBox::IsEmpty(void)
+BOOL CWeaponBox::IsEmpty()
 {
     int i;
 
@@ -350,7 +350,7 @@ BOOL CWeaponBox::IsEmpty(void)
 
 //=========================================================
 //=========================================================
-void CWeaponBox::SetObjectCollisionBox(void)
+void CWeaponBox::SetObjectCollisionBox()
 {
     pev->absmin = pev->origin + Vector(-16, -16, 0);
     pev->absmax = pev->origin + Vector(16, 16, 16);

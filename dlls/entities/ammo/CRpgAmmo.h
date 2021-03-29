@@ -19,7 +19,7 @@
 
 class CRpgAmmo : public CBasePlayerAmmo
 {
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     BOOL AddAmmo(CBaseEntity* pOther) override;
 };

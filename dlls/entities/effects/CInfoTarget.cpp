@@ -21,7 +21,7 @@ LINK_ENTITY_TO_CLASS(info_target, CInfoTarget);
 #define SF_TARGET_HACK_VISIBLE    1
 
 // Landmark class
-void CInfoTarget::Spawn(void)
+void CInfoTarget::Spawn()
 {
     //Precache();
     pev->solid = SOLID_NOT;
@@ -33,7 +33,7 @@ void CInfoTarget::Spawn(void)
     }
 }
 
-void CInfoTarget::Precache(void)
+void CInfoTarget::Precache()
 {
     if (pev->spawnflags & SF_TARGET_HACK_VISIBLE)
         PRECACHE_MODEL("sprites/null.spr");

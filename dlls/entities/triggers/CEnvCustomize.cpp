@@ -128,18 +128,18 @@ void CEnvCustomize::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-void CEnvCustomize::Spawn(void)
+void CEnvCustomize::Spawn()
 {
     Precache();
 }
 
-void CEnvCustomize::Precache(void)
+void CEnvCustomize::Precache()
 {
     if (m_iszModel)
         PRECACHE_MODEL((char*)STRING(m_iszModel));
 }
 
-void CEnvCustomize::PostSpawn(void)
+void CEnvCustomize::PostSpawn()
 {
     if (!pev->targetname)
     {
@@ -148,7 +148,7 @@ void CEnvCustomize::PostSpawn(void)
     }
 }
 
-void CEnvCustomize::DesiredAction(void)
+void CEnvCustomize::DesiredAction()
 {
     Use(this, this, USE_TOGGLE, 0);
 }

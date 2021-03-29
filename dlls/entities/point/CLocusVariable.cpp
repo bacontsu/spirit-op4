@@ -67,7 +67,7 @@ void CLocusVariable::KeyValue(KeyValueData* pkvd)
         CPointEntity::KeyValue(pkvd);
 }
 
-void CLocusVariable::Spawn(void)
+void CLocusVariable::Spawn()
 {
     SetMovedir(pev);
 }

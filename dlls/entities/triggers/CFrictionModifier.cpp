@@ -26,7 +26,7 @@ TYPEDESCRIPTION CFrictionModifier::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CFrictionModifier, CBaseEntity);
 
 // Modify an entity's friction
-void CFrictionModifier::Spawn(void)
+void CFrictionModifier::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     SET_MODEL(ENT(pev), STRING(pev->model)); // set size and link into world

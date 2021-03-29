@@ -24,7 +24,7 @@ TYPEDESCRIPTION CInfoBM::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CInfoBM, CPointEntity);
 
-void CInfoBM::Spawn(void)
+void CInfoBM::Spawn()
 {
 }
 

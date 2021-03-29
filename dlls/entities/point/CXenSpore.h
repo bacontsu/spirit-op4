@@ -19,10 +19,10 @@
 class CXenSpore : public CActAnimating
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void Touch(CBaseEntity* pOther) override;
-    void Think(void) override;
+    void Think() override;
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override
     {
@@ -31,7 +31,7 @@ public:
     }
 
     //    void        HandleAnimEvent( MonsterEvent_t *pEvent );
-    void Attack(void)
+    void Attack()
     {
     }
 

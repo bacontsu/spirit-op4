@@ -19,25 +19,25 @@
 class CHgun : public CBasePlayerWeapon
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
 
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
-    BOOL Deploy(void) override;
-    BOOL IsUseable(void) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    BOOL Deploy() override;
+    BOOL IsUseable() override;
     void Holster(int skiplocal = 0) override;
-    void Reload(void) override;
-    void WeaponIdle(void) override;
+    void Reload() override;
+    void WeaponIdle() override;
     float m_flNextAnimTime;
 
     float m_flRechargeTime;
 
     int m_iFirePhase; // don't save me.
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

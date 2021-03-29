@@ -32,8 +32,8 @@ public:
     void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    STATE GetState(void) override;
-    void DLLEXPORT Register(void);
+    STATE GetState() override;
+    void DLLEXPORT Register();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

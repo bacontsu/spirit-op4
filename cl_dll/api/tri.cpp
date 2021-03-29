@@ -55,7 +55,7 @@ void SetPoint(float x, float y, float z, float (*matrix)[4])
 
 //LRCT
 
-void BlackFog(void)
+void BlackFog()
 {
     //Not in water and we want fog.
     static float fColorBlack[3] = {0, 0, 0};
@@ -66,7 +66,7 @@ void BlackFog(void)
         gEngfuncs.pTriAPI->Fog(g_fog.fogColor, g_fog.startDist, g_fog.endDist, bFog);
 }
 
-void RenderFog(void)
+void RenderFog()
 {
     //Not in water and we want fog.
     bool bFog = g_iWaterLevel < 2 && g_fog.startDist > 0 && g_fog.endDist > 0;
@@ -76,7 +76,7 @@ void RenderFog(void)
     //		gEngfuncs.pTriAPI->Fog ( g_fFogColor, 10000, 10001, 0 );
 }
 
-void ClearToFogColor(void)
+void ClearToFogColor()
 {
     if (g_fog.startDist > 0 && g_fog.endDist > 0)
     {
@@ -92,7 +92,7 @@ HUD_DrawNormalTriangles
 Non-transparent triangles-- add them here
 =================
 */
-void DLLEXPORT HUD_DrawNormalTriangles(void)
+void DLLEXPORT HUD_DrawNormalTriangles()
 {
     //	RecClDrawNormalTriangles();
 
@@ -108,7 +108,7 @@ Render any triangles with transparent rendermode needs here
 */
 extern ParticleSystemManager* g_pParticleSystems; // LRC
 
-void DLLEXPORT HUD_DrawTransparentTriangles(void)
+void DLLEXPORT HUD_DrawTransparentTriangles()
 {
     //	RecClDrawTransparentTriangles();
 

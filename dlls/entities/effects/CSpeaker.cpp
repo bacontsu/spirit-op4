@@ -28,7 +28,7 @@ IMPLEMENT_SAVERESTORE(CSpeaker, CBaseEntity);
 //
 // ambient_generic - general-purpose user-defined static sound
 //
-void CSpeaker::Spawn(void)
+void CSpeaker::Spawn()
 {
     char* szSoundFile = (char*)STRING(pev->message);
 
@@ -53,14 +53,14 @@ void CSpeaker::Spawn(void)
     Precache();
 }
 
-void CSpeaker::Precache(void)
+void CSpeaker::Precache()
 {
     if (!FBitSet(pev->spawnflags, SPEAKER_START_SILENT))
         // set first announcement time for random n second
         SetNextThink(RANDOM_FLOAT(5.0, 15.0));
 }
 
-void CSpeaker::SpeakerThink(void)
+void CSpeaker::SpeakerThink()
 {
     const char* szSoundFile;
     float flvolume = pev->health * 0.1;

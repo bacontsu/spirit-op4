@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(hud_sprite, CHudSprite);
 
-void CHudSprite::Spawn(void)
+void CHudSprite::Spawn()
 {
     //LRC 1.8
     // We can't keep a hud.txt spritename in pev->model, because on loading a saved game, it
@@ -42,7 +42,7 @@ void CHudSprite::Spawn(void)
     }
 }
 
-void CHudSprite::Think(void)
+void CHudSprite::Think()
 {
     Use(this, this, USE_ON, 0);
 }

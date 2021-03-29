@@ -20,5 +20,5 @@
 class CTriggerVolume : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 };

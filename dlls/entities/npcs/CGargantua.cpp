@@ -207,13 +207,13 @@ void CGargantua::EyeOn(int level)
 }
 
 
-void CGargantua::EyeOff(void)
+void CGargantua::EyeOff()
 {
     m_eyeBrightness = 0;
 }
 
 
-void CGargantua::EyeUpdate(void)
+void CGargantua::EyeUpdate()
 {
     if (m_pEyeGlow)
     {
@@ -227,7 +227,7 @@ void CGargantua::EyeUpdate(void)
 }
 
 
-void CGargantua::StompAttack(void)
+void CGargantua::StompAttack()
 {
     TraceResult trace;
 
@@ -247,7 +247,7 @@ void CGargantua::StompAttack(void)
 }
 
 
-void CGargantua::FlameCreate(void)
+void CGargantua::FlameCreate()
 {
     int i;
     Vector posGun, angleGun;
@@ -323,7 +323,7 @@ void StreakSplash(const Vector& origin, const Vector& direction, int color, int 
     MESSAGE_END();
 }
 
-void CGargantua::FlameUpdate(void)
+void CGargantua::FlameUpdate()
 {
     int i;
     static float offset[2] = {60, -60};
@@ -450,7 +450,7 @@ void CGargantua::FlameDamage(Vector vecStart, Vector vecEnd, entvars_t* pevInfli
 }
 
 
-void CGargantua::FlameDestroy(void)
+void CGargantua::FlameDestroy()
 {
     int i;
 
@@ -466,7 +466,7 @@ void CGargantua::FlameDestroy(void)
 }
 
 
-void CGargantua::PrescheduleThink(void)
+void CGargantua::PrescheduleThink()
 {
     if (!HasConditions(bits_COND_SEE_ENEMY))
     {
@@ -484,7 +484,7 @@ void CGargantua::PrescheduleThink(void)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CGargantua::Classify(void)
+int CGargantua::Classify()
 {
     return m_iClass ? m_iClass : CLASS_ALIEN_MONSTER;
 }
@@ -493,7 +493,7 @@ int CGargantua::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CGargantua::SetYawSpeed(void)
+void CGargantua::SetYawSpeed()
 {
     int ys;
 
@@ -680,7 +680,7 @@ void SpawnExplosion(Vector center, float randomRange, float time, int magnitude)
     pExplosion->SetNextThink(time);
 }
 
-void CGargantua::DeathEffect(void)
+void CGargantua::DeathEffect()
 {
     int i;
     UTIL_MakeVectors(pev->angles);

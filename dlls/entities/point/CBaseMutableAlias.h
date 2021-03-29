@@ -19,7 +19,7 @@
 class CBaseMutableAlias : public CPointEntity
 {
 public:
-    BOOL IsMutableAlias(void) override { return TRUE; }
+    BOOL IsMutableAlias() override { return TRUE; }
     CBaseEntity* FollowAlias(CBaseEntity* pFrom) override { return NULL; }
 
     virtual void ChangeValue(int iszValue)
@@ -29,7 +29,7 @@ public:
 
     virtual void ChangeValue(CBaseEntity* pValue) { ChangeValue(pValue->pev->targetname); }
 
-    virtual void FlushChanges(void)
+    virtual void FlushChanges()
     {
     }
 

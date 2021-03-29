@@ -20,10 +20,10 @@ class CBaseSpectator : public CBaseEntity
 {
 public:
     void Spawn() override;
-    void SpectatorConnect(void);
-    void SpectatorDisconnect(void);
-    void SpectatorThink(void);
+    void SpectatorConnect();
+    void SpectatorDisconnect();
+    void SpectatorThink();
 
 private:
-    void SpectatorImpulseCommand(void);
+    void SpectatorImpulseCommand();
 };

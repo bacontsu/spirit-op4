@@ -75,7 +75,7 @@ IMPLEMENT_SAVERESTORE(CAmbientGeneric, CBaseEntity);
 //
 // ambient_generic - general-purpose user-defined static sound
 //
-void CAmbientGeneric::Spawn(void)
+void CAmbientGeneric::Spawn()
 {
     /*
             -1 : "Default"
@@ -145,7 +145,7 @@ void CAmbientGeneric::Spawn(void)
 
 // this function needs to be called when the game is loaded, not just when the entity spawns.
 // Don't make this a PostSpawn function.
-void CAmbientGeneric::Precache(void)
+void CAmbientGeneric::Precache()
 {
     char* szSoundFile = (char*)STRING(pev->message);
 
@@ -197,7 +197,7 @@ void CAmbientGeneric::Precache(void)
 
 //LRC - for some reason, I can't get other entities to start playing sounds during Activate;
 // this function is used to delay the effect until the first Think, which seems to fix the problem.
-void CAmbientGeneric::StartPlayFrom(void)
+void CAmbientGeneric::StartPlayFrom()
 {
     char* szSoundFile = (char*)STRING(pev->message);
 
@@ -213,7 +213,7 @@ void CAmbientGeneric::StartPlayFrom(void)
 // ramp pitch and/or volume up or down, modify pitch/volume
 // with lfo if active.
 
-void CAmbientGeneric::RampThink(void)
+void CAmbientGeneric::RampThink()
 {
     char* szSoundFile = (char*)STRING(pev->message);
     int pitch = m_dpv.pitch;
@@ -427,7 +427,7 @@ void CAmbientGeneric::RampThink(void)
 // Init all ramp params in preparation to 
 // play a new sound
 
-void CAmbientGeneric::InitModulationParms(void)
+void CAmbientGeneric::InitModulationParms()
 {
     int pitchinc;
 

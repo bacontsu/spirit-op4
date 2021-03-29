@@ -36,7 +36,7 @@ TYPEDESCRIPTION CLaser::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CLaser, CBeam);
 
-void CLaser::Spawn(void)
+void CLaser::Spawn()
 {
     if (FStringNull(pev->model))
     {
@@ -50,7 +50,7 @@ void CLaser::Spawn(void)
     pev->flags |= FL_CUSTOMENTITY;
 }
 
-void CLaser::PostSpawn(void)
+void CLaser::PostSpawn()
 {
     if (m_iszStartSpriteName)
     {
@@ -122,7 +122,7 @@ void CLaser::PostSpawn(void)
         TurnOn();
 }
 
-void CLaser::Precache(void)
+void CLaser::Precache()
 {
     PRECACHE_MODEL("sprites/null.spr");
     pev->modelindex = PRECACHE_MODEL((char*)STRING(pev->model));
@@ -228,7 +228,7 @@ void CLaser::KeyValue(KeyValueData* pkvd)
         CBeam::KeyValue(pkvd);
 }
 
-void CLaser::TurnOff(void)
+void CLaser::TurnOff()
 {
     pev->effects |= EF_NODRAW;
     DontThink();
@@ -245,7 +245,7 @@ void CLaser::TurnOff(void)
 }
 
 
-void CLaser::TurnOn(void)
+void CLaser::TurnOn()
 {
     pev->effects &= ~EF_NODRAW;
 
@@ -306,7 +306,7 @@ void CLaser::FireAtPoint(Vector startpos, TraceResult& tr)
     DoSparks(startpos, tr.vecEndPos);
 }
 
-void CLaser::StrikeThink(void)
+void CLaser::StrikeThink()
 {
     Vector startpos = pev->origin;
     bool success = true;

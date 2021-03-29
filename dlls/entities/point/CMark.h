@@ -33,5 +33,5 @@ public:
         return true;
     }
 
-    void Think(void) override { SUB_Remove(); }
+    void Think() override { SUB_Remove(); }
 };

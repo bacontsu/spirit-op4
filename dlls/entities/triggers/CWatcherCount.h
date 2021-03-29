@@ -31,10 +31,10 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void Spawn(void) override;
-    void DLLEXPORT Think(void) override;
-    STATE GetState(void) override { return (pev->spawnflags & SF_SWATCHER_VALID) ? STATE_ON : STATE_OFF; }
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    void Spawn() override;
+    void DLLEXPORT Think() override;
+    STATE GetState() override { return (pev->spawnflags & SF_SWATCHER_VALID) ? STATE_ON : STATE_OFF; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     bool CalcNumber(CBaseEntity* pLocus, float* OUTresult) override
     {

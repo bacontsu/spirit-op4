@@ -21,5 +21,5 @@ class CXenHull : public CPointEntity
 {
 public:
     static CXenHull* CreateHull(CBaseEntity* source, const Vector& mins, const Vector& maxs, const Vector& offset);
-    int Classify(void) override { return CLASS_BARNACLE; }
+    int Classify() override { return CLASS_BARNACLE; }
 };

@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_onsight, CTriggerOnSight);
 
-void CTriggerOnSight::Spawn(void)
+void CTriggerOnSight::Spawn()
 {
     if (pev->target || pev->noise)
         // if we're going to have to trigger stuff, start thinking
@@ -35,7 +35,7 @@ void CTriggerOnSight::Spawn(void)
     }
 }
 
-STATE CTriggerOnSight::GetState(void)
+STATE CTriggerOnSight::GetState()
 {
     if (pev->spawnflags & SF_ONSIGHT_DEMAND)
         return VisionCheck() ? STATE_ON : STATE_OFF;
@@ -43,7 +43,7 @@ STATE CTriggerOnSight::GetState(void)
         return (pev->spawnflags & SF_ONSIGHT_ACTIVE) ? STATE_ON : STATE_OFF;
 }
 
-void CTriggerOnSight::Think(void)
+void CTriggerOnSight::Think()
 {
     // is this a sensible rate?
     SetNextThink(0.1);
@@ -74,7 +74,7 @@ void CTriggerOnSight::Think(void)
     }
 }
 
-BOOL CTriggerOnSight::VisionCheck(void) //AJH modifed to check if multiple entities can see
+BOOL CTriggerOnSight::VisionCheck() //AJH modifed to check if multiple entities can see
 {
     // and GetState check (stops dead monsters seeing)
     CBaseEntity* pLooker;
@@ -160,7 +160,7 @@ BOOL CTriggerOnSight::VisionCheck(void) //AJH modifed to check if multiple entit
     }
 }
 
-/*BOOL CTriggerOnSight :: VisionCheck( void )
+/*BOOL CTriggerOnSight :: VisionCheck()
 {
     CBaseEntity *pLooker;
     if (pev->netname)

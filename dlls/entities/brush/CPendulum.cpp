@@ -33,12 +33,12 @@ TYPEDESCRIPTION CPendulum::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CPendulum, CBaseEntity);
 
-int CPendulum::ObjectCaps(void)
+int CPendulum::ObjectCaps()
 {
     return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 }
 
-STATE CPendulum::GetState(void)
+STATE CPendulum::GetState()
 {
     return (pev->speed) ? STATE_ON : STATE_OFF;
 }
@@ -64,7 +64,7 @@ void CPendulum::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-void CPendulum::Spawn(void)
+void CPendulum::Spawn()
 {
     // set the axis of rotation
     CBaseToggle::AxisDir(pev);
@@ -139,7 +139,7 @@ void CPendulum::PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     }
 }
 
-void CPendulum::StopThink(void)
+void CPendulum::StopThink()
 {
     UTIL_SetAngles(this, m_start); //LRC
     //pev->angles = m_start;
@@ -154,7 +154,7 @@ void CPendulum::Blocked(CBaseEntity* pOther)
     m_time = gpGlobals->time;
 }
 
-void CPendulum::SwingThink(void)
+void CPendulum::SwingThink()
 {
     float delta, dt;
 

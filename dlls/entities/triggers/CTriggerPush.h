@@ -22,7 +22,7 @@
 class CTriggerPush : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void Touch(CBaseEntity* pOther) override;
 

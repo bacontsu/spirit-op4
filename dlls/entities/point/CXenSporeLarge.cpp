@@ -28,7 +28,7 @@ const Vector CXenSporeLarge::m_hullSizes[] =
     Vector(-90, 60, 0),
 };
 
-void CXenSporeLarge::Spawn(void)
+void CXenSporeLarge::Spawn()
 {
     pev->skin = 2;
     CXenSpore::Spawn();

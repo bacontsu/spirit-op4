@@ -29,7 +29,7 @@ class CEnvExplosion : public CBaseMonster
 {
 public:
     void Spawn();
-    void DLLEXPORT Smoke(void);
+    void DLLEXPORT Smoke();
     void KeyValue(KeyValueData* pkvd);
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 

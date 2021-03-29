@@ -37,7 +37,7 @@
 #include "util/findentity.h"
 #include "util/usermessages.h"
 
-float UTIL_WeaponTimeBase( void )
+float UTIL_WeaponTimeBase()
 {
 #if defined( CLIENT_WEAPONS )
     return 0.0;
@@ -68,7 +68,7 @@ unsigned int seed_table[ 256 ] =
     25678, 18555, 13256, 23316, 22407, 16727, 991, 9236, 5373, 29402, 6117, 15241, 27715, 19291, 19888, 19847
 };
 
-unsigned int U_Random( void ) 
+unsigned int U_Random() 
 { 
     glSeed *= 69069; 
     glSeed += seed_table[ glSeed & 0xff ];
@@ -377,7 +377,7 @@ int UTIL_MonstersInSphere( CBaseEntity **pList, int listMax, const Vector &cente
 //LRC - things get messed up if aliases change in the middle of an entity traversal.
 // so instead, they record what changes should be made, and wait until this function gets
 // called.
-void UTIL_FlushAliases( void )
+void UTIL_FlushAliases()
 {
 //    ALERT(at_console, "Flushing alias list\n");
     if (!g_pWorld)
@@ -1256,7 +1256,7 @@ void UTIL_BloodDrips( const Vector &origin, const Vector &direction, int color, 
     MESSAGE_END();
 }                
 
-Vector UTIL_RandomBloodVector( void )
+Vector UTIL_RandomBloodVector()
 {
     Vector direction;
 

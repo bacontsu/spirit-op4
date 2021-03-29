@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(env_footsteps, CEnvFootsteps);
 
-void CEnvFootsteps::Spawn(void)
+void CEnvFootsteps::Spawn()
 {
     Precache();
 }
@@ -42,7 +42,7 @@ void CEnvFootsteps::PrecacheNoise(const char* szNoise)
         PRECACHE_SOUND((char*)szNoise);
 }
 
-void CEnvFootsteps::Precache(void)
+void CEnvFootsteps::Precache()
 {
     if (pev->noise)
         PrecacheNoise(STRING(pev->noise));

@@ -31,7 +31,7 @@ TYPEDESCRIPTION CLightFader::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CLightFader, CPointEntity);
 
-void CLightFader::FadeThink(void)
+void CLightFader::FadeThink()
 {
     if (m_fEndTime > gpGlobals->time)
     {
@@ -61,7 +61,7 @@ void CLightFader::FadeThink(void)
 }
 
 // we've finished. revert the light and kill the fader.
-void CLightFader::WaitThink(void)
+void CLightFader::WaitThink()
 {
     m_pLight->SetCorrectStyle();
     SetThink(&CLightFader::SUB_Remove);

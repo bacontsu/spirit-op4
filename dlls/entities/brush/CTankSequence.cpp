@@ -40,7 +40,7 @@ TYPEDESCRIPTION    CTankSequence::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CTankSequence, CBaseEntity);
 
-int    CTankSequence::ObjectCaps(void)
+int    CTankSequence::ObjectCaps()
 {
     return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION);
 }

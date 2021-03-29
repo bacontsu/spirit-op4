@@ -23,11 +23,11 @@ class CQueuePriority
 {
 public:
 
-    CQueuePriority(void); // constructor
-    inline int Full(void) { return (m_cSize == MAX_STACK_NODES); }
-    inline int Empty(void) { return (m_cSize == 0); }
+    CQueuePriority(); // constructor
+    inline int Full() { return (m_cSize == MAX_STACK_NODES); }
+    inline int Empty() { return (m_cSize == 0); }
     //inline int Tail ( float & ) { return ( m_queue[ m_tail ].Id ); }
-    inline int Size(void) { return (m_cSize); }
+    inline int Size() { return (m_cSize); }
     void Insert(int, float);
     int Remove(float&);
 
@@ -41,5 +41,5 @@ private:
     } m_heap[MAX_STACK_NODES];
 
     void Heap_SiftDown(int);
-    void Heap_SiftUp(void);
+    void Heap_SiftUp();
 };

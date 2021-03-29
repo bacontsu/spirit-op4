@@ -32,7 +32,7 @@ TYPEDESCRIPTION    CFuncMortarField::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CFuncMortarField, CBaseToggle );
 
-int CFuncMortarField::ObjectCaps(void)
+int CFuncMortarField::ObjectCaps()
 {
     return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 }
@@ -67,7 +67,7 @@ void CFuncMortarField :: KeyValue( KeyValueData *pkvd )
 }
 
 // Drop bombs from above
-void CFuncMortarField :: Spawn( void )
+void CFuncMortarField :: Spawn()
 {
     pev->solid = SOLID_NOT;
     SET_MODEL(ENT(pev), STRING(pev->model));    // set size and link into world
@@ -77,7 +77,7 @@ void CFuncMortarField :: Spawn( void )
     Precache();
 }
 
-void CFuncMortarField :: Precache( void )
+void CFuncMortarField :: Precache()
 {
     PRECACHE_SOUND ("weapons/mortar.wav");
     PRECACHE_SOUND ("weapons/mortarhit.wav");

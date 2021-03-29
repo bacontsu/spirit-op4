@@ -62,7 +62,7 @@ TYPEDESCRIPTION CFuncTank::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CFuncTank, CBaseEntity);
 
 
-void CFuncTank::Spawn(void)
+void CFuncTank::Spawn()
 {
     Precache();
 
@@ -101,7 +101,7 @@ void CFuncTank::Spawn(void)
     }
 }
 
-void CFuncTank::PostSpawn(void)
+void CFuncTank::PostSpawn()
 {
     if (m_pMoveWith)
     {
@@ -115,7 +115,7 @@ void CFuncTank::PostSpawn(void)
     }
 }
 
-void CFuncTank::Precache(void)
+void CFuncTank::Precache()
 {
     //    PRECACHE_MODEL( "sprites/mommablob.spr" );
     if (m_iszSpriteSmoke)
@@ -330,7 +330,7 @@ void CFuncTank::StopControl(CFuncTankControls* pControls)
     }
 }
 
-void CFuncTank::UpdateSpot(void)
+void CFuncTank::UpdateSpot()
 {
     if (pev->spawnflags & SF_TANK_LASERSPOT)
     {
@@ -362,7 +362,7 @@ void CFuncTank::UpdateSpot(void)
 // Called each frame by PostThink, via Use.
 // all we do here is handle firing.
 // LRC- this is now never called. Think functions are handling it all.
-/*void CFuncTank :: ControllerPostFrame( void )
+/*void CFuncTank :: ControllerPostFrame()
 {
     ASSERT(m_pController != NULL);
 
@@ -441,7 +441,7 @@ edict_t* CFuncTank::FindTarget(edict_t* pPlayer)
     return pPlayer;
 }
 
-CBaseEntity* CFuncTank::BestVisibleEnemy(void)
+CBaseEntity* CFuncTank::BestVisibleEnemy()
 {
     CBaseEntity* pReturn;
     int iNearest;
@@ -590,7 +590,7 @@ void CFuncTank::StopSequence()
 }
 
 // NB: tracktarget updates nextthink
-void CFuncTank::Think(void)
+void CFuncTank::Think()
 {
     //    pev->avelocity = g_vecZero;
     TrackTarget();
@@ -601,7 +601,7 @@ void CFuncTank::Think(void)
         StopRotSound();
 }
 
-void CFuncTank::TrackTarget(void)
+void CFuncTank::TrackTarget()
 {
     TraceResult tr;
     //    edict_t *pPlayer;
@@ -1016,7 +1016,7 @@ void CFuncTank::TankTrace(const Vector& vecStart, const Vector& vecForward, cons
 }
 
 
-void CFuncTank::StartRotSound(void)
+void CFuncTank::StartRotSound()
 {
     if (!pev->noise || (pev->spawnflags & SF_TANK_SOUNDON))
         return;
@@ -1025,7 +1025,7 @@ void CFuncTank::StartRotSound(void)
 }
 
 
-void CFuncTank::StopRotSound(void)
+void CFuncTank::StopRotSound()
 {
     if (pev->spawnflags & SF_TANK_SOUNDON)
         STOP_SOUND(edict(), CHAN_STATIC, (char*)STRING(pev->noise));

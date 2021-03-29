@@ -21,7 +21,7 @@
 class CXenHair : public CActAnimating
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void Think() override;
 };

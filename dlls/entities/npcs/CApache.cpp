@@ -47,7 +47,7 @@ TYPEDESCRIPTION CApache::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CApache, CBaseMonster);
 
 
-void CApache::Spawn(void)
+void CApache::Spawn()
 {
     Precache();
     // motor
@@ -89,7 +89,7 @@ void CApache::Spawn(void)
 }
 
 
-void CApache::Precache(void)
+void CApache::Precache()
 {
     if (pev->model)
         PRECACHE_MODEL((char*)STRING(pev->model)); //LRC
@@ -116,7 +116,7 @@ void CApache::Precache(void)
 }
 
 
-void CApache::NullThink(void)
+void CApache::NullThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.5);
@@ -155,7 +155,7 @@ void CApache::Killed(entvars_t* pevAttacker, int iGib)
     }
 }
 
-void CApache::DyingThink(void)
+void CApache::DyingThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -372,13 +372,13 @@ void CApache::CrashTouch(CBaseEntity* pOther)
 }
 
 
-void CApache::GibMonster(void)
+void CApache::GibMonster()
 {
     // EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);        
 }
 
 
-void CApache::HuntThink(void)
+void CApache::HuntThink()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -526,7 +526,7 @@ void CApache::HuntThink(void)
 }
 
 
-void CApache::Flight(void)
+void CApache::Flight()
 {
     // tilt model 5 degrees
     Vector vecAdj = Vector(5.0, 0, 0);
@@ -679,7 +679,7 @@ void CApache::Flight(void)
 }
 
 
-void CApache::FireRocket(void)
+void CApache::FireRocket()
 {
     static float side = 1.0;
     static int count;
@@ -805,7 +805,7 @@ BOOL CApache::FireGun()
 }
 
 
-void CApache::ShowDamage(void)
+void CApache::ShowDamage()
 {
     if (m_iDoSmokePuff > 0 || RANDOM_LONG(0, 99) > pev->health)
     {

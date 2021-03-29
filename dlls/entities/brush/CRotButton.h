@@ -22,7 +22,7 @@
 class CRotButton : public CBaseButton
 {
 public:
-    void Spawn( void ) override;
-    void PostSpawn( void ) override;
+    void Spawn() override;
+    void PostSpawn() override;
     void KeyValue( KeyValueData* pkvd) override;
 };

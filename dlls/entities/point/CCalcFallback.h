@@ -25,7 +25,7 @@ public:
     bool CalcPosition(CBaseEntity* pLocus, Vector* OUTresult) override;
     bool CalcVelocity(CBaseEntity* pLocus, Vector* OUTresult) override;
     bool CalcNumber(CBaseEntity* pLocus, float* OUTresult) override;
-    void Think(void) override;
+    void Think() override;
 
     template <class R, const R* DEFAULTR>
     bool CalcWithFallback(

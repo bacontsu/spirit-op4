@@ -19,7 +19,7 @@
 
 LINK_ENTITY_TO_CLASS(controller_energy_ball, CControllerZapBall);
 
-void CControllerZapBall::Spawn(void)
+void CControllerZapBall::Spawn()
 {
     Precache();
     // motor
@@ -46,7 +46,7 @@ void CControllerZapBall::Spawn(void)
 }
 
 
-void CControllerZapBall::Precache(void)
+void CControllerZapBall::Precache()
 {
     PRECACHE_MODEL("sprites/xspark4.spr");
     // PRECACHE_SOUND("debris/zap4.wav");
@@ -54,7 +54,7 @@ void CControllerZapBall::Precache(void)
 }
 
 
-void CControllerZapBall::AnimateThink(void)
+void CControllerZapBall::AnimateThink()
 {
     SetNextThink(0.1);
 

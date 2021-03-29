@@ -20,8 +20,8 @@
 class CFireAndDie : public CBaseDelay
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void Think(void) override;
-    int ObjectCaps(void) override { return CBaseDelay::ObjectCaps() | FCAP_FORCE_TRANSITION; } // Always go across transitions
+    void Spawn() override;
+    void Precache() override;
+    void Think() override;
+    int ObjectCaps() override { return CBaseDelay::ObjectCaps() | FCAP_FORCE_TRANSITION; } // Always go across transitions
 };

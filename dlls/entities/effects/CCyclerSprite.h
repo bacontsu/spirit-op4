@@ -19,10 +19,10 @@
 class CCyclerSprite : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int ObjectCaps(void) override { return (CBaseEntity::ObjectCaps() | FCAP_DONT_SAVE | FCAP_IMPULSE_USE); }
+    int ObjectCaps() override { return (CBaseEntity::ObjectCaps() | FCAP_DONT_SAVE | FCAP_IMPULSE_USE); }
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     void Animate(float frames);
 
@@ -30,7 +30,7 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    inline int ShouldAnimate(void) { return m_animate && m_maxFrame > 1.0; }
+    inline int ShouldAnimate() { return m_animate && m_maxFrame > 1.0; }
     int m_animate;
     float m_lastTime;
     float m_maxFrame;

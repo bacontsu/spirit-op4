@@ -37,7 +37,7 @@ void CFuncPlatRot::KeyValue(KeyValueData* pkvd)
         CFuncPlat::KeyValue(pkvd);
 }
 
-void CFuncPlatRot::SetupRotation(void)
+void CFuncPlatRot::SetupRotation()
 {
     if (m_vecFinalAngle.x != 0) // This plat rotates too!
     {
@@ -58,13 +58,13 @@ void CFuncPlatRot::SetupRotation(void)
 }
 
 
-void CFuncPlatRot::Spawn(void)
+void CFuncPlatRot::Spawn()
 {
     CFuncPlat::Spawn();
     SetupRotation();
 }
 
-void CFuncPlatRot::GoDown(void)
+void CFuncPlatRot::GoDown()
 {
     CFuncPlat::GoDown();
     //    RotMove( m_start, m_fNextThink - pev->ltime );   //G-Cont/ this fix for func_platrot
@@ -86,7 +86,7 @@ void CFuncPlatRot::GoDown(void)
 //
 // Platform has hit bottom.  Stops and waits forever.
 //
-void CFuncPlatRot::HitBottom(void)
+void CFuncPlatRot::HitBottom()
 {
     CFuncPlat::HitBottom();
     UTIL_SetAvelocity(this, g_vecZero);
@@ -99,7 +99,7 @@ void CFuncPlatRot::HitBottom(void)
 //
 // Platform is at bottom, now starts moving up
 //
-void CFuncPlatRot::GoUp(void)
+void CFuncPlatRot::GoUp()
 {
     CFuncPlat::GoUp();
     //    RotMove( m_end, m_fNextThink - pev->ltime );
@@ -121,7 +121,7 @@ void CFuncPlatRot::GoUp(void)
 //
 // Platform has hit top.  Pauses, then starts back down again.
 //
-void CFuncPlatRot::HitTop(void)
+void CFuncPlatRot::HitTop()
 {
     CFuncPlat::HitTop();
     UTIL_SetAvelocity(this, g_vecZero);

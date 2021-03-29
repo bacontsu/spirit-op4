@@ -29,21 +29,21 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 #endif
 
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
 
-    BOOL Deploy(void) override;
+    BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
 
-    void PrimaryAttack(void) override;
-    void SecondaryAttack(void) override;
-    void WeaponIdle(void) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    void WeaponIdle() override;
 
-    void StartFire(void);
+    void StartFire();
     void Fire(Vector vecOrigSrc, Vector vecDirShooting, float flDamage);
-    float GetFullChargeTime(void);
+    float GetFullChargeTime();
     int m_iBalls;
     int m_iGlow;
     int m_iBeam;
@@ -53,7 +53,7 @@ public:
     // we need to know so we can pick the right set of effects. 
     BOOL m_fPrimaryFire;
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

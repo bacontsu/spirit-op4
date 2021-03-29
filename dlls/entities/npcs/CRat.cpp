@@ -21,7 +21,7 @@ LINK_ENTITY_TO_CLASS(monster_rat, CRat);
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CRat::Classify(void)
+int CRat::Classify()
 {
     return m_iClass ? m_iClass : CLASS_INSECT; //LRC- maybe someone needs to give them a basic biology lesson...
 }
@@ -30,7 +30,7 @@ int CRat::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CRat::SetYawSpeed(void)
+void CRat::SetYawSpeed()
 {
     int ys;
 

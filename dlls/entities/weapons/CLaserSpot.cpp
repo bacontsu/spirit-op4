@@ -19,7 +19,7 @@ LINK_ENTITY_TO_CLASS(laser_spot, CLaserSpot);
 
 //=========================================================
 //=========================================================
-CLaserSpot* CLaserSpot::CreateSpot(void)
+CLaserSpot* CLaserSpot::CreateSpot()
 {
     CLaserSpot* pSpot = GetClassPtr((CLaserSpot*)NULL);
     pSpot->Spawn();
@@ -40,7 +40,7 @@ CLaserSpot* CLaserSpot::CreateSpot(const char* spritename)
 
 //=========================================================
 //=========================================================
-void CLaserSpot::Spawn(void)
+void CLaserSpot::Spawn()
 {
     Precache();
     pev->movetype = MOVETYPE_NONE;
@@ -76,14 +76,14 @@ void CLaserSpot::Suspend(float flSuspendTime)
 //=========================================================
 // Revive - bring a suspended laser sight back.
 //=========================================================
-void CLaserSpot::Revive(void)
+void CLaserSpot::Revive()
 {
     pev->effects &= ~EF_NODRAW;
 
     SetThink(NULL);
 }
 
-void CLaserSpot::Precache(void)
+void CLaserSpot::Precache()
 {
     PRECACHE_MODEL("sprites/laserdot.spr");
 };

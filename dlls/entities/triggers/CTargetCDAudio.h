@@ -22,10 +22,10 @@ extern void PlayCDTrack(int iTrack, int iSong);
 class CTargetCDAudio : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
 
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    void Think(void) override;
-    void Play(void);
+    void Think() override;
+    void Play();
 };

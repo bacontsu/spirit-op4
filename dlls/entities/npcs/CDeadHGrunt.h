@@ -22,8 +22,8 @@
 class CDeadHGrunt : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    int Classify(void) override { return CLASS_HUMAN_MILITARY; }
+    void Spawn() override;
+    int Classify() override { return CLASS_HUMAN_MILITARY; }
 
     void KeyValue(KeyValueData* pkvd) override;
 

@@ -19,11 +19,11 @@
 class CTurret : public CBaseTurret
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     // Think functions
-    void SpinUpCall(void) override;
-    void SpinDownCall(void) override;
+    void SpinUpCall() override;
+    void SpinDownCall() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

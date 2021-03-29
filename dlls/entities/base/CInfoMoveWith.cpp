@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(info_movewith, CInfoMoveWith);
 
-void CInfoMoveWith::Spawn(void)
+void CInfoMoveWith::Spawn()
 {
     if (pev->spawnflags & SF_IMW_INACTIVE)
         m_MoveWith = pev->netname;

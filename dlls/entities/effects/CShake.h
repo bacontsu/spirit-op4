@@ -20,14 +20,14 @@
 class CShake : public CPointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
 
-    inline float Amplitude(void) { return pev->scale; }
-    inline float Frequency(void) { return pev->dmg_save; }
-    inline float Duration(void) { return pev->dmg_take; }
-    inline float Radius(void) { return pev->dmg; }
+    inline float Amplitude() { return pev->scale; }
+    inline float Frequency() { return pev->dmg_save; }
+    inline float Duration() { return pev->dmg_take; }
+    inline float Radius() { return pev->dmg; }
 
     inline void SetAmplitude(float amplitude) { pev->scale = amplitude; }
     inline void SetFrequency(float frequency) { pev->dmg_save = frequency; }
@@ -35,7 +35,7 @@ public:
     inline void SetRadius(float radius) { pev->dmg = radius; }
 
     STATE m_iState; //LRC
-    STATE GetState(void) override { return m_iState; } //LRC
-    void Think(void) override { m_iState = STATE_OFF; } //LRC
+    STATE GetState() override { return m_iState; } //LRC
+    void Think() override { m_iState = STATE_OFF; } //LRC
 private:
 };

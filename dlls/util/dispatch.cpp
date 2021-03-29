@@ -395,7 +395,7 @@ void RestoreGlobalState(SAVERESTOREDATA* pSaveData)
     gGlobalState.Restore(restoreHelper);
 }
 
-void ResetGlobalState(void)
+void ResetGlobalState()
 {
     gGlobalState.ClearStates();
     gInitHUD = TRUE; // Init the HUD on a new game / load game

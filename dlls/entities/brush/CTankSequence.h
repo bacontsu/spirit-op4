@@ -44,15 +44,15 @@ class CTankSequence : public CBaseEntity
 {
 public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void EndThink(void);
-    void TimeOutThink(void);
+    void EndThink();
+    void TimeOutThink();
     void    KeyValue(KeyValueData* pkvd);
-    STATE    GetState(void) { return m_pTank ? STATE_ON : STATE_OFF; }
-    virtual int    ObjectCaps(void);
+    STATE    GetState() { return m_pTank ? STATE_ON : STATE_OFF; }
+    virtual int    ObjectCaps();
 
-    void StopSequence(void);
-    void FacingNotify(void);
-    void DeadEnemyNotify(void);
+    void StopSequence();
+    void FacingNotify();
+    void DeadEnemyNotify();
 
     virtual int    Save(CSave& save);
     virtual int    Restore(CRestore& restore);

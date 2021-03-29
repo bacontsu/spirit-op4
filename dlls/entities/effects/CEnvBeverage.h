@@ -24,10 +24,10 @@
 class CEnvBeverage : public CBaseDelay
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     // it's 'on' while there are cans left
-    STATE GetState(void) override { return (pev->health > 0) ? STATE_ON : STATE_OFF; }
+    STATE GetState() override { return (pev->health > 0) ? STATE_ON : STATE_OFF; }
 };

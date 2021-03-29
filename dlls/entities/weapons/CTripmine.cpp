@@ -44,7 +44,7 @@ void CTripmine::Spawn()
     }
 }
 
-void CTripmine::Precache(void)
+void CTripmine::Precache()
 {
     PRECACHE_MODEL("models/v_tripmine.mdl");
     PRECACHE_MODEL("models/p_tripmine.mdl");
@@ -93,7 +93,7 @@ void CTripmine::Holster(int skiplocal /* = 0 */)
     EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "common/null.wav", 1.0, ATTN_NORM);
 }
 
-void CTripmine::PrimaryAttack(void)
+void CTripmine::PrimaryAttack()
 {
     if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
         return;
@@ -149,7 +149,7 @@ void CTripmine::PrimaryAttack(void)
     m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
 }
 
-void CTripmine::WeaponIdle(void)
+void CTripmine::WeaponIdle()
 {
     //If we're here then we're in a player's inventory, and need to use this body
     pev->body = 0;

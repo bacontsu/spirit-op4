@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(monster_target, CMonsterTarget);
 
-void CMonsterTarget::Spawn(void)
+void CMonsterTarget::Spawn()
 {
     if (pev->spawnflags & SF_MONSTERTARGET_OFF)
         pev->health = 0;

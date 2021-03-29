@@ -15,7 +15,7 @@
 
 #include "CXenSpore.h"
 
-void CXenSpore::Spawn(void)
+void CXenSpore::Spawn()
 {
     Precache();
 
@@ -39,7 +39,7 @@ const char* CXenSpore::pModelNames[] =
     "models/fungus(large).mdl",
 };
 
-void CXenSpore::Precache(void)
+void CXenSpore::Precache()
 {
     PRECACHE_MODEL((char*)pModelNames[pev->skin]);
 }
@@ -48,7 +48,7 @@ void CXenSpore::Touch(CBaseEntity* pOther)
 {
 }
 
-void CXenSpore::Think(void)
+void CXenSpore::Think()
 {
     float flInterval = StudioFrameAdvance();
     SetNextThink(0.1);

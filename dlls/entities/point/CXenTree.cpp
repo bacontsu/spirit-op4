@@ -25,7 +25,7 @@ TYPEDESCRIPTION CXenTree::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CXenTree, CActAnimating);
 
-void CXenTree::Spawn(void)
+void CXenTree::Spawn()
 {
     Precache();
 
@@ -62,7 +62,7 @@ const char* CXenTree::pAttackMissSounds[] =
     "zombie/claw_miss2.wav",
 };
 
-void CXenTree::Precache(void)
+void CXenTree::Precache()
 {
     PRECACHE_MODEL("models/tree.mdl");
     PRECACHE_MODEL(XEN_PLANT_GLOW_SPRITE);
@@ -80,7 +80,7 @@ void CXenTree::Touch(CBaseEntity* pOther)
 }
 
 
-void CXenTree::Attack(void)
+void CXenTree::Attack()
 {
     if (GetActivity() == ACT_IDLE)
     {
@@ -129,7 +129,7 @@ void CXenTree::HandleAnimEvent(MonsterEvent_t* pEvent)
     CActAnimating::HandleAnimEvent(pEvent);
 }
 
-void CXenTree::Think(void)
+void CXenTree::Think()
 {
     float flInterval = StudioFrameAdvance();
     SetNextThink(0.1);

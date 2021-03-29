@@ -19,7 +19,7 @@
 //=========================================================
 // CStack Constructor
 //=========================================================
-CStack::CStack(void)
+CStack::CStack()
 {
     m_level = 0;
 }
@@ -41,7 +41,7 @@ void CStack::Push(int value)
 //=========================================================
 // pops a value off of the stack
 //=========================================================
-int CStack::Pop(void)
+int CStack::Pop()
 {
     if (m_level <= 0)
         return -1;
@@ -53,7 +53,7 @@ int CStack::Pop(void)
 //=========================================================
 // returns the value on the top of the stack
 //=========================================================
-int CStack::Top(void)
+int CStack::Top()
 {
     return m_stack[m_level - 1];
 }

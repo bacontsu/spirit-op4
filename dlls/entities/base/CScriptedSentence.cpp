@@ -94,7 +94,7 @@ void CScriptedSentence::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 }
 
 
-void CScriptedSentence::Spawn(void)
+void CScriptedSentence::Spawn()
 {
     pev->solid = SOLID_NOT;
 
@@ -134,7 +134,7 @@ void CScriptedSentence::Spawn(void)
 }
 
 
-void CScriptedSentence::FindThink(void)
+void CScriptedSentence::FindThink()
 {
     if (!m_iszEntity) //LRC- no target monster given: speak through HEV
     {
@@ -177,14 +177,14 @@ void CScriptedSentence::FindThink(void)
 }
 
 //LRC
-void CScriptedSentence::DurationThink(void)
+void CScriptedSentence::DurationThink()
 {
     m_playing = FALSE;
     SetNextThink(m_flRepeat);
     SetThink(&CScriptedSentence::DelayThink);
 }
 
-void CScriptedSentence::DelayThink(void)
+void CScriptedSentence::DelayThink()
 {
     m_active = TRUE;
     if (!pev->targetname)

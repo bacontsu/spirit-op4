@@ -23,11 +23,11 @@ extern DLL_GLOBAL BOOL g_fGameOver;
 class CChangeLevel : public CBaseTrigger
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void DLLEXPORT UseChangeLevel(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-    void DLLEXPORT TriggerChangeLevel(void);
-    void DLLEXPORT ExecuteChangeLevel(void);
+    void DLLEXPORT TriggerChangeLevel();
+    void DLLEXPORT ExecuteChangeLevel();
     void DLLEXPORT TouchChangeLevel(CBaseEntity* pOther);
     void ChangeLevelNow(CBaseEntity* pActivator);
 

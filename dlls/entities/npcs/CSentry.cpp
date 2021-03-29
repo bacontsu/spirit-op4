@@ -112,7 +112,7 @@ void CSentry::SentryTouch(CBaseEntity* pOther)
 }
 
 
-void CSentry::SentryDeath(void)
+void CSentry::SentryDeath()
 {
     BOOL iActive = FALSE;
 

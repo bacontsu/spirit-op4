@@ -43,7 +43,7 @@ void CDeadGenericMonster::KeyValue(KeyValueData* pkvd)
 //=========================================================
 // ********** DeadGenericMonster SPAWN **********
 //=========================================================
-void CDeadGenericMonster::Spawn(void)
+void CDeadGenericMonster::Spawn()
 {
     Precache();
     SET_MODEL(ENT(pev), STRING(pev->model));

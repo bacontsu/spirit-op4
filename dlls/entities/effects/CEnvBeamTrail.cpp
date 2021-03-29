@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(env_beamtrail, CEnvBeamTrail);
 
-void CEnvBeamTrail::Precache(void)
+void CEnvBeamTrail::Precache()
 {
     if (pev->target)
         PRECACHE_MODEL("sprites/null.spr");
@@ -28,7 +28,7 @@ void CEnvBeamTrail::Precache(void)
         m_iSprite = PRECACHE_MODEL((char*)STRING(pev->netname));
 }
 
-STATE CEnvBeamTrail::GetState(void)
+STATE CEnvBeamTrail::GetState()
 {
     if (pev->spawnflags & SF_BEAMTRAIL_OFF)
         return STATE_OFF;
@@ -36,7 +36,7 @@ STATE CEnvBeamTrail::GetState(void)
         return STATE_ON;
 }
 
-void CEnvBeamTrail::StartTrailThink(void)
+void CEnvBeamTrail::StartTrailThink()
 {
     pev->spawnflags |= SF_BEAMTRAIL_OFF; // fake turning off, so the Use turns it on properly
     Use(this, this, USE_ON, 0);
@@ -98,7 +98,7 @@ void CEnvBeamTrail::Affect(CBaseEntity* pTarget, USE_TYPE useType)
     }
 }
 
-void CEnvBeamTrail::Spawn(void)
+void CEnvBeamTrail::Spawn()
 {
     Precache();
 

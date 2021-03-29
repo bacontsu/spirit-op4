@@ -32,7 +32,7 @@ void CTriggerCDAudio::Touch(CBaseEntity* pOther)
     PlayTrack();
 }
 
-void CTriggerCDAudio::Spawn(void)
+void CTriggerCDAudio::Spawn()
 {
     InitTrigger();
 }
@@ -75,7 +75,7 @@ void PlayCDTrack(int iTrack, int iSong)
 }
 
 // only plays for ONE client, so only use in single play!
-void CTriggerCDAudio::PlayTrack(void)
+void CTriggerCDAudio::PlayTrack()
 {
     PlayCDTrack((int)pev->health, (int)pev->message);
 

@@ -19,13 +19,13 @@
 class CFrictionModifier : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
     void DLLEXPORT ChangeFriction(CBaseEntity* pOther);
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
 
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     static TYPEDESCRIPTION m_SaveData[];
 

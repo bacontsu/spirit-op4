@@ -33,7 +33,7 @@
 extern entvars_t *g_pevLastInflictor;
 
 //LRC - work out gibs from blood colour, instead of from class.
-BOOL CBaseMonster :: HasHumanGibs( void )
+BOOL CBaseMonster :: HasHumanGibs()
 {
     int myClass = Classify();
 
@@ -59,7 +59,7 @@ BOOL CBaseMonster :: HasHumanGibs( void )
 }
 
 //LRC - work out gibs from blood colour, instead.
-BOOL CBaseMonster :: HasAlienGibs( void )
+BOOL CBaseMonster :: HasAlienGibs()
 {
     int myClass = Classify();
 
@@ -88,7 +88,7 @@ BOOL CBaseMonster :: HasAlienGibs( void )
 //    return FALSE;
 }
 
-void CBaseMonster::FadeMonster( void )
+void CBaseMonster::FadeMonster()
 {
     StopAnimation();
     pev->velocity = g_vecZero;
@@ -103,7 +103,7 @@ void CBaseMonster::FadeMonster( void )
 // GibMonster - create some gore and get rid of a monster's
 // model.
 //=========================================================
-void CBaseMonster :: GibMonster( void )
+void CBaseMonster :: GibMonster()
 {
     TraceResult    tr;
     BOOL        gibbed = FALSE;
@@ -158,7 +158,7 @@ void CBaseMonster :: GibMonster( void )
 // GetDeathActivity - determines the best type of death
 // anim to play.
 //=========================================================
-Activity CBaseMonster :: GetDeathActivity ( void )
+Activity CBaseMonster :: GetDeathActivity ()
 {
     Activity    deathActivity;
     BOOL        fTriedDirection;
@@ -279,7 +279,7 @@ Activity CBaseMonster :: GetDeathActivity ( void )
 // GetSmallFlinchActivity - determines the best type of flinch
 // anim to play.
 //=========================================================
-Activity CBaseMonster :: GetSmallFlinchActivity ( void )
+Activity CBaseMonster :: GetSmallFlinchActivity ()
 {
     Activity    flinchActivity;
     BOOL        fTriedDirection;
@@ -327,7 +327,7 @@ Activity CBaseMonster :: GetSmallFlinchActivity ( void )
     return flinchActivity;
 }
 
-void CBaseMonster::BecomeDead( void )
+void CBaseMonster::BecomeDead()
 {
     pev->takedamage = DAMAGE_YES;// don't let autoaim aim at corpses.
     
@@ -351,7 +351,7 @@ BOOL CBaseMonster::ShouldGibMonster( int iGib )
     return FALSE;
 }
 
-void CBaseMonster::CallGibMonster( void )
+void CBaseMonster::CallGibMonster()
 {
     BOOL fade = FALSE;
 

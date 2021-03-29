@@ -24,7 +24,7 @@ TYPEDESCRIPTION CXenPLight::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CXenPLight, CActAnimating);
 
-void CXenPLight::Spawn(void)
+void CXenPLight::Spawn()
 {
     Precache();
 
@@ -42,13 +42,13 @@ void CXenPLight::Spawn(void)
     m_pGlow->SetAttachment(edict(), 1);
 }
 
-void CXenPLight::Precache(void)
+void CXenPLight::Precache()
 {
     PRECACHE_MODEL("models/light.mdl");
     PRECACHE_MODEL(XEN_PLANT_GLOW_SPRITE);
 }
 
-void CXenPLight::Think(void)
+void CXenPLight::Think()
 {
     StudioFrameAdvance();
     SetNextThink(0.1);
@@ -94,14 +94,14 @@ void CXenPLight::Touch(CBaseEntity* pOther)
     }
 }
 
-void CXenPLight::LightOn(void)
+void CXenPLight::LightOn()
 {
     SUB_UseTargets(this, USE_ON, 0);
     if (m_pGlow)
         m_pGlow->pev->effects &= ~EF_NODRAW;
 }
 
-void CXenPLight::LightOff(void)
+void CXenPLight::LightOff()
 {
     SUB_UseTargets(this, USE_OFF, 0);
     if (m_pGlow)

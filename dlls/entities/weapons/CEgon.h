@@ -35,33 +35,33 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 #endif
 
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     int GetItemInfo(ItemInfo* p) override;
     int AddToPlayer(CBasePlayer* pPlayer) override;
 
-    BOOL Deploy(void) override;
+    BOOL Deploy() override;
     void Holster(int skiplocal = 0) override;
 
     void UpdateEffect(const Vector& startPoint, const Vector& endPoint, float timeBlend);
 
-    void CreateEffect(void);
-    void DestroyEffect(void);
+    void CreateEffect();
+    void DestroyEffect();
 
-    void EndAttack(void);
-    void Attack(void);
-    void PrimaryAttack(void) override;
+    void EndAttack();
+    void Attack();
+    void PrimaryAttack() override;
     BOOL ShouldWeaponIdle() override { return TRUE; }
-    void WeaponIdle(void) override;
+    void WeaponIdle() override;
 
     float m_flAmmoUseTime; // since we use < 1 point of ammo per update, we subtract ammo on a timer.
 
-    float GetPulseInterval(void);
-    float GetDischargeInterval(void);
+    float GetPulseInterval();
+    float GetDischargeInterval();
 
     void Fire(const Vector& vecOrigSrc, const Vector& vecDir);
 
-    BOOL HasAmmo(void);
+    BOOL HasAmmo();
 
     void UseAmmo(int count);
 
@@ -71,7 +71,7 @@ public:
     CBeam* m_pNoise;
     CSprite* m_pSprite;
 
-    BOOL UseDecrement(void) override
+    BOOL UseDecrement() override
     {
 #if defined( CLIENT_WEAPONS )
         return TRUE;

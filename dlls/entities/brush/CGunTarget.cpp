@@ -26,12 +26,12 @@ TYPEDESCRIPTION CGunTarget::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CGunTarget, CBaseMonster);
 
 
-int CGunTarget::BloodColor(void)
+int CGunTarget::BloodColor()
 {
     return DONT_BLEED;
 }
 
-int CGunTarget::Classify(void)
+int CGunTarget::Classify()
 {
     return CLASS_MACHINE;
 }
@@ -41,12 +41,12 @@ Vector CGunTarget::BodyTarget(const Vector& posSrc)
     return pev->origin;
 }
 
-int CGunTarget::ObjectCaps(void)
+int CGunTarget::ObjectCaps()
 {
     return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 }
 
-void CGunTarget::Spawn(void)
+void CGunTarget::Spawn()
 {
     pev->solid = SOLID_BSP;
     pev->movetype = MOVETYPE_PUSH;
@@ -72,7 +72,7 @@ void CGunTarget::Spawn(void)
 }
 
 
-void CGunTarget::Activate(void)
+void CGunTarget::Activate()
 {
     CBaseEntity* pTarg;
 
@@ -87,13 +87,13 @@ void CGunTarget::Activate(void)
 }
 
 
-void CGunTarget::Start(void)
+void CGunTarget::Start()
 {
     Use(this, this, USE_ON, 0);
 }
 
 
-void CGunTarget::Next(void)
+void CGunTarget::Next()
 {
     SetThink(NULL);
 
@@ -110,7 +110,7 @@ void CGunTarget::Next(void)
 }
 
 
-void CGunTarget::Wait(void)
+void CGunTarget::Wait()
 {
     CBaseEntity* pTarget = m_hTargetEnt;
 
@@ -144,7 +144,7 @@ void CGunTarget::Wait(void)
 }
 
 
-void CGunTarget::Stop(void)
+void CGunTarget::Stop()
 {
     pev->velocity = g_vecZero;
     DontThink();

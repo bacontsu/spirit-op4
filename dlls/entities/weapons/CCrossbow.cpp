@@ -72,7 +72,7 @@ int CCrossbow::AddToPlayer(CBasePlayer* pPlayer)
     return FALSE;
 }
 
-void CCrossbow::Precache(void)
+void CCrossbow::Precache()
 {
     PRECACHE_MODEL("models/w_crossbow.mdl");
     PRECACHE_MODEL("models/v_crossbow.mdl");
@@ -128,7 +128,7 @@ void CCrossbow::Holster(int skiplocal /* = 0 */)
         SendWeaponAnim(CROSSBOW_HOLSTER2);
 }
 
-void CCrossbow::PrimaryAttack(void)
+void CCrossbow::PrimaryAttack()
 {
 #ifdef CLIENT_DLL
     if (m_pPlayer->m_iFOV != 0 && bIsMultiplayer())
@@ -272,7 +272,7 @@ void CCrossbow::SecondaryAttack()
 }
 
 
-void CCrossbow::Reload(void)
+void CCrossbow::Reload()
 {
     if (m_pPlayer->ammo_bolts <= 0)
         return;
@@ -289,7 +289,7 @@ void CCrossbow::Reload(void)
 }
 
 
-void CCrossbow::WeaponIdle(void)
+void CCrossbow::WeaponIdle()
 {
     m_pPlayer->GetAutoaimVector(AUTOAIM_2DEGREES); // get the autoaim vector but ignore it;  used for autoaim crosshair in DM
 

@@ -27,7 +27,7 @@ TYPEDESCRIPTION CSprite::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CSprite, CPointEntity);
 
-void CSprite::Spawn(void)
+void CSprite::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -52,7 +52,7 @@ void CSprite::Spawn(void)
 }
 
 
-void CSprite::Precache(void)
+void CSprite::Precache()
 {
     PRECACHE_MODEL((char*)STRING(pev->model));
 
@@ -89,7 +89,7 @@ CSprite* CSprite::SpriteCreate(const char* pSpriteName, const Vector& origin, BO
 }
 
 
-void CSprite::AnimateThink(void)
+void CSprite::AnimateThink()
 {
     Animate(pev->framerate * (gpGlobals->time - m_lastTime));
 
@@ -97,7 +97,7 @@ void CSprite::AnimateThink(void)
     m_lastTime = gpGlobals->time;
 }
 
-void CSprite::AnimateUntilDead(void)
+void CSprite::AnimateUntilDead()
 {
     if (gpGlobals->time > pev->dmgtime)
         UTIL_Remove(this);
@@ -119,7 +119,7 @@ void CSprite::Expand(float scaleSpeed, float fadeSpeed)
 }
 
 
-void CSprite::ExpandThink(void)
+void CSprite::ExpandThink()
 {
     float frametime = gpGlobals->time - m_lastTime;
     pev->scale += pev->speed * frametime;
@@ -155,14 +155,14 @@ void CSprite::Animate(float frames)
 }
 
 
-void CSprite::TurnOff(void)
+void CSprite::TurnOff()
 {
     pev->effects = EF_NODRAW;
     DontThink();
 }
 
 
-void CSprite::TurnOn(void)
+void CSprite::TurnOn()
 {
     if (pev->message)
     {

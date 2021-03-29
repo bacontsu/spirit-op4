@@ -31,7 +31,7 @@ public:
 
     BOOL ClientCommand(CBasePlayer* pPlayer, const char* pcmd) override;
     void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer) override;
-    BOOL IsTeamplay(void) override;
+    BOOL IsTeamplay() override;
     BOOL FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker) override;
     int PlayerRelationship(CBaseEntity* pPlayer, CBaseEntity* pTarget) override;
     const char* GetTeamID(CBaseEntity* pEntity) override;
@@ -39,10 +39,10 @@ public:
     int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) override;
     void InitHUD(CBasePlayer* pl) override;
     void DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pevInflictor) override;
-    const char* GetGameDescription(void) override { return "HL Teamplay"; } // this is the game name that gets seen in the server browser
+    const char* GetGameDescription() override { return "HL Teamplay"; } // this is the game name that gets seen in the server browser
     void UpdateGameMode(CBasePlayer* pPlayer) override; // the client needs to be informed of the current game mode
     void PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor) override;
-    void Think(void) override;
+    void Think() override;
     int GetTeamIndex(const char* pTeamName) override;
     const char* GetIndexedTeamName(int teamIndex) override;
     BOOL IsValidTeam(const char* pTeamName) override;
@@ -51,7 +51,7 @@ public:
 
 private:
     void RecountTeams(bool bResendInfo = FALSE);
-    const char* TeamWithFewestPlayers(void);
+    const char* TeamWithFewestPlayers();
 
     BOOL m_DisableDeathMessages;
     BOOL m_DisableDeathPenalty;

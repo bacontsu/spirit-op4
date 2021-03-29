@@ -29,7 +29,7 @@ void UTIL_SetGroupTrace(int groupmask, int op)
     ENGINE_SETGROUPMASK(g_groupmask, g_groupop);
 }
 
-void UTIL_UnsetGroupTrace(void)
+void UTIL_UnsetGroupTrace()
 {
     g_groupmask = 0;
     g_groupop = 0;
@@ -49,7 +49,7 @@ UTIL_GroupTrace::UTIL_GroupTrace(int groupmask, int op)
     ENGINE_SETGROUPMASK(g_groupmask, g_groupop);
 }
 
-UTIL_GroupTrace::~UTIL_GroupTrace(void)
+UTIL_GroupTrace::~UTIL_GroupTrace()
 {
     g_groupmask = m_oldgroupmask;
     g_groupop = m_oldgroupop;

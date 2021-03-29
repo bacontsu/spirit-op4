@@ -75,7 +75,7 @@ void CPython::Spawn()
 }
 
 
-void CPython::Precache(void)
+void CPython::Precache()
 {
     PRECACHE_MODEL("models/v_357.mdl");
     PRECACHE_MODEL("models/w_357.mdl");
@@ -126,7 +126,7 @@ void CPython::Holster(int skiplocal /* = 0 */)
     SendWeaponAnim(PYTHON_HOLSTER);
 }
 
-void CPython::SecondaryAttack(void)
+void CPython::SecondaryAttack()
 {
 #ifdef CLIENT_DLL
     if (!bIsMultiplayer())
@@ -222,7 +222,7 @@ void CPython::PrimaryAttack()
 }
 
 
-void CPython::Reload(void)
+void CPython::Reload()
 {
     if (m_pPlayer->ammo_357 <= 0)
         return;
@@ -243,7 +243,7 @@ void CPython::Reload(void)
 }
 
 
-void CPython::WeaponIdle(void)
+void CPython::WeaponIdle()
 {
     //Evaluate this here so the client properly sets up its body value (Deploy never runs there)
 #ifdef CLIENT_DLL

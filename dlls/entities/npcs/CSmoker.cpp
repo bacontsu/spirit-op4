@@ -18,7 +18,7 @@
 
 LINK_ENTITY_TO_CLASS(env_smoker, CSmoker);
 
-void CSmoker::Spawn(void)
+void CSmoker::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     SetNextThink(0);
@@ -29,7 +29,7 @@ void CSmoker::Spawn(void)
 }
 
 
-void CSmoker::Think(void)
+void CSmoker::Think()
 {
     // lots of smoke
     MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);

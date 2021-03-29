@@ -213,7 +213,7 @@ void CBaseDoor::Spawn()
 //END
 
 //LRC
-void CBaseDoor::PostSpawn(void)
+void CBaseDoor::PostSpawn()
 {
     if (m_pMoveWith)
         m_vecPosition1 = pev->origin - m_pMoveWith->pev->origin;
@@ -245,7 +245,7 @@ void CBaseDoor::PostSpawn(void)
     }
 }
 
-//void CBaseDoor :: PostMoveWith( void )
+//void CBaseDoor :: PostMoveWith()
 //{
 //    Vector vecTemp = m_vecPosition1 - m_pMoveWith->m_vecSpawnOffset;
 //    ALERT(at_console, "door %s pmw: pos1 changes from (%f %f %f) to (%f %f %f)\n", STRING(pev->targetname), m_vecPosition1.x, m_vecPosition1.y, m_vecPosition1.z, vecTemp.x, vecTemp.y, vecTemp.z);
@@ -272,7 +272,7 @@ void CBaseDoor::SetToggleState(int state)
 }
 
 
-void CBaseDoor::Precache(void)
+void CBaseDoor::Precache()
 {
     const char* pszSound;
 
@@ -559,7 +559,7 @@ int CBaseDoor::DoorActivate()
 //
 // Starts the door going to its "up" position (simply ToggleData->vecPosition2).
 //
-void CBaseDoor::DoorGoUp(void)
+void CBaseDoor::DoorGoUp()
 {
     entvars_t* pevActivator;
 
@@ -626,7 +626,7 @@ void CBaseDoor::DoorGoUp(void)
 //
 // The door has reached the "up" position.  Either go back down, or wait for another activation.
 //
-void CBaseDoor::DoorHitTop(void)
+void CBaseDoor::DoorHitTop()
 {
     if (!FBitSet(pev->spawnflags, SF_DOOR_SILENT))
     {
@@ -683,7 +683,7 @@ void CBaseDoor::DoorHitTop(void)
 //
 // Starts the door going to its "down" position (simply ToggleData->vecPosition1).
 //
-void CBaseDoor::DoorGoDown(void)
+void CBaseDoor::DoorGoDown()
 {
     if (!FBitSet(pev->spawnflags, SF_DOOR_SILENT))
     {
@@ -735,7 +735,7 @@ void CBaseDoor::DoorGoDown(void)
 //
 // The door has reached the "down" position.  Back to quiescence.
 //
-void CBaseDoor::DoorHitBottom(void)
+void CBaseDoor::DoorHitBottom()
 {
     if (!FBitSet(pev->spawnflags, SF_DOOR_SILENT))
     {

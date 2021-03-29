@@ -23,11 +23,11 @@ class CQueue
 {
 public:
 
-    CQueue(void); // constructor
-    inline int Full(void) { return (m_cSize == MAX_STACK_NODES); }
-    inline int Empty(void) { return (m_cSize == 0); }
-    //inline int Tail ( void ) { return ( m_queue[ m_tail ] ); }
-    inline int Size(void) { return (m_cSize); }
+    CQueue(); // constructor
+    inline int Full() { return (m_cSize == MAX_STACK_NODES); }
+    inline int Empty() { return (m_cSize == 0); }
+    //inline int Tail () { return ( m_queue[ m_tail ] ); }
+    inline int Size() { return (m_cSize); }
     void Insert(int, float);
     int Remove(float&);
 

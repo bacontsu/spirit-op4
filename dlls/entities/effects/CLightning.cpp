@@ -42,7 +42,7 @@ TYPEDESCRIPTION CLightning::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CLightning, CBeam);
 
 
-void CLightning::Spawn(void)
+void CLightning::Spawn()
 {
     if (FStringNull(m_iszSpriteName))
     {
@@ -100,14 +100,14 @@ void CLightning::Spawn(void)
     }
 }
 
-void CLightning::Precache(void)
+void CLightning::Precache()
 {
     m_spriteTexture = PRECACHE_MODEL((char*)STRING(m_iszSpriteName));
     CBeam::Precache();
 }
 
 
-void CLightning::Activate(void)
+void CLightning::Activate()
 {
     if (ServerSide())
         BeamUpdateVars();
@@ -244,7 +244,7 @@ int IsPointEntity(CBaseEntity* pEnt)
         return 1;
 }
 
-void CLightning::StrikeThink(void)
+void CLightning::StrikeThink()
 {
     if (m_life != 0 && m_restrike != -1) //LRC non-restriking beams! what an idea!
     {
@@ -357,7 +357,7 @@ void CLightning::StrikeThink(void)
 
 
 //LRC - used to be DamageThink, but now it's more general.
-void CLightning::TripThink(void)
+void CLightning::TripThink()
 {
     SetNextThink(0.1);
     TraceResult tr;
@@ -435,7 +435,7 @@ void CLightning::Zap(const Vector& vecSrc, const Vector& vecDest)
     DoSparks(vecSrc, vecDest);
 }
 
-void CLightning::RandomArea(void)
+void CLightning::RandomArea()
 {
     int iLoops = 0;
 
@@ -503,7 +503,7 @@ void CLightning::RandomPoint(Vector& vecSrc)
 
 
 // LRC: Called whenever the beam gets turned on, in case an alias changed or one of the points has moved.
-void CLightning::BeamUpdatePoints(void)
+void CLightning::BeamUpdatePoints()
 {
     int beamType;
     int pointStart, pointEnd;
@@ -557,7 +557,7 @@ void CLightning::BeamUpdatePoints(void)
     RelinkBeam();
 }
 
-void CLightning::BeamUpdateVars(void)
+void CLightning::BeamUpdateVars()
 {
     pev->skin = 0;
     pev->sequence = 0;

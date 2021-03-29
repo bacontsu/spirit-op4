@@ -15,7 +15,7 @@
 
 #include "CRuleBrushEntity.h"
 
-void CRuleBrushEntity::Spawn(void)
+void CRuleBrushEntity::Spawn()
 {
     SET_MODEL(edict(), STRING(pev->model));
     CRuleEntity::Spawn();

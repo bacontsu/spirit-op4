@@ -23,10 +23,10 @@ class CSentry : public CBaseTurret
 {
 public:
     void Spawn() override;
-    void Precache(void) override;
+    void Precache() override;
     // other functions
     void Shoot(Vector& vecSrc, Vector& vecDirToEnemy) override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     void DLLEXPORT SentryTouch(CBaseEntity* pOther);
-    void DLLEXPORT SentryDeath(void);
+    void DLLEXPORT SentryDeath();
 };

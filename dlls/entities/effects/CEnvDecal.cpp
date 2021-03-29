@@ -90,7 +90,7 @@ void CEnvDecal::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
     MESSAGE_END();
 }
 
-void CEnvDecal::Spawn(void)
+void CEnvDecal::Spawn()
 {
     if (pev->impulse == 0)
     {

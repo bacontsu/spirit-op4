@@ -33,7 +33,7 @@ void CDeadHEV::KeyValue(KeyValueData* pkvd)
 //=========================================================
 // ********** DeadHEV SPAWN **********
 //=========================================================
-void CDeadHEV::Spawn(void)
+void CDeadHEV::Spawn()
 {
     PRECACHE_MODEL("models/player.mdl");
     SET_MODEL(ENT(pev), "models/player.mdl");

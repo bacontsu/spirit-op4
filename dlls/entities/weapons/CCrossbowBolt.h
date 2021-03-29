@@ -23,15 +23,15 @@
 // speed - the ideal magnitude of my velocity
 class CCrossbowBolt : public CBaseEntity
 {
-    void Spawn(void) override;
-    void Precache(void) override;
-    int Classify(void) override;
-    void DLLEXPORT BubbleThink(void);
+    void Spawn() override;
+    void Precache() override;
+    int Classify() override;
+    void DLLEXPORT BubbleThink();
     void DLLEXPORT BoltTouch(CBaseEntity* pOther);
-    void DLLEXPORT ExplodeThink(void);
+    void DLLEXPORT ExplodeThink();
 
     int m_iTrail;
 
 public:
-    static CCrossbowBolt* BoltCreate(void);
+    static CCrossbowBolt* BoltCreate();
 };

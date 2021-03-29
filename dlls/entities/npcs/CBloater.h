@@ -19,16 +19,16 @@
 class CBloater : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
 
-    void PainSound(void) override;
-    void AlertSound(void) override;
-    void IdleSound(void) override;
-    void AttackSnd(void);
+    void PainSound() override;
+    void AlertSound() override;
+    void IdleSound() override;
+    void AttackSnd();
 
     // No range attacks
     BOOL CheckRangeAttack1(float flDot, float flDist) override { return FALSE; }

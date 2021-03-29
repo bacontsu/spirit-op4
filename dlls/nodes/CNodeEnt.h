@@ -49,9 +49,9 @@ enum
 //=========================================================
 class CNodeEnt : public CBaseEntity
 {
-    void Spawn(void) override;
+    void Spawn() override;
     void KeyValue(KeyValueData* pkvd) override;
-    int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     short m_sHintType;
     short m_sHintActivity;

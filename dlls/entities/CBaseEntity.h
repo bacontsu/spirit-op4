@@ -133,7 +133,7 @@ extern Vector GetMovedir(Vector vecAngles);
 #define MAX_MULTI_TARGETS    16 // maximum number of targets a single multi_manager entity may be assigned.
 
 
-typedef void (CBaseEntity::* BASEPTR)(void);
+typedef void (CBaseEntity::* BASEPTR)();
 typedef void (CBaseEntity::* ENTITYFUNCPTR)(CBaseEntity* pOther);
 typedef void (CBaseEntity::* USEPTR)(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
@@ -166,7 +166,7 @@ public:
     float m_fNextThink; // LRC - for SetNextThink and SetPhysThink. Marks the time when a think will be performed - not necessarily the same as pev->nextthink!
     float m_fPevNextThink; // LRC - always set equal to pev->nextthink, so that we can tell when the latter gets changed by the @#$^¬! engine.
     int m_iLFlags; // LRC- a new set of flags. (pev->spawnflags and pev->flags are full...)
-    virtual void DesiredAction(void)
+    virtual void DesiredAction()
     {
     } // LRC - for postponing stuff until PostThink time, not as a think.
     int m_iStyle; // LRC - almost anything can have a lightstyle these days...
@@ -204,11 +204,11 @@ public:
     //    void                SetChildrenThink( float delay );
 
     //LRC use this instead of "SetThink( NULL )" or "pev->nextthink = -1".
-    void DontThink(void);
+    void DontThink();
     //LRC similar, but called by the parent when a think needs to be aborted.
-    //    void    DontMWThink( void );
+    //    void    DontMWThink();
 
-    virtual void ThinkCorrection(void);
+    virtual void ThinkCorrection();
 
     //LRC - loci
     virtual bool CalcPosition(CBaseEntity* pLocus, Vector* OUTresult)
@@ -236,12 +236,12 @@ public:
     }
 
     //LRC 1.8 - FollowAlias is now available to all; the special alias class is only for mutable ones.
-    virtual BOOL IsMutableAlias(void) { return FALSE; }
+    virtual BOOL IsMutableAlias() { return FALSE; }
     virtual CBaseEntity* FollowAlias(CBaseEntity* pFrom) { return NULL; }
 
     // initialization functions
-    virtual void Spawn(void) {}
-    virtual void Precache(void) {}
+    virtual void Spawn() {}
+    virtual void Precache() {}
 
     virtual void KeyValue(KeyValueData* pkvd)
     {
@@ -277,20 +277,20 @@ public:
     virtual int Save(CSave& save);
     virtual int Restore(CRestore& restore);
     //LRC - if I MoveWith something, then only cross transitions if the MoveWith entity does too.
-    virtual int ObjectCaps(void) { return m_pMoveWith ? m_pMoveWith->ObjectCaps() & FCAP_ACROSS_TRANSITION : FCAP_ACROSS_TRANSITION; }
-    virtual void Activate(void); //LRC
-    void InitMoveWith(void); //LRC - called by Activate() to set up moveWith values
-    virtual void PostSpawn(void)
+    virtual int ObjectCaps() { return m_pMoveWith ? m_pMoveWith->ObjectCaps() & FCAP_ACROSS_TRANSITION : FCAP_ACROSS_TRANSITION; }
+    virtual void Activate(); //LRC
+    void InitMoveWith(); //LRC - called by Activate() to set up moveWith values
+    virtual void PostSpawn()
     {
     } //LRC - called by Activate() to handle entity-specific initialisation.
     // (mostly setting positions, for MoveWith support)
 
     // Setup the object->object collision box (pev->mins / pev->maxs is the object->world collision box)
-    virtual void SetObjectCollisionBox(void);
+    virtual void SetObjectCollisionBox();
 
     // Classify - returns the type of group (e.g., "alien monster", or "human military" so that monsters
     // on the same side won't attack each other, even if they have different classnames.
-    virtual int Classify(void) { return CLASS_NONE; }
+    virtual int Classify() { return CLASS_NONE; }
 
     virtual void DeathNotice(entvars_t* pevChild)
     {
@@ -299,7 +299,7 @@ public:
 
     // LRC- this supports a global concept of "entities with states", so that state_watchers and
     // mastership (mastery? masterhood?) can work universally.
-    virtual STATE GetState(void) { return STATE_OFF; }
+    virtual STATE GetState() { return STATE_OFF; }
 
     // For team-specific doors in multiplayer, etc: a master's state depends on who wants to know.
     virtual STATE GetState(CBaseEntity* pEnt) { return GetState(); }
@@ -310,13 +310,13 @@ public:
     virtual int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
     virtual int TakeHealth(float flHealth, int bitsDamageType);
     virtual void Killed(entvars_t* pevAttacker, int iGib);
-    virtual int BloodColor(void) { return DONT_BLEED; }
+    virtual int BloodColor() { return DONT_BLEED; }
     virtual void TraceBleed(float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
     //LRC- superceded by GetState ( pActivator ).
     //    virtual BOOL    IsTriggered( CBaseEntity *pActivator ) {return TRUE;}
-    virtual CBaseMonster* MyMonsterPointer(void) { return NULL; }
-    virtual CSquadMonster* MySquadMonsterPointer(void) { return NULL; }
-    virtual int GetToggleState(void) { return TS_AT_TOP; }
+    virtual CBaseMonster* MyMonsterPointer() { return NULL; }
+    virtual CSquadMonster* MySquadMonsterPointer() { return NULL; }
+    virtual int GetToggleState() { return TS_AT_TOP; }
 
     virtual void AddPoints(int score, BOOL bAllowNegativeScore)
     {
@@ -329,10 +329,10 @@ public:
     virtual BOOL AddPlayerItem(CBasePlayerItem* pItem) { return 0; }
     virtual BOOL RemovePlayerItem(CBasePlayerItem* pItem) { return 0; }
     virtual int GiveAmmo(int iAmount, const char* szName, int iMax) { return -1; }
-    virtual float GetDelay(void) { return 0; }
-    virtual int IsMoving(void) { return pev->velocity != g_vecZero; }
+    virtual float GetDelay() { return 0; }
+    virtual int IsMoving() { return pev->velocity != g_vecZero; }
 
-    virtual void OverrideReset(void)
+    virtual void OverrideReset()
     {
     }
 
@@ -342,36 +342,36 @@ public:
     {
     }
 
-    virtual void StartSneaking(void)
+    virtual void StartSneaking()
     {
     }
 
-    virtual void StopSneaking(void)
+    virtual void StopSneaking()
     {
     }
 
     virtual BOOL OnControls(entvars_t* pev) { return FALSE; }
-    virtual BOOL IsSneaking(void) { return FALSE; }
-    virtual BOOL IsAlive(void) { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
-    virtual BOOL IsBSPModel(void) { return pev->solid == SOLID_BSP || pev->movetype == MOVETYPE_PUSHSTEP; }
-    virtual BOOL ReflectGauss(void) { return (IsBSPModel() && !pev->takedamage); }
+    virtual BOOL IsSneaking() { return FALSE; }
+    virtual BOOL IsAlive() { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
+    virtual BOOL IsBSPModel() { return pev->solid == SOLID_BSP || pev->movetype == MOVETYPE_PUSHSTEP; }
+    virtual BOOL ReflectGauss() { return (IsBSPModel() && !pev->takedamage); }
     virtual BOOL HasTarget(string_t targetname) { return FStrEq(STRING(targetname), STRING(pev->targetname)); }
-    virtual BOOL IsInWorld(void);
-    virtual BOOL IsPlayer(void) { return FALSE; }
-    virtual BOOL IsNetClient(void) { return FALSE; }
-    virtual const char* TeamID(void) { return ""; }
+    virtual BOOL IsInWorld();
+    virtual BOOL IsPlayer() { return FALSE; }
+    virtual BOOL IsNetClient() { return FALSE; }
+    virtual const char* TeamID() { return ""; }
 
 
     //    virtual void    SetActivator( CBaseEntity *pActivator ) {}
-    virtual CBaseEntity* GetNextTarget(void);
+    virtual CBaseEntity* GetNextTarget();
 
     // fundamental callbacks
-    void (CBaseEntity::* m_pfnThink)(void);
+    void (CBaseEntity::* m_pfnThink)();
     void (CBaseEntity::* m_pfnTouch)(CBaseEntity* pOther);
     void (CBaseEntity::* m_pfnUse)(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
     void (CBaseEntity::* m_pfnBlocked)(CBaseEntity* pOther);
 
-    virtual void Think(void) { if (m_pfnThink) (this->*m_pfnThink)(); }
+    virtual void Think() { if (m_pfnThink) (this->*m_pfnThink)(); }
     virtual void Touch(CBaseEntity* pOther) { if (m_pfnTouch) (this->*m_pfnTouch)(pOther); }
 
     virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
@@ -396,15 +396,15 @@ public:
     }
 #endif
 
-    void UpdateOnRemove(void);
+    void UpdateOnRemove();
 
     // common member functions
-    void DLLEXPORT SUB_Remove(void);
-    void DLLEXPORT SUB_DoNothing(void);
-    void DLLEXPORT SUB_StartFadeOut(void);
-    void DLLEXPORT SUB_FadeOut(void);
+    void DLLEXPORT SUB_Remove();
+    void DLLEXPORT SUB_DoNothing();
+    void DLLEXPORT SUB_StartFadeOut();
+    void DLLEXPORT SUB_FadeOut();
 
-    void DLLEXPORT SUB_CallUseToggle(void) // a think function used at spawn time. Don't apply the moveWith fix to it.
+    void DLLEXPORT SUB_CallUseToggle() // a think function used at spawn time. Don't apply the moveWith fix to it.
     {
         this->Use(this, this, USE_TOGGLE, 0);
     }
@@ -416,14 +416,14 @@ public:
     Vector FireBulletsPlayer(ULONG cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4,
                              int iDamage = 0, entvars_t* pevAttacker = NULL, int shared_rand = 0);
 
-    virtual CBaseEntity* Respawn(void) { return NULL; }
+    virtual CBaseEntity* Respawn() { return NULL; }
 
     void SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value);
     // Do the bounding boxes of these two intersect?
     int Intersects(CBaseEntity* pOther);
-    void MakeDormant(void);
-    int IsDormant(void);
-    BOOL IsLockedByMaster(void) { return FALSE; }
+    void MakeDormant();
+    int IsDormant();
+    BOOL IsLockedByMaster() { return FALSE; }
 
     static CBaseEntity* Instance(edict_t* pent)
     {
@@ -502,13 +502,13 @@ public:
     // virtual functions used by a few classes
 
     // used by monsters that are created by the MonsterMaker
-    virtual void UpdateOwner(void) {}
+    virtual void UpdateOwner() {}
 
 
     //
     static CBaseEntity* Create(const char* szName, const Vector& vecOrigin, const Vector& vecAngles, edict_t* pentOwner = NULL);
 
-    virtual BOOL FBecomeProne(void) { return FALSE; }
+    virtual BOOL FBecomeProne() { return FALSE; }
     edict_t* edict() { return ENT(pev); }
     EOFFSET eoffset() { return OFFSET(pev); }
     int entindex() { return ENTINDEX(edict()); }
@@ -553,14 +553,14 @@ inline BOOL FNullEnt(CBaseEntity* ent) { return ent == NULL || FNullEnt(ent->edi
 
 #ifdef _DEBUG
 
-#define SetThink( a ) ThinkSet( static_cast <void (CBaseEntity::*)(void)> (a), #a )
+#define SetThink( a ) ThinkSet( static_cast <void (CBaseEntity::*)()> (a), #a )
 #define SetTouch( a ) TouchSet( static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a), #a )
 #define SetUse( a ) UseSet( static_cast <void (CBaseEntity::*)(    CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (a), #a )
 #define SetBlocked( a ) BlockedSet( static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a), #a )
 
 #else
 
-#define SetThink( a ) m_pfnThink = static_cast <void (CBaseEntity::*)(void)> (a)
+#define SetThink( a ) m_pfnThink = static_cast <void (CBaseEntity::*)()> (a)
 #define SetTouch( a ) m_pfnTouch = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a)
 #define SetUse( a ) m_pfnUse = static_cast <void (CBaseEntity::*)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (a)
 #define SetBlocked( a ) m_pfnBlocked = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a)

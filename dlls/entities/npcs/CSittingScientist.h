@@ -22,11 +22,11 @@
 class CSittingScientist : public CScientist // kdb: changed from public CBaseMonster so he can speak
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
-    void DLLEXPORT SittingThink(void);
-    int Classify(void) override;
+    void DLLEXPORT SittingThink();
+    int Classify() override;
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
@@ -34,7 +34,7 @@ public:
     void SetAnswerQuestion(CTalkMonster* pSpeaker) override;
     int FriendNumber(int arrayNumber) override;
 
-    int FIdleSpeak(void);
+    int FIdleSpeak();
     int m_baseSequence;
     int m_headTurn;
     float m_flResponseDelay;

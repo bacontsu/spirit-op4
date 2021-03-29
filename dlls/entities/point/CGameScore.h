@@ -26,13 +26,13 @@
 class CGameScore : public CRulePointEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
 
-    inline int Points(void) { return pev->frags; }
-    inline BOOL AllowNegativeScore(void) { return pev->spawnflags & SF_SCORE_NEGATIVE; }
-    inline BOOL AwardToTeam(void) { return pev->spawnflags & SF_SCORE_TEAM; }
+    inline int Points() { return pev->frags; }
+    inline BOOL AllowNegativeScore() { return pev->spawnflags & SF_SCORE_NEGATIVE; }
+    inline BOOL AwardToTeam() { return pev->spawnflags & SF_SCORE_TEAM; }
 
     inline void SetPoints(int points) { pev->frags = points; }
 

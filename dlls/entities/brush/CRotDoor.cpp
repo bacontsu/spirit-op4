@@ -22,7 +22,7 @@ void CRotDoor::PostSpawn()
     // don't use the moveWith fix from CBaseDoor
 }
 
-void CRotDoor::Spawn( void )
+void CRotDoor::Spawn()
 {
     Precache();
     // set the axis of rotation

@@ -63,7 +63,7 @@ const char* CZombie::pPainSounds[] =
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CZombie::Classify(void)
+int CZombie::Classify()
 {
     return m_iClass ? m_iClass : CLASS_ALIEN_MONSTER;
 }
@@ -72,7 +72,7 @@ int CZombie::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CZombie::SetYawSpeed(void)
+void CZombie::SetYawSpeed()
 {
     int ys;
 
@@ -105,7 +105,7 @@ int CZombie::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float f
     return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
-void CZombie::PainSound(void)
+void CZombie::PainSound()
 {
     int pitch = 95 + RANDOM_LONG(0, 9);
 
@@ -113,14 +113,14 @@ void CZombie::PainSound(void)
         EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pPainSounds[RANDOM_LONG(0, ARRAYSIZE(pPainSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
 }
 
-void CZombie::AlertSound(void)
+void CZombie::AlertSound()
 {
     int pitch = 95 + RANDOM_LONG(0, 9);
 
     EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pAlertSounds[RANDOM_LONG(0, ARRAYSIZE(pAlertSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
 }
 
-void CZombie::IdleSound(void)
+void CZombie::IdleSound()
 {
     int pitch = 100 + RANDOM_LONG(-5, 5);
 
@@ -128,7 +128,7 @@ void CZombie::IdleSound(void)
     EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, pIdleSounds[RANDOM_LONG(0, ARRAYSIZE(pIdleSounds) - 1)], 1.0, ATTN_NORM, 0, pitch);
 }
 
-void CZombie::AttackSound(void)
+void CZombie::AttackSound()
 {
     int pitch = 100 + RANDOM_LONG(-5, 5);
 
@@ -287,7 +287,7 @@ void CZombie::Precache()
 //=========================================================
 
 
-int CZombie::IgnoreConditions(void)
+int CZombie::IgnoreConditions()
 {
     int iIgnore = CBaseMonster::IgnoreConditions();
 

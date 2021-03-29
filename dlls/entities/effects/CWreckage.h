@@ -23,9 +23,9 @@ class CWreckage : public CBaseMonster
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void Spawn(void) override;
-    void Precache(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void Think() override;
 
     int m_flStartTime;
 };

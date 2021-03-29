@@ -26,38 +26,38 @@ enum { HEAD_GLASSES = 0, HEAD_EINSTEIN = 1, HEAD_LUTHER = 2, HEAD_SLICK = 3 };
 class CScientist : public CTalkMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
     void RunTask(Task_t* pTask) override;
     void StartTask(Task_t* pTask) override;
-    int ObjectCaps(void) override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
+    int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     int FriendNumber(int arrayNumber) override;
     void SetActivity(Activity newActivity) override;
-    Activity GetStoppedActivity(void) override;
-    int ISoundMask(void) override;
-    void DeclineFollowing(void) override;
+    Activity GetStoppedActivity() override;
+    int ISoundMask() override;
+    void DeclineFollowing() override;
 
-    float CoverRadius(void) override { return 1200; } // Need more room for cover because scientists want to get far away!
+    float CoverRadius() override { return 1200; } // Need more room for cover because scientists want to get far away!
     BOOL DisregardEnemy(CBaseEntity* pEnemy) { return !pEnemy->IsAlive() || (gpGlobals->time - m_fearTime) > 15; }
 
-    BOOL CanHeal(void);
-    void Heal(void);
-    void Scream(void);
+    BOOL CanHeal();
+    void Heal();
+    void Scream();
 
     // Override these to set behavior
     Schedule_t* GetScheduleOfType(int Type) override;
-    Schedule_t* GetSchedule(void) override;
-    MONSTERSTATE GetIdealState(void) override;
+    Schedule_t* GetSchedule() override;
+    MONSTERSTATE GetIdealState() override;
 
-    void DeathSound(void) override;
-    void PainSound(void) override;
+    void DeathSound() override;
+    void PainSound() override;
 
-    void TalkInit(void);
+    void TalkInit();
 
     void Killed(entvars_t* pevAttacker, int iGib) override;
 

@@ -27,7 +27,7 @@ TYPEDESCRIPTION CLocusAlias::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CLocusAlias, CBaseMutableAlias);
 
-void CLocusAlias::PostSpawn(void)
+void CLocusAlias::PostSpawn()
 {
     m_hValue = UTIL_FindEntityByTargetname(NULL, STRING(pev->netname));
 }
@@ -38,7 +38,7 @@ void CLocusAlias::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
     UTIL_AddToAliasList(this);
 }
 
-void CLocusAlias::FlushChanges(void)
+void CLocusAlias::FlushChanges()
 {
     m_hValue = m_hChangeTo;
     m_hChangeTo = NULL;

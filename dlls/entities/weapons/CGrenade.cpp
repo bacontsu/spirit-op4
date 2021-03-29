@@ -115,7 +115,7 @@ void CGrenade::Explode(TraceResult* pTrace, int bitsDamageType)
 }
 
 
-void CGrenade::Smoke(void)
+void CGrenade::Smoke()
 {
     if (UTIL_PointContents(pev->origin) == CONTENTS_WATER)
     {
@@ -149,7 +149,7 @@ void CGrenade::DetonateUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
     SetNextThink(0);
 }
 
-void CGrenade::PreDetonate(void)
+void CGrenade::PreDetonate()
 {
     CSoundEnt::InsertSound(bits_SOUND_DANGER, pev->origin, 400, 0.3);
 
@@ -158,7 +158,7 @@ void CGrenade::PreDetonate(void)
 }
 
 
-void CGrenade::Detonate(void)
+void CGrenade::Detonate()
 {
     TraceResult tr;
     Vector vecSpot; // trace starts here!
@@ -187,7 +187,7 @@ void CGrenade::ExplodeTouch(CBaseEntity* pOther)
 }
 
 
-void CGrenade::DangerSoundThink(void)
+void CGrenade::DangerSoundThink()
 {
     if (!IsInWorld())
     {
@@ -290,7 +290,7 @@ void CGrenade::SlideTouch(CBaseEntity* pOther)
     }
 }
 
-void CGrenade::BounceSound(void)
+void CGrenade::BounceSound()
 {
     switch (RANDOM_LONG(0, 2))
     {
@@ -303,7 +303,7 @@ void CGrenade::BounceSound(void)
     }
 }
 
-void CGrenade::TumbleThink(void)
+void CGrenade::TumbleThink()
 {
     if (!IsInWorld())
     {
@@ -331,7 +331,7 @@ void CGrenade::TumbleThink(void)
 }
 
 
-void CGrenade::Spawn(void)
+void CGrenade::Spawn()
 {
     pev->movetype = MOVETYPE_BOUNCE;
     pev->classname = MAKE_STRING("grenade");

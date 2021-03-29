@@ -44,7 +44,7 @@ static int PM_boxpnt[6][4] =
     { 7, 6, 4, 5 }, // -Z
 };    
 
-void PM_ShowClipBox( void )
+void PM_ShowClipBox()
 {
 #if defined( _DEBUG )
     vec3_t org;
@@ -277,7 +277,7 @@ Shows particles at that entities bbox
 Tries to shoot a ray out by about 128 units.
 ================
 */
-void PM_ViewEntity( void )
+void PM_ViewEntity()
 {
     Vector forward, right, up;
     float raydist = 256.0f;

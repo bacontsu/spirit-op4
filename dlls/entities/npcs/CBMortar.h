@@ -22,11 +22,11 @@
 class CBMortar : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
+    void Spawn() override;
 
     static CBMortar* Shoot(edict_t* pOwner, Vector vecStart, Vector vecVelocity);
     void Touch(CBaseEntity* pOther) override;
-    void DLLEXPORT Animate(void);
+    void DLLEXPORT Animate();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

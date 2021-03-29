@@ -66,7 +66,7 @@ CInOutRegister* CInOutRegister::Add(CBaseEntity* pValue)
     }
 }
 
-CInOutRegister* CInOutRegister::Prune(void)
+CInOutRegister* CInOutRegister::Prune()
 {
     if (m_hValue)
     {

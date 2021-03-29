@@ -41,7 +41,7 @@ public:
 
     int m_cTriggersLeft; // trigger_counter only, # of activations remaining
     float m_flHeight;
-    void (CBaseToggle::*m_pfnCallWhenMoveDone)(void);
+    void (CBaseToggle::*m_pfnCallWhenMoveDone)();
     Vector m_vecFinalDest;
     float m_flLinearMoveSpeed; // LRC- allows a LinearMove to be delayed until a think.
     float m_flAngularMoveSpeed; // LRC
@@ -62,25 +62,25 @@ public:
 
     static TYPEDESCRIPTION m_SaveData[];
 
-    int GetToggleState(void) override { return m_toggle_state; }
+    int GetToggleState() override { return m_toggle_state; }
 
     // LRC- overridden because toggling entities have general rules governing their states.
-    STATE GetState(void) override;
+    STATE GetState() override;
 
-    float GetDelay(void) override { return m_flWait; }
+    float GetDelay() override { return m_flWait; }
 
     // common member functions
     void LinearMove(Vector vecInput, float flSpeed);
     void LinearMove(Vector vecInput, float flSpeed, float flAccel, float flDecel); //AJH-Accelerated linear movement
-    void DLLEXPORT LinearMoveNow(void); //LRC- think function that lets us guarantee a LinearMove gets done as a think.
-    void DLLEXPORT LinearMoveDone(void);
-    void DLLEXPORT LinearMoveDoneNow(void); //LRC
-    //    void DLLEXPORT LinearMoveFinalDone( void );
+    void DLLEXPORT LinearMoveNow(); //LRC- think function that lets us guarantee a LinearMove gets done as a think.
+    void DLLEXPORT LinearMoveDone();
+    void DLLEXPORT LinearMoveDoneNow(); //LRC
+    //    void DLLEXPORT LinearMoveFinalDone();
     void AngularMove(Vector vecDestAngle, float flSpeed);
-    void DLLEXPORT AngularMoveNow(void); //LRC- think function that lets us guarantee an AngularMove gets done as a think.
-    void DLLEXPORT AngularMoveDone(void);
-    void DLLEXPORT AngularMoveDoneNow(void);
-    BOOL IsLockedByMaster(void);
+    void DLLEXPORT AngularMoveNow(); //LRC- think function that lets us guarantee an AngularMove gets done as a think.
+    void DLLEXPORT AngularMoveDone();
+    void DLLEXPORT AngularMoveDoneNow();
+    BOOL IsLockedByMaster();
 
     static float AxisValue(int flags, const Vector& angles);
     static void AxisDir(entvars_t* pev);
@@ -93,4 +93,4 @@ public:
     // deactivated.
 };
 
-#define SetMoveDone( a ) m_pfnCallWhenMoveDone = static_cast <void (CBaseToggle::*)(void)> (a)
+#define SetMoveDone( a ) m_pfnCallWhenMoveDone = static_cast <void (CBaseToggle::*)()> (a)

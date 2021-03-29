@@ -28,7 +28,7 @@ void CTriggerCounter::KeyValue(KeyValueData* pkvd)
         CTriggerMultiple::KeyValue(pkvd);
 }
 
-void CTriggerCounter::Spawn(void)
+void CTriggerCounter::Spawn()
 {
     // By making the flWait be -1, this counter-trigger will disappear after it's activated
     // (but of course it needs cTriggersLeft "uses" before that happens).

@@ -247,7 +247,7 @@ void CRestore::BufferReadHeader(HEADER* pheader)
 }
 
 
-short CRestore::ReadShort(void)
+short CRestore::ReadShort()
 {
     short tmp = 0;
 
@@ -256,7 +256,7 @@ short CRestore::ReadShort(void)
     return tmp;
 }
 
-int CRestore::ReadInt(void)
+int CRestore::ReadInt()
 {
     int tmp = 0;
 
@@ -286,7 +286,7 @@ char* CRestore::ReadNamedString(const char* pName)
 }
 
 
-char* CRestore::BufferPointer(void)
+char* CRestore::BufferPointer()
 {
     if (!m_pdata)
         return NULL;
@@ -320,7 +320,7 @@ void CRestore::BufferSkipBytes(int bytes)
     BufferReadBytes(NULL, bytes);
 }
 
-int CRestore::BufferSkipZString(void)
+int CRestore::BufferSkipZString()
 {
     char* pszSearch;
     int len;

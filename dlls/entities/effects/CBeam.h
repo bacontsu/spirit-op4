@@ -94,7 +94,7 @@ public:
 
     // Call after you change start/end positions
     void RelinkBeam();
-    //    void        SetObjectCollisionBox( void );
+    //    void        SetObjectCollisionBox();
 
     void DoSparks(const Vector& start, const Vector& end);
     CBaseEntity* RandomTargetname(const char* szName);

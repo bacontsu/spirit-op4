@@ -21,8 +21,8 @@
 class CStomp : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void Think(void) override;
+    void Spawn() override;
+    void Think() override;
     static CStomp* StompCreate(const Vector& origin, const Vector& end, float speed);
 
 private:

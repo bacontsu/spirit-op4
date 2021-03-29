@@ -35,7 +35,7 @@ void CMortar::Precache( )
     m_spriteTexture = PRECACHE_MODEL( "sprites/lgtning.spr" );
 }
 
-void CMortar::MortarExplode( void )
+void CMortar::MortarExplode()
 {
 #if 1
     // mortar beam

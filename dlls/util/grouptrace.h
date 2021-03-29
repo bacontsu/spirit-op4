@@ -24,11 +24,11 @@ class UTIL_GroupTrace
 {
 public:
     UTIL_GroupTrace(int groupmask, int op);
-    ~UTIL_GroupTrace(void);
+    ~UTIL_GroupTrace();
 
 private:
     int m_oldgroupmask, m_oldgroupop;
 };
 
 void UTIL_SetGroupTrace(int groupmask, int op);
-void UTIL_UnsetGroupTrace(void);
+void UTIL_UnsetGroupTrace();

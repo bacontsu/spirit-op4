@@ -55,7 +55,7 @@ void CEnvModel::KeyValue(KeyValueData* pkvd)
     }
 }
 
-void CEnvModel::Spawn(void)
+void CEnvModel::Spawn()
 {
     Precache();
     SET_MODEL(ENT(pev), STRING(pev->model));
@@ -82,12 +82,12 @@ void CEnvModel::Spawn(void)
     SetNextThink(0.1);
 }
 
-void CEnvModel::Precache(void)
+void CEnvModel::Precache()
 {
     PRECACHE_MODEL((char*)STRING(pev->model));
 }
 
-STATE CEnvModel::GetState(void)
+STATE CEnvModel::GetState()
 {
     if (pev->spawnflags & SF_ENVMODEL_OFF)
         return STATE_OFF;
@@ -109,7 +109,7 @@ void CEnvModel::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
     }
 }
 
-void CEnvModel::Think(void)
+void CEnvModel::Think()
 {
     int iTemp;
 
@@ -151,7 +151,7 @@ void CEnvModel::Think(void)
     SetNextThink(0.1);
 }
 
-void CEnvModel::SetSequence(void)
+void CEnvModel::SetSequence()
 {
     int iszSeq;
 

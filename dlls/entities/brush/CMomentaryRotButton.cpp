@@ -37,14 +37,14 @@ CMomentaryRotButton* CMomentaryRotButton::Instance(edict_t* pent)
     return (CMomentaryRotButton*) GET_PRIVATE(pent);
 };
 
-int CMomentaryRotButton::ObjectCaps(void)
+int CMomentaryRotButton::ObjectCaps()
 {
     int flags = CBaseToggle::ObjectCaps() & (~FCAP_ACROSS_TRANSITION);
     if (pev->spawnflags & SF_MOMENTARY_DOOR) return flags;
     return flags | FCAP_CONTINUOUS_USE;
 }
 
-void CMomentaryRotButton::Spawn( void )
+void CMomentaryRotButton::Spawn()
 {
     CBaseToggle::AxisDir( pev );
 
@@ -101,7 +101,7 @@ void CMomentaryRotButton::KeyValue( KeyValueData *pkvd )
         CBaseToggle::KeyValue( pkvd );
 }
 
-void CMomentaryRotButton::PlaySound( void )
+void CMomentaryRotButton::PlaySound()
 {
     EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noise), 1, ATTN_NORM);
 }
@@ -207,7 +207,7 @@ void CMomentaryRotButton::UpdateTarget( float value )
     }
 }
 
-void CMomentaryRotButton::Off( void )
+void CMomentaryRotButton::Off()
 {
     pev->avelocity = g_vecZero;
     m_lastUsed = 0;
@@ -221,7 +221,7 @@ void CMomentaryRotButton::Off( void )
         SetThink( NULL );
 }
 
-void CMomentaryRotButton::Return( void )
+void CMomentaryRotButton::Return()
 {
     float value = CBaseToggle::AxisDelta( pev->spawnflags, pev->angles, m_start ) / m_flMoveDistance;
     

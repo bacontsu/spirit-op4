@@ -46,7 +46,7 @@ void CTriggerHurt::KeyValue(KeyValueData* pkvd)
         CBaseToggle::KeyValue(pkvd);
 }
 
-void CTriggerHurt::Spawn(void)
+void CTriggerHurt::Spawn()
 {
     InitTrigger();
     SetTouch(&CTriggerHurt::HurtTouch);
@@ -198,7 +198,7 @@ void CTriggerHurt::HurtTouch(CBaseEntity* pOther)
 // check and set the player's geiger counter level
 // according to distance from center of trigger
 
-void CTriggerHurt::RadiationThink(void)
+void CTriggerHurt::RadiationThink()
 {
     edict_t* pentPlayer;
     CBasePlayer* pPlayer = NULL;

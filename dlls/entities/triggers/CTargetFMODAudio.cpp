@@ -35,7 +35,7 @@ TYPEDESCRIPTION CTargetFMODAudio::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CTargetFMODAudio, CPointEntity);
 
-void CTargetFMODAudio::Spawn(void)
+void CTargetFMODAudio::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;

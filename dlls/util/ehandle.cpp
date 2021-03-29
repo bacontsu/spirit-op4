@@ -18,7 +18,7 @@
 #include "util.h"
 #include "entities/CBaseEntity.h"
 
-edict_t* EHANDLE::Get(void)
+edict_t* EHANDLE::Get()
 {
     if (m_pent)
     {

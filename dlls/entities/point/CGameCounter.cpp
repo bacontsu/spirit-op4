@@ -17,7 +17,7 @@
 
 LINK_ENTITY_TO_CLASS(game_counter, CGameCounter);
 
-void CGameCounter::Spawn(void)
+void CGameCounter::Spawn()
 {
     // Save off the initial count
     SetInitialValue(CountValue());

@@ -58,7 +58,7 @@ void CCommandMenu::AddButton(CommandButton* pButton)
     }
 }
 
-void CCommandMenu::RemoveAllButtons(void)
+void CCommandMenu::RemoveAllButtons()
 {
     /*
     for(int i=0;i<m_iButtons;i++)
@@ -117,7 +117,7 @@ bool CCommandMenu::KeyInput(int keyNum)
 // Purpose: clears the current menus buttons of any armed (highlighted) 
 //			state, and all their sub buttons
 //-----------------------------------------------------------------------------
-void CCommandMenu::ClearButtonsOfArmedState(void)
+void CCommandMenu::ClearButtonsOfArmedState()
 {
     for (int i = 0; i < GetNumButtons(); i++)
     {

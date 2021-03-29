@@ -44,7 +44,7 @@ void CFuncTankControls::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-int CFuncTankControls::ObjectCaps(void)
+int CFuncTankControls::ObjectCaps()
 {
     if (pev->spawnflags & SF_TANKCONTROLS_NO_USE)
         return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION);
@@ -184,7 +184,7 @@ void CFuncTankControls::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 
 
 /* LRC- no need to set up m_pTank any more...
-void CFuncTankControls :: Think( void )
+void CFuncTankControls :: Think()
 {
     CBaseEntity *pTarget = NULL;
 
@@ -215,7 +215,7 @@ void CFuncTankControls :: Think( void )
 }
 }*/
 
-void CFuncTankControls::Spawn(void)
+void CFuncTankControls::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     pev->movetype = MOVETYPE_NONE;

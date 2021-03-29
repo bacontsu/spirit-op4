@@ -22,8 +22,8 @@
 class CFurniture : public CBaseMonster
 {
 public:
-    void Spawn(void) override;
-    void Die(void);
-    int Classify(void) override;
-    int ObjectCaps(void) override { return (CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+    void Spawn() override;
+    void Die();
+    int Classify() override;
+    int ObjectCaps() override { return (CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 };

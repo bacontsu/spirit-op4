@@ -102,7 +102,7 @@ void CSatchel::Spawn()
 }
 
 
-void CSatchel::Precache(void)
+void CSatchel::Precache()
 {
     PRECACHE_MODEL("models/v_satchel.mdl");
     PRECACHE_MODEL("models/v_satchel_radio.mdl");
@@ -133,7 +133,7 @@ int CSatchel::GetItemInfo(ItemInfo* p)
 
 //=========================================================
 //=========================================================
-BOOL CSatchel::IsUseable(void)
+BOOL CSatchel::IsUseable()
 {
     if (m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()] > 0)
     {
@@ -150,7 +150,7 @@ BOOL CSatchel::IsUseable(void)
     return FALSE;
 }
 
-BOOL CSatchel::CanDeploy(void)
+BOOL CSatchel::CanDeploy()
 {
     if (m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()] > 0)
     {
@@ -250,7 +250,7 @@ void CSatchel::PrimaryAttack()
 }
 
 
-void CSatchel::SecondaryAttack(void)
+void CSatchel::SecondaryAttack()
 {
     if (m_chargeReady != 2)
     {
@@ -259,7 +259,7 @@ void CSatchel::SecondaryAttack(void)
 }
 
 
-void CSatchel::Throw(void)
+void CSatchel::Throw()
 {
     if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
     {
@@ -293,7 +293,7 @@ void CSatchel::Throw(void)
 }
 
 
-void CSatchel::WeaponIdle(void)
+void CSatchel::WeaponIdle()
 {
     if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
         return;

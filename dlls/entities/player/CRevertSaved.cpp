@@ -59,7 +59,7 @@ void CRevertSaved::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
     SetThink(&CRevertSaved::MessageThink);
 }
 
-void CRevertSaved::MessageThink(void)
+void CRevertSaved::MessageThink()
 {
     UTIL_ShowMessageAll(STRING(pev->message));
     float nextThink = LoadTime() - MessageTime();
@@ -72,7 +72,7 @@ void CRevertSaved::MessageThink(void)
         LoadThink();
 }
 
-void CRevertSaved::LoadThink(void)
+void CRevertSaved::LoadThink()
 {
     if (!gpGlobals->deathmatch)
     {

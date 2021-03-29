@@ -18,5 +18,5 @@
 
 class CXenSporeSmall : public CXenSpore
 {
-    void Spawn(void) override;
+    void Spawn() override;
 };

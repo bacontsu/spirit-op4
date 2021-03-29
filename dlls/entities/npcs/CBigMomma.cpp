@@ -157,7 +157,7 @@ void CBigMomma::KeyValue(KeyValueData* pkvd)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int CBigMomma::Classify(void)
+int CBigMomma::Classify()
 {
     return m_iClass ? m_iClass : CLASS_ALIEN_MONSTER;
 }
@@ -166,7 +166,7 @@ int CBigMomma::Classify(void)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBigMomma::SetYawSpeed(void)
+void CBigMomma::SetYawSpeed()
 {
     int ys;
 
@@ -352,7 +352,7 @@ int CBigMomma::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float
     return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
-void CBigMomma::LayHeadcrab(void)
+void CBigMomma::LayHeadcrab()
 {
     CBaseEntity* pChild = CBaseEntity::Create(BIG_CHILDCLASS, pev->origin, pev->angles, edict());
 
@@ -433,7 +433,7 @@ Vector VecCheckSplatToss(entvars_t* pev, const Vector& vecSpot1, Vector vecSpot2
     return vecGrenadeVel;
 }
 
-void CBigMomma::LaunchMortar(void)
+void CBigMomma::LaunchMortar()
 {
     m_mortarTime = gpGlobals->time + RANDOM_FLOAT(2, 15);
 
@@ -521,7 +521,7 @@ void CBigMomma::Precache()
 }
 
 
-void CBigMomma::Activate(void)
+void CBigMomma::Activate()
 {
     if (m_hTargetEnt == NULL)
         Remember(bits_MEMORY_ADVANCE_NODE); // Start 'er up
@@ -556,7 +556,7 @@ void CBigMomma::NodeStart(int iszNextNode)
 }
 
 
-void CBigMomma::NodeReach(void)
+void CBigMomma::NodeReach()
 {
     CBaseEntity* pTarget = m_hTargetEnt;
 
@@ -721,7 +721,7 @@ Schedule_t* CBigMomma::GetScheduleOfType(int Type)
 }
 
 
-BOOL CBigMomma::ShouldGoToNode(void)
+BOOL CBigMomma::ShouldGoToNode()
 {
     if (HasMemory(bits_MEMORY_ADVANCE_NODE))
     {
@@ -772,7 +772,7 @@ void CBigMomma::SetActivity(Activity NewActivity)
     m_IdealActivity = m_Activity;
 }
 
-Schedule_t* CBigMomma::GetSchedule(void)
+Schedule_t* CBigMomma::GetSchedule()
 {
     if (ShouldGoToNode())
     {

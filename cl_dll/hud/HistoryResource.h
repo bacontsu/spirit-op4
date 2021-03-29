@@ -41,12 +41,12 @@ private:
 
 public:
 
-    void Init(void)
+    void Init()
     {
         Reset();
     }
 
-    void Reset(void)
+    void Reset()
     {
         memset(rgAmmoHistory, 0, sizeof rgAmmoHistory);
     }
@@ -57,7 +57,7 @@ public:
     void AddToHistory(int iType, int iId, int iCount = 0);
     void AddToHistory(int iType, const char* szName, int iCount = 0);
 
-    void CheckClearHistory(void);
+    void CheckClearHistory();
     int DrawAmmoHistory(float flTime);
 };
 

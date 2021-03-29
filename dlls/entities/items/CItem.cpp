@@ -18,7 +18,7 @@
 
 extern int gEvilImpulse101;
 
-void CItem::Spawn(void)
+void CItem::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->solid = SOLID_TRIGGER;
@@ -73,7 +73,7 @@ void CItem::ItemTouch(CBaseEntity* pOther)
     }
 }
 
-CBaseEntity* CItem::Respawn(void)
+CBaseEntity* CItem::Respawn()
 {
     SetTouch(NULL);
     pev->effects |= EF_NODRAW;
@@ -85,7 +85,7 @@ CBaseEntity* CItem::Respawn(void)
     return this;
 }
 
-void CItem::Materialize(void)
+void CItem::Materialize()
 {
     if (pev->effects & EF_NODRAW)
     {

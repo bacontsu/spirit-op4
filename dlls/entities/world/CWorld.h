@@ -29,8 +29,8 @@
 class CWorld : public CBaseEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void KeyValue(KeyValueData* pkvd) override;
 
     CBaseMutableAlias* m_pFirstAlias;

@@ -75,7 +75,7 @@ void CCycler::Spawn()
 //
 // cycler think
 //
-void CCycler::Think(void)
+void CCycler::Think()
 {
     SetNextThink(0.1);
 

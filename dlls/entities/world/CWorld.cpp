@@ -26,8 +26,8 @@
 extern DLL_GLOBAL int gDisplayTitle;
 extern DLL_GLOBAL BOOL g_fGameOver;
 extern CBaseEntity* g_pLastSpawn;
-extern void W_Precache(void); // weapon precache - weapons.cpp
-void I_Precache(void); // item precache
+extern void W_Precache(); // weapon precache - weapons.cpp
+void I_Precache(); // item precache
 
 BOOL g_allowGJump;
 BOOL g_startSuit; //LRC
@@ -35,13 +35,13 @@ CWorld* g_pWorld = NULL; //LRC
 
 LINK_ENTITY_TO_CLASS(worldspawn, CWorld);
 
-void CWorld::Spawn(void)
+void CWorld::Spawn()
 {
     g_fGameOver = FALSE;
     Precache();
 }
 
-void CWorld::Precache(void)
+void CWorld::Precache()
 {
     //LRC - set up the world lists
     g_pWorld = this;
@@ -321,7 +321,7 @@ void CWorld::KeyValue(KeyValueData* pkvd)
         CBaseEntity::KeyValue(pkvd);
 }
 
-void I_Precache(void)
+void I_Precache()
 {
     // common world objects (moved from W_Precache - weapons.cpp)
     UTIL_PrecacheOther("item_suit");

@@ -29,10 +29,10 @@ public:
     void Spawn(const char* szGibModel);
     void DLLEXPORT BounceGibTouch(CBaseEntity* pOther);
     void DLLEXPORT StickyGibTouch(CBaseEntity* pOther);
-    void DLLEXPORT WaitTillLand(void);
-    void LimitVelocity(void);
+    void DLLEXPORT WaitTillLand();
+    void LimitVelocity();
 
-    int ObjectCaps(void) override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
+    int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
     static void SpawnHeadGib(entvars_t* pevVictim);
     static void SpawnHeadGib(entvars_t* pevVictim, const char* szGibModel);
     static void SpawnRandomGibs(entvars_t* pevVictim, int cGibs, int human);

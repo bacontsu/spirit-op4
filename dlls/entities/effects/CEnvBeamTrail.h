@@ -24,11 +24,11 @@
 class CEnvBeamTrail : public CPointEntity
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    STATE GetState(void) override;
-    void DLLEXPORT StartTrailThink(void);
+    STATE GetState() override;
+    void DLLEXPORT StartTrailThink();
     void Affect(CBaseEntity* pTarget, USE_TYPE useType);
 
     int m_iSprite; // Don't save, precache

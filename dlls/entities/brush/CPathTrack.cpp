@@ -84,7 +84,7 @@ void CPathTrack::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
 }
 
 
-void CPathTrack::Link(void)
+void CPathTrack::Link()
 {
     CBaseEntity* pTarget;
 
@@ -113,7 +113,7 @@ void CPathTrack::Link(void)
 }
 
 
-void CPathTrack::Spawn(void)
+void CPathTrack::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     UTIL_SetSize(pev, Vector(-8, -8, -8), Vector(8, 8, 8));
@@ -128,7 +128,7 @@ void CPathTrack::Spawn(void)
 }
 
 
-void CPathTrack::Activate(void)
+void CPathTrack::Activate()
 {
     if (!FStringNull(pev->targetname)) // Link to next, and back-link
         Link();
@@ -158,7 +158,7 @@ void CPathTrack::Project(CPathTrack* pstart, CPathTrack* pend, Vector* origin, f
     }
 }
 
-CPathTrack* CPathTrack::GetNext(void)
+CPathTrack* CPathTrack::GetNext()
 {
     if (m_paltpath && FBitSet(pev->spawnflags, SF_PATH_ALTERNATE) && !FBitSet(pev->spawnflags, SF_PATH_ALTREVERSE))
         return m_paltpath;
@@ -167,7 +167,7 @@ CPathTrack* CPathTrack::GetNext(void)
 }
 
 
-CPathTrack* CPathTrack::GetPrevious(void)
+CPathTrack* CPathTrack::GetPrevious()
 {
     if (m_paltpath && FBitSet(pev->spawnflags, SF_PATH_ALTERNATE) && FBitSet(pev->spawnflags, SF_PATH_ALTREVERSE))
         return m_paltpath;
@@ -318,7 +318,7 @@ CPathTrack* CPathTrack::Instance(edict_t* pent)
 
 // DEBUGGING CODE
 #if PATH_SPARKLE_DEBUG
-void CPathTrack::Sparkle(void)
+void CPathTrack::Sparkle()
 {
 
     SetNextThink(0.2);

@@ -25,7 +25,7 @@ extern BEAM* pBeam2;
 extern TEMPENTITY* pFlare; // Vit_amiN: egon's energy flare
 void HUD_GetLastOrg(float* org);
 
-void UpdateBeams(void)
+void UpdateBeams()
 {
     vec3_t forward, vecSrc, vecEnd, origin, angles, right, up;
     vec3_t view_ofs;
@@ -100,7 +100,7 @@ Game_AddObjects
 Add game specific, client-side objects here
 =====================
 */
-void Game_AddObjects(void)
+void Game_AddObjects()
 {
     if (pBeam || pBeam2 || pFlare)
         UpdateBeams();

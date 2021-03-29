@@ -36,7 +36,7 @@ public:
     void keyFocusTicked(Panel* panel) override {}
 
     void paintBackground() override;
-    void paint(void) override;
+    void paint() override;
 
 private:
     struct cvar_s* m_cvar;

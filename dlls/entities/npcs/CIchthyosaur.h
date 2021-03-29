@@ -25,10 +25,10 @@
 class CIchthyosaur : public CFlyingMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
     CUSTOM_SCHEDULES;
 
@@ -36,11 +36,11 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    Schedule_t* GetSchedule(void) override;
+    Schedule_t* GetSchedule() override;
     Schedule_t* GetScheduleOfType(int Type) override;
 
     void Killed(entvars_t* pevAttacker, int iGib) override;
-    void BecomeDead(void) override;
+    void BecomeDead() override;
 
     void DLLEXPORT CombatUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
     void DLLEXPORT BiteTouch(CBaseEntity* pOther);
@@ -52,17 +52,17 @@ public:
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
 
     float ChangeYaw(int speed) override;
-    Activity GetStoppedActivity(void) override;
+    Activity GetStoppedActivity() override;
 
     void Move(float flInterval) override;
     void MoveExecute(CBaseEntity* pTargetEnt, const Vector& vecDir, float flInterval) override;
-    void MonsterThink(void) override;
-    void Stop(void) override;
-    void Swim(void);
+    void MonsterThink() override;
+    void Stop() override;
+    void Swim();
     Vector DoProbe(const Vector& Probe);
 
     float VectorToPitch(const Vector& vec);
-    float FlPitchDiff(void);
+    float FlPitchDiff();
     float ChangePitch(int speed);
 
     Vector m_SaveVelocity;
@@ -90,10 +90,10 @@ public:
     static const char* pDieSounds[];
     static const char* pPainSounds[];
 
-    void IdleSound(void) override;
-    void AlertSound(void) override;
-    void AttackSound(void);
-    void BiteSound(void);
-    void DeathSound(void) override;
-    void PainSound(void) override;
+    void IdleSound() override;
+    void AlertSound() override;
+    void AttackSound();
+    void BiteSound();
+    void DeathSound() override;
+    void PainSound() override;
 };

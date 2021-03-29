@@ -74,7 +74,7 @@ const char *GetSpectatorLabel ( int iMode )
 
 #endif
 
-void SpectatorMode(void)
+void SpectatorMode()
 {
     if (gEngfuncs.Cmd_Argc() <= 1)
     {
@@ -89,7 +89,7 @@ void SpectatorMode(void)
         gHUD.m_Spectator.SetModes(atoi(gEngfuncs.Cmd_Argv(1)), atoi(gEngfuncs.Cmd_Argv(2)));
 }
 
-void SpectatorSpray(void)
+void SpectatorSpray()
 {
     vec3_t forward;
     char string[128];
@@ -109,7 +109,7 @@ void SpectatorSpray(void)
     }
 }
 
-void SpectatorHelp(void)
+void SpectatorHelp()
 {
     if (gViewPort)
     {
@@ -131,7 +131,7 @@ void SpectatorHelp(void)
     }
 }
 
-void SpectatorMenu(void)
+void SpectatorMenu()
 {
     if (gEngfuncs.Cmd_Argc() <= 1)
     {
@@ -142,7 +142,7 @@ void SpectatorMenu(void)
     gViewPort->m_pSpectatorPanel->ShowMenu(atoi(gEngfuncs.Cmd_Argv(1)) != 0);
 }
 
-void ToggleScores(void)
+void ToggleScores()
 {
     if (gViewPort)
     {

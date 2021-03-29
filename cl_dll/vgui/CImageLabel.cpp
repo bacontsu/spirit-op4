@@ -40,7 +40,7 @@ CImageLabel::CImageLabel(const char* pImageName, int x, int y, int wide, int tal
 
 //===========================================================
 // Image size
-int CImageLabel::getImageWide(void)
+int CImageLabel::getImageWide()
 {
     if (m_pTGA)
     {
@@ -54,7 +54,7 @@ int CImageLabel::getImageWide(void)
     }
 }
 
-int CImageLabel::getImageTall(void)
+int CImageLabel::getImageTall()
 {
     if (m_pTGA)
     {

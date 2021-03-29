@@ -42,7 +42,7 @@ void CEnvGlobal::KeyValue(KeyValueData* pkvd)
         CPointEntity::KeyValue(pkvd);
 }
 
-void CEnvGlobal::Spawn(void)
+void CEnvGlobal::Spawn()
 {
     if (!m_globalstate)
     {

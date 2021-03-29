@@ -32,9 +32,9 @@ public:
 
 private:
 
-    inline BOOL RemoveOnFire(void) { return (pev->spawnflags & SF_PTEAM_FIREONCE) ? TRUE : FALSE; }
-    inline BOOL ShouldKillPlayer(void) { return (pev->spawnflags & SF_PTEAM_KILL) ? TRUE : FALSE; }
-    inline BOOL ShouldGibPlayer(void) { return (pev->spawnflags & SF_PTEAM_GIB) ? TRUE : FALSE; }
+    inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_PTEAM_FIREONCE) ? TRUE : FALSE; }
+    inline BOOL ShouldKillPlayer() { return (pev->spawnflags & SF_PTEAM_KILL) ? TRUE : FALSE; }
+    inline BOOL ShouldGibPlayer() { return (pev->spawnflags & SF_PTEAM_GIB) ? TRUE : FALSE; }
 
     const char* TargetTeamName(const char* pszTargetName);
 };

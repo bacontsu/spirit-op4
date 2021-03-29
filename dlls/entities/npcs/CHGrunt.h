@@ -34,43 +34,43 @@
 class CHGrunt : public CSquadMonster
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
-    void SetYawSpeed(void) override;
-    int Classify(void) override;
-    int ISoundMask(void) override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int Classify() override;
+    int ISoundMask() override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-    BOOL FCanCheckAttacks(void) override;
+    BOOL FCanCheckAttacks() override;
     BOOL CheckMeleeAttack1(float flDot, float flDist) override;
     BOOL CheckRangeAttack1(float flDot, float flDist) override;
     BOOL CheckRangeAttack2(float flDot, float flDist) override;
-    void CheckAmmo(void) override;
+    void CheckAmmo() override;
     void SetActivity(Activity NewActivity) override;
     void StartTask(Task_t* pTask) override;
     void RunTask(Task_t* pTask) override;
-    void DeathSound(void) override;
-    void PainSound(void) override;
-    void IdleSound(void) override;
-    Vector GetGunPosition(void) override;
-    void Shoot(void);
-    void Shotgun(void);
-    void PrescheduleThink(void) override;
-    void GibMonster(void) override;
-    void SpeakSentence(void);
+    void DeathSound() override;
+    void PainSound() override;
+    void IdleSound() override;
+    Vector GetGunPosition() override;
+    void Shoot();
+    void Shotgun();
+    void PrescheduleThink() override;
+    void GibMonster() override;
+    void SpeakSentence();
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
 
-    CBaseEntity* Kick(void);
-    Schedule_t* GetSchedule(void) override;
+    CBaseEntity* Kick();
+    Schedule_t* GetSchedule() override;
     Schedule_t* GetScheduleOfType(int Type) override;
     void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 
     int IRelationship(CBaseEntity* pTarget) override;
 
-    BOOL FOkToSpeak(void);
-    void JustSpoke(void);
+    BOOL FOkToSpeak();
+    void JustSpoke();
 
     CUSTOM_SCHEDULES;
     static TYPEDESCRIPTION m_SaveData[];

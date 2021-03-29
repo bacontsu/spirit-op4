@@ -20,18 +20,18 @@
 class CMomentaryDoor : public CBaseToggle
 {
 public:
-    void Spawn(void) override;
-    void Precache(void) override;
+    void Spawn() override;
+    void Precache() override;
 
     void KeyValue(KeyValueData* pkvd) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int ObjectCaps(void) override;
+    int ObjectCaps() override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    void DLLEXPORT DoorMoveDone(void);
+    void DLLEXPORT DoorMoveDone();
 
     BYTE m_bMoveSnd; // sound a door makes while moving    
     BYTE m_bStopSnd; // sound a door makes while moving
@@ -39,7 +39,7 @@ public:
     STATE m_iState;
     float m_fLastPos;
 
-    STATE GetState(void) override;
+    STATE GetState() override;
 
     bool CalcNumber(CBaseEntity* pLocus, float* OUTresult) override;
 };
