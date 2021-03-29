@@ -366,5 +366,7 @@ public:
 
     int m_iAutoWepSwitch;
 
+    bool m_bRestored;
+
     BOOL m_bHasIntroPlayed; // not my job to clean up this mess of a class definition
 };
