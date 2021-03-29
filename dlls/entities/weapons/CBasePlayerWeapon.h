@@ -24,8 +24,6 @@ public:
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
 
-    void SetNextThink(float delay) override; //LRC
-
     // generic weapon versions of CBasePlayerItem calls
     int AddToPlayer(CBasePlayer* pPlayer) override;
     int AddDuplicate(CBasePlayerItem* pItem) override;

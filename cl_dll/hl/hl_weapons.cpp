@@ -211,13 +211,6 @@ BOOL CBasePlayerWeapon :: CanDeploy( void )
 	return TRUE;
 }
 
-//LRC
-void CBasePlayerWeapon :: SetNextThink( float delay )
-{
-	m_fNextThink = UTIL_WeaponTimeBase() + delay;
-	pev->nextthink = m_fNextThink;
-}
-
 /*
 =====================
 CBasePlayerWeapon :: DefaultDeploy

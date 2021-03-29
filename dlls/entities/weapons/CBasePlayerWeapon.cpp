@@ -40,13 +40,6 @@ TYPEDESCRIPTION CBasePlayerWeapon::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CBasePlayerWeapon, CBasePlayerItem);
 
-//LRC
-void CBasePlayerWeapon::SetNextThink(float delay)
-{
-    m_fNextThink = UTIL_WeaponTimeBase() + delay;
-    pev->nextthink = m_fNextThink;
-}
-
 int CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 {
     if (!UTIL_IsMasterTriggered(m_sMaster, pPlayer)) //
