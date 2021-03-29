@@ -35,16 +35,6 @@ public:
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
     static TYPEDESCRIPTION m_SaveData[];
 
-	float GetMoveDeltaTime()
-	{
-		if (m_flLastMoveTime == 0)
-		{
-			m_flLastMoveTime = gpGlobals->time - gpGlobals->frametime;
-		}
-
-		return gpGlobals->time - m_flLastMoveTime;
-	}
-
     EHANDLE m_hPlayer;
     EHANDLE m_hTarget;
     CBaseEntity* m_pentPath;
@@ -58,6 +48,5 @@ public:
     float m_acceleration;
     float m_deceleration;
     int m_state;
-	float m_flLastMoveTime;
     int m_iszViewEntity;
 };

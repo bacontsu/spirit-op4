@@ -279,6 +279,7 @@ void CBasePlayer::AddPointsToTeam(int score, BOOL bAllowNegativeScore) {}
 
 // CBasePlayerItem Stubs
 ItemInfo CBasePlayerItem::ItemInfoArray[MAX_WEAPONS];
+AmmoInfo CBasePlayerItem::AmmoInfoArray[MAX_AMMO_SLOTS];
 int CBasePlayerItem::Restore(class CRestore&) { return 1; }
 int CBasePlayerItem::Save(class CSave&) { return 1; }
 void CBasePlayerItem::SetObjectCollisionBox() {}
@@ -353,8 +354,6 @@ Vector UTIL_VecToAngles(const Vector& vec) { return 0; }
 void ClientPrint(entvars_t* client, int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) { return; }
 int ShouldSimplify(int routeType) { return TRUE; }
 int TrainSpeed(int iSpeed, int iMax) { return 0; }
-CBaseEntity* FindEntityForward(CBaseEntity* pMe) { return NULL; }
-void AddAmmoNameToAmmoRegistry(const char* szAmmoname) { return; }
 
 void ClearMultiDamage() { return; }
 void ApplyMultiDamage(entvars_t* pevInflictor, entvars_t* pevAttacker) { return; }

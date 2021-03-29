@@ -23,5 +23,5 @@ public:
     int ObjectCaps() override;
     void SpawnInsideTrigger(CFuncPlat* pPlatform);
     void Touch(CBaseEntity* pOther) override;
-    CFuncPlat* m_pPlatform;
+	EHANDLE m_hPlatform;
 };

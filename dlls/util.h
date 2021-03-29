@@ -292,6 +292,7 @@ float UTIL_SharedRandomFloat( unsigned int seed, float low, float high );
 
 float UTIL_WeaponTimeBase();
 
+CBaseEntity* UTIL_FindEntityForward(CBaseEntity* pMe);
 
 // LRC- for aliases and groups
 CBaseEntity* UTIL_FollowReference( CBaseEntity* pStartEntity, const char* szName );
