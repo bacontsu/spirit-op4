@@ -122,14 +122,14 @@ void CGenericMonster::HandleAnimEvent(MonsterEvent_t* pEvent)
             int gas = 1;
             MakeGas();
             UpdateGas();
-        };
+        }
         break;
 
     case HTORCH_AE_OFFGAS:
         {
             int gas = 0;
             KillGas();
-        };
+        }
         break;
 
     default:

@@ -67,7 +67,7 @@ public:
     // Functions to verify the single/multiplayer status of a game
     virtual BOOL IsMultiplayer(void) = 0; // is this a multiplayer game? (either coop or deathmatch)
     virtual BOOL IsDeathmatch(void) = 0; //is this a deathmatch game?
-    virtual BOOL IsTeamplay(void) { return FALSE; }; // is this deathmatch game being played with team rules?
+    virtual BOOL IsTeamplay(void) { return FALSE; } // is this deathmatch game being played with team rules?
     virtual BOOL IsCoOp(void) = 0; // is this a coop game?
     virtual const char* GetGameDescription(void) { return GAME_NAME; } // this is the game name that gets seen in the server browser
 
@@ -82,7 +82,7 @@ public:
 
     // Client damage rules
     virtual float FlPlayerFallDamage(CBasePlayer* pPlayer) = 0; // this client just hit the ground after a fall. How much damage?
-    virtual BOOL FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker) { return TRUE; }; // can this player take damage from this attacker?
+    virtual BOOL FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker) { return TRUE; } // can this player take damage from this attacker?
     virtual BOOL ShouldAutoAim(CBasePlayer* pPlayer, edict_t* target) { return TRUE; }
 
     // Client spawn/respawn control
@@ -92,8 +92,8 @@ public:
     virtual float FlPlayerSpawnTime(CBasePlayer* pPlayer) = 0; // When in the future will this player be able to spawn?
     virtual edict_t* GetPlayerSpawnSpot(CBasePlayer* pPlayer); // Place this player on their spawnspot and face them the proper direction.
 
-    virtual BOOL AllowAutoTargetCrosshair(void) { return TRUE; };
-    virtual BOOL ClientCommand(CBasePlayer* pPlayer, const char* pcmd) { return FALSE; };
+    virtual BOOL AllowAutoTargetCrosshair(void) { return TRUE; }
+    virtual BOOL ClientCommand(CBasePlayer* pPlayer, const char* pcmd) { return FALSE; }
     // handles the user commands;  returns TRUE if command handled properly
     virtual void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer)
     {

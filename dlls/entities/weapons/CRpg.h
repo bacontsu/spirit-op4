@@ -41,7 +41,7 @@ public:
     void SecondaryAttack(void) override;
     void WeaponIdle(void) override;
     void UpdateSpot(void);
-    BOOL ShouldWeaponIdle(void) override { return TRUE; };
+    BOOL ShouldWeaponIdle(void) override { return TRUE; }
 
     CLaserSpot* m_pSpot;
     int m_fSpotActive;

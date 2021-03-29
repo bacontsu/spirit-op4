@@ -21,7 +21,7 @@ class CSave : public CSaveRestoreBuffer
 public:
     CSave(SAVERESTOREDATA* pdata) : CSaveRestoreBuffer(pdata)
     {
-    };
+    }
 
     void WriteShort(const char* pname, const short* value, int count);
     void WriteInt(const char* pname, const int* value, int count); // Save an int

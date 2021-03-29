@@ -58,7 +58,7 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 
     STATE m_iState;
-    STATE GetState(void) override { return m_iState; };
+    STATE GetState(void) override { return m_iState; }
 
     int m_cTargets; // the total number of targets in this manager's fire list.
     int m_index; // Current target

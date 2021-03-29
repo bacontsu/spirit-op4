@@ -45,7 +45,7 @@ public:
     void BeamUpdatePoints(); //LRC
     void BeamUpdateVars();
 
-    STATE GetState() override { return m_active ? STATE_OFF : STATE_ON; };
+    STATE GetState() override { return m_active ? STATE_OFF : STATE_ON; }
 
     int m_active;
     int m_iszStartEntity;

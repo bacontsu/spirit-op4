@@ -36,7 +36,7 @@ public:
     {
         ExtractAmmo(this);
         return TRUE;
-    }; // Return TRUE if you want to add yourself to the player
+    } // Return TRUE if you want to add yourself to the player
 
     // generic "shared" ammo handlers
     BOOL AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
@@ -44,7 +44,7 @@ public:
 
     void UpdateItemInfo(void) override
     {
-    }; // updates HUD state
+    } // updates HUD state
 
     int m_iPlayEmptySound;
     int m_fFireOnEmpty; // True when the gun is empty and the player is still holding down the
@@ -61,23 +61,23 @@ public:
 
     void ItemPostFrame(void) override; // called each frame by the player PostThink
     // called by CBasePlayerWeapons ItemPostFrame()
-    virtual void PrimaryAttack(void) { return; } // do "+ATTACK"
-    virtual void SecondaryAttack(void) { return; } // do "+ATTACK2"
-    virtual void Reload(void) { return; } // do "+RELOAD"
-    virtual void WeaponIdle(void) { return; } // called when no buttons pressed
+    virtual void PrimaryAttack(void) {} // do "+ATTACK"
+    virtual void SecondaryAttack(void) {} // do "+ATTACK2"
+    virtual void Reload(void) {} // do "+RELOAD"
+    virtual void WeaponIdle(void) {} // called when no buttons pressed
     int UpdateClientData(CBasePlayer* pPlayer) override; // sends hud info to client dll, if things have changed
     virtual void RetireWeapon(void);
-    virtual BOOL ShouldWeaponIdle(void) { return FALSE; };
+    virtual BOOL ShouldWeaponIdle(void) { return FALSE; }
     void Holster(int skiplocal = 0) override;
-    virtual BOOL UseDecrement(void) { return FALSE; };
-    virtual void OnAmmoOrClipChanged() {}; // Called when ammo is forcably changed (e.g. by player_weaponstrip)
+    virtual BOOL UseDecrement(void) { return FALSE; }
+    virtual void OnAmmoOrClipChanged() {} // Called when ammo is forcably changed (e.g. by player_weaponstrip)
 
     int PrimaryAmmoIndex() override;
     int SecondaryAmmoIndex() override;
 
     void PrintState(void);
 
-    CBasePlayerItem* GetWeaponPtr(void) override { return (CBasePlayerItem*)this; };
+    CBasePlayerItem* GetWeaponPtr(void) override { return (CBasePlayerItem*)this; }
     float GetNextAttackDelay(float delay);
 
     float m_flPumpTime;

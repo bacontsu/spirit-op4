@@ -33,7 +33,7 @@ public:
     int LookupSequence(const char* label);
     void ResetSequenceInfo();
     void DispatchAnimEvents(float flFutureInterval = 0.1); // Handle events that have happend since last time called up until X seconds into the future
-    virtual void HandleAnimEvent(MonsterEvent_t* pEvent) { return; };
+    virtual void HandleAnimEvent(MonsterEvent_t* pEvent) {}
     float SetBoneController(int iController, float flValue);
     void InitBoneControllers(void);
     float SetBlending(int iBlender, float flValue);

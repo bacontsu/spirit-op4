@@ -42,31 +42,31 @@ public:
     CBaseEntity* Respawn(void) override; // copy a weapon
     void FallInit(void);
     void CheckRespawn(void);
-    virtual int GetItemInfo(ItemInfo* p) { return 0; }; // returns 0 if struct not filled out
-    virtual BOOL CanDeploy(void) { return TRUE; };
+    virtual int GetItemInfo(ItemInfo* p) { return 0; } // returns 0 if struct not filled out
+    virtual BOOL CanDeploy(void) { return TRUE; }
 
     virtual BOOL Deploy() // returns is deploy was successful
     {
         return TRUE;
-    };
+    }
 
-    virtual BOOL CanHolster(void) { return TRUE; }; // can this weapon be put away right now?
+    virtual BOOL CanHolster(void) { return TRUE; } // can this weapon be put away right now?
     virtual void Holster(int skiplocal = 0);
-    virtual void UpdateItemInfo(void) { return; };
+    virtual void UpdateItemInfo(void) {}
 
-    virtual void ItemPreFrame(void) { return; } // called each frame by the player PreThink
-    virtual void ItemPostFrame(void) { return; } // called each frame by the player PostThink
+    virtual void ItemPreFrame(void) {} // called each frame by the player PreThink
+    virtual void ItemPostFrame(void) {} // called each frame by the player PostThink
 
     virtual void Drop(void);
     virtual void Kill(void);
     virtual void AttachToPlayer(CBasePlayer* pPlayer);
 
-    virtual int PrimaryAmmoIndex() { return -1; };
-    virtual int SecondaryAmmoIndex() { return -1; };
+    virtual int PrimaryAmmoIndex() { return -1; }
+    virtual int SecondaryAmmoIndex() { return -1; }
 
     virtual int UpdateClientData(CBasePlayer* pPlayer) { return 0; }
 
-    virtual CBasePlayerItem* GetWeaponPtr(void) { return NULL; };
+    virtual CBasePlayerItem* GetWeaponPtr(void) { return NULL; }
 
     static ItemInfo ItemInfoArray[MAX_WEAPONS];
     static AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];

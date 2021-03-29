@@ -28,11 +28,11 @@ public:
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
-    STATE GetState(void) override { return m_iState; }; //LRC
+    STATE GetState(void) override { return m_iState; } //LRC
 
     static TYPEDESCRIPTION m_SaveData[];
 
-    int GetStyle(void) { return m_iszCurrentStyle; }; //LRC
+    int GetStyle(void) { return m_iszCurrentStyle; } //LRC
     void SetStyle(int iszPattern); //LRC
 
     void SetCorrectStyle(void); //LRC

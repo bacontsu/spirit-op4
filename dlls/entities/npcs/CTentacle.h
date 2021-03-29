@@ -58,14 +58,14 @@ public:
 
     void DLLEXPORT HitTouch(CBaseEntity* pOther);
 
-    float HearingSensitivity(void) override { return 2.0; };
+    float HearingSensitivity(void) override { return 2.0; }
 
     int TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
     void HandleAnimEvent(MonsterEvent_t* pEvent) override;
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
-    MONSTERSTATE GetIdealState(void) override { return MONSTERSTATE_IDLE; };
-    int CanPlaySequence(int interruptFlags) override { return TRUE; };
+    MONSTERSTATE GetIdealState(void) override { return MONSTERSTATE_IDLE; }
+    int CanPlaySequence(int interruptFlags) override { return TRUE; }
 
     int Classify(void) override;
 

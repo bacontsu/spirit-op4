@@ -46,8 +46,8 @@ public:
     }
 
     void UpdateSubMenus(int iAdjustment);
-    int GetPlayerClass() const { return m_iPlayerClass; };
-    CCommandMenu* GetSubMenu() const { return m_pSubMenu; };
+    int GetPlayerClass() const { return m_iPlayerClass; }
+    CCommandMenu* GetSubMenu() const { return m_pSubMenu; }
 
     CCommandMenu* getParentMenu(void);
     void setParentMenu(CCommandMenu* pParentMenu);

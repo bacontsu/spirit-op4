@@ -29,5 +29,5 @@ public:
     CBaseEntity* Respawn(void) override;
     void DLLEXPORT ItemTouch(CBaseEntity* pOther);
     void DLLEXPORT Materialize(void);
-    virtual BOOL MyTouch(CBasePlayer* pPlayer) { return FALSE; };
+    virtual BOOL MyTouch(CBasePlayer* pPlayer) { return FALSE; }
 };

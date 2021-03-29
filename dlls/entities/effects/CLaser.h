@@ -31,7 +31,7 @@ public:
 
     void TurnOn(void);
     void TurnOff(void);
-    STATE GetState(void) override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; };
+    STATE GetState(void) override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; }
 
     void FireAtPoint(Vector startpos, TraceResult& point);
 

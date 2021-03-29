@@ -35,7 +35,7 @@ public:
     inline void SetRadius(float radius) { pev->dmg = radius; }
 
     STATE m_iState; //LRC
-    STATE GetState(void) override { return m_iState; }; //LRC
-    void Think(void) override { m_iState = STATE_OFF; }; //LRC
+    STATE GetState(void) override { return m_iState; } //LRC
+    void Think(void) override { m_iState = STATE_OFF; } //LRC
 private:
 };

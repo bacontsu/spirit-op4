@@ -32,7 +32,7 @@ public:
 
     void Spawn(void) override;
     void Precache(void) override;
-    int Classify(void) override { return CLASS_ALIEN_MILITARY; };
+    int Classify(void) override { return CLASS_ALIEN_MILITARY; }
     int BloodColor(void) override { return BLOOD_COLOR_YELLOW; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
     void GibMonster(void) override;

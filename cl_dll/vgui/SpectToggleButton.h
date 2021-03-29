@@ -26,14 +26,14 @@ public:
     void cursorExited(Panel* panel) override;
     void mousePressed(vgui::MouseCode code, Panel* panel) override;
 
-    void cursorMoved(int x, int y, Panel* panel) override { return; }
-    void mouseDoublePressed(vgui::MouseCode code, Panel* panel) override { return; }
-    void mouseReleased(vgui::MouseCode code, Panel* panel) override { return; }
-    void mouseWheeled(int delta, Panel* panel) override { return; }
-    void keyPressed(vgui::KeyCode code, Panel* panel) override { return; }
-    void keyTyped(vgui::KeyCode code, Panel* panel) override { return; }
-    void keyReleased(vgui::KeyCode code, Panel* panel) override { return; }
-    void keyFocusTicked(Panel* panel) override { return; }
+    void cursorMoved(int x, int y, Panel* panel) override {}
+    void mouseDoublePressed(vgui::MouseCode code, Panel* panel) override {}
+    void mouseReleased(vgui::MouseCode code, Panel* panel) override {}
+    void mouseWheeled(int delta, Panel* panel) override {}
+    void keyPressed(vgui::KeyCode code, Panel* panel) override {}
+    void keyTyped(vgui::KeyCode code, Panel* panel) override {}
+    void keyReleased(vgui::KeyCode code, Panel* panel) override {}
+    void keyFocusTicked(Panel* panel) override {}
 
     void paintBackground() override;
     void paint(void) override;

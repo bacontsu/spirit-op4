@@ -28,7 +28,7 @@ public:
     // GR_Think
     void Think(void) override;
     BOOL IsAllowedToSpawn(CBaseEntity* pEntity) override;
-    BOOL FAllowFlashlight(void) override { return TRUE; };
+    BOOL FAllowFlashlight(void) override { return TRUE; }
 
     BOOL FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon) override;
     BOOL GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon) override;
@@ -98,6 +98,6 @@ public:
     BOOL FAllowMonsters(void) override;
 
     // Teamplay stuff    
-    const char* GetTeamID(CBaseEntity* pEntity) override { return ""; };
+    const char* GetTeamID(CBaseEntity* pEntity) override { return ""; }
     int PlayerRelationship(CBaseEntity* pPlayer, CBaseEntity* pTarget) override;
 };

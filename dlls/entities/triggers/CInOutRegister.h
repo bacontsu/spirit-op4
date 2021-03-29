@@ -34,7 +34,7 @@ public:
     CInOutRegister* Prune(void);
     // adds a new entry to the list
     CInOutRegister* Add(CBaseEntity* pValue);
-    BOOL IsEmpty(void) { return m_pNext ? FALSE : TRUE; };
+    BOOL IsEmpty(void) { return m_pNext ? FALSE : TRUE; }
     CBaseEntity* GetFirstEntityFrom(CBaseEntity* pStartEntity);
 
     int Save(CSave& save) override;

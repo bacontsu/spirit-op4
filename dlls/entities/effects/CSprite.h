@@ -41,7 +41,7 @@ public:
     void Expand(float scaleSpeed, float fadeSpeed);
     void SpriteInit(const char* pSpriteName, const Vector& origin);
 
-    STATE GetState(void) override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; };
+    STATE GetState(void) override { return (pev->effects & EF_NODRAW) ? STATE_OFF : STATE_ON; }
 
     inline void SetAttachment(edict_t* pEntity, int attachment)
     {

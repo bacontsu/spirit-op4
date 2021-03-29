@@ -94,9 +94,7 @@ public:
     void SetTurretAnim(TURRET_ANIM anim);
     int MoveTurret(void);
 
-    virtual void Shoot(Vector& vecSrc, Vector& vecDirToEnemy)
-    {
-    };
+    virtual void Shoot(Vector& vecSrc, Vector& vecDirToEnemy) {}
 
     float m_flMaxSpin; // Max time to spin the barrel w/o a target
     int m_iSpin;

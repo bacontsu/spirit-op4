@@ -39,5 +39,5 @@ public:
     int m_bubbleModel;
     int m_state;
 
-    STATE GetState(void) override { return m_state ? STATE_ON : STATE_OFF; };
+    STATE GetState(void) override { return m_state ? STATE_ON : STATE_OFF; }
 };

@@ -38,7 +38,7 @@ public:
 
     // Numeric input
     virtual bool SlotInput(int iSlot) { return false; }
-    virtual void SetActiveInfo(int iInput) { return; }
+    virtual void SetActiveInfo(int iInput) {}
 
 private:
     CMenuPanel* m_pNextMenu;

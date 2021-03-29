@@ -19,8 +19,8 @@
 class CBaseMutableAlias : public CPointEntity
 {
 public:
-    BOOL IsMutableAlias(void) override { return TRUE; };
-    CBaseEntity* FollowAlias(CBaseEntity* pFrom) override { return NULL; };
+    BOOL IsMutableAlias(void) override { return TRUE; }
+    CBaseEntity* FollowAlias(CBaseEntity* pFrom) override { return NULL; }
 
     virtual void ChangeValue(int iszValue)
     {
@@ -31,7 +31,7 @@ public:
 
     virtual void FlushChanges(void)
     {
-    };
+    }
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

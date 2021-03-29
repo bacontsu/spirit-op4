@@ -328,7 +328,6 @@ void CShotgun::Reload(void)
         m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.6;
         m_flNextPrimaryAttack = GetNextAttackDelay(1.0);
         m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 1.0;
-        return;
     }
     else if (m_fInSpecialReload == 1)
     {

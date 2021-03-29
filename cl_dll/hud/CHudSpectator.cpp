@@ -275,7 +275,7 @@ int UTIL_FindEntityInMap(const char* name, float* origin, float* angle)
             {
                 gEngfuncs.Con_DPrintf("UTIL_FindEntityInMap: EOF without closing brace\n");
                 return 0;
-            };
+            }
 
             strcpy(keyname, token);
 
@@ -293,7 +293,7 @@ int UTIL_FindEntityInMap(const char* name, float* origin, float* angle)
             {
                 gEngfuncs.Con_DPrintf("UTIL_FindEntityInMap: EOF without closing brace\n");
                 return 0;
-            };
+            }
 
             if (token[0] == '}')
             {
@@ -307,7 +307,7 @@ int UTIL_FindEntityInMap(const char* name, float* origin, float* angle)
                 {
                     found = 1; // thats our entity
                 }
-            };
+            }
 
             if (!strcmp(keyname, "angle"))
             {
@@ -321,7 +321,7 @@ int UTIL_FindEntityInMap(const char* name, float* origin, float* angle)
                 else if ((int)y == -1)
                 {
                     angle[0] = -90.0f;
-                    angle[1] = 0.0f;;
+                    angle[1] = 0.0f;
                 }
                 else
                 {
@@ -340,7 +340,7 @@ int UTIL_FindEntityInMap(const char* name, float* origin, float* angle)
             if (!strcmp(keyname, "origin"))
             {
                 UTIL_StringToVector(origin, token);
-            };
+            }
         } // while (1)
 
         if (found)

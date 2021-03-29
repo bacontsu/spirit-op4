@@ -29,5 +29,5 @@ public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     // it's 'on' while there are cans left
-    STATE GetState(void) override { return (pev->health > 0) ? STATE_ON : STATE_OFF; };
+    STATE GetState(void) override { return (pev->health > 0) ? STATE_ON : STATE_OFF; }
 };

@@ -94,7 +94,7 @@ public:
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    CUSTOM_SCHEDULES;
+    CUSTOM_SCHEDULES
 
 private:
     static const char* pAttackHitSounds[];

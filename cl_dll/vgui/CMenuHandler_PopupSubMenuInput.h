@@ -40,15 +40,15 @@ public:
             m_pButton->setArmed(true);
     }
 
-    void cursorExited(vgui::Panel* Panel) override { return; }
-    void mousePressed(vgui::MouseCode code, vgui::Panel* panel) override { return; }
-    void mouseDoublePressed(vgui::MouseCode code, vgui::Panel* panel) override { return; }
-    void mouseReleased(vgui::MouseCode code, vgui::Panel* panel) override { return; }
-    void mouseWheeled(int delta, vgui::Panel* panel) override { return; }
-    void keyPressed(vgui::KeyCode code, vgui::Panel* panel) override { return; }
-    void keyTyped(vgui::KeyCode code, vgui::Panel* panel) override { return; }
-    void keyReleased(vgui::KeyCode code, vgui::Panel* panel) override { return; }
-    void keyFocusTicked(vgui::Panel* panel) override { return; }
+    void cursorExited(vgui::Panel* Panel) override {}
+    void mousePressed(vgui::MouseCode code, vgui::Panel* panel) override {}
+    void mouseDoublePressed(vgui::MouseCode code, vgui::Panel* panel) override {}
+    void mouseReleased(vgui::MouseCode code, vgui::Panel* panel) override {}
+    void mouseWheeled(int delta, vgui::Panel* panel) override {}
+    void keyPressed(vgui::KeyCode code, vgui::Panel* panel) override {}
+    void keyTyped(vgui::KeyCode code, vgui::Panel* panel) override {}
+    void keyReleased(vgui::KeyCode code, vgui::Panel* panel) override {}
+    void keyFocusTicked(vgui::Panel* panel) override {}
 
 private:
     CCommandMenu* m_pSubMenu;

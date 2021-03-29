@@ -25,13 +25,11 @@ class CViewPortInputHandler : public vgui::InputSignal
 public:
     bool bPressed;
 
-    CViewPortInputHandler()
-    {
-    }
+    CViewPortInputHandler() {}
 
-    void cursorMoved(int x, int y, vgui::Panel* panel) override { return; }
-    void cursorEntered(vgui::Panel* panel) override { return; }
-    void cursorExited(vgui::Panel* panel) override { return; }
+    void cursorMoved(int x, int y, vgui::Panel* panel) override {}
+    void cursorEntered(vgui::Panel* panel) override {}
+    void cursorExited(vgui::Panel* panel) override {}
 
     void mousePressed(vgui::MouseCode code, vgui::Panel* panel) override
     {
@@ -43,11 +41,11 @@ public:
         }
     }
 
-    void mouseReleased(vgui::MouseCode code, vgui::Panel* panel) override { return; }
-    void mouseDoublePressed(vgui::MouseCode code, vgui::Panel* panel) override { return; }
-    void mouseWheeled(int delta, vgui::Panel* panel) override { return; }
-    void keyPressed(vgui::KeyCode code, vgui::Panel* panel) override { return; }
-    void keyTyped(vgui::KeyCode code, vgui::Panel* panel) override { return; }
-    void keyReleased(vgui::KeyCode code, vgui::Panel* panel) override { return; }
-    void keyFocusTicked(vgui::Panel* panel) override { return; }
+    void mouseReleased(vgui::MouseCode code, vgui::Panel* panel) override {}
+    void mouseDoublePressed(vgui::MouseCode code, vgui::Panel* panel) override {}
+    void mouseWheeled(int delta, vgui::Panel* panel) override {}
+    void keyPressed(vgui::KeyCode code, vgui::Panel* panel) override {}
+    void keyTyped(vgui::KeyCode code, vgui::Panel* panel) override {}
+    void keyReleased(vgui::KeyCode code, vgui::Panel* panel) override {}
+    void keyFocusTicked(vgui::Panel* panel) override {}
 };

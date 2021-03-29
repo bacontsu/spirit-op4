@@ -146,7 +146,7 @@ public:
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
 
-    STATE GetState(void) override { return (pev->deadflag == DEAD_DEAD) ? STATE_OFF : STATE_ON; };
+    STATE GetState(void) override { return (pev->deadflag == DEAD_DEAD) ? STATE_OFF : STATE_ON; }
 
     static TYPEDESCRIPTION m_SaveData[];
 
@@ -273,7 +273,7 @@ public:
     void AdvanceRoute(float distance);
     virtual BOOL FTriangulate(const Vector& vecStart, const Vector& vecEnd, float flDist, CBaseEntity* pTargetEnt, Vector* pApex);
     void MakeIdealYaw(Vector vecTarget);
-    virtual void SetYawSpeed(void) { return; }; // allows different yaw_speeds for each activity
+    virtual void SetYawSpeed(void) {} // allows different yaw_speeds for each activity
     BOOL BuildRoute(const Vector& vecGoal, int iMoveFlag, CBaseEntity* pTarget);
     virtual BOOL BuildNearestRoute(Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist);
     int RouteClassify(int iMoveFlag);
@@ -281,11 +281,11 @@ public:
 
     BOOL FindLateralCover(const Vector& vecThreat, const Vector& vecViewOffset);
     virtual BOOL FindCover(Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist);
-    virtual BOOL FValidateCover(const Vector& vecCoverLocation) { return TRUE; };
+    virtual BOOL FValidateCover(const Vector& vecCoverLocation) { return TRUE; }
     virtual float CoverRadius(void) { return 784; } // Default cover radius
 
     virtual BOOL FCanCheckAttacks(void);
-    virtual void CheckAmmo(void) { return; };
+    virtual void CheckAmmo(void) {}
     virtual int IgnoreConditions(void);
 
     inline void SetConditions(int iConditions) { m_afConditions |= iConditions; }
@@ -320,7 +320,7 @@ public:
     virtual int ISoundMask(void);
     virtual CSound* PBestSound(void);
     virtual CSound* PBestScent(void);
-    virtual float HearingSensitivity(void) { return 1.0; };
+    virtual float HearingSensitivity(void) { return 1.0; }
 
     BOOL FBecomeProne(void) override;
     virtual void BarnacleVictimBitten(entvars_t* pevBarnacle);
@@ -340,7 +340,7 @@ public:
     BOOL BBoxFlat(void);
 
     // PrescheduleThink 
-    virtual void PrescheduleThink(void) { return; };
+    virtual void PrescheduleThink(void) {}
 
     BOOL GetEnemy(void);
     void MakeDamageBloodDecal(int cCount, float flNoise, TraceResult* ptr, const Vector& vecDir);
@@ -360,7 +360,7 @@ public:
     virtual void FadeMonster(void); // Called instead of GibMonster() when gibs are disabled
 
     Vector ShootAtEnemy(const Vector& shootOrigin);
-    Vector BodyTarget(const Vector& posSrc) override { return Center() * 0.75 + EyePosition() * 0.25; }; // position to shoot at
+    Vector BodyTarget(const Vector& posSrc) override { return Center() * 0.75 + EyePosition() * 0.25; } // position to shoot at
 
     virtual Vector GetGunPosition(void);
 
@@ -375,10 +375,10 @@ public:
     void RouteClear(void);
     void RouteNew(void);
 
-    virtual void DeathSound(void) { return; };
-    virtual void AlertSound(void) { return; };
-    virtual void IdleSound(void) { return; };
-    virtual void PainSound(void) { return; };
+    virtual void DeathSound(void) {}
+    virtual void AlertSound(void) {}
+    virtual void IdleSound(void) {}
+    virtual void PainSound(void) {}
 
     virtual void StopFollowing(BOOL clearSchedule)
     {

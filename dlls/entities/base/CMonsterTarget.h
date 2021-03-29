@@ -24,10 +24,10 @@ class CMonsterTarget : public CBaseEntity
 public:
     void Spawn(void) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    int Classify(void) override { return pev->frags; };
+    int Classify(void) override { return pev->frags; }
 
     STATE GetState(void) override
     {
         return pev->health ? STATE_ON : STATE_OFF;
-    };
+    }
 };

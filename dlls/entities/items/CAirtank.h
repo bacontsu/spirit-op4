@@ -22,7 +22,7 @@ class CAirtank : public CGrenade
     void Precache(void) override;
     void DLLEXPORT TankThink(void);
     void DLLEXPORT TankTouch(CBaseEntity* pOther);
-    int BloodColor(void) override { return DONT_BLEED; };
+    int BloodColor(void) override { return DONT_BLEED; }
     void Killed(entvars_t* pevAttacker, int iGib) override;
 
     int Save(CSave& save) override;

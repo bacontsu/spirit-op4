@@ -41,7 +41,7 @@ public:
     void Spawn(void) override;
     void DLLEXPORT Think(void) override;
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-    STATE GetState(void) override { return (pev->spawnflags & SF_WATCHERRATIO_ON) ? STATE_ON : STATE_OFF; };
+    STATE GetState(void) override { return (pev->spawnflags & SF_WATCHERRATIO_ON) ? STATE_ON : STATE_OFF; }
     int ObjectCaps(void) override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
     bool CalcNumber(CBaseEntity* pLocus, float* OUTresult) override;
 

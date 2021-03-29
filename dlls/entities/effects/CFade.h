@@ -31,7 +31,7 @@ public:
     void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void KeyValue(KeyValueData* pkvd) override;
 
-    STATE GetState(void) override { return m_iState; }; // LRC
+    STATE GetState(void) override { return m_iState; } // LRC
     void Think(void) override; //LRC
 
     inline float Duration(void) { return pev->dmg_take; }

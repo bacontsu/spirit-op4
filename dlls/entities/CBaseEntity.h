@@ -168,7 +168,7 @@ public:
     int m_iLFlags; // LRC- a new set of flags. (pev->spawnflags and pev->flags are full...)
     virtual void DesiredAction(void)
     {
-    }; // LRC - for postponing stuff until PostThink time, not as a think.
+    } // LRC - for postponing stuff until PostThink time, not as a think.
     int m_iStyle; // LRC - almost anything can have a lightstyle these days...
 
     Vector m_vecSpawnOffset; // LRC- To fix things which (for example) MoveWith a door which Starts Open.
@@ -240,8 +240,8 @@ public:
     virtual CBaseEntity* FollowAlias(CBaseEntity* pFrom) { return NULL; }
 
     // initialization functions
-    virtual void Spawn(void) { return; }
-    virtual void Precache(void) { return; }
+    virtual void Spawn(void) {}
+    virtual void Precache(void) {}
 
     virtual void KeyValue(KeyValueData* pkvd)
     {
@@ -290,7 +290,7 @@ public:
 
     // Classify - returns the type of group (e.g., "alien monster", or "human military" so that monsters
     // on the same side won't attack each other, even if they have different classnames.
-    virtual int Classify(void) { return CLASS_NONE; };
+    virtual int Classify(void) { return CLASS_NONE; }
 
     virtual void DeathNotice(entvars_t* pevChild)
     {
@@ -299,10 +299,10 @@ public:
 
     // LRC- this supports a global concept of "entities with states", so that state_watchers and
     // mastership (mastery? masterhood?) can work universally.
-    virtual STATE GetState(void) { return STATE_OFF; };
+    virtual STATE GetState(void) { return STATE_OFF; }
 
     // For team-specific doors in multiplayer, etc: a master's state depends on who wants to know.
-    virtual STATE GetState(CBaseEntity* pEnt) { return GetState(); };
+    virtual STATE GetState(CBaseEntity* pEnt) { return GetState(); }
 
     static TYPEDESCRIPTION m_SaveData[];
 
@@ -328,7 +328,7 @@ public:
 
     virtual BOOL AddPlayerItem(CBasePlayerItem* pItem) { return 0; }
     virtual BOOL RemovePlayerItem(CBasePlayerItem* pItem) { return 0; }
-    virtual int GiveAmmo(int iAmount, const char* szName, int iMax) { return -1; };
+    virtual int GiveAmmo(int iAmount, const char* szName, int iMax) { return -1; }
     virtual float GetDelay(void) { return 0; }
     virtual int IsMoving(void) { return pev->velocity != g_vecZero; }
 
@@ -371,8 +371,8 @@ public:
     void (CBaseEntity::* m_pfnUse)(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
     void (CBaseEntity::* m_pfnBlocked)(CBaseEntity* pOther);
 
-    virtual void Think(void) { if (m_pfnThink) (this->*m_pfnThink)(); };
-    virtual void Touch(CBaseEntity* pOther) { if (m_pfnTouch) (this->*m_pfnTouch)(pOther); };
+    virtual void Think(void) { if (m_pfnThink) (this->*m_pfnThink)(); }
+    virtual void Touch(CBaseEntity* pOther) { if (m_pfnTouch) (this->*m_pfnTouch)(pOther); }
 
     virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
     {
@@ -380,20 +380,20 @@ public:
             (this->*m_pfnUse)(pActivator, pCaller, useType, value);
     }
 
-    virtual void Blocked(CBaseEntity* pOther) { if (m_pfnBlocked) (this->*m_pfnBlocked)(pOther); };
+    virtual void Blocked(CBaseEntity* pOther) { if (m_pfnBlocked) (this->*m_pfnBlocked)(pOther); }
 
     // allow engine to allocate instance data
     void* operator new(size_t stAllocateBlock, entvars_t* pev)
     {
         return (void*)ALLOC_PRIVATE(ENT(pev), stAllocateBlock);
-    };
+    }
 
     // don't use this.
 #if _MSC_VER >= 1200 // only build this code if MSVC++ 6.0 or higher
     void operator delete(void* pMem, entvars_t* pev)
     {
         pev->flags |= FL_KILLME;
-    };
+    }
 #endif
 
     void UpdateOnRemove(void);
@@ -502,23 +502,23 @@ public:
     // virtual functions used by a few classes
 
     // used by monsters that are created by the MonsterMaker
-    virtual void UpdateOwner(void) { return; };
+    virtual void UpdateOwner(void) {}
 
 
     //
     static CBaseEntity* Create(const char* szName, const Vector& vecOrigin, const Vector& vecAngles, edict_t* pentOwner = NULL);
 
-    virtual BOOL FBecomeProne(void) { return FALSE; };
-    edict_t* edict() { return ENT(pev); };
-    EOFFSET eoffset() { return OFFSET(pev); };
-    int entindex() { return ENTINDEX(edict()); };
+    virtual BOOL FBecomeProne(void) { return FALSE; }
+    edict_t* edict() { return ENT(pev); }
+    EOFFSET eoffset() { return OFFSET(pev); }
+    int entindex() { return ENTINDEX(edict()); }
 
-    virtual Vector Center() { return (pev->absmax + pev->absmin) * 0.5; }; // center point of entity
-    virtual Vector EyePosition() { return pev->origin + pev->view_ofs; }; // position of eyes
-    virtual Vector EarPosition() { return pev->origin + pev->view_ofs; }; // position of ears
-    virtual Vector BodyTarget(const Vector& posSrc) { return Center(); }; // position to shoot at
+    virtual Vector Center() { return (pev->absmax + pev->absmin) * 0.5; } // center point of entity
+    virtual Vector EyePosition() { return pev->origin + pev->view_ofs; } // position of eyes
+    virtual Vector EarPosition() { return pev->origin + pev->view_ofs; } // position of ears
+    virtual Vector BodyTarget(const Vector& posSrc) { return Center(); } // position to shoot at
 
-    virtual int Illumination() { return GETENTITYILLUM(ENT(pev)); };
+    virtual int Illumination() { return GETENTITYILLUM(ENT(pev)); }
 
     virtual BOOL FVisible(CBaseEntity* pEntity);
     virtual BOOL FVisible(const Vector& vecOrigin);

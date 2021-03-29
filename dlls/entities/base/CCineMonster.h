@@ -44,7 +44,7 @@ public:
     static TYPEDESCRIPTION m_SaveData[];
 
     //LRC: states for script entities
-    STATE GetState(void) override { return m_iState; };
+    STATE GetState(void) override { return m_iState; }
     STATE m_iState;
 
     // void DLLEXPORT CineSpawnThink( void );
@@ -56,7 +56,7 @@ public:
     CBaseMonster* FindEntity(const char* sName, CBaseEntity* pActivator);
     virtual void PossessEntity(void);
 
-    inline BOOL IsAction(void) { return FClassnameIs(pev, "scripted_action"); }; //LRC
+    inline BOOL IsAction(void) { return FClassnameIs(pev, "scripted_action"); } //LRC
 
     //LRC: Should the monster do a precise attack for this scripted_action?
     // (Do a precise attack if we'll be turning to face the target, but we haven't just walked to the target.)
@@ -68,7 +68,7 @@ public:
         //    ALERT(at_console,"preciseattack passes!\n");
         //    return TRUE;
         return m_fTurnType == 1 && (m_fMoveTo == 5 || (m_fMoveTo != 0 && !FStrEq(STRING(m_iszAttack), STRING(m_iszMoveTarget))));
-    };
+    }
 
     void ReleaseEntity(CBaseMonster* pEntity);
     void CancelScript(void);
