@@ -97,7 +97,7 @@ public:
     // Input
     bool SlotInput(int iSlot);
 
-    virtual void paintBackground();
+    void paintBackground() override;
 
     CSchemeManager* GetSchemeManager() { return &m_SchemeManager; }
     ScorePanel* GetScoreBoard() const { return m_pScoreBoard; }

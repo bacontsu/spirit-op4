@@ -28,10 +28,10 @@ void ExplosionCreate(const Vector& center, const Vector& angles, edict_t* pOwner
 class CEnvExplosion : public CBaseMonster
 {
 public:
-    void Spawn();
+    void Spawn() override;
     void DLLEXPORT Smoke();
-    void KeyValue(KeyValueData* pkvd);
-    void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+    void KeyValue(KeyValueData* pkvd) override;
+    void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;

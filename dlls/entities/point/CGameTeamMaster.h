@@ -30,11 +30,11 @@
 class CGameTeamMaster : public CRulePointEntity
 {
 public:
-    void        KeyValue( KeyValueData *pkvd );
-    void        Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+    void        KeyValue( KeyValueData *pkvd ) override;
+    void        Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
     BOOL        IsTriggered( CBaseEntity *pActivator );
-    const char    *TeamID();
+    const char    *TeamID() override;
     inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_TEAMMASTER_FIREONCE) ? TRUE : FALSE; }
     inline BOOL AnyTeam() { return (pev->spawnflags & SF_TEAMMASTER_ANYTEAM) ? TRUE : FALSE; }
 

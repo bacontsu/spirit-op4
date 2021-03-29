@@ -24,6 +24,6 @@
 class CTriggerBounce : public CBaseTrigger
 {
 public:
-    void Spawn();
-    void Touch( CBaseEntity *pOther );
+    void Spawn() override;
+    void Touch( CBaseEntity *pOther ) override;
 };

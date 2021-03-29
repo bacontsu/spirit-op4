@@ -19,6 +19,6 @@
 class CTriggerGravity : public CBaseTrigger
 {
 public:
-    void Spawn();
+    void Spawn() override;
     void DLLEXPORT GravityTouch( CBaseEntity *pOther );
 };

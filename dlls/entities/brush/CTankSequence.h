@@ -43,19 +43,19 @@ class CFuncTank;
 class CTankSequence : public CBaseEntity
 {
 public:
-    void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+    void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
     void EndThink();
     void TimeOutThink();
-    void    KeyValue(KeyValueData* pkvd);
-    STATE    GetState() { return m_pTank ? STATE_ON : STATE_OFF; }
-    virtual int    ObjectCaps();
+    void    KeyValue(KeyValueData* pkvd) override;
+    STATE    GetState() override { return m_pTank ? STATE_ON : STATE_OFF; }
+    int    ObjectCaps() override;
 
     void StopSequence();
     void FacingNotify();
     void DeadEnemyNotify();
 
-    virtual int    Save(CSave& save);
-    virtual int    Restore(CRestore& restore);
+    int    Save(CSave& save) override;
+    int    Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
     string_t m_iszEntity;

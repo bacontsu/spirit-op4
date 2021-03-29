@@ -27,7 +27,7 @@ public:
         sprintf(m_szMapName, "maps/%s.bsp", pMapName);
     }
 
-    virtual int IsNotValid()
+    int IsNotValid() override
     {
         const char* level = gEngfuncs.pfnGetLevelName();
         if (!level)
