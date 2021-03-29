@@ -13,6 +13,8 @@
 *
 ****/
 
+#include <limits>
+
 #include "extdll.h"
 #include "util.h"
 #include "entities/player/CBasePlayer.h"
@@ -925,7 +927,7 @@ void CBasePlayer::Killed(entvars_t* pevAttacker, int iGib)
     // send "health" update message to zero
     m_iClientHealth = 0;
     MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
-    WRITE_BYTE(m_iClientHealth);
+    WRITE_SHORT(m_iClientHealth);
     MESSAGE_END();
 
     // Tell Ammo Hud that the player is dead
@@ -4114,14 +4116,15 @@ void CBasePlayer::UpdateClientData()
 
     if (pev->health != m_iClientHealth)
     {
+		//TODO: clean up this macro
 #define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
-        int iHealth = clamp(pev->health, 0, 255); // make sure that no negative health values are sent
-        if (pev->health > 0.0f && pev->health <= 1.0f)
+        int iHealth = clamp(pev->health, 0, std::numeric_limits<short>::max()); // make sure that no negative health values are sent
+		if (pev->health > 0.0f && pev->health <= 1.0f)
             iHealth = 1;
 
         // send "health" update message
         MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
-        WRITE_BYTE(iHealth);
+		WRITE_SHORT( iHealth );
         MESSAGE_END();
 
         m_iClientHealth = pev->health;
@@ -4175,6 +4178,11 @@ void CBasePlayer::UpdateClientData()
 
 	if (m_bRestored)
 	{
+        //Always tell client about battery state
+        MESSAGE_BEGIN(MSG_ONE, gmsgFlashBattery, NULL, pev);
+        WRITE_BYTE(m_iFlashBattery);
+        MESSAGE_END();
+
 		//Tell client the flashlight is on
 		if (FlashlightIsOn())
 		{
@@ -4794,7 +4802,7 @@ BOOL CBasePlayer::HasNamedPlayerItem(const char* pszItemName)
 //=========================================================
 BOOL CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
 {
-    if (!pWeapon->CanDeploy())
+    if (pWeapon && !pWeapon->CanDeploy())
     {
         return FALSE;
     }
@@ -4815,7 +4823,10 @@ BOOL CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
     }
 #else
     m_pActiveItem = pWeapon;
-    pWeapon->Deploy();
+    if (pWeapon)
+    {
+        pWeapon->Deploy();
+    }
 #endif
     return TRUE;
 }

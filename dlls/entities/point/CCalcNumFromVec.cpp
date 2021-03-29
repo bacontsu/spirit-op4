@@ -80,27 +80,27 @@ bool CCalcNumFromVec::CalcNumber(CBaseEntity* pLocus, float* OUTresult)
         }
     case 6: // Min X
         if (!gotB) return false;
-        *OUTresult = min(vecA.x, vecB.x);
+        *OUTresult = V_min(vecA.x, vecB.x);
         return true;
     case 7: // Max X
         if (!gotB) return false;
-        *OUTresult = max(vecA.x, vecB.x);
+        *OUTresult = V_max(vecA.x, vecB.x);
         return true;
     case 8: // Min Y
         if (!gotB) return false;
-        *OUTresult = min(vecA.y, vecB.y);
+        *OUTresult = V_min(vecA.y, vecB.y);
         return true;
     case 9: // Max Y
         if (!gotB) return false;
-        *OUTresult = max(vecA.y, vecB.y);
+        *OUTresult = V_max(vecA.y, vecB.y);
         return true;
     case 10: // Min Z
         if (!gotB) return false;
-        *OUTresult = min(vecA.z, vecB.z);
+        *OUTresult = V_min(vecA.z, vecB.z);
         return true;
     case 11: // Max Z
         if (!gotB) return false;
-        *OUTresult = max(vecA.z, vecB.z);
+        *OUTresult = V_max(vecA.z, vecB.z);
         return true;
     case 20: // Component in B
         {

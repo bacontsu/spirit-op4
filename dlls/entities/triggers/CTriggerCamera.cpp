@@ -36,6 +36,7 @@ TYPEDESCRIPTION CTriggerCamera::m_SaveData[] =
     DEFINE_FIELD(CTriggerCamera, m_acceleration, FIELD_FLOAT),
     DEFINE_FIELD(CTriggerCamera, m_deceleration, FIELD_FLOAT),
     DEFINE_FIELD(CTriggerCamera, m_state, FIELD_INTEGER),
+    DEFINE_FIELD(CTriggerCamera, m_flLastMoveTime, FIELD_TIME),
     DEFINE_FIELD(CTriggerCamera, m_iszViewEntity, FIELD_STRING),
 };
 
@@ -207,6 +208,8 @@ void CTriggerCamera::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     SetNextThink(0);
 
     m_moveDistance = 0;
+    //Ensure we don't get enormous delta times if we're reused
+    m_flLastMoveTime = 0;
     Move();
 }
 
@@ -259,9 +262,10 @@ void CTriggerCamera::FollowTarget()
     if (dy > 180)
         dy = dy - 360;
 
-    pev->avelocity.x = dx * 40 * gpGlobals->frametime;
-    pev->avelocity.y = dy * 40 * gpGlobals->frametime;
+    const float deltaTime = GetMoveDeltaTime();
 
+    pev->avelocity.x = dx * 40 * deltaTime;
+    pev->avelocity.y = dy * 40 * deltaTime;
 
     if (!(FBitSet(pev->spawnflags, SF_CAMERA_PLAYER_TAKECONTROL)))
     {
@@ -277,12 +281,21 @@ void CTriggerCamera::FollowTarget()
 
 void CTriggerCamera::Move()
 {
+    if (m_flLastMoveTime == 0)
+    {
+        m_flLastMoveTime = gpGlobals->time - gpGlobals->frametime;
+    }
+
+    const float deltaTime = gpGlobals->time - m_flLastMoveTime;
+
+    m_flLastMoveTime = gpGlobals->time;
+
     // Not moving on a path, return
     if (!m_pentPath)
         return;
 
     // Subtract movement from the previous frame
-    m_moveDistance -= pev->speed * gpGlobals->frametime;
+    m_moveDistance -= pev->speed * deltaTime;
 
     // Have we moved enough to reach the target?
     if (m_moveDistance <= 0)
@@ -315,10 +328,10 @@ void CTriggerCamera::Move()
     }
 
     if (m_flStopTime > gpGlobals->time)
-        pev->speed = UTIL_Approach(0, pev->speed, m_deceleration * gpGlobals->frametime);
+        pev->speed = UTIL_Approach(0, pev->speed, m_deceleration * deltaTime);
     else
-        pev->speed = UTIL_Approach(m_targetSpeed, pev->speed, m_acceleration * gpGlobals->frametime);
+        pev->speed = UTIL_Approach(m_targetSpeed, pev->speed, m_acceleration * deltaTime);
 
-    float fraction = 2 * gpGlobals->frametime;
+    float fraction = 2 * deltaTime;
     pev->velocity = ((pev->movedir * pev->speed) * fraction) + (pev->velocity * (1 - fraction));
 }

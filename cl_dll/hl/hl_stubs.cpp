@@ -306,8 +306,8 @@ int CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer) { return 0; }
 BOOL CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry) { return TRUE; }
 BOOL CBasePlayerWeapon::AddSecondaryAmmo(int iCount, char* szName, int iMax) { return TRUE; }
 BOOL CBasePlayerWeapon::IsUseable() { return TRUE; }
-int CBasePlayerWeapon::PrimaryAmmoIndex() { return -1; }
-int CBasePlayerWeapon::SecondaryAmmoIndex() { return -1; }
+int CBasePlayerWeapon::PrimaryAmmoIndex() { return m_iPrimaryAmmoType; }
+int CBasePlayerWeapon::SecondaryAmmoIndex() { return m_iSecondaryAmmoType; }
 int CBasePlayerWeapon::ExtractAmmo(CBasePlayerWeapon* pWeapon) { return 0; }
 int CBasePlayerWeapon::ExtractClipAmmo(CBasePlayerWeapon* pWeapon) { return 0; }
 void CBasePlayerWeapon::RetireWeapon() {}

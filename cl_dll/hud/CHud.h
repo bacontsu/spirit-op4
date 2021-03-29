@@ -84,6 +84,10 @@ public:
     int DrawHudStringReverse(int xpos, int ypos, int iMinX, char* szString, int r, int g, int b);
     int DrawHudNumberString(int xpos, int ypos, int iMinX, int iNumber, int r, int g, int b);
     int GetNumWidth(int iNumber, int iFlags);
+
+    int GetHudNumberWidth(int number, int width, int flags);
+    int DrawHudNumberReverse(int x, int y, int number, int flags, int r, int g, int b);
+
     int viewEntityIndex; // for trigger_viewset
     int viewFlags;
 

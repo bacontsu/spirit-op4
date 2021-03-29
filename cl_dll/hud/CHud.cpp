@@ -930,7 +930,11 @@ int CHud::MsgFunc_Concuss(const char* pszName, int iSize, void* pbuf)
     BEGIN_READ(pbuf, iSize);
     m_iConcussionEffect = READ_BYTE();
     if (m_iConcussionEffect)
-        this->m_StatusIcons.EnableIcon("dmg_concuss", 255, 160, 0);
+    {
+        int r, g, b;
+        UnpackRGB(r, g, b, RGB_YELLOWISH);
+        this->m_StatusIcons.EnableIcon("dmg_concuss", r, g, b);
+    }
     else
         this->m_StatusIcons.DisableIcon("dmg_concuss");
     return 1;
@@ -1329,6 +1333,52 @@ int CHud::GetNumWidth(int iNumber, int iFlags)
     return 3;
 }
 
+int CHud::GetHudNumberWidth(int number, int width, int flags)
+{
+	const int digitWidth = GetSpriteRect(m_HUD_number_0).right - GetSpriteRect(m_HUD_number_0).left;
+
+	int totalDigits = 0;
+
+	if (number > 0)
+	{
+		totalDigits = static_cast<int>(log10(number)) + 1;
+	}
+	else if (flags & DHN_DRAWZERO)
+	{
+		totalDigits = 1;
+	}
+
+	totalDigits = V_max(totalDigits, width);
+
+	return totalDigits * digitWidth;
+}
+
+int CHud::DrawHudNumberReverse(int x, int y, int number, int flags, int r, int g, int b)
+{
+	if (number > 0 || (flags & DHN_DRAWZERO))
+	{
+		const int digitWidth = GetSpriteRect(m_HUD_number_0).right - GetSpriteRect(m_HUD_number_0).left;
+
+		int remainder = number;
+
+		do
+		{
+			const int digit = remainder % 10;
+			const int digitSpriteIndex = m_HUD_number_0 + digit;
+
+			//This has to happen *before* drawing because we're drawing in reverse
+			x -= digitWidth;
+
+			SPR_Set(GetSprite(digitSpriteIndex), r, g, b);
+			SPR_DrawAdditive(0, x, y, &GetSpriteRect(digitSpriteIndex));
+
+			remainder /= 10;
+		}
+		while (remainder > 0);
+	}
+
+	return x;
+}
 
 int CL_ButtonBits(int);
 void CL_ResetButtonBits(int bits);

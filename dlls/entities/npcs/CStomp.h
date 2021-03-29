@@ -25,6 +25,12 @@ public:
     void Think() override;
     static CStomp* StompCreate(const Vector& origin, const Vector& end, float speed);
 
+    int		Save(CSave& save) override;
+	int		Restore(CRestore& restore) override;
+	static	TYPEDESCRIPTION m_SaveData[];
+
+	float m_flLastThinkTime;
+
 private:
     // UNDONE: re-use this sprite list instead of creating new ones all the time
     //    CSprite        *m_pSprites[ STOMP_SPRITE_COUNT ];

@@ -19,6 +19,13 @@
 
 LINK_ENTITY_TO_CLASS(garg_stomp, CStomp);
 
+TYPEDESCRIPTION	CStomp::m_SaveData[] =
+{
+	DEFINE_FIELD(CStomp, m_flLastThinkTime, FIELD_TIME),
+};
+
+IMPLEMENT_SAVERESTORE(CStomp, CBaseEntity);
+
 CStomp* CStomp::StompCreate(const Vector& origin, const Vector& end, float speed)
 {
     CStomp* pStomp = GetClassPtr((CStomp*)NULL);
@@ -48,14 +55,24 @@ void CStomp::Spawn()
 
 void CStomp::Think()
 {
-    TraceResult tr;
+	if (m_flLastThinkTime == 0)
+	{
+		m_flLastThinkTime = gpGlobals->time - gpGlobals->frametime;
+	}
+
+	//Use 1/4th the delta time to match the original behavior more closely
+	const float deltaTime = (gpGlobals->time - m_flLastThinkTime) / 4;
+
+	m_flLastThinkTime = gpGlobals->time;
+
+	TraceResult tr;
 
     SetNextThink(0.1);
 
     // Do damage for this frame
     Vector vecStart = pev->origin;
     vecStart.z += 30;
-    Vector vecEnd = vecStart + (pev->movedir * pev->speed * gpGlobals->frametime);
+	Vector vecEnd = vecStart + (pev->movedir * pev->speed * deltaTime);
 
     UTIL_TraceHull(vecStart, vecEnd, dont_ignore_monsters, head_hull, ENT(pev), &tr);
 
@@ -71,8 +88,8 @@ void CStomp::Think()
     }
 
     // Accelerate the effect
-    pev->speed = pev->speed + (gpGlobals->frametime) * pev->framerate;
-    pev->framerate = pev->framerate + (gpGlobals->frametime) * 1500;
+	pev->speed = pev->speed + deltaTime * pev->framerate;
+	pev->framerate = pev->framerate + deltaTime * 1500;
 
     // Move and spawn trails
     while (gpGlobals->time - pev->dmgtime > STOMP_INTERVAL)
