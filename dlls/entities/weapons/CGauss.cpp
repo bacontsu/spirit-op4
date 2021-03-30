@@ -25,19 +25,6 @@
 extern BOOL g_allowGJump; //AJH SP Gaussjump
 #endif
 
-enum gauss_e
-{
-    GAUSS_IDLE = 0,
-    GAUSS_IDLE2,
-    GAUSS_FIDGET,
-    GAUSS_SPINUP,
-    GAUSS_SPIN,
-    GAUSS_FIRE,
-    GAUSS_FIRE2,
-    GAUSS_HOLSTER,
-    GAUSS_DRAW
-};
-
 LINK_ENTITY_TO_CLASS(weapon_gauss, CGauss);
 
 #ifndef CLIENT_DLL

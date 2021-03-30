@@ -35,7 +35,7 @@ CBaseEntity
                     CCineMonster
 */
 
-#include "entities/constants/damage.h"
+#include "../shared/damage.h"
 #include "entities/constants/capability.h"
 #include "util/ehandle.h"
 #include "util/entity.h"
@@ -537,8 +537,6 @@ public:
     float m_flReleaseThrow;
     int m_chargeReady;
     int m_fInAttack;
-
-    enum EGON_FIRESTATE { FIRE_OFF, FIRE_CHARGE };
 
     int m_fireState;
 };

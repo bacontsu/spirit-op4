@@ -18,21 +18,6 @@
 #include "entities/player/CBasePlayer.h"
 #include "util/skill.h"
 
-enum handgrenade_e
-{
-    HANDGRENADE_IDLE = 0,
-    HANDGRENADE_FIDGET,
-    HANDGRENADE_PINPULL,
-    HANDGRENADE_THROW1,
-    // toss
-    HANDGRENADE_THROW2,
-    // medium
-    HANDGRENADE_THROW3,
-    // hard
-    HANDGRENADE_HOLSTER,
-    HANDGRENADE_DRAW
-};
-
 LINK_ENTITY_TO_CLASS(weapon_handgrenade, CHandGrenade);
 
 void CHandGrenade::Spawn()

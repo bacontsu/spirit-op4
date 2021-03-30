@@ -20,23 +20,6 @@ void EV_FireGauss(struct event_args_s* args);
 void EV_SpinGauss(struct event_args_s* args);
 }
 
-
-#define	GAUSS_PRIMARY_CHARGE_VOLUME	256 // how loud gauss is while charging
-#define GAUSS_PRIMARY_FIRE_VOLUME	450 // how loud gauss is when discharged
-
-enum gauss_e
-{
-    GAUSS_IDLE = 0,
-    GAUSS_IDLE2,
-    GAUSS_FIDGET,
-    GAUSS_SPINUP,
-    GAUSS_SPIN,
-    GAUSS_FIRE,
-    GAUSS_FIRE2,
-    GAUSS_HOLSTER,
-    GAUSS_DRAW
-};
-
 void EV_SpinGauss(event_args_t* args)
 {
     int idx;

@@ -22,16 +22,6 @@
 #define ROUTE_SIZE        8 // how many waypoints a monster can store at one time
 #define MAX_OLD_ENEMIES   4 // how many old enemies to remember
 
-#define itbd_Paralyze       0
-#define itbd_NerveGas       1
-#define itbd_Poison         2
-#define itbd_Radiation      3
-#define itbd_DrownRecover   4
-#define itbd_Acid           5
-#define itbd_SlowBurn       6
-#define itbd_SlowFreeze     7
-#define CDMG_TIMEBASED      8
-
 typedef enum
 {
     MONSTERSTATE_NONE = 0,

@@ -21,14 +21,14 @@
 #include "CHudHealth.h"
 #include "CHud.h"
 
-#include "stdio.h"
-#include "stdlib.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include "hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
-#include <string.h>
-
+#include "../shared/damage.h"
 
 DECLARE_MESSAGE(m_Health, Health)
 DECLARE_MESSAGE(m_Health, Damage)

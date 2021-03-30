@@ -14,15 +14,13 @@
 ****/
 
 #include "CHud.h"
-
 #include <particleman.h>
-
-
 #include "CGameStateManager.h"
 #include "effects/CWeather.h"
 #include "effects/CMP3.h"
 #include "api/demo.h"
 #include "demo_api.h"
+#include "util.h"
 #include "vgui/TeamFortressViewport.h"
 #include "voice/CVoiceStatus.h"
 #include "voice/CHLVoiceStatusHelper.h"

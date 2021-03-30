@@ -20,20 +20,6 @@ void EV_FireShotGunSingle(struct event_args_s* args);
 void EV_FireShotGunDouble(struct event_args_s* args);
 }
 
-enum shotgun_e
-{
-    SHOTGUN_IDLE = 0,
-    SHOTGUN_FIRE,
-    SHOTGUN_FIRE2,
-    SHOTGUN_RELOAD,
-    SHOTGUN_PUMP,
-    SHOTGUN_START_RELOAD,
-    SHOTGUN_DRAW,
-    SHOTGUN_HOLSTER,
-    SHOTGUN_IDLE4,
-    SHOTGUN_IDLE_DEEP
-};
-
 void EV_FireShotGunDouble(event_args_t* args)
 {
     int idx;

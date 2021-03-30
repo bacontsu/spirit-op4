@@ -19,16 +19,6 @@ extern "C" {
 void EV_HornetGunFire(struct event_args_s* args);
 }
 
-enum hgun_e
-{
-    HGUN_IDLE1 = 0,
-    HGUN_FIDGETSWAY,
-    HGUN_FIDGETSHAKE,
-    HGUN_DOWN,
-    HGUN_UP,
-    HGUN_SHOOT
-};
-
 void EV_HornetGunFire(event_args_t* args)
 {
     int idx, iFireMode;

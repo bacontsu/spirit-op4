@@ -16,9 +16,6 @@
 
 #include "CBasePlayerWeapon.h"
 
-#define GAUSS_PRIMARY_CHARGE_VOLUME  256 // how loud gauss is while charging
-#define GAUSS_PRIMARY_FIRE_VOLUME    450 // how loud gauss is when discharged
-
 class CGauss : public CBasePlayerWeapon
 {
 public:

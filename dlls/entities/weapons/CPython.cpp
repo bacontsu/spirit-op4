@@ -18,18 +18,6 @@
 #include "entities/player/CBasePlayer.h"
 #include "util/usermessages.h"
 
-enum python_e
-{
-    PYTHON_IDLE1 = 0,
-    PYTHON_FIDGET,
-    PYTHON_FIRE1,
-    PYTHON_RELOAD,
-    PYTHON_HOLSTER,
-    PYTHON_DRAW,
-    PYTHON_IDLE2,
-    PYTHON_IDLE3
-};
-
 LINK_ENTITY_TO_CLASS(weapon_python, CPython);
 LINK_ENTITY_TO_CLASS(weapon_357, CPython);
 

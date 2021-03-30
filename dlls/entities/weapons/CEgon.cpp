@@ -20,21 +20,6 @@
 #include "util/skill.h"
 #include "util/usermessages.h"
 
-enum egon_e
-{
-    EGON_IDLE1 = 0,
-    EGON_FIDGET1,
-    EGON_ALTFIREON,
-    EGON_ALTFIRECYCLE,
-    EGON_ALTFIREOFF,
-    EGON_FIRE1,
-    EGON_FIRE2,
-    EGON_FIRE3,
-    EGON_FIRE4,
-    EGON_DRAW,
-    EGON_HOLSTER
-};
-
 LINK_ENTITY_TO_CLASS(weapon_egon, CEgon);
 
 #ifndef CLIENT_DLL

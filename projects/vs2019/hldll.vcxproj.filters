@@ -2128,9 +2128,6 @@
     <ClInclude Include="..\..\dlls\util\dispatch.h">
       <Filter>Header Files\dlls\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\entities\constants\damage.h">
-      <Filter>Header Files\dlls\entities\constants</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\dlls\entities\constants\capability.h">
       <Filter>Header Files\dlls\entities\constants</Filter>
     </ClInclude>
@@ -2346,6 +2343,9 @@
     </ClInclude>
     <ClInclude Include="..\..\dlls\entities\player\CBaseDMStart.h">
       <Filter>Header Files\dlls\entities\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\damage.h">
+      <Filter>Header Files\shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

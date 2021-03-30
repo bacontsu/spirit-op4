@@ -16,16 +16,6 @@
 #include "CSqueak.h"
 #include "entities/player/CBasePlayer.h"
 
-enum squeak_e
-{
-    SQUEAK_IDLE1 = 0,
-    SQUEAK_FIDGETFIT,
-    SQUEAK_FIDGETNIP,
-    SQUEAK_DOWN,
-    SQUEAK_UP,
-    SQUEAK_THROW
-};
-
 LINK_ENTITY_TO_CLASS(weapon_snark, CSqueak);
 
 void CSqueak::Spawn()

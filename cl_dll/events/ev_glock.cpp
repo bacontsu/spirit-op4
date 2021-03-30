@@ -20,20 +20,6 @@ void EV_FireGlock1(struct event_args_s* args);
 void EV_FireGlock2(struct event_args_s* args);
 }
 
-enum glock_e
-{
-    GLOCK_IDLE1 = 0,
-    GLOCK_IDLE2,
-    GLOCK_IDLE3,
-    GLOCK_SHOOT,
-    GLOCK_SHOOT_EMPTY,
-    GLOCK_RELOAD,
-    GLOCK_RELOAD_NOT_EMPTY,
-    GLOCK_DRAW,
-    GLOCK_HOLSTER,
-    GLOCK_ADD_SILENCER
-};
-
 void EV_FireGlock1(event_args_t* args)
 {
     int idx;

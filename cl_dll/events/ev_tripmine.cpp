@@ -19,19 +19,6 @@ extern "C" {
 void EV_TripmineFire(struct event_args_s* args);
 }
 
-enum tripmine_e
-{
-    TRIPMINE_IDLE1 = 0,
-    TRIPMINE_IDLE2,
-    TRIPMINE_ARM1,
-    TRIPMINE_ARM2,
-    TRIPMINE_FIDGET,
-    TRIPMINE_HOLSTER,
-    TRIPMINE_DRAW,
-    TRIPMINE_WORLD,
-    TRIPMINE_GROUND,
-};
-
 //We only check if it's possible to put a trip mine
 //and if it is, then we play the animation. Server still places it.
 void EV_TripmineFire(event_args_t* args)

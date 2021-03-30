@@ -20,34 +20,8 @@ void EV_EgonFire(struct event_args_s* args);
 void EV_EgonStop(struct event_args_s* args);
 }
 
-enum egon_e
-{
-    EGON_IDLE1 = 0,
-    EGON_FIDGET1,
-    EGON_ALTFIREON,
-    EGON_ALTFIRECYCLE,
-    EGON_ALTFIREOFF,
-    EGON_FIRE1,
-    EGON_FIRE2,
-    EGON_FIRE3,
-    EGON_FIRE4,
-    EGON_DRAW,
-    EGON_HOLSTER
-};
-
 int g_fireAnims1[] = {EGON_FIRE1, EGON_FIRE2, EGON_FIRE3, EGON_FIRE4};
 int g_fireAnims2[] = {EGON_ALTFIRECYCLE};
-
-enum EGON_FIRESTATE { FIRE_OFF, FIRE_CHARGE };
-
-enum EGON_FIREMODE { FIRE_NARROW, FIRE_WIDE };
-
-#define	EGON_PRIMARY_VOLUME		450
-#define EGON_BEAM_SPRITE		"sprites/xbeam1.spr"
-#define EGON_FLARE_SPRITE		"sprites/XSpark1.spr"
-#define EGON_SOUND_OFF			"weapons/egon_off1.wav"
-#define EGON_SOUND_RUN			"weapons/egon_run3.wav"
-#define EGON_SOUND_STARTUP		"weapons/egon_windup2.wav"
 
 #define ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
 

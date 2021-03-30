@@ -16,18 +16,6 @@
 
 #include "CBasePlayerWeapon.h"
 
-enum tripmine_e {
-    TRIPMINE_IDLE1 = 0,
-    TRIPMINE_IDLE2,
-    TRIPMINE_ARM1,
-    TRIPMINE_ARM2,
-    TRIPMINE_FIDGET,
-    TRIPMINE_HOLSTER,
-    TRIPMINE_DRAW,
-    TRIPMINE_WORLD,
-    TRIPMINE_GROUND,
-};
-
 #define TRIPMINE_PRIMARY_VOLUME 450
 
 class CTripmine : public CBasePlayerWeapon

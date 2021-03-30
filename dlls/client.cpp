@@ -1367,9 +1367,6 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
     return 1;
 }
 
-// defaults for clientinfo messages
-#define    DEFAULT_VIEWHEIGHT    28
-
 /*
 ===================
 CreateBaseline
@@ -1935,25 +1932,25 @@ GetHullBounds
   Engine calls this to enumerate player collision hulls, for prediction.  Return 0 if the hullnumber doesn't exist.
 ================================
 */
-int GetHullBounds( int hullnumber, float *mins, float *maxs )
+int GetHullBounds(int hullnumber, float* mins, float* maxs)
 {
     int iret = 0;
 
-    switch ( hullnumber )
+    switch (hullnumber)
     {
-    case 0:                // Normal player
-        mins = VEC_HULL_MIN;
-        maxs = VEC_HULL_MAX;
+    case 0: // Normal player
+        memcpy(mins, &VEC_HULL_MIN, sizeof(VEC_HULL_MIN));
+        memcpy(maxs, &VEC_HULL_MAX, sizeof(VEC_HULL_MAX));
         iret = 1;
         break;
-    case 1:                // Crouched player
-        mins = VEC_DUCK_HULL_MIN;
-        maxs = VEC_DUCK_HULL_MAX;
+    case 1: // Crouched player
+        memcpy(mins, &VEC_DUCK_HULL_MIN, sizeof(VEC_DUCK_HULL_MIN));
+        memcpy(maxs, &VEC_DUCK_HULL_MAX, sizeof(VEC_DUCK_HULL_MAX));
         iret = 1;
         break;
-    case 2:                // Point based hull
-        mins = Vector( 0, 0, 0 );
-        maxs = Vector( 0, 0, 0 );
+    case 2: // Point based hull
+        memcpy(mins, &g_vecZero, sizeof(g_vecZero));
+        memcpy(maxs, &g_vecZero, sizeof(g_vecZero));
         iret = 1;
         break;
     }

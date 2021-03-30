@@ -19,19 +19,6 @@ extern "C" {
 void EV_FirePython(struct event_args_s* args);
 }
 
-enum python_e
-{
-    PYTHON_IDLE1 = 0,
-    PYTHON_FIDGET,
-    PYTHON_FIRE1,
-    PYTHON_RELOAD,
-    PYTHON_HOLSTER,
-    PYTHON_DRAW,
-    PYTHON_IDLE2,
-    PYTHON_IDLE3
-};
-
-
 void EV_FirePython(event_args_t* args)
 {
     int idx;

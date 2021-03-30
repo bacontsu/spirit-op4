@@ -560,7 +560,6 @@ EXIT /B 0</Command>
     <ClInclude Include="..\..\dlls\entities\CBaseMonster.h" />
     <ClInclude Include="..\..\dlls\entities\CBaseToggle.h" />
     <ClInclude Include="..\..\dlls\entities\constants\capability.h" />
-    <ClInclude Include="..\..\dlls\entities\constants\damage.h" />
     <ClInclude Include="..\..\dlls\entities\effects\CAmbientGeneric.h" />
     <ClInclude Include="..\..\dlls\entities\effects\CBeam.h" />
     <ClInclude Include="..\..\dlls\entities\effects\CBlood.h" />
@@ -839,6 +838,7 @@ EXIT /B 0</Command>
     <ClInclude Include="..\..\pm_shared\pm_shared.h" />
     <ClInclude Include="..\..\shared\bitvec.h" />
     <ClInclude Include="..\..\shared\common_defs.h" />
+    <ClInclude Include="..\..\shared\damage.h" />
     <ClInclude Include="..\..\shared\mathdefs.h" />
     <ClInclude Include="..\..\shared\mathlib.h" />
     <ClInclude Include="..\..\shared\types.h" />

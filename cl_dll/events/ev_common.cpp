@@ -100,12 +100,10 @@ Figure out the height of the gun
 void EV_GetGunPosition(event_args_t* args, float* pos, float* origin)
 {
     int idx;
-    Vector view_ofs;
 
     idx = args->entindex;
-
-    view_ofs.Clear();
-    view_ofs[2] = DEFAULT_VIEWHEIGHT;
+    
+	Vector view_ofs = VEC_VIEW;
 
     if (EV_IsPlayer(idx))
     {
@@ -117,7 +115,7 @@ void EV_GetGunPosition(event_args_t* args, float* pos, float* origin)
         }
         else if (args->ducking == 1)
         {
-            view_ofs[2] = VEC_DUCK_VIEW;
+			view_ofs = VEC_DUCK_VIEW;
         }
     }
 
@@ -150,15 +148,13 @@ void EV_GetDefaultShellInfo(event_args_t* args, float* origin, float* velocity, 
                             float* up, float forwardScale, float upScale, float rightScale)
 {
     int i;
-    Vector view_ofs;
     float fR, fU;
 
     int idx;
 
     idx = args->entindex;
-
-    view_ofs.Clear();
-    view_ofs[2] = DEFAULT_VIEWHEIGHT;
+    
+	Vector view_ofs = VEC_VIEW;
 
     if (EV_IsPlayer(idx))
     {
@@ -168,7 +164,7 @@ void EV_GetDefaultShellInfo(event_args_t* args, float* origin, float* velocity, 
         }
         else if (args->ducking == 1)
         {
-            view_ofs[2] = VEC_DUCK_VIEW;
+			view_ofs = VEC_DUCK_VIEW;
         }
     }
 

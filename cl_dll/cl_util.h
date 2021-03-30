@@ -35,7 +35,7 @@
 							}
 
 inline float CVAR_GET_FLOAT(const char* x) { return gEngfuncs.pfnGetCvarFloat((char*)x); }
-inline char* CVAR_GET_STRING(const char* x) { return gEngfuncs.pfnGetCvarString((char*)x); }
+inline const char* CVAR_GET_STRING(const char* x) { return gEngfuncs.pfnGetCvarString((char*)x); }
 inline struct cvar_s* CVAR_CREATE(const char* cv, const char* val, const int flags) { return gEngfuncs.pfnRegisterVariable((char*)cv, (char*)val, flags); }
 
 #define SPR_Load (*gEngfuncs.pfnSPR_Load)
@@ -168,5 +168,3 @@ inline void UnpackRGB(int& r, int& g, int& b, unsigned long ulRGB)
     g = (ulRGB & 0xFF00) >> 8;
     b = ulRGB & 0xFF;
 }
-
-inline float UTIL_Lerp(float lerpfactor, float A, float B) { return A + lerpfactor * (B - A); }
