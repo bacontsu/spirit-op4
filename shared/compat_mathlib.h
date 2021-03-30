@@ -170,7 +170,7 @@ inline float anglemod(const float a)
 
 inline float Distance(const float* v1, const float* v2)
 {
-    vec3_t d;
+    Vector d;
     VectorSubtract(v2, v1, d);
     return Length(d);
 }

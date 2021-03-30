@@ -29,24 +29,6 @@
 extern IParticleMan* g_pParticleMan;
 
 extern int g_iWaterLevel;
-extern vec3_t v_origin;
-
-
-//
-//-----------------------------------------------------
-//
-
-void SetPoint(float x, float y, float z, float (*matrix)[4])
-{
-    vec3_t point, result;
-    point[0] = x;
-    point[1] = y;
-    point[2] = z;
-
-    VectorTransform(point, matrix, result);
-
-    gEngfuncs.pTriAPI->Vertex3f(result[0], result[1], result[2]);
-}
 
 
 //

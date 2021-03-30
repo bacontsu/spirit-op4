@@ -35,12 +35,12 @@ enum python_e
 void EV_FirePython(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
-    vec3_t angles;
-    vec3_t velocity;
+    Vector origin;
+    Vector angles;
+    Vector velocity;
 
-    vec3_t vecSrc, vecAiming;
-    vec3_t up, right, forward;
+    Vector vecSrc, vecAiming;
+    Vector up, right, forward;
     float flSpread = 0.01;
 
     idx = args->entindex;

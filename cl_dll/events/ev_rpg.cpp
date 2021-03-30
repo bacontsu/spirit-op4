@@ -35,7 +35,7 @@ enum rpg_e {
 void EV_FireRpg(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
+    Vector origin;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);

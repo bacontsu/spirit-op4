@@ -40,8 +40,8 @@ public:
     static bool c_bCosTableInit;
 
     // General functions
-    bool UpdateSystem(float frametime, /*vec3_t &right, vec3_t &up,*/ int messagenum); // If this function returns false, the manager deletes the system
-    void DrawSystem(); //vec3_t &right, vec3_t &up);
+    bool UpdateSystem(float frametime, /*Vector &right, Vector &up,*/ int messagenum); // If this function returns false, the manager deletes the system
+    void DrawSystem(); //Vector &right, Vector &up);
     particle* ActivateParticle(); // adds one of the free particles to the active list, and returns it for initialisation.
     //MUST CHECK WHETHER THIS RESULT IS NULL!
 
@@ -50,7 +50,7 @@ public:
 
     // returns false if the particle has died
     bool UpdateParticle(particle* part, float frametime);
-    void DrawParticle(particle* part, vec3_t& right, vec3_t& up);
+    void DrawParticle(particle* part, Vector& right, Vector& up);
 
     // Utility functions that have to be public
     //	bool ParticleIsVisible( particle* part );

@@ -49,7 +49,7 @@ public:
     int m_lastUsed;
     int m_direction;
     float m_returnSpeed;
-    vec3_t m_start;
-    vec3_t m_end;
+    Vector m_start;
+    Vector m_end;
     int m_sounds;
 };

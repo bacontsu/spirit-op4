@@ -68,7 +68,7 @@ void EV_EgonFlareCallback(struct tempent_s* ent, float frametime, float currentt
 void EV_EgonFire(event_args_t* args)
 {
     int idx, iFireState, iFireMode;
-    vec3_t origin;
+    Vector origin;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);
@@ -105,7 +105,7 @@ void EV_EgonFire(event_args_t* args)
     if (iStartup == 1 && EV_IsLocal(idx) && !pBeam && !pBeam2 && !pFlare && cl_lw->value)
         //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
     {
-        vec3_t vecSrc, vecEnd, origin, angles, forward, right, up;
+        Vector vecSrc, vecEnd, origin, angles, forward, right, up;
         pmtrace_t tr;
 
         cl_entity_t* pl = gEngfuncs.GetEntityByIndex(idx);
@@ -170,7 +170,7 @@ void EV_EgonFire(event_args_t* args)
 void EV_EgonStop(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
+    Vector origin;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);

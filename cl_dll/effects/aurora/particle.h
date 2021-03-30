@@ -26,10 +26,10 @@ struct particle
 
     ParticleType* pType;
 
-    vec3_t origin;
-    vec3_t velocity;
-    vec3_t accel;
-    vec3_t m_vecWind;
+    Vector origin;
+    Vector velocity;
+    Vector accel;
+    Vector m_vecWind;
 
     int m_iEntIndex; // if non-zero, this particle is tied to the given entity
 

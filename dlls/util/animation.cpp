@@ -13,18 +13,11 @@
 *
 ****/
 
-#include "Platform.h"
-#include "../../shared/Vector.h"
-typedef int qboolean;
-typedef unsigned char byte;
-#include "const.h"
-#include "progdefs.h"
-#include "edict.h"
-#include "eiface.h"
+#include "extdll.h"
+#include "util.h"
 #include "studio.h"
 #include "util/animation.h"
 #include "scriptevent.h"
-#include "enginecallback.h"
 
 extern globalvars_t* gpGlobals;
 

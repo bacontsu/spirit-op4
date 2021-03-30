@@ -25,11 +25,11 @@ public:
         x = y = z = w = 0;
     }
 
-    Vector4D(const vec_t x, const vec_t y, const vec_t z, const vec_t w): x(x), y(y), z(z), w(w)
+    Vector4D(const float x, const float y, const float z, const float w): x(x), y(y), z(z), w(w)
     {
     }
 
-    explicit Vector4D(vec_t flScalar) : x(flScalar), y(flScalar), z(flScalar), w(flScalar)
+    explicit Vector4D(float flScalar) : x(flScalar), y(flScalar), z(flScalar), w(flScalar)
     {
     }
 
@@ -102,7 +102,7 @@ public:
         return &x;
     }
 
-    vec_t x, y, z, w;
+    float x, y, z, w;
 };
 
 inline Vector4D operator*(const float fl, const Vector4D& v)

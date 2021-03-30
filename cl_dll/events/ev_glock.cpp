@@ -37,16 +37,16 @@ enum glock_e
 void EV_FireGlock1(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
-    vec3_t angles;
-    vec3_t velocity;
+    Vector origin;
+    Vector angles;
+    Vector velocity;
     int empty;
 
-    vec3_t ShellVelocity;
-    vec3_t ShellOrigin;
+    Vector ShellVelocity;
+    Vector ShellOrigin;
     int shell;
-    vec3_t vecSrc, vecAiming;
-    vec3_t up, right, forward;
+    Vector vecSrc, vecAiming;
+    Vector up, right, forward;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);
@@ -83,16 +83,16 @@ void EV_FireGlock1(event_args_t* args)
 void EV_FireGlock2(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
-    vec3_t angles;
-    vec3_t velocity;
+    Vector origin;
+    Vector angles;
+    Vector velocity;
 
-    vec3_t ShellVelocity;
-    vec3_t ShellOrigin;
+    Vector ShellVelocity;
+    Vector ShellOrigin;
     int shell;
-    vec3_t vecSrc, vecAiming;
-    vec3_t vecSpread;
-    vec3_t up, right, forward;
+    Vector vecSrc, vecAiming;
+    Vector vecSpread;
+    Vector up, right, forward;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);

@@ -36,15 +36,15 @@ enum mp5_e
 void EV_FireMP5(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
-    vec3_t angles;
-    vec3_t velocity;
+    Vector origin;
+    Vector angles;
+    Vector velocity;
 
-    vec3_t ShellVelocity;
-    vec3_t ShellOrigin;
+    Vector ShellVelocity;
+    Vector ShellOrigin;
     int shell;
-    vec3_t vecSrc, vecAiming;
-    vec3_t up, right, forward;
+    Vector vecSrc, vecAiming;
+    Vector up, right, forward;
     float flSpread = 0.01;
 
     idx = args->entindex;
@@ -97,7 +97,7 @@ void EV_FireMP5(event_args_t* args)
 void EV_FireMP52(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
+    Vector origin;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);

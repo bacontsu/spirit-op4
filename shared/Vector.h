@@ -27,12 +27,15 @@ class Vector
 {
 public:
     // Construction/destruction
-    Vector()
+    constexpr Vector() : x{}, y{}, z{}
     {
-        x = y = z = 0;
     }
 
-    Vector(const float x, const float y, const float z) : x(x), y(y), z(z)
+    constexpr Vector(const float X, const float Y, const float Z) : x(X), y(Y), z(Z)
+    {
+    }
+
+    constexpr Vector(const float rgfl[3]) : x(rgfl[0]), y(rgfl[1]), z(rgfl[2])
     {
     }
 
@@ -41,16 +44,8 @@ public:
     {
     }
 
-    Vector(const Vector& v) = default;
-
+    constexpr Vector(const Vector& v) = default;
     Vector(Vector&&) noexcept = default;
-
-    Vector(const float rgfl[3])
-    {
-        x = rgfl[0];
-        y = rgfl[1];
-        z = rgfl[2];
-    }
 
     ~Vector() = default;
     Vector& operator=(const Vector& v) = default;
@@ -447,6 +442,5 @@ inline Vector operator*(const float fl, const Vector& v)
     return v * fl;
 }
 
-#define vec3_t Vector
-
-extern vec3_t vec3_origin;
+constexpr Vector vec3_origin(0, 0, 0);
+constexpr Vector g_vecZero(0, 0, 0);

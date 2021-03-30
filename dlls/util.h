@@ -49,9 +49,6 @@ extern globalvars_t                *gpGlobals;
 // In case it's not alread defined
 typedef int BOOL;
 
-// In case this ever changes
-#define M_PI            3.14159265358979323846
-
 inline void MESSAGE_BEGIN( int msg_dest, int msg_type, const float *pOrigin, entvars_t *ent ) {
     (*g_engfuncs.pfnMessageBegin)(msg_dest, msg_type, pOrigin, ENT(ent));
 }
@@ -247,9 +244,6 @@ void DBG_AssertFunction(BOOL fExpr, const char* szExpr, const char* szFile, int 
 #define ASSERT(f)
 #define ASSERTSZ(f, sz)
 #endif    // !DEBUG
-
-
-extern DLL_GLOBAL const Vector g_vecZero;
 
 //
 // Constants that were used only by QC (maybe not used at all now)

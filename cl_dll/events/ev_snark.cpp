@@ -35,7 +35,7 @@ enum squeak_e
 void EV_SnarkFire(event_args_t* args)
 {
     int idx;
-    vec3_t vecSrc, angles, view_ofs, forward;
+    Vector vecSrc, angles, view_ofs, forward;
     pmtrace_t tr;
 
     idx = args->entindex;

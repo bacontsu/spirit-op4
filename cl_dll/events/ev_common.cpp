@@ -100,7 +100,7 @@ Figure out the height of the gun
 void EV_GetGunPosition(event_args_t* args, float* pos, float* origin)
 {
     int idx;
-    vec3_t view_ofs;
+    Vector view_ofs;
 
     idx = args->entindex;
 
@@ -133,7 +133,7 @@ Bullet shell casings
 */
 void EV_EjectBrass(float* origin, float* velocity, float rotation, int model, int soundtype)
 {
-    vec3_t endpos;
+    Vector endpos;
     endpos.Clear();
     endpos[1] = rotation;
     gEngfuncs.pEfxAPI->R_TempModel(origin, velocity, endpos, 2.5, model, soundtype);
@@ -150,7 +150,7 @@ void EV_GetDefaultShellInfo(event_args_t* args, float* origin, float* velocity, 
                             float* up, float forwardScale, float upScale, float rightScale)
 {
     int i;
-    vec3_t view_ofs;
+    Vector view_ofs;
     float fR, fU;
 
     int idx;
@@ -291,11 +291,11 @@ int EV_HLDM_CheckTracer(int idx, float* vecSrc, float* end, float* forward, floa
 
     if (iTracerFreq != 0 && ((*tracerCount)++ % iTracerFreq) == 0)
     {
-        vec3_t vecTracerSrc;
+        Vector vecTracerSrc;
 
         if (player)
         {
-            vec3_t offset(0, 0, -4);
+            Vector offset(0, 0, -4);
 
             // adjust tracer position for player
             for (i = 0; i < 3; i++)
@@ -475,7 +475,7 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 
     for (iShot = 1; iShot <= cShots; iShot++)
     {
-        vec3_t vecDir, vecEnd;
+        Vector vecDir, vecEnd;
 
         float x, y, z;
         //We randomize for the Shotgun.

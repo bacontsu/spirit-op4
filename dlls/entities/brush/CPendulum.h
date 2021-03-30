@@ -44,8 +44,8 @@ public:
     float m_damp;
     float m_maxSpeed;
     float m_dampSpeed;
-    vec3_t m_center;
-    vec3_t m_start;
+    Vector m_center;
+    Vector m_start;
 
     EHANDLE m_hActivator; //AJH (give frags to this entity)
 };

@@ -431,19 +431,19 @@ particle* ParticleSystem::ActivateParticle()
     return pActivated;
 }
 
-extern vec3_t v_origin;
+extern Vector v_origin;
 
 void ParticleSystem::CalculateDistance()
 {
     if (!m_pActiveParticle)
         return;
 
-    vec3_t offset = v_origin - m_pActiveParticle->origin; // just pick one
+    Vector offset = v_origin - m_pActiveParticle->origin; // just pick one
     m_fViewerDist = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
 }
 
 
-bool ParticleSystem::UpdateSystem(float frametime, /*vec3_t &right, vec3_t &up,*/ int messagenum)
+bool ParticleSystem::UpdateSystem(float frametime, /*Vector &right, Vector &up,*/ int messagenum)
 {
     // the entity emitting this system
     cl_entity_t* source = gEngfuncs.GetEntityByIndex(m_iEntIndex);
@@ -519,9 +519,9 @@ bool ParticleSystem::UpdateSystem(float frametime, /*vec3_t &right, vec3_t &up,*
     return true;
 }
 
-void ParticleSystem::DrawSystem() //vec3_t &right, vec3_t &up)
+void ParticleSystem::DrawSystem() //Vector &right, Vector &up)
 {
-    vec3_t normal, forward, right, up;
+    Vector normal, forward, right, up;
 
     gEngfuncs.GetViewAngles((float*)normal);
     AngleVectors(normal, forward, right, up);
@@ -537,7 +537,7 @@ void ParticleSystem::DrawSystem() //vec3_t &right, vec3_t &up)
 {
 	return true;
 
-	vec3_t normal, forward, right, up;
+	Vector normal, forward, right, up;
 	gEngfuncs.GetViewAngles((float*)normal);
 	AngleVectors( normal, forward, right, up );
 
@@ -597,7 +597,7 @@ bool ParticleSystem::UpdateParticle(particle* part, float frametime)
             return false;
 
         // apply acceleration and velocity
-        vec3_t vecOldPos = part->origin;
+        Vector vecOldPos = part->origin;
         if (part->m_fDrag)
             VectorMA(part->velocity, -part->m_fDrag * frametime, part->velocity - part->m_vecWind, part->velocity);
         VectorMA(part->velocity, frametime, part->accel, part->velocity);
@@ -605,7 +605,7 @@ bool ParticleSystem::UpdateParticle(particle* part, float frametime)
 
         if (part->pType->m_bBouncing)
         {
-            vec3_t vecTarget;
+            Vector vecTarget;
             VectorMA(part->origin, frametime, part->velocity, vecTarget);
             pmtrace_t* tr = gEngfuncs.PM_TraceLine(part->origin, vecTarget, PM_TRACELINE_PHYSENTSONLY, 2 /*point hull*/, -1);
             if (tr->fraction < 1)
@@ -639,7 +639,7 @@ bool ParticleSystem::UpdateParticle(particle* part, float frametime)
                     float fSprayPitch = part->pType->m_SprayPitch.GetInstance()/*;*/ - source->curstate.angles.x; //AJH For rotating paticles.
                     float fSprayYaw = part->pType->m_SprayYaw.GetInstance()/*;*/ - source->curstate.angles.y; //AJH
                     float fForceCosPitch = fSprayForce * CosLookup(fSprayPitch); //- source->curstate.angles.z;		//AJH
-                    //	vec3_t vecSprayVel;
+                    //	Vector vecSprayVel;
                     pChild->velocity.x += CosLookup(fSprayYaw) * fForceCosPitch;
                     pChild->velocity.y += SinLookup(fSprayYaw) * fForceCosPitch;
                     pChild->velocity.z -= SinLookup(fSprayPitch) * fSprayForce;
@@ -665,12 +665,12 @@ bool ParticleSystem::UpdateParticle(particle* part, float frametime)
     return true;
 }
 
-void ParticleSystem::DrawParticle(particle* part, vec3_t& right, vec3_t& up)
+void ParticleSystem::DrawParticle(particle* part, Vector& right, Vector& up)
 {
     //	gEngfuncs.Con_Printf("DrawParticle: size %f, pos %f %f %f\n", part->size, part->origin[0], part->origin[1], part->origin[2]);
     float fSize = part->m_fSize;
-    vec3_t point1, point2, point3, point4;
-    vec3_t origin = part->origin;
+    Vector point1, point2, point3, point4;
+    Vector origin = part->origin;
 
     // nothing to draw?
     if (fSize == 0)

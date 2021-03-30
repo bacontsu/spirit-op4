@@ -32,7 +32,7 @@ enum hgun_e
 void EV_HornetGunFire(event_args_t* args)
 {
     int idx, iFireMode;
-    vec3_t origin, angles, vecSrc, forward, right, up;
+    Vector origin, angles, vecSrc, forward, right, up;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);

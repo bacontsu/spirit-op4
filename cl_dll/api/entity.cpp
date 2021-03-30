@@ -22,7 +22,7 @@ extern IParticleMan* g_pParticleMan;
 
 void Game_AddObjects();
 
-extern vec3_t v_origin;
+extern Vector v_origin;
 
 int g_iAlive = 1;
 
@@ -556,7 +556,7 @@ void DLLEXPORT HUD_TempEntUpdate(
 
             if (pTemp->flags & (FTENT_COLLIDEALL | FTENT_COLLIDEWORLD))
             {
-                vec3_t traceNormal;
+                Vector traceNormal;
                 float traceFraction = 1;
 
                 if (pTemp->flags & FTENT_COLLIDEALL)

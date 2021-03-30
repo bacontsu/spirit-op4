@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <memory.h>
-#include <math.h>
 
 #include "r_studioint.h"
 
@@ -179,7 +178,7 @@ void CStudioModelRenderer::StudioCalcBoneQuaterion(int frame, float s, mstudiobo
 {
     int j, k;
     vec4_t q1, q2;
-    vec3_t angle1, angle2;
+    Vector angle1, angle2;
     mstudioanimvalue_t* panimvalue;
 
     for (j = 0; j < 3; j++)
@@ -427,8 +426,8 @@ StudioSetUpTransform
 void CStudioModelRenderer::StudioSetUpTransform(int trivial_accept)
 {
     int i;
-    vec3_t angles;
-    vec3_t modelpos;
+    Vector angles;
+    Vector modelpos;
 
     // tweek model origin	
     //for (i = 0; i < 3; i++)
@@ -1119,7 +1118,7 @@ StudioDrawModel
 int CStudioModelRenderer::StudioDrawModel(int flags)
 {
     alight_t lighting;
-    vec3_t dir;
+    Vector dir;
 
     m_pCurrentEntity = IEngineStudio.GetCurrentEntity();
 
@@ -1198,7 +1197,7 @@ int CStudioModelRenderer::StudioDrawModel(int flags)
         {
             cl_entity_t* ent = gEngfuncs.GetEntityByIndex(m_pCurrentEntity->index);
 
-            memcpy(ent->attachment, m_pCurrentEntity->attachment, sizeof(vec3_t) * 4);
+            memcpy(ent->attachment, m_pCurrentEntity->attachment, sizeof(Vector) * 4);
         }
     }
 
@@ -1232,7 +1231,7 @@ StudioEstimateGait
 void CStudioModelRenderer::StudioEstimateGait(entity_state_t* pplayer)
 {
     float dt;
-    vec3_t est_velocity;
+    Vector est_velocity;
 
     dt = (m_clTime - m_clOldTime);
     if (dt < 0)
@@ -1401,7 +1400,7 @@ StudioDrawPlayer
 int CStudioModelRenderer::StudioDrawPlayer(int flags, entity_state_t* pplayer)
 {
     alight_t lighting;
-    vec3_t dir;
+    Vector dir;
 
     m_pCurrentEntity = IEngineStudio.GetCurrentEntity();
     IEngineStudio.GetTimes(&m_nFrameCount, &m_clTime, &m_clOldTime);
@@ -1424,7 +1423,7 @@ int CStudioModelRenderer::StudioDrawPlayer(int flags, entity_state_t* pplayer)
 
     if (pplayer->gaitsequence)
     {
-        vec3_t orig_angles;
+        Vector orig_angles;
         m_pPlayerInfo = IEngineStudio.PlayerInfo(m_nPlayerIndex);
 
         VectorCopy(m_pCurrentEntity->angles, orig_angles);
@@ -1483,7 +1482,7 @@ int CStudioModelRenderer::StudioDrawPlayer(int flags, entity_state_t* pplayer)
         {
             cl_entity_t* ent = gEngfuncs.GetEntityByIndex(m_pCurrentEntity->index);
 
-            memcpy(ent->attachment, m_pCurrentEntity->attachment, sizeof(vec3_t) * 4);
+            memcpy(ent->attachment, m_pCurrentEntity->attachment, sizeof(Vector) * 4);
         }
     }
 

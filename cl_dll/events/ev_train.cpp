@@ -22,7 +22,7 @@ void EV_TrainPitchAdjust(struct event_args_s* args);
 void EV_TrainPitchAdjust(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
+    Vector origin;
 
     unsigned short us_params;
     int noise;

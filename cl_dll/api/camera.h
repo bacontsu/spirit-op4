@@ -12,7 +12,7 @@
 // NOTE: must include quakedef.h first
 
 // pitch, yaw, dist
-extern vec3_t cam_ofs;
+extern Vector cam_ofs;
 // Using third person camera
 extern int cam_thirdperson;
 

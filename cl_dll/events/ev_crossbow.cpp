@@ -49,14 +49,14 @@ void EV_BoltCallback(struct tempent_s* ent, float frametime, float currenttime)
 
 void EV_FireCrossbow2(event_args_t* args)
 {
-    vec3_t vecSrc, vecEnd;
-    vec3_t up, right, forward;
+    Vector vecSrc, vecEnd;
+    Vector up, right, forward;
     pmtrace_t tr;
 
     int idx;
-    vec3_t origin;
-    vec3_t angles;
-    vec3_t velocity;
+    Vector origin;
+    Vector angles;
+    Vector velocity;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);
@@ -117,7 +117,7 @@ void EV_FireCrossbow2(event_args_t* args)
             if (gEngfuncs.PM_PointContents(tr.endpos, NULL) != CONTENTS_WATER)
                 gEngfuncs.pEfxAPI->R_SparkShower(tr.endpos);
 
-            vec3_t vBoltAngles;
+            Vector vBoltAngles;
             int iModelIndex = gEngfuncs.pEventAPI->EV_FindModelIndex("models/crossbow_bolt.mdl");
 
             VectorAngles(forward, vBoltAngles);
@@ -141,7 +141,7 @@ void EV_FireCrossbow2(event_args_t* args)
 void EV_FireCrossbow(event_args_t* args)
 {
     int idx;
-    vec3_t origin;
+    Vector origin;
 
     idx = args->entindex;
     VectorCopy(args->origin, origin);

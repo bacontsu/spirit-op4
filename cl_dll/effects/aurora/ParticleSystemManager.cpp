@@ -125,7 +125,7 @@ void ParticleSystemManager::UpdateSystems(float frametime) //LRC - now with adde
     ParticleSystem* pLast = NULL;
     ParticleSystem* pLastSorted = NULL;
     cl_entity_t* localPlayer = gEngfuncs.GetLocalPlayer();
-    //	vec3_t normal, forward, right, up;
+    //	Vector normal, forward, right, up;
 
     //	gEngfuncs.GetViewAngles((float*)normal);
     //	AngleVectors(normal,forward,right,up);
