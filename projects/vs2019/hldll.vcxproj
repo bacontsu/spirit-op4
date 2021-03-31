@@ -465,6 +465,7 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\dlls\weapons.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_debug.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
+    <ClCompile Include="..\..\shared\weapons_shared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />

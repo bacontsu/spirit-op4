@@ -275,6 +275,8 @@ const char* CBasePlayer::TeamID() { return ""; }
 int CBasePlayer::GiveAmmo(int iCount, const char* szName, int iMax) { return 0; }
 void CBasePlayer::AddPoints(int score, BOOL bAllowNegativeScore) {}
 void CBasePlayer::AddPointsToTeam(int score, BOOL bAllowNegativeScore) {}
+void CBasePlayer::TabulateAmmo() {}
+
 
 // CBasePlayerItem Stubs
 ItemInfo CBasePlayerItem::ItemInfoArray[MAX_WEAPONS];

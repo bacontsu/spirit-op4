@@ -162,6 +162,9 @@ typedef struct
     int iId;
 } AmmoInfo;
 
+extern int giAmmoIndex;
+void AddAmmoNameToAmmoRegistry(const char* szAmmoname);
+
 extern DLL_GLOBAL  short        g_sModelIndexLaser;      // holds the index for the laser beam
 extern DLL_GLOBAL  const char  *g_pModelNameLaser;
 

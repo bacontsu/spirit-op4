@@ -103,6 +103,9 @@
     <Filter Include="Header Files\cl_dll\events">
       <UniqueIdentifier>{565c4ff7-2864-4045-b697-4f91cb44688f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shared">
+      <UniqueIdentifier>{7fe0f0f3-0eac-4ffc-bb13-7eb0bab9f504}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\com_weapons.cpp">
@@ -425,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\CGameStateManager.cpp">
       <Filter>Source Files\cl_dll</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\weapons_shared.cpp">
+      <Filter>Source Files\shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

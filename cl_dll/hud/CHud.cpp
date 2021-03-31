@@ -20,7 +20,6 @@
 #include "effects/CMP3.h"
 #include "api/demo.h"
 #include "demo_api.h"
-#include "util.h"
 #include "vgui/TeamFortressViewport.h"
 #include "voice/CVoiceStatus.h"
 #include "voice/CHLVoiceStatusHelper.h"
@@ -1061,6 +1060,8 @@ void CHud::Think()
         m_iFOV = gHUD.m_Spectator.GetFOV(); // default_fov->value;
     }
 }
+
+inline float UTIL_Lerp(float lerpfactor, float A, float B) { return A + lerpfactor * (B - A); }
 
 // Redraw
 // step through the local data,  placing the appropriate graphics & text as appropriate

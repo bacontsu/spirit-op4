@@ -15,6 +15,7 @@
 #include "weapons.h"
 #include "event_api.h"
 #include "r_studioint.h"
+#include "util/sound.h"
 
 // defaults for clientinfo messages
 #define FTENT_FADEOUT			0x00000080
@@ -22,8 +23,6 @@
 extern engine_studio_api_t IEngineStudio;
 extern cvar_t* cl_lw;
 extern int tracerCount[32];
-
-#define SND_CHANGE_PITCH	(1<<7)		// duplicated in protocol.h change sound pitch
 
 // Some of these are HL/TFC specific?
 struct cl_entity_s* GetEntity(int idx);

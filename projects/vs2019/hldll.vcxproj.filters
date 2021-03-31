@@ -129,6 +129,9 @@
     <Filter Include="Header Files\shared">
       <UniqueIdentifier>{deedbd06-d078-46d4-b327-2b105c425b0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shared">
+      <UniqueIdentifier>{61aa4010-7256-4b3d-861b-318c8425b1e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\client.cpp">
@@ -1207,6 +1210,9 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\entities\player\CBaseDMStart.cpp">
       <Filter>Source Files\dlls\entities\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\weapons_shared.cpp">
+      <Filter>Source Files\shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

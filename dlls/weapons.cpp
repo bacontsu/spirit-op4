@@ -172,31 +172,6 @@ void EjectBrass ( const Vector &vecOrigin, const Vector &vecVelocity, float rota
     MESSAGE_END();
 }
 
-int giAmmoIndex = 0;
-
-// Precaches the ammo and queues the ammo info for sending to clients
-void AddAmmoNameToAmmoRegistry( const char *szAmmoname )
-{
-    // make sure it's not already in the registry
-    for ( int i = 0; i < MAX_AMMO_SLOTS; i++ )
-    {
-        if ( !CBasePlayerItem::AmmoInfoArray[i].pszName)
-            continue;
-
-        if ( stricmp( CBasePlayerItem::AmmoInfoArray[i].pszName, szAmmoname ) == 0 )
-            return; // ammo already in registry, just quite
-    }
-
-
-    giAmmoIndex++;
-    ASSERT( giAmmoIndex < MAX_AMMO_SLOTS );
-    if ( giAmmoIndex >= MAX_AMMO_SLOTS )
-        giAmmoIndex = 0;
-
-    CBasePlayerItem::AmmoInfoArray[giAmmoIndex].pszName = szAmmoname;
-    CBasePlayerItem::AmmoInfoArray[giAmmoIndex].iId = giAmmoIndex;   // yes, this info is redundant
-}
-
 // Precaches the weapon and queues the weapon info for sending to clients
 void UTIL_PrecacheOtherWeapon( const char *szClassname )
 {
