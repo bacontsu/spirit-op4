@@ -17,6 +17,7 @@
 
 #include <assert.h>
 #include "../shared/compat_mathlib.h"
+#include "../shared/common_defs.h"
 #include "const.h"
 #include "usercmd.h"
 #include "pm_defs.h"
@@ -27,8 +28,6 @@
 #include <string.h> // strcpy
 #include <stdlib.h> // atoi
 #include <ctype.h>  // isspace
-
-#include "../shared/common_defs.h"
 
 #ifdef CLIENT_DLL
     // Spectator Mode
@@ -780,7 +779,7 @@ returns the blocked flags:
 0x02 == step / wall
 ==================
 */
-int PM_ClipVelocity (Vector in, Vector normal, Vector out, float overbounce)
+int PM_ClipVelocity (Vector in, Vector normal, Vector& out, float overbounce)
 {
     float    backoff;
     float    change;
@@ -2164,9 +2163,8 @@ void PM_LadderMove( physent_t *pLadder )
         {
             flSpeed = pmove->maxspeed;
         }
-
-        Vector up_discarded;
-        AngleVectors( pmove->angles, vpn, v_right, up_discarded);
+        
+		AngleVectors( pmove->angles, &vpn, &v_right, NULL );
 
         if ( pmove->flags & FL_DUCKING )
         {
@@ -2852,7 +2850,7 @@ float PM_CalcRoll (Vector angles, Vector velocity, float rollangle, float rollsp
     float   value;
     Vector  forward, right, up;
     
-    AngleVectors (angles, forward, right, up);
+	AngleVectors (angles, &forward, &right, &up);
     
     side = DotProduct (velocity, right);
     
@@ -2880,7 +2878,7 @@ PM_DropPunchAngle
 
 =============
 */
-void PM_DropPunchAngle ( Vector punchangle )
+void PM_DropPunchAngle ( Vector& punchangle )
 {
     float    len;
     
@@ -3028,7 +3026,7 @@ void PM_PlayerMove ( qboolean server )
     PM_ReduceTimers();
 
     // Convert view angles to vectors
-    AngleVectors (pmove->angles, pmove->forward, pmove->right, pmove->up);
+	AngleVectors (pmove->angles, &pmove->forward, &pmove->right, &pmove->up);
 
     // PM_ShowClipBox();
 

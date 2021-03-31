@@ -229,71 +229,71 @@ public:
      * @param right The vector to put the right result into
      * @param up The vector to put the up result into
      */
-    void AngleVectors(Vector& forward, Vector& right, Vector& up) const
+    void AngleVectors(Vector* forward, Vector* right, Vector* up) const
     {
-        auto angles = *this;
+        const auto& angles = *this;
 
-        auto angle = static_cast<double>(angles[YAW]) * (M_PI * 2 / 360);
+        float angle = angles[YAW] * (M_PI * 2 / 360);
         const auto sy = sin(angle);
         const auto cy = cos(angle);
-        angle = static_cast<double>(angles[PITCH]) * (M_PI * 2 / 360);
+        angle = angles[PITCH] * (M_PI * 2 / 360);
         const auto sp = sin(angle);
         const auto cp = cos(angle);
-        angle = static_cast<double>(angles[ROLL]) * (M_PI * 2 / 360);
+        angle = angles[ROLL] * (M_PI * 2 / 360);
         const auto sr = sin(angle);
         const auto cr = cos(angle);
 
         if (forward)
         {
-            forward[0] = static_cast<float>(cp * cy);
-            forward[1] = static_cast<float>(cp * sy);
-            forward[2] = static_cast<float>(-sp);
+            forward->x = cp * cy;
+            forward->y = cp * sy;
+            forward->z = -sp;
         }
         if (right)
         {
-            right[0] = static_cast<float>(-1 * sr * sp * cy + -1 * cr * -sy);
-            right[1] = static_cast<float>(-1 * sr * sp * sy + -1 * cr * cy);
-            right[2] = static_cast<float>(-1 * sr * cp);
+            right->x = (-1 * sr * sp * cy + -1 * cr * -sy);
+            right->y = (-1 * sr * sp * sy + -1 * cr * cy);
+            right->z = -1 * sr * cp;
         }
         if (up)
         {
-            up[0] = static_cast<float>(cr * sp * cy + -sr * -sy);
-            up[1] = static_cast<float>(cr * sp * sy + -sr * cy);
-            up[2] = static_cast<float>(cr * cp);
+            up->x = (cr * sp * cy + -sr * -sy);
+            up->y = (cr * sp * sy + -sr * cy);
+            up->z = cr * cp;
         }
     }
 
-    void AngleVectorsTranspose(Vector& forward, Vector& right, Vector& up) const
+    void AngleVectorsTranspose(Vector* forward, Vector* right, Vector* up) const
     {
         auto angles = *this;
 
-        auto angle = static_cast<double>(angles[YAW]) * (M_PI * 2 / 360);
+        float angle = angles[YAW] * (M_PI * 2 / 360);
         const auto sy = sin(angle);
         const auto cy = cos(angle);
-        angle = static_cast<double>(angles[PITCH]) * (M_PI * 2 / 360);
+        angle = angles[PITCH] * (M_PI * 2 / 360);
         const auto sp = sin(angle);
         const auto cp = cos(angle);
-        angle = static_cast<double>(angles[ROLL]) * (M_PI * 2 / 360);
+        angle = angles[ROLL] * (M_PI * 2 / 360);
         const auto sr = sin(angle);
         const auto cr = cos(angle);
 
         if (forward)
         {
-            forward[0] = static_cast<float>(cp * cy);
-            forward[1] = static_cast<float>(sr * sp * cy + cr * -sy);
-            forward[2] = static_cast<float>(cr * sp * cy + -sr * -sy);
+            forward->x = cp * cy;
+            forward->y = (sr * sp * cy + cr * -sy);
+            forward->z = (cr * sp * cy + -sr * -sy);
         }
         if (right)
         {
-            right[0] = static_cast<float>(cp * sy);
-            right[1] = static_cast<float>(sr * sp * sy + cr * cy);
-            right[2] = static_cast<float>(cr * sp * sy + -sr * cy);
+            right->x = cp * sy;
+            right->y = (sr * sp * sy + cr * cy);
+            right->z = (cr * sp * sy + -sr * cy);
         }
         if (up)
         {
-            up[0] = static_cast<float>(-sp);
-            up[1] = static_cast<float>(sr * cp);
-            up[2] = static_cast<float>(cr * cp);
+            up->x = -sp;
+            up->y = sr * cp;
+            up->z = cr * cp;
         }
     }
 

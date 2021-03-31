@@ -177,8 +177,8 @@ void PM_DrawPhysEntBBox(int num, int pcolor, float life)
         if (pe->angles[0] || pe->angles[1] || pe->angles[2])
         {
             Vector    forward, right, up;
-
-            AngleVectorsTranspose(pe->angles, forward, right, up);
+            
+			AngleVectorsTranspose(pe->angles, &forward, &right, &up);
             for (j = 0; j < 8; j++)
             {
                 VectorCopy(p[j], tmp);
@@ -290,8 +290,8 @@ void PM_ViewEntity()
     if ( !pm_showclip.value )
         return;
 #endif
-
-    AngleVectors (pmove->angles, forward, right, up);  // Determine movement angles
+    
+	AngleVectors (pmove->angles, &forward, &right, &up);  // Determine movement angles
 
     VectorCopy( pmove->origin, origin);
 

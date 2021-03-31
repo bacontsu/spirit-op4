@@ -121,13 +121,13 @@ inline void VectorScale(const float* in, const float scale, float* out)
 }
 
 //[[deprecated]]
-inline void AngleVectors(const Vector& angles, Vector& forward, Vector& right, Vector& up)
+inline void AngleVectors(const Vector& angles, Vector* forward, Vector* right, Vector* up)
 {
     return angles.AngleVectors(forward, right, up);
 }
 
 //[[deprecated]]
-inline void AngleVectorsTranspose(const Vector& angles, Vector& forward, Vector& right, Vector& up)
+inline void AngleVectorsTranspose(const Vector& angles, Vector* forward, Vector* right, Vector* up)
 {
     return angles.AngleVectorsTranspose(forward, right, up);
 }
