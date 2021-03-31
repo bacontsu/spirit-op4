@@ -9,7 +9,6 @@
 // com_weapons.h
 // Shared weapons common function prototypes
 
-#include "hud_iface.h"
 #include "Exports.h"
 
 int CL_IsDead();

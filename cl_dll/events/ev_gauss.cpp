@@ -15,11 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_FireGauss(struct event_args_s* args);
-void EV_SpinGauss(struct event_args_s* args);
-}
-
 void EV_SpinGauss(event_args_t* args)
 {
     int idx;

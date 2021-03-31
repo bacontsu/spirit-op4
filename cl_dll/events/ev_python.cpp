@@ -15,10 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_FirePython(struct event_args_s* args);
-}
-
 void EV_FirePython(event_args_t* args)
 {
     int idx;

@@ -20,7 +20,7 @@
 #include "pm_defs.h"
 #include "event_api.h"
 #include "r_efx.h"
-#include "../hud_iface.h"
+#include "cl_dll.h"
 #include "../com_weapons.h"
 #include "entities/weapons/CCrossbow.h"
 #include "entities/weapons/CCrowbar.h"

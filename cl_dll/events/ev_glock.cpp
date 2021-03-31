@@ -15,11 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_FireGlock1(struct event_args_s* args);
-void EV_FireGlock2(struct event_args_s* args);
-}
-
 void EV_FireGlock1(event_args_t* args)
 {
     int idx;

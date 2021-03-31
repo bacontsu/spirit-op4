@@ -31,7 +31,9 @@ extern "C" {
 #include "ref_params.h"
 #include "r_efx.h"
 #include "studio_event.h"
-#include "ui/wrect.h"
+#include "wrect.h"
+#include "rgba.h"
+#include "point.h"
 
 // this file is included by both the engine and the client-dll,
 // so make sure engine declarations aren't done twice

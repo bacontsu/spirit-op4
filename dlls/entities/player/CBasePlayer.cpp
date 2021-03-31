@@ -40,6 +40,7 @@
 #include "util/findentity.h"
 #include "util/sound.h"
 #include "util/usermessages.h"
+#include "client.h"
 
 extern DLL_GLOBAL ULONG g_ulModelIndexPlayer;
 extern DLL_GLOBAL BOOL g_fGameOver;
@@ -50,7 +51,6 @@ extern DLL_GLOBAL int gDisplayTitle;
 BOOL gInitHUD = TRUE;
 
 extern void CopyToBodyQue(entvars_t* pev);
-extern void respawn(entvars_t* pev, BOOL fCopyCorpse);
 extern edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer);
 
 #define TRAIN_ACTIVE       0x80
@@ -4069,8 +4069,6 @@ void CBasePlayer::UpdateClientData()
 
     if (pev->health != m_iClientHealth)
     {
-		//TODO: clean up this macro
-#define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
         int iHealth = clamp(pev->health, 0, std::numeric_limits<short>::max()); // make sure that no negative health values are sent
 		if (pev->health > 0.0f && pev->health <= 1.0f)
             iHealth = 1;

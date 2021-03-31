@@ -15,7 +15,6 @@
 #pragma once
 
 #include "hud.h"
-#include "ui/wrect.h"
 
 #define MAX_WEAPON_NAME 128
 #define WEAPON_FLAGS_SELECTONEMPTY	1

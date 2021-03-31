@@ -15,10 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_TrainPitchAdjust(struct event_args_s* args);
-}
-
 void EV_TrainPitchAdjust(event_args_t* args)
 {
     int idx;

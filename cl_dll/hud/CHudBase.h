@@ -20,9 +20,6 @@
 
 #include "parsemsg.h"
 #include "../cl_util.h"
-#include "ui/point.h"
-#include "ui/wrect.h"
-#include "ui/rgba.h"
 
 class CHudBase
 {

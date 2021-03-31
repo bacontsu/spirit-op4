@@ -15,11 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_FireCrossbow(struct event_args_s* args);
-void EV_FireCrossbow2(struct event_args_s* args);
-}
-
 //=====================
 // EV_BoltCallback
 // This function is used to correct the origin and angles 

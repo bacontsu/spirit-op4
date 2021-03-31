@@ -15,11 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_EgonFire(struct event_args_s* args);
-void EV_EgonStop(struct event_args_s* args);
-}
-
 int g_fireAnims1[] = {EGON_FIRE1, EGON_FIRE2, EGON_FIRE3, EGON_FIRE4};
 int g_fireAnims2[] = {EGON_ALTFIRECYCLE};
 

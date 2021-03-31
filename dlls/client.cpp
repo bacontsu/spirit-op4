@@ -521,7 +521,7 @@ void ClientCommand( edict_t *pEntity )
 
     entvars_t *pev = &pEntity->v;
 
-	auto player = reinterpret_cast<CBasePlayer*>(GET_PRIVATE(pEntity));
+	auto player = GetClassPtr<CBasePlayer>(reinterpret_cast<CBasePlayer*>(&pEntity->v));
 
     if ( FStrEq(pcmd, "VModEnable") ) //LRC - shut up about VModEnable...
     {
@@ -1374,7 +1374,7 @@ CreateBaseline
 Creates baselines used for network encoding, especially for player data since players are not spawned until connect time.
 ===================
 */
-void CreateBaseline( int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, Vector player_mins, Vector player_maxs )
+void CreateBaseline( int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, Vector* player_mins, Vector* player_maxs )
 {
     baseline->origin        = entity->v.origin;
     baseline->angles        = entity->v.angles;
@@ -1391,8 +1391,8 @@ void CreateBaseline( int player, int eindex, struct entity_state_s *baseline, st
 
     if ( player )
     {
-        baseline->mins            = player_mins;
-        baseline->maxs            = player_maxs;
+		baseline->mins			= *player_mins;
+		baseline->maxs			= *player_maxs;
 
         baseline->colormap        = eindex;
         baseline->modelindex    = playermodelindex;

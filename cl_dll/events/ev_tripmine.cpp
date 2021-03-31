@@ -15,10 +15,6 @@
 
 #include "ev_common.h"
 
-extern "C" {
-void EV_TripmineFire(struct event_args_s* args);
-}
-
 //We only check if it's possible to put a trip mine
 //and if it is, then we play the animation. Server still places it.
 void EV_TripmineFire(event_args_t* args)
