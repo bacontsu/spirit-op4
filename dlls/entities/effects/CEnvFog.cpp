@@ -178,9 +178,9 @@ void CEnvFog::Resume2Think()
 void CEnvFog::FadeInDone()
 {
     pev->spawnflags &= ~SF_FOG_FADING;
-    SendData(pev->rendercolor, 0, m_iStartDist, m_iEndDist);
+//LRC 1.8 we don't need to resend...	SendData( pev->rendercolor, 0, m_iStartDist, m_iEndDist);
 
-    if (m_fHoldTime)
+	if (m_fHoldTime)
     {
         SetNextThink(m_fHoldTime);
         SetThink(&CEnvFog::TurnOff);
@@ -190,7 +190,7 @@ void CEnvFog::FadeInDone()
 void CEnvFog::FadeOutDone()
 {
     pev->spawnflags &= ~SF_FOG_FADING;
-    //LRC 1.8 we don't need to resend...    SendData( pev->rendercolor, 0, m_iStartDist, m_iEndDist);
+	SendData( g_vecZero, 0, 0, 0);
 }
 
 void CEnvFog::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)

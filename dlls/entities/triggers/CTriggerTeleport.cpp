@@ -111,7 +111,7 @@ void CTriggerTeleport::TeleportTouch(CBaseEntity* pOther)
         if (pOther->IsPlayer())
         {
             pOther->pev->v_angle = pTarget->pev->angles; //LRC
-            pOther->pev->fixangle = TRUE;
+		    pevToucher->fixangle = TRUE;
         }
     }
 
