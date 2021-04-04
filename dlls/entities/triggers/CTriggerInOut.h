@@ -14,6 +14,8 @@
 ****/
 #pragma once
 
+#include <vector>
+
 #include "CBaseTrigger.h"
 #include "CInOutRegister.h"
 
@@ -23,20 +25,27 @@ public:
     void Spawn() override;
     void DLLEXPORT Touch(CBaseEntity* pOther) override;
     void DLLEXPORT Think() override;
-    void FireOnEntry(CBaseEntity* pOther);
-    void FireOnLeaving(CBaseEntity* pOther);
 
     void KeyValue(KeyValueData* pkvd) override;
     int Save(CSave& save) override;
     int Restore(CRestore& restore) override;
     static TYPEDESCRIPTION m_SaveData[];
 
-    STATE GetState() override { return m_pRegister->IsEmpty() ? STATE_OFF : STATE_ON; }
+    void OnBeforeSave(CSave& save) override;
+
+    STATE GetState() override { return entitiesInside.empty() ? STATE_OFF : STATE_ON; }
 
     //LRC 1.8 - let it act as an alias that refers to the entities within it
     CBaseEntity* FollowAlias(CBaseEntity* pFrom) override;
 
+private:
+
+    void FireOnEntry(CBaseEntity* pOther);
+    void FireOnLeaving(CBaseEntity* pOther);
+    void RemoveNullEntities();
+
     string_t m_iszAltTarget;
     string_t m_iszBothTarget;
-    CInOutRegister* m_pRegister;
+
+    std::vector<CBaseEntity*> entitiesInside;
 };

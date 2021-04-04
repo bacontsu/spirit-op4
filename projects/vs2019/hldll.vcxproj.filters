@@ -446,9 +446,6 @@
     <ClCompile Include="..\..\dlls\entities\triggers\CFrictionModifier.cpp">
       <Filter>Source Files\dlls\entities\triggers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\entities\triggers\CInOutRegister.cpp">
-      <Filter>Source Files\dlls\entities\triggers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\entities\triggers\CLadder.cpp">
       <Filter>Source Files\dlls\entities\triggers</Filter>
     </ClCompile>
@@ -1568,9 +1565,6 @@
       <Filter>Header Files\dlls\entities\triggers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\entities\triggers\CFrictionModifier.h">
-      <Filter>Header Files\dlls\entities\triggers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\entities\triggers\CInOutRegister.h">
       <Filter>Header Files\dlls\entities\triggers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\entities\triggers\CLadder.h">

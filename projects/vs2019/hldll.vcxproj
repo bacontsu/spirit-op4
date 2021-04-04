@@ -358,7 +358,6 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\dlls\entities\triggers\CEnvCustomize.cpp" />
     <ClCompile Include="..\..\dlls\entities\triggers\CFireAndDie.cpp" />
     <ClCompile Include="..\..\dlls\entities\triggers\CFrictionModifier.cpp" />
-    <ClCompile Include="..\..\dlls\entities\triggers\CInOutRegister.cpp" />
     <ClCompile Include="..\..\dlls\entities\triggers\CLadder.cpp" />
     <ClCompile Include="..\..\dlls\entities\triggers\CMotionManager.cpp" />
     <ClCompile Include="..\..\dlls\entities\triggers\CMotionThread.cpp" />
@@ -766,7 +765,6 @@ EXIT /B 0</Command>
     <ClInclude Include="..\..\dlls\entities\triggers\CEnvCustomize.h" />
     <ClInclude Include="..\..\dlls\entities\triggers\CFireAndDie.h" />
     <ClInclude Include="..\..\dlls\entities\triggers\CFrictionModifier.h" />
-    <ClInclude Include="..\..\dlls\entities\triggers\CInOutRegister.h" />
     <ClInclude Include="..\..\dlls\entities\triggers\CLadder.h" />
     <ClInclude Include="..\..\dlls\entities\triggers\CMotionManager.h" />
     <ClInclude Include="..\..\dlls\entities\triggers\CMotionThread.h" />

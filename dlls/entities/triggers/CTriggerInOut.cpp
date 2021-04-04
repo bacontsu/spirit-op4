@@ -15,13 +15,21 @@
 
 #include "CTriggerInOut.h"
 
+/**
+ * trigger_inout
+ * -------------
+ * Fires `target` with USE_TOGGLE and `m_iszBothTarget` with USE_ON when an entity enters the trigger.
+ * Fires `m_iszAltTarget` with USE_TOGGLE and `m_iszBothTarget` with USE_OFF when an entity enters the trigger.
+ * Acts as a multisource (has state) - is ON when any entity is inside, and OFF when no entity is inside.
+ */
+
 LINK_ENTITY_TO_CLASS(trigger_inout, CTriggerInOut);
 
 TYPEDESCRIPTION CTriggerInOut::m_SaveData[] =
 {
     DEFINE_FIELD(CTriggerInOut, m_iszAltTarget, FIELD_STRING),
     DEFINE_FIELD(CTriggerInOut, m_iszBothTarget, FIELD_STRING),
-    DEFINE_FIELD(CTriggerInOut, m_pRegister, FIELD_CLASSPTR),
+    DEFINE_STD_VECTOR(CTriggerInOut, entitiesInside, FIELD_CLASSPTR)
 };
 
 IMPLEMENT_SAVERESTORE(CTriggerInOut, CBaseTrigger);
@@ -39,39 +47,80 @@ void CTriggerInOut::KeyValue(KeyValueData* pkvd)
         pkvd->fHandled = TRUE;
     }
     else
+    {
         CBaseTrigger::KeyValue(pkvd);
+    }
 }
 
 void CTriggerInOut::Spawn()
 {
     InitTrigger();
-    // create a null-terminator for the registry
-    m_pRegister = GetClassPtr((CInOutRegister*)NULL);
-    m_pRegister->m_hValue = NULL;
-    m_pRegister->m_pNext = NULL;
-    m_pRegister->m_pField = this;
-    m_pRegister->pev->classname = MAKE_STRING("inout_register");
+    entitiesInside = std::vector<CBaseEntity*>();
+}
+
+void CTriggerInOut::OnBeforeSave(CSave& save)
+{
+    RemoveNullEntities();
 }
 
 void CTriggerInOut::Touch(CBaseEntity* pOther)
 {
     if (!CanTouch(pOther->pev)) return;
 
-    m_pRegister = m_pRegister->Add(pOther);
+    auto alreadyInside = false;
+    auto iter = entitiesInside.begin();
+    while (iter != entitiesInside.end())
+    {
+        auto* ent = *iter;
+        if (ent == pOther)
+        {
+            alreadyInside = true;
+            break;
+        }
+        ++iter;
+    }
 
-    if (m_fNextThink <= 0 && !m_pRegister->IsEmpty())
-        SetNextThink(0.1);
+    if (!alreadyInside)
+    {
+        entitiesInside.push_back(pOther);
+        FireOnEntry(pOther);
+    }
+
+    if (m_fNextThink <= 0 && !entitiesInside.empty())
+    {
+        SetNextThink(0.1f);
+    }
+}
+
+void CTriggerInOut::RemoveNullEntities()
+{
+    entitiesInside.erase(std::remove_if(entitiesInside.begin(), entitiesInside.end(), [](CBaseEntity* ent)
+    {
+        return FNullEnt(ent);
+    }), entitiesInside.end());
 }
 
 void CTriggerInOut::Think()
 {
-    // Prune handles all Intersects tests and fires targets as appropriate
-    m_pRegister = m_pRegister->Prune();
-
-    if (m_pRegister->IsEmpty())
-        DontThink();
-    else
-        SetNextThink(0.1);
+    RemoveNullEntities();
+    auto iter = entitiesInside.begin();
+    while (iter != entitiesInside.end())
+    {
+        auto* ent = *iter;
+        if (!Intersects(ent))
+        {
+            // This entity has just left the field, trigger and stop tracking
+            FireOnLeaving(ent);
+            iter = entitiesInside.erase(iter);
+        }
+        else
+        {
+            // This entity is still inside the field, do nothing
+            ++iter;
+        }
+    }
+    if (entitiesInside.empty()) DontThink();
+    else SetNextThink(0.1f);
 }
 
 void CTriggerInOut::FireOnEntry(CBaseEntity* pOther)
@@ -94,5 +143,26 @@ void CTriggerInOut::FireOnLeaving(CBaseEntity* pEnt)
 
 CBaseEntity* CTriggerInOut::FollowAlias(CBaseEntity* pStartEntity)
 {
-    return m_pRegister->GetFirstEntityFrom(pStartEntity);
+    CBaseEntity* result = nullptr;
+
+    auto currentOffset = -1;
+    if (pStartEntity) currentOffset = OFFSET(pStartEntity->pev);
+
+    auto iter = entitiesInside.begin();
+    while (iter != entitiesInside.end())
+    {
+        auto* current = *iter;
+        if (!FNullEnt(current))
+        {
+            const auto testOffset = OFFSET(current->pev);
+            if (testOffset > currentOffset)
+            {
+                result = current;
+                currentOffset = testOffset;
+            }
+        }
+        ++iter;
+    }
+
+    return result;
 }
