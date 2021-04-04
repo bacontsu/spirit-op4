@@ -20,8 +20,7 @@
 
 int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount, int startField, int size, char* pName, void* pData)
 {
-    int i, j, stringCount, fieldNumber, entityIndex;
-    TYPEDESCRIPTION* pTest;
+    int j, stringCount, entityIndex;
     float time, timeData;
     Vector position;
     edict_t* pent;
@@ -37,18 +36,34 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
             position = m_pdata->vecLandmarkOffset;
     }
 
-    for (i = 0; i < fieldCount; i++)
+    for (auto i = 0; i < fieldCount; i++)
     {
-        fieldNumber = (i + startField) % fieldCount;
-        pTest = &pFields[fieldNumber];
+        const auto fieldNumber = (i + startField) % fieldCount;
+        auto* const pTest = &pFields[fieldNumber];
+
         if (!stricmp(pTest->fieldName, pName))
         {
             if (!m_global || !(pTest->flags & FTYPEDESC_GLOBAL))
             {
-                for (j = 0; j < pTest->fieldSize; j++)
+                const auto typeSize = gSizes[pTest->fieldType];
+                auto fieldSize = pTest->fieldSize;
+                const auto isVector = fieldSize == ARRAYSIZE_STD_VECTOR;
+
+                auto* inputStart = static_cast<char*>(pData);
+                auto* outputStart = static_cast<char*>(pBaseData) + pTest->fieldOffset;
+
+                if (isVector)
                 {
-                    void* pOutputData = ((char*)pBaseData + pTest->fieldOffset + (j * gSizes[pTest->fieldType]));
-                    void* pInputData = (char*)pData + j * gSizes[pTest->fieldType];
+                    const auto prefixSize = typeSize == 1 ? 2 : 1;
+                    fieldSize = *static_cast<short*>(pData);
+                    inputStart += prefixSize * typeSize;
+                    outputStart = static_cast<char*>(calloc(fieldSize, typeSize));
+                }
+
+                for (j = 0; j < fieldSize; j++)
+                {
+                    void* pOutputData = outputStart + j * typeSize;
+                    void* pInputData = inputStart + j * typeSize;
 
                     switch (pTest->fieldType)
                     {
@@ -173,6 +188,14 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
                         ALERT(at_error, "Bad field type\n");
                     }
                 }
+
+                if (isVector)
+                {
+                    // Create the vector and assign it
+                    auto* outputData = static_cast<char*>(pBaseData) + pTest->fieldOffset;
+                    AssignVector(*pTest, fieldSize, outputStart, outputData);
+                    free(outputStart);
+                }
             }
 #if 0
             else
@@ -221,6 +244,10 @@ int CRestore::ReadFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pF
     // Clear out base data
     for (i = 0; i < fieldCount; i++)
     {
+        // We'll clear vectors during the restore
+        if (pFields[i].fieldSize == ARRAYSIZE_STD_VECTOR)
+            continue;
+
         // Don't clear global fields
         if (!m_global || !(pFields[i].flags & FTYPEDESC_GLOBAL))
             memset(((char*)pBaseData + pFields[i].fieldOffset), 0, pFields[i].fieldSize * gSizes[pFields[i].fieldType]);

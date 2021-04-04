@@ -226,6 +226,7 @@ int CSave::WriteFields(const char* cname, const char* pname, void* pBaseData, TY
     emptyCount = 0;
     for (i = 0; i < fieldCount; i++)
     {
+        if (pFields[i].fieldSize == ARRAYSIZE_STD_VECTOR) continue;
         void* pOutputData;
         pOutputData = ((char*)pBaseData + pFields[i].fieldOffset);
         if (DataEmpty((const char*)pOutputData, pFields[i].fieldSize * gSizes[pFields[i].fieldType]))
@@ -242,31 +243,60 @@ int CSave::WriteFields(const char* cname, const char* pname, void* pBaseData, TY
         pTest = &pFields[i];
         pOutputData = ((char*)pBaseData + pTest->fieldOffset);
 
+        auto fieldSize = pTest->fieldSize;
+        auto isVector = fieldSize == ARRAYSIZE_STD_VECTOR;
+
+        if (isVector)
+        {
+            fieldSize = GetVectorFieldSize(pFields[i], pOutputData);
+            if (fieldSize < 0)
+            {
+                // null vector - don't write
+                *static_cast<size_t*>(pOutputData) = NULL;
+                continue;
+            }
+
+            // Allow space for the size prefix - the size is always a short, but the prefix
+            // may be longer if the element size is greater than sizeof(short). This is just so
+            // we don't have to modify too much code to support the size prefix.
+            const auto typeSize = gSizes[pTest->fieldType];
+            const auto prefixSize = typeSize == 1 ? 2 : 1;
+
+            // Create a copy of the array, prefixed with the size
+            auto* vecData = GetVectorData(pFields[i], pOutputData);
+            pOutputData = calloc(fieldSize + prefixSize, typeSize);
+            memcpy(pOutputData, &fieldSize, sizeof(fieldSize)); // Copy the size into the buffer
+            memcpy(static_cast<char*>(pOutputData) + prefixSize * typeSize, vecData, typeSize * fieldSize); // Copy the data into the buffer
+
+            // Tell the below code to cater for our size prefix
+            fieldSize += prefixSize;
+        }
+
         // UNDONE: Must we do this twice?
-        if (DataEmpty((const char*)pOutputData, pTest->fieldSize * gSizes[pTest->fieldType]))
+        if (!isVector && DataEmpty((const char*)pOutputData, fieldSize * gSizes[pTest->fieldType]))
             continue;
 
         switch (pTest->fieldType)
         {
         case FIELD_FLOAT:
-            WriteFloat(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
+            WriteFloat(pTest->fieldName, (float*)pOutputData, fieldSize);
             break;
         case FIELD_TIME:
-            WriteTime(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
+            WriteTime(pTest->fieldName, (float*)pOutputData, fieldSize);
             break;
         case FIELD_MODELNAME:
         case FIELD_SOUNDNAME:
         case FIELD_STRING:
-            WriteString(pTest->fieldName, (int*)pOutputData, pTest->fieldSize);
+            WriteString(pTest->fieldName, (int*)pOutputData, fieldSize);
             break;
         case FIELD_CLASSPTR:
         case FIELD_EVARS:
         case FIELD_EDICT:
         case FIELD_ENTITY:
         case FIELD_EHANDLE:
-            if (pTest->fieldSize > MAX_ENTITYARRAY)
+            if (fieldSize > MAX_ENTITYARRAY)
                 ALERT(at_error, "Can't save more than %d entities in an array!!!\n", MAX_ENTITYARRAY);
-            for (j = 0; j < pTest->fieldSize; j++)
+            for (j = 0; j < fieldSize; j++)
             {
                 switch (pTest->fieldType)
                 {
@@ -287,38 +317,43 @@ int CSave::WriteFields(const char* cname, const char* pname, void* pBaseData, TY
                     break;
                 }
             }
-            WriteInt(pTest->fieldName, entityArray, pTest->fieldSize);
+            WriteInt(pTest->fieldName, entityArray, fieldSize);
             break;
         case FIELD_POSITION_VECTOR:
-            WritePositionVector(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
+            WritePositionVector(pTest->fieldName, (float*)pOutputData, fieldSize);
             break;
         case FIELD_VECTOR:
-            WriteVector(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
+            WriteVector(pTest->fieldName, (float*)pOutputData, fieldSize);
             break;
 
         case FIELD_BOOLEAN:
         case FIELD_INTEGER:
-            WriteInt(pTest->fieldName, (int*)pOutputData, pTest->fieldSize);
+            WriteInt(pTest->fieldName, (int*)pOutputData, fieldSize);
             break;
 
         case FIELD_SHORT:
-            WriteData(pTest->fieldName, 2 * pTest->fieldSize, ((char*)pOutputData));
+            WriteData(pTest->fieldName, 2 * fieldSize, ((char*)pOutputData));
             break;
 
         case FIELD_CHARACTER:
-            WriteData(pTest->fieldName, pTest->fieldSize, ((char*)pOutputData));
+            WriteData(pTest->fieldName, fieldSize, ((char*)pOutputData));
             break;
 
             // For now, just write the address out, we're not going to change memory while doing this yet!
         case FIELD_POINTER:
-            WriteInt(pTest->fieldName, (int*)(char*)pOutputData, pTest->fieldSize);
+            WriteInt(pTest->fieldName, (int*)(char*)pOutputData, fieldSize);
             break;
 
         case FIELD_FUNCTION:
-            WriteFunction(cname, pTest->fieldName, (void**)pOutputData, pTest->fieldSize);
+            WriteFunction(cname, pTest->fieldName, (void**)pOutputData, fieldSize);
             break;
         default:
             ALERT(at_error, "Bad field type\n");
+        }
+
+        if (isVector)
+        {
+            free(pOutputData);
         }
     }
 
