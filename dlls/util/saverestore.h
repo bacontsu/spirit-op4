@@ -42,6 +42,13 @@ extern int gEntvarsCount;
         return restore.ReadFields( #derivedClass, this, m_SaveData, ARRAYSIZE(m_SaveData) );\
     }
 
+/*
+ * For the below functions:
+ * Vectors have a size of 12, shorts have a size of 2, chars have a size of 1,
+ * and everything else has a size of size_t. If the engine was ever compiled under 64-bit, this
+ * would no longer be the case.
+ */
+
 inline short GetVectorFieldSize(TYPEDESCRIPTION type, void* pOutputData)
 {
     if (pOutputData == nullptr) return -1;

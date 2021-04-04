@@ -54,9 +54,10 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 
                 if (isVector)
                 {
-                    const auto prefixSize = typeSize == 1 ? 2 : 1;
+                    // If we have a vector, the size should be taken from the save data, it's the first two bytes of the data
+                    const auto prefixSize = sizeof(short);
                     fieldSize = *static_cast<short*>(pData);
-                    inputStart += prefixSize * typeSize;
+                    inputStart += prefixSize;
                     outputStart = static_cast<char*>(calloc(fieldSize, typeSize));
                 }
 

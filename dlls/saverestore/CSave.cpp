@@ -18,39 +18,40 @@
 #include "util/saverestore.h"
 
 
-void CSave::WriteData(const char* pname, int size, const char* pdata)
+void CSave::WriteData(const char* pname, int size, const char* pdata, int prefixSize, const char* prefixData)
 {
-    BufferField(pname, size, pdata);
+    BufferField(pname, size, pdata, prefixSize, prefixData);
 }
 
 
-void CSave::WriteShort(const char* pname, const short* data, int count)
+void CSave::WriteShort(const char* pname, const short* data, int count, int prefixSize, const char* prefixData)
 {
-    BufferField(pname, sizeof(short) * count, (const char*)data);
+    BufferField(pname, sizeof(short) * count, (const char*)data, prefixSize, prefixData);
 }
 
 
-void CSave::WriteInt(const char* pname, const int* data, int count)
+void CSave::WriteInt(const char* pname, const int* data, int count, int prefixSize, const char* prefixData)
 {
-    BufferField(pname, sizeof(int) * count, (const char*)data);
+    BufferField(pname, sizeof(int) * count, (const char*)data, prefixSize, prefixData);
 }
 
 
-void CSave::WriteFloat(const char* pname, const float* data, int count)
+void CSave::WriteFloat(const char* pname, const float* data, int count, int prefixSize, const char* prefixData)
 {
-    BufferField(pname, sizeof(float) * count, (const char*)data);
+    BufferField(pname, sizeof(float) * count, (const char*)data, prefixSize, prefixData);
 }
 
 
-void CSave::WriteTime(const char* pname, const float* data, int count)
+void CSave::WriteTime(const char* pname, const float* data, int count, int prefixSize, const char* prefixData)
 {
-    int i;
     Vector tmp, input;
 
-    BufferHeader(pname, sizeof(float) * count);
-    for (i = 0; i < count; i++)
+    BufferHeader(pname, sizeof(float) * count + prefixSize);
+    if (prefixSize > 0) BufferData(prefixData, prefixSize);
+
+    for (auto i = 0; i < count; i++)
     {
-        float tmp = data[0];
+        auto tmp = data[0];
 
         // Always encode time as a delta from the current time so it can be re-based if loaded in a new level
         // Times of 0 are never written to the file, so they will be restored as 0, not a relative time
@@ -63,18 +64,18 @@ void CSave::WriteTime(const char* pname, const float* data, int count)
 }
 
 
-void CSave::WriteString(const char* pname, const char* pdata)
+void CSave::WriteString(const char* pname, const char* pdata, int prefixSize, const char* prefixData)
 {
 #ifdef TOKENIZE
     short    token = (short)TokenHash(pdata);
     WriteShort(pname, &token, 1);
 #else
-    BufferField(pname, strlen(pdata) + 1, pdata);
+    BufferField(pname, strlen(pdata) + 1, pdata, prefixSize, prefixData);
 #endif
 }
 
 
-void CSave::WriteString(const char* pname, const int* stringId, int count)
+void CSave::WriteString(const char* pname, const int* stringId, int count, int prefixSize, const char* prefixData)
 {
     int i, size;
 
@@ -92,48 +93,50 @@ void CSave::WriteString(const char* pname, const int* stringId, int count)
     for (i = 0; i < count; i++)
         size += strlen(STRING(stringId[i])) + 1;
 
-    BufferHeader(pname, size);
+    BufferHeader(pname, size + prefixSize);
+    if (prefixSize > 0) BufferData(prefixData, prefixSize);
     for (i = 0; i < count; i++)
     {
-        const char* pString = STRING(stringId[i]);
+        const auto* pString = STRING(stringId[i]);
         BufferData(pString, strlen(pString) + 1);
     }
 #endif
 }
 
 
-void CSave::WriteVector(const char* pname, const Vector& value)
+void CSave::WriteVector(const char* pname, const Vector& value, int prefixSize, const char* prefixData)
 {
-    WriteVector(pname, &value.x, 1);
+    WriteVector(pname, &value.x, 1, prefixSize, prefixData);
 }
 
 
-void CSave::WriteVector(const char* pname, const float* value, int count)
+void CSave::WriteVector(const char* pname, const float* value, int count, int prefixSize, const char* prefixData)
 {
-    BufferHeader(pname, sizeof(float) * 3 * count);
+    BufferHeader(pname, sizeof(float) * 3 * count + prefixSize);
+    if (prefixSize > 0) BufferData(prefixData, prefixSize);
     BufferData((const char*)value, sizeof(float) * 3 * count);
 }
 
 
-void CSave::WritePositionVector(const char* pname, const Vector& value)
+void CSave::WritePositionVector(const char* pname, const Vector& value, int prefixSize, const char* prefixData)
 {
     if (m_pdata && m_pdata->fUseLandmark)
     {
-        Vector tmp = value - m_pdata->vecLandmarkOffset;
-        WriteVector(pname, tmp);
+        const auto tmp = value - m_pdata->vecLandmarkOffset;
+        WriteVector(pname, tmp, prefixSize, prefixData);
     }
 
-    WriteVector(pname, value);
+    WriteVector(pname, value, prefixSize, prefixData);
 }
 
 
-void CSave::WritePositionVector(const char* pname, const float* value, int count)
+void CSave::WritePositionVector(const char* pname, const float* value, int count, int prefixSize, const char* prefixData)
 {
-    int i;
     Vector tmp, input;
 
-    BufferHeader(pname, sizeof(float) * 3 * count);
-    for (i = 0; i < count; i++)
+    BufferHeader(pname, sizeof(float) * 3 * count + prefixSize);
+    if (prefixSize > 0) BufferData(prefixData, prefixSize);
+    for (auto i = 0; i < count; i++)
     {
         Vector tmp(value[0], value[1], value[2]);
 
@@ -146,13 +149,11 @@ void CSave::WritePositionVector(const char* pname, const float* value, int count
 }
 
 
-void CSave::WriteFunction(const char* cname, const char* pname, void** data, int count)
+void CSave::WriteFunction(const char* cname, const char* pname, void** data, int count, int prefixSize, const char* prefixData)
 {
-    const char* functionName;
-
-    functionName = NAME_FOR_FUNCTION((uint32)*data);
+    const auto* functionName = NAME_FOR_FUNCTION((uint32)*data);
     if (functionName)
-        BufferField(pname, strlen(functionName) + 1, functionName);
+        BufferField(pname, strlen(functionName) + 1, functionName, prefixSize, prefixData);
     else
         ALERT(at_error, "Member \"%s\" of \"%s\" contains an invalid function pointer %p!", pname, cname, *data);
 }
@@ -160,12 +161,9 @@ void CSave::WriteFunction(const char* cname, const char* pname, void** data, int
 
 void EntvarsKeyvalue(entvars_t* pev, KeyValueData* pkvd)
 {
-    int i;
-    TYPEDESCRIPTION* pField;
-
-    for (i = 0; i < ENTVARS_COUNT; i++)
+    for (auto i = 0; i < ENTVARS_COUNT; i++)
     {
-        pField = &gEntvarsDescription[i];
+        auto* pField = &gEntvarsDescription[i];
 
         if (!stricmp(pField->fieldName, pkvd->szKeyName))
         {
@@ -218,33 +216,33 @@ int CSave::WriteEntVars(const char* pname, entvars_t* pev)
 
 int CSave::WriteFields(const char* cname, const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount)
 {
-    int i, j, actualCount, emptyCount;
-    TYPEDESCRIPTION* pTest;
+    int i, j, actualCount;
     int entityArray[MAX_ENTITYARRAY];
 
     // Precalculate the number of empty fields
-    emptyCount = 0;
+    auto emptyCount = 0;
     for (i = 0; i < fieldCount; i++)
     {
         if (pFields[i].fieldSize == ARRAYSIZE_STD_VECTOR) continue;
-        void* pOutputData;
-        pOutputData = ((char*)pBaseData + pFields[i].fieldOffset);
-        if (DataEmpty((const char*)pOutputData, pFields[i].fieldSize * gSizes[pFields[i].fieldType]))
+        void* pOutputData = (static_cast<char*>(pBaseData) + pFields[i].fieldOffset);
+        if (DataEmpty(static_cast<const char*>(pOutputData), pFields[i].fieldSize * gSizes[pFields[i].fieldType]))
             emptyCount++;
     }
 
     // Empty fields will not be written, write out the actual number of fields to be written
     actualCount = fieldCount - emptyCount;
-    WriteInt(pname, &actualCount, 1);
+    WriteInt(pname, &actualCount, 1, 0, nullptr);
 
     for (i = 0; i < fieldCount; i++)
     {
-        void* pOutputData;
-        pTest = &pFields[i];
-        pOutputData = ((char*)pBaseData + pTest->fieldOffset);
+        auto* pTest = &pFields[i];
+        void* pOutputData = (static_cast<char*>(pBaseData) + pTest->fieldOffset);
 
         auto fieldSize = pTest->fieldSize;
-        auto isVector = fieldSize == ARRAYSIZE_STD_VECTOR;
+        const auto isVector = fieldSize == ARRAYSIZE_STD_VECTOR;
+
+        auto prefixSize = 0;
+        const char* prefixData = nullptr;
 
         if (isVector)
         {
@@ -256,38 +254,31 @@ int CSave::WriteFields(const char* cname, const char* pname, void* pBaseData, TY
                 continue;
             }
 
-            // Allow space for the size prefix - the size is always a short, but the prefix
-            // may be longer if the element size is greater than sizeof(short). This is just so
-            // we don't have to modify too much code to support the size prefix.
-            const auto typeSize = gSizes[pTest->fieldType];
-            const auto prefixSize = typeSize == 1 ? 2 : 1;
+            // Assemble the prefix data
+            auto prefixValue = fieldSize;
+            prefixSize = sizeof(short);
+            prefixData = static_cast<char*>(static_cast<void*>(&prefixValue));
 
-            // Create a copy of the array, prefixed with the size
-            auto* vecData = GetVectorData(pFields[i], pOutputData);
-            pOutputData = calloc(fieldSize + prefixSize, typeSize);
-            memcpy(pOutputData, &fieldSize, sizeof(fieldSize)); // Copy the size into the buffer
-            memcpy(static_cast<char*>(pOutputData) + prefixSize * typeSize, vecData, typeSize * fieldSize); // Copy the data into the buffer
-
-            // Tell the below code to cater for our size prefix
-            fieldSize += prefixSize;
+            // Use the array data from the vector
+            pOutputData = GetVectorData(pFields[i], pOutputData);
         }
 
         // UNDONE: Must we do this twice?
-        if (!isVector && DataEmpty((const char*)pOutputData, fieldSize * gSizes[pTest->fieldType]))
+        if (!isVector && DataEmpty(static_cast<const char*>(pOutputData), fieldSize * gSizes[pTest->fieldType]))
             continue;
 
         switch (pTest->fieldType)
         {
         case FIELD_FLOAT:
-            WriteFloat(pTest->fieldName, (float*)pOutputData, fieldSize);
+            WriteFloat(pTest->fieldName, static_cast<float*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
         case FIELD_TIME:
-            WriteTime(pTest->fieldName, (float*)pOutputData, fieldSize);
+            WriteTime(pTest->fieldName, static_cast<float*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
         case FIELD_MODELNAME:
         case FIELD_SOUNDNAME:
         case FIELD_STRING:
-            WriteString(pTest->fieldName, (int*)pOutputData, fieldSize);
+            WriteString(pTest->fieldName, static_cast<int*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
         case FIELD_CLASSPTR:
         case FIELD_EVARS:
@@ -301,59 +292,54 @@ int CSave::WriteFields(const char* cname, const char* pname, void* pBaseData, TY
                 switch (pTest->fieldType)
                 {
                 case FIELD_EVARS:
-                    entityArray[j] = EntityIndex(((entvars_t**)pOutputData)[j]);
+                    entityArray[j] = EntityIndex(static_cast<entvars_t**>(pOutputData)[j]);
                     break;
                 case FIELD_CLASSPTR:
-                    entityArray[j] = EntityIndex(((CBaseEntity**)pOutputData)[j]);
+                    entityArray[j] = EntityIndex(static_cast<CBaseEntity**>(pOutputData)[j]);
                     break;
                 case FIELD_EDICT:
-                    entityArray[j] = EntityIndex(((edict_t**)pOutputData)[j]);
+                    entityArray[j] = EntityIndex(static_cast<edict_t**>(pOutputData)[j]);
                     break;
                 case FIELD_ENTITY:
-                    entityArray[j] = EntityIndex(((EOFFSET*)pOutputData)[j]);
+                    entityArray[j] = EntityIndex(static_cast<EOFFSET*>(pOutputData)[j]);
                     break;
                 case FIELD_EHANDLE:
-                    entityArray[j] = EntityIndex((CBaseEntity*)(((EHANDLE*)pOutputData)[j]));
+                    entityArray[j] = EntityIndex(static_cast<CBaseEntity*>(static_cast<EHANDLE*>(pOutputData)[j]));
                     break;
                 }
             }
-            WriteInt(pTest->fieldName, entityArray, fieldSize);
+            WriteInt(pTest->fieldName, entityArray, fieldSize, prefixSize, prefixData);
             break;
         case FIELD_POSITION_VECTOR:
-            WritePositionVector(pTest->fieldName, (float*)pOutputData, fieldSize);
+            WritePositionVector(pTest->fieldName, static_cast<float*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
         case FIELD_VECTOR:
-            WriteVector(pTest->fieldName, (float*)pOutputData, fieldSize);
+            WriteVector(pTest->fieldName, static_cast<float*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
 
         case FIELD_BOOLEAN:
         case FIELD_INTEGER:
-            WriteInt(pTest->fieldName, (int*)pOutputData, fieldSize);
+            WriteInt(pTest->fieldName, static_cast<int*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
 
         case FIELD_SHORT:
-            WriteData(pTest->fieldName, 2 * fieldSize, ((char*)pOutputData));
+            WriteData(pTest->fieldName, 2 * fieldSize, static_cast<char*>(pOutputData), prefixSize, prefixData);
             break;
 
         case FIELD_CHARACTER:
-            WriteData(pTest->fieldName, fieldSize, ((char*)pOutputData));
+            WriteData(pTest->fieldName, fieldSize, static_cast<char*>(pOutputData), prefixSize, prefixData);
             break;
 
             // For now, just write the address out, we're not going to change memory while doing this yet!
         case FIELD_POINTER:
-            WriteInt(pTest->fieldName, (int*)(char*)pOutputData, fieldSize);
+            WriteInt(pTest->fieldName, (int*)static_cast<char*>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
 
         case FIELD_FUNCTION:
-            WriteFunction(cname, pTest->fieldName, (void**)pOutputData, fieldSize);
+            WriteFunction(cname, pTest->fieldName, static_cast<void**>(pOutputData), fieldSize, prefixSize, prefixData);
             break;
         default:
             ALERT(at_error, "Bad field type\n");
-        }
-
-        if (isVector)
-        {
-            free(pOutputData);
         }
     }
 
@@ -381,9 +367,10 @@ int CSave::DataEmpty(const char* pdata, int size)
 }
 
 
-void CSave::BufferField(const char* pname, int size, const char* pdata)
+void CSave::BufferField(const char* pname, const int size, const char* pdata, const int prefixSize, const char* prefixData)
 {
-    BufferHeader(pname, size);
+    BufferHeader(pname, size + prefixSize);
+    if (prefixSize > 0) BufferData(prefixData, prefixSize);
     BufferData(pdata, size);
 }
 

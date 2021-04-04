@@ -23,21 +23,21 @@ public:
     {
     }
 
-    void WriteShort(const char* pname, const short* value, int count);
-    void WriteInt(const char* pname, const int* value, int count); // Save an int
-    void WriteFloat(const char* pname, const float* value, int count); // Save a float
-    void WriteTime(const char* pname, const float* value, int count); // Save a float (timevalue)
-    void WriteData(const char* pname, int size, const char* pdata); // Save a binary data block
-    void WriteString(const char* pname, const char* pstring); // Save a null-terminated string
-    void WriteString(const char* pname, const int* stringId, int count); // Save a null-terminated string (engine string)
-    void WriteVector(const char* pname, const Vector& value); // Save a vector
-    void WriteVector(const char* pname, const float* value, int count); // Save a vector
-    void WritePositionVector(const char* pname, const Vector& value); // Offset for landmark if necessary
-    void WritePositionVector(const char* pname, const float* value, int count); // array of pos vectors
+    void WriteShort(const char* pname, const short* value, int count, int prefixSize, const char* prefixData);
+    void WriteInt(const char* pname, const int* value, int count, int prefixSize, const char* prefixData); // Save an int
+    void WriteFloat(const char* pname, const float* value, int count, int prefixSize, const char* prefixData); // Save a float
+    void WriteTime(const char* pname, const float* value, int count, int prefixSize, const char* prefixData); // Save a float (timevalue)
+    void WriteData(const char* pname, int size, const char* pdata, int prefixSize, const char* prefixData); // Save a binary data block
+    void WriteString(const char* pname, const char* pstring, int prefixSize, const char* prefixData); // Save a null-terminated string
+    void WriteString(const char* pname, const int* stringId, int count, int prefixSize, const char* prefixData); // Save a null-terminated string (engine string)
+    void WriteVector(const char* pname, const Vector& value, int prefixSize, const char* prefixData); // Save a vector
+    void WriteVector(const char* pname, const float* value, int count, int prefixSize, const char* prefixData); // Save a vector
+    void WritePositionVector(const char* pname, const Vector& value, int prefixSize, const char* prefixData); // Offset for landmark if necessary
+    void WritePositionVector(const char* pname, const float* value, int count, int prefixSize, const char* prefixData); // array of pos vectors
 
-    void WriteFunction(const char* pname, const int* value, int count); // Save a function pointer
+    void WriteFunction(const char* pname, const int* value, int count, int prefixSize, const char* prefixData); // Save a function pointer
     // Save a function pointer. (LRC- also pass the classname to allow better error messages)
-    void WriteFunction(const char* cname, const char* pname, void** value, int count);
+    void WriteFunction(const char* cname, const char* pname, void** value, int count, int prefixSize, const char* prefixData);
 
     int WriteEntVars(const char* pname, entvars_t* pev); // Save entvars_t (entvars_t)
 
@@ -46,7 +46,7 @@ public:
 
 private:
     int DataEmpty(const char* pdata, int size);
-    void BufferField(const char* pname, int size, const char* pdata);
+    void BufferField(const char* pname, int size, const char* pdata, int prefixSize, const char* prefixData);
     void BufferString(char* pdata, int len);
     void BufferData(const char* pdata, int size);
     void BufferHeader(const char* pname, int size);
