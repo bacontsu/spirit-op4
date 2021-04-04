@@ -901,37 +901,33 @@ int CBaseEntity::Save(CSave& save)
 {
     ThinkCorrection(); //LRC
 
+    auto result = 0;
     if (save.WriteEntVars("ENTVARS", pev))
     {
         if (pev->targetname)
-            return save.WriteFields(STRING(pev->targetname), "BASE", this, m_SaveData, ARRAYSIZE(m_SaveData));
+            result = save.WriteFields(STRING(pev->targetname), "BASE", this, m_SaveData, ARRAYSIZE(m_SaveData));
         else
-            return save.WriteFields(STRING(pev->classname), "BASE", this, m_SaveData, ARRAYSIZE(m_SaveData));
+            result = save.WriteFields(STRING(pev->classname), "BASE", this, m_SaveData, ARRAYSIZE(m_SaveData));
     }
 
-    return 0;
+    return result;
 }
 
 int CBaseEntity::Restore(CRestore& restore)
 {
-    int status;
-
-    status = restore.ReadEntVars("ENTVARS", pev);
-    if (status)
-        status = restore.ReadFields("BASE", this, m_SaveData, ARRAYSIZE(m_SaveData));
+    auto status = restore.ReadEntVars("ENTVARS", pev);
+    if (status) status = restore.ReadFields("BASE", this, m_SaveData, ARRAYSIZE(m_SaveData));
 
     if (pev->modelindex != 0 && !FStringNull(pev->model))
     {
-        Vector mins, maxs;
-        mins = pev->mins; // Set model is about to destroy these
-        maxs = pev->maxs;
+        const auto mins = pev->mins; // Set model is about to destroy these
+        const auto maxs = pev->maxs;
 
-
-        PRECACHE_MODEL((char*)STRING(pev->model));
+        PRECACHE_MODEL(const_cast<char*>(STRING(pev->model)));
         SET_MODEL(ENT(pev), STRING(pev->model));
         UTIL_SetSize(pev, mins, maxs); // Reset them
     }
-
+    
     return status;
 }
 

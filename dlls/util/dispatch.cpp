@@ -181,7 +181,9 @@ void DispatchSave(edict_t* pent, SAVERESTOREDATA* pSaveData)
         pTable->classname = pEntity->pev->classname; // Remember entity class for respawn
 
         CSave saveHelper(pSaveData);
+        pEntity->OnBeforeSave(saveHelper);
         pEntity->Save(saveHelper);
+        pEntity->OnAfterSave(saveHelper);
 
         pTable->size = pSaveData->size - pTable->location; // Size of entity block is data size written to block
     }
@@ -266,7 +268,8 @@ int DispatchRestore(edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity)
                 return 0;
             }
         }
-
+        
+        pEntity->OnBeforeRestore(restoreHelper);
         if (pEntity->ObjectCaps() & FCAP_MUST_SPAWN)
         {
             pEntity->Restore(restoreHelper);
@@ -320,6 +323,8 @@ int DispatchRestore(edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity)
                 gGlobalState.EntityAdd(pEntity->pev->globalname, gpGlobals->mapname, GLOBAL_ON);
             }
         }
+        
+        pEntity->OnAfterRestore(restoreHelper);
     }
     return 0;
 }

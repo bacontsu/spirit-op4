@@ -276,6 +276,13 @@ public:
 
     virtual int Save(CSave& save);
     virtual int Restore(CRestore& restore);
+
+    // Custom events for save/restore
+    virtual void OnBeforeSave(CSave& save) {}
+    virtual void OnAfterSave(CSave& save) {}
+    virtual void OnBeforeRestore(CRestore& restore) {}
+    virtual void OnAfterRestore(CRestore& restore) {}
+
     //LRC - if I MoveWith something, then only cross transitions if the MoveWith entity does too.
     virtual int ObjectCaps() { return m_pMoveWith ? m_pMoveWith->ObjectCaps() & FCAP_ACROSS_TRANSITION : FCAP_ACROSS_TRANSITION; }
     virtual void Activate(); //LRC
