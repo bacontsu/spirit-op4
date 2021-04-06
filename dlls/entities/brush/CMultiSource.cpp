@@ -72,18 +72,14 @@ void CMultiSource::Spawn()
 void CMultiSource::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
     int i = 0;
-
-    // Find the entity in our list
-    for (; i < m_iTotal; ++i)
-	{
-		if (m_rgEntities[i] == pCaller)
-		{
+    
+	// Find the entity in our list
+	while (i < m_iTotal)
+		if ( m_rgEntities[i++] == pCaller )
 			break;
-		}
-	}
-
-    // if we didn't find it, report error and leave
-	if (i >= m_iTotal)
+    
+	// if we didn't find it, report error and leave
+	if (i > m_iTotal)
     {
         if (pCaller->pev->targetname)
             ALERT(at_debug, "multisource \"%s\": Used by non-member %s \"%s\"\n", STRING(pev->targetname),
@@ -103,7 +99,7 @@ void CMultiSource::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
     STATE s = GetState();
 
     // do the change
-	m_rgTriggered[i] ^= 1;
+	m_rgTriggered[i-1] ^= 1;
 
     // did we change state?
     if (s == GetState())
