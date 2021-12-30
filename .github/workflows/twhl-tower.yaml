@@ -1,9 +1,9 @@
-name: SOHL Updated
+name: TWHL Tower
 
 on:
   push:
     branches:
-      - spirit/*
+      - mods/twhl-tower*
 
 jobs:
   linux:
