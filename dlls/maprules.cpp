@@ -844,22 +844,23 @@ IMPLEMENT_SAVERESTORE(CGamePlayerEquip, CRulePointEntity);
 
 bool CGamePlayerEquip::KeyValue(KeyValueData* pkvd)
 {
-
-	if (!CRulePointEntity::KeyValue(pkvd))
+	if (CRulePointEntity::KeyValue(pkvd))
 	{
-		for (int i = 0; i < MAX_EQUIP; i++)
+		return true;
+	}
+
+	for (int i = 0; i < MAX_EQUIP; i++)
+	{
+		if (FStringNull(m_weaponNames[i]))
 		{
-			if (FStringNull(m_weaponNames[i]))
-			{
-				char tmp[128];
+			char tmp[128];
 
-				UTIL_StripToken(pkvd->szKeyName, tmp);
+			UTIL_StripToken(pkvd->szKeyName, tmp);
 
-				m_weaponNames[i] = ALLOC_STRING(tmp);
-				m_weaponCount[i] = atoi(pkvd->szValue);
-				m_weaponCount[i] = V_max(1, m_weaponCount[i]);
-				return true;
-			}
+			m_weaponNames[i] = ALLOC_STRING(tmp);
+			m_weaponCount[i] = atoi(pkvd->szValue);
+			m_weaponCount[i] = V_max(1, m_weaponCount[i]);
+			return true;
 		}
 	}
 

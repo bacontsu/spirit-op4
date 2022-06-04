@@ -36,9 +36,6 @@
     <ClInclude Include="..\..\utils\qbsp2\bsp5.h">
       <Filter>Header Files\utils\qbsp2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\utils\common\bsplib.h">
-      <Filter>Header Files\utils\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\utils\common\threads.h">
       <Filter>Header Files\utils\common</Filter>
     </ClInclude>
@@ -51,49 +48,52 @@
     <ClInclude Include="..\..\utils\common\scriplib.h">
       <Filter>Header Files\utils\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\utils\common\bspfile.h">
+      <Filter>Header Files\utils\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bsplib.c">
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
+    <ClCompile Include="..\..\utils\common\mathlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\mathlib.c">
+    <ClCompile Include="..\..\utils\qbsp2\gldraw.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\portals.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\merge.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\outside.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\qbsp.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\surfaces.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\solidbsp.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\threads.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\gldraw.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\portals.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\merge.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\outside.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\qbsp.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\surfaces.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\solidbsp.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\common\threads.c">
+    <ClCompile Include="..\..\utils\common\scriplib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\scriplib.c">
+    <ClCompile Include="..\..\utils\qbsp2\writebsp.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\qbsp2\tjunc.cpp">
+      <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\bspfile.cpp">
       <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\writebsp.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\tjunc.c">
-      <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

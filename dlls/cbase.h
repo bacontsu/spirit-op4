@@ -256,6 +256,11 @@ public:
 	virtual bool IsMutableAlias() { return false; }
 	virtual CBaseEntity* FollowAlias(CBaseEntity* pFrom) { return NULL; }
 
+	/**
+	*	@brief Entity flags sent to the client in ::AddToFullPack
+	*/
+	byte m_EFlags = 0;
+
 	virtual ~CBaseEntity() {}
 
 	// initialization functions

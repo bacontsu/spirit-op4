@@ -1250,6 +1250,8 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 {
 	int i;
 
+	auto entity = reinterpret_cast<CBaseEntity*>(GET_PRIVATE(ent));
+
 	// don't send if flagged for NODRAW and it's not the host getting the message
 	if ((ent->v.effects & EF_NODRAW) != 0 &&
 		(ent != host))
@@ -1346,6 +1348,7 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 
 	// This non-player entity is being moved by the game .dll and not the physics simulation system
 	//  make sure that we interpolate it's position on the client if it moves
+	/*
 	if (0 == player &&
 		0 != ent->v.animtime &&
 		ent->v.velocity[0] == 0 &&
@@ -1354,6 +1357,18 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 	{
 		state->eflags |= EFLAG_SLERP;
 	}
+	*/
+
+	if ((ent->v.flags & FL_FLY) != 0)
+	{
+		state->eflags |= EFLAG_SLERP;
+	}
+	else
+	{
+		state->eflags &= ~EFLAG_SLERP;
+	}
+
+	state->eflags |= entity->m_EFlags;
 
 	state->scale = ent->v.scale;
 	state->solid = ent->v.solid;
@@ -1784,6 +1799,7 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 						item->iuser2 = gun->m_fInAttack;
 						item->iuser3 = gun->m_fireState;
 
+						gun->GetWeaponData(*item);
 
 						//						item->m_flPumpTime				= V_max( gun->m_flPumpTime, -0.001 );
 					}
@@ -1989,28 +2005,7 @@ GetHullBounds
 */
 int GetHullBounds(int hullnumber, float* mins, float* maxs)
 {
-	int iret = 0;
-
-	switch (hullnumber)
-	{
-	case 0: // Normal player
-		memcpy(mins, &VEC_HULL_MIN, sizeof(VEC_HULL_MIN));
-		memcpy(maxs, &VEC_HULL_MAX, sizeof(VEC_HULL_MAX));
-		iret = 1;
-		break;
-	case 1: // Crouched player
-		memcpy(mins, &VEC_DUCK_HULL_MIN, sizeof(VEC_DUCK_HULL_MIN));
-		memcpy(maxs, &VEC_DUCK_HULL_MAX, sizeof(VEC_DUCK_HULL_MAX));
-		iret = 1;
-		break;
-	case 2: // Point based hull
-		memcpy(mins, &g_vecZero, sizeof(g_vecZero));
-		memcpy(maxs, &g_vecZero, sizeof(g_vecZero));
-		iret = 1;
-		break;
-	}
-
-	return iret;
+	return static_cast<int>(PM_GetHullBounds(hullnumber, mins, maxs));
 }
 
 /*

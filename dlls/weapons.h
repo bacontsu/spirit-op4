@@ -16,6 +16,7 @@
 #pragma once
 
 #include "effects.h"
+#include "weaponinfo.h"
 
 class CBasePlayer;
 
@@ -254,6 +255,12 @@ public:
 	virtual bool UpdateClientData(CBasePlayer* pPlayer) { return false; }
 
 	virtual CBasePlayerItem* GetWeaponPtr() { return NULL; }
+
+	virtual void GetWeaponData(weapon_data_t& data) {}
+
+	virtual void SetWeaponData(const weapon_data_t& data) {}
+
+	virtual void DecrementTimers() {}
 
 	static inline ItemInfo ItemInfoArray[MAX_WEAPONS];
 	static inline AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];
@@ -569,6 +576,9 @@ public:
 		return false;
 #endif
 	}
+
+private:
+	unsigned short m_usCrowbar;
 };
 
 enum python_e
@@ -589,7 +599,6 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	bool Deploy() override;
@@ -629,7 +638,6 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -681,7 +689,6 @@ public:
 	void FireSniperBolt();
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 	bool Deploy() override;
 	void Holster() override;
 	void Reload() override;
@@ -728,7 +735,6 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -797,7 +803,6 @@ public:
 	void Precache() override;
 	void Reload() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	bool CanHolster() override;
@@ -829,6 +834,8 @@ private:
 class CRpgRocket : public CGrenade
 {
 public:
+	~CRpgRocket() override;
+
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 	static TYPEDESCRIPTION m_SaveData[];
@@ -872,7 +879,6 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	void Holster() override;
@@ -901,6 +907,9 @@ public:
 		return false;
 #endif
 	}
+
+private:
+	void SendStopEvent(bool sendToHost);
 
 private:
 	unsigned short m_usGaussFire;
@@ -953,7 +962,6 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	void Holster() override;

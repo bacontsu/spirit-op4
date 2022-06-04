@@ -25,6 +25,7 @@
 //End Compile Options
 
 #include <limits>
+#include <algorithm>
 
 #include "extdll.h"
 #include "util.h"
@@ -2864,6 +2865,8 @@ pt_end:
 						gun->pev->fuser1 = V_max(gun->pev->fuser1 - gpGlobals->frametime, -0.001);
 					}
 
+					gun->DecrementTimers();
+
 					// Only decrement if not flagged as NO_DECREMENT
 					//					if ( gun->m_flPumpTime != 1000 )
 					//	{
@@ -3024,6 +3027,16 @@ ReturnSpot:
 
 void CBasePlayer::Spawn()
 {
+	m_bIsSpawning = true;
+
+	//Make sure this gets reset even if somebody adds an early return or throws an exception.
+	const CallOnDestroy resetIsSpawning{[this]()
+		{
+			//Done spawning; reset.
+			m_bIsSpawning = false;
+		}
+	};
+
 	//	ALERT(at_console, "PLAYER spawns at time %f\n", gpGlobals->time);
 
 	pev->classname = MAKE_STRING("player");
@@ -3033,7 +3046,7 @@ void CBasePlayer::Spawn()
 	pev->solid = SOLID_SLIDEBOX;
 	pev->movetype = MOVETYPE_WALK;
 	pev->max_health = pev->health;
-	pev->flags &= FL_PROXY; // keep proxy flag sey by engine
+	pev->flags &= FL_PROXY | FL_FAKECLIENT; // keep proxy and fakeclient flags set by engine
 	pev->flags |= FL_CLIENT;
 	pev->air_finished = gpGlobals->time + 12;
 	pev->dmg = 2; // initial water damage
@@ -3573,6 +3586,15 @@ void CBasePlayer::ForceClientDllUpdate()
 {
 	m_iClientHealth = -1;
 	m_iClientBattery = -1;
+	m_iClientHideHUD = -1;
+	m_iClientFOV = -1;
+	m_ClientWeaponBits = 0;
+
+	for (int i = 0; i < MAX_AMMO_SLOTS; ++i)
+	{
+		m_rgAmmoLast[i] = 0;
+	}
+
 	m_iTrain |= TRAIN_NEW; // Force new train message.
 	m_fWeapon = false;	   // Force weapon send
 	m_fKnownItem = false;  // Force weaponinit messages.
@@ -4149,19 +4171,34 @@ void CBasePlayer::SendAmmoUpdate()
 {
 	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
 	{
-		if (m_rgAmmo[i] != m_rgAmmoLast[i])
-		{
-			m_rgAmmoLast[i] = m_rgAmmo[i];
+		InternalSendSingleAmmoUpdate(i);
+	}
+}
 
-			ASSERT(m_rgAmmo[i] >= 0);
-			ASSERT(m_rgAmmo[i] < 255);
+void CBasePlayer::SendSingleAmmoUpdate(int ammoIndex)
+{
+	if (ammoIndex < 0 || ammoIndex >= MAX_AMMO_SLOTS)
+	{
+		return;
+	}
 
-			// send "Ammo" update message
-			MESSAGE_BEGIN(MSG_ONE, gmsgAmmoX, NULL, pev);
-			WRITE_BYTE(i);
-			WRITE_BYTE(V_max(V_min(m_rgAmmo[i], 254), 0)); // clamp the value to one byte
-			MESSAGE_END();
-		}
+	InternalSendSingleAmmoUpdate(ammoIndex);
+}
+
+void CBasePlayer::InternalSendSingleAmmoUpdate(int ammoIndex)
+{
+	if (m_rgAmmo[ammoIndex] != m_rgAmmoLast[ammoIndex])
+	{
+		m_rgAmmoLast[ammoIndex] = m_rgAmmo[ammoIndex];
+
+		ASSERT(m_rgAmmo[ammoIndex] >= 0);
+		ASSERT(m_rgAmmo[ammoIndex] < 255);
+
+		// send "Ammo" update message
+		MESSAGE_BEGIN(MSG_ONE, gmsgAmmoX, NULL, pev);
+		WRITE_BYTE(ammoIndex);
+		WRITE_BYTE(V_max(V_min(m_rgAmmo[ammoIndex], 254), 0)); // clamp the value to one byte
+		MESSAGE_END();
 	}
 }
 
@@ -4290,7 +4327,7 @@ void CBasePlayer::UpdateClientData()
 
 	if (pev->health != m_iClientHealth)
 	{
-		int iHealth = clamp(pev->health, 0, std::numeric_limits<short>::max()); // make sure that no negative health values are sent
+		int iHealth = std::clamp<float>(pev->health, 0.f, (float)(std::numeric_limits<short>::max())); // make sure that no negative health values are sent
 		if (pev->health > 0.0f && pev->health <= 1.0f)
 			iHealth = 1;
 
@@ -5115,6 +5152,27 @@ bool CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
 	}
 #endif
 	return true;
+}
+
+void CBasePlayer::EquipWeapon()
+{
+	if (m_pActiveItem)
+	{
+		if ((!FStringNull(pev->viewmodel) || !FStringNull(pev->weaponmodel)))
+		{
+			//Already have a weapon equipped and deployed.
+			return;
+		}
+
+		//Have a weapon equipped, but not deployed.
+		if (m_pActiveItem->CanDeploy() && m_pActiveItem->Deploy())
+		{
+			return;
+		}
+	}
+
+	//No weapon equipped or couldn't deploy it, find a suitable alternative.
+	g_pGameRules->GetNextBestWeapon(this, m_pActiveItem, true);
 }
 
 void CBasePlayer::SetPrefsFromUserinfo(char* infobuffer)

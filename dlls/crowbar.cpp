@@ -49,6 +49,8 @@ void CCrowbar::Precache()
 	PRECACHE_SOUND("weapons/cbar_hitbod2.wav");
 	PRECACHE_SOUND("weapons/cbar_hitbod3.wav");
 	PRECACHE_SOUND("weapons/cbar_miss1.wav");
+
+	m_usCrowbar = PRECACHE_EVENT(1, "events/crowbar.sc");
 }
 
 bool CCrowbar::GetItemInfo(ItemInfo* p)
@@ -174,6 +176,14 @@ bool CCrowbar::Swing(bool fFirst)
 		}
 	}
 #endif
+
+	if (fFirst)
+	{
+		PLAYBACK_EVENT_FULL(FEV_NOTHOST, m_pPlayer->edict(), m_usCrowbar,
+			0.0, g_vecZero, g_vecZero, 0, 0, 0,
+			0.0, 0, 0.0);
+	}
+
 
 	if (tr.flFraction >= 1.0)
 	{

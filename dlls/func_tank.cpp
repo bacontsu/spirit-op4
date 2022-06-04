@@ -556,6 +556,11 @@ void CFuncTank::StopControl(CFuncTankControls* pControls)
 		return;
 	}
 
+	if (m_pControls->m_pController)
+	{
+		m_pControls->m_pController->EquipWeapon();
+	}
+
 	//	ALERT(at_debug,"StopControl succeeded\n");
 
 	//	ALERT( at_debug, "stopped using TANK\n");

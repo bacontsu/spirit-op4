@@ -71,20 +71,6 @@ bool CEgon::Deploy()
 	return DefaultDeploy("models/v_egon.mdl", "models/p_egon.mdl", EGON_DRAW, "egon");
 }
 
-bool CEgon::AddToPlayer(CBasePlayer* pPlayer)
-{
-	if (CBasePlayerWeapon::AddToPlayer(pPlayer))
-	{
-		MESSAGE_BEGIN(MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev);
-		WRITE_BYTE(m_iId);
-		MESSAGE_END();
-		return true;
-	}
-	return false;
-}
-
-
-
 void CEgon::Holster()
 {
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
@@ -507,7 +493,8 @@ void CEgon::EndAttack()
 	if (m_fireState != FIRE_OFF) //Checking the button just in case!.
 		bMakeNoise = true;
 
-	PLAYBACK_EVENT_FULL(FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0, static_cast<int>(bMakeNoise), 0, 0, 0);
+	PLAYBACK_EVENT_FULL(FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0,
+		static_cast<int>(bMakeNoise), 0, 0, 0);
 
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;
