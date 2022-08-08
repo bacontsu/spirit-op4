@@ -842,7 +842,7 @@ void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax)
 			continue;
 
 		// Clients aren't necessarily initialized until ClientPutInServer()
-		if (i < clientMax || !pEdictList[i].pvPrivateData)
+		if ((i > 0 && i <= clientMax) || !pEdictList[i].pvPrivateData)
 			continue;
 
 		pClass = CBaseEntity::Instance(&pEdictList[i]);
@@ -1773,7 +1773,7 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 
 			while (pPlayerItem)
 			{
-				gun = dynamic_cast<CBasePlayerWeapon*>(pPlayerItem->GetWeaponPtr());
+				gun = pPlayerItem->GetWeaponPtr();
 				if (gun && gun->UseDecrement())
 				{
 					// Get The ID.
@@ -1903,8 +1903,7 @@ void UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* 
 
 			if (pl->m_pActiveItem)
 			{
-				CBasePlayerWeapon* gun;
-				gun = (CBasePlayerWeapon*)pl->m_pActiveItem->GetWeaponPtr();
+				CBasePlayerWeapon* gun = pl->m_pActiveItem->GetWeaponPtr();
 				if (gun && gun->UseDecrement())
 				{
 					ItemInfo II;

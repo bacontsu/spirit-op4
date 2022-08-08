@@ -316,13 +316,13 @@ void CBasePlayerItem::CheckRespawn() {}
 CBaseEntity* CBasePlayerItem::Respawn() { return NULL; }
 void CBasePlayerItem::DefaultTouch(CBaseEntity* pOther) {}
 void CBasePlayerItem::DestroyItem() {}
-bool CBasePlayerItem::AddToPlayer(CBasePlayer* pPlayer) { return true; }
+void CBasePlayerItem::AddToPlayer(CBasePlayer* pPlayer) {}
 void CBasePlayerItem::Drop() {}
 void CBasePlayerItem::Kill() {}
 void CBasePlayerItem::Holster() {}
 void CBasePlayerItem::AttachToPlayer(CBasePlayer* pPlayer) {}
 bool CBasePlayerWeapon::AddDuplicate(CBasePlayerItem* pOriginal) { return false; }
-bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer) { return false; }
+void CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer) {}
 bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer) { return false; }
 bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry) { return true; }
 bool CBasePlayerWeapon::AddSecondaryAmmo(int iCount, char* szName, int iMax) { return true; }
@@ -336,5 +336,6 @@ void CBasePlayerAmmo::DefaultTouch(CBaseEntity* pOther) {}
 bool CBasePlayerWeapon::ExtractAmmo(CBasePlayerWeapon* pWeapon) { return false; }
 bool CBasePlayerWeapon::ExtractClipAmmo(CBasePlayerWeapon* pWeapon) { return false; }
 void CBasePlayerWeapon::RetireWeapon() {}
+void CBasePlayerWeapon::DoRetireWeapon() {}
 void CSoundEnt::InsertSound(int iType, const Vector& vecOrigin, int iVolume, float flDuration) {}
 void RadiusDamage(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType) {}

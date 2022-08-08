@@ -28,7 +28,6 @@ public:
 	void Spawn(void);
 	void Precache(void);
 	bool GetItemInfo(ItemInfo* p);
-	bool AddToPlayer(CBasePlayer* pPlayer);
 	void EXPORT Commands(bool type);
 	void PrimaryAttack(void);
 	void SecondaryAttack(void);
@@ -49,18 +48,6 @@ void CDebugger::Spawn()
 	SET_MODEL(ENT(pev), "models/w_9mmhandgun.mdl");
 	m_iClip = -1;
 	FallInit(); // get ready to fall down.
-}
-
-bool CDebugger::AddToPlayer(CBasePlayer* pPlayer)
-{
-	if (CBasePlayerWeapon::AddToPlayer(pPlayer))
-	{
-		MESSAGE_BEGIN(MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev);
-		WRITE_BYTE(m_iId);
-		MESSAGE_END();
-		return true;
-	}
-	return false;
 }
 
 void CDebugger::Holster()

@@ -122,9 +122,10 @@ public:
 	int m_afButtonPressed;
 	int m_afButtonReleased;
 
-	edict_t* m_pentSndLast; // last sound entity to modify player room type
-	float m_flSndRoomtype;	// last roomtype set by sound entity
-	float m_flSndRange;		// dist from player to sound entity
+	EHANDLE m_SndLast;	   // last sound entity to modify player room type
+	int m_SndRoomtype = 0; // last roomtype set by sound entity. Defaults to 0 on new maps to disable it by default.
+	int m_ClientSndRoomtype;
+	float m_flSndRange; // dist from player to sound entity
 
 	float m_flFallVelocity;
 
@@ -301,6 +302,7 @@ public:
 	void ItemPreFrame();
 	void ItemPostFrame();
 	void GiveNamedItem(const char* szName);
+	void GiveNamedItem(const char* szName, int defaultAmmo);
 	void EnableControl(bool fControl);
 
 	int GiveAmmo(int iAmount, const char* szName, int iMax) override;

@@ -19,6 +19,7 @@
 #include "weaponinfo.h"
 
 class CBasePlayer;
+class CBasePlayerWeapon;
 
 void DeactivateSatchels(CBasePlayer* pOwner);
 
@@ -197,15 +198,20 @@ typedef struct
 	int iWeight; // this value used to determine this weapon's importance in autoselection.
 } ItemInfo;
 
-typedef struct
+struct AmmoInfo
 {
 	const char* pszName;
 	int iId;
-} AmmoInfo;
+
+	/**
+	*	@brief For exhaustible weapons. If provided, and the player does not have this weapon in their inventory yet it will be given to them.
+	*/
+	const char* WeaponName = nullptr;
+};
 
 inline int giAmmoIndex = 0;
 
-void AddAmmoNameToAmmoRegistry(const char* szAmmoname);
+void AddAmmoNameToAmmoRegistry(const char* szAmmoname, const char* weaponName);
 
 // Items that the player has in their inventory that they can use
 class CBasePlayerItem : public CBaseAnimating
@@ -221,7 +227,9 @@ public:
 
 	static TYPEDESCRIPTION m_SaveData[];
 
-	virtual bool AddToPlayer(CBasePlayer* pPlayer);						// return true if the item you want the item added to the player inventory
+	virtual bool CanAddToPlayer(CBasePlayer* player) { return true; } // return true if the item you want the item added to the player inventory
+
+	virtual void AddToPlayer(CBasePlayer* pPlayer);
 	virtual bool AddDuplicate(CBasePlayerItem* pItem) { return false; } // return true if you want your duplicate removed from world
 	void EXPORT DestroyItem();
 	void EXPORT DefaultTouch(CBaseEntity* pOther); // default weapon touch
@@ -254,7 +262,7 @@ public:
 
 	virtual bool UpdateClientData(CBasePlayer* pPlayer) { return false; }
 
-	virtual CBasePlayerItem* GetWeaponPtr() { return NULL; }
+	virtual CBasePlayerWeapon* GetWeaponPtr() { return NULL; }
 
 	virtual void GetWeaponData(weapon_data_t& data) {}
 
@@ -294,6 +302,9 @@ public:
 
 	// int		m_iIdPrimary;										// Unique Id for primary ammo
 	// int		m_iIdSecondary;										// Unique Id for secondary ammo
+
+	//Hack so deploy animations work when weapon prediction is enabled.
+	bool m_ForceSendAnimations = false;
 };
 
 
@@ -309,17 +320,11 @@ public:
 	void SetNextThink(float delay) override; //LRC
 
 	// generic weapon versions of CBasePlayerItem calls
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
+	void AddToPlayer(CBasePlayer* pPlayer) override;
 	bool AddDuplicate(CBasePlayerItem* pItem) override;
 
 	virtual bool ExtractAmmo(CBasePlayerWeapon* pWeapon);	  //{ return true; }			// Return true if you can add ammo to yourself when picked up
 	virtual bool ExtractClipAmmo(CBasePlayerWeapon* pWeapon); // { return true; }			// Return true if you can add ammo to yourself when picked up
-
-	virtual bool AddWeapon()
-	{
-		ExtractAmmo(this);
-		return true;
-	} // Return true if you want to add yourself to the player
 
 	// generic "shared" ammo handlers
 	bool AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
@@ -347,7 +352,15 @@ public:
 	virtual void Reload() {}							  // do "+RELOAD"
 	virtual void WeaponIdle() {}						  // called when no buttons pressed
 	bool UpdateClientData(CBasePlayer* pPlayer) override; // sends hud info to client dll, if things have changed
-	virtual void RetireWeapon();
+	void RetireWeapon();
+
+	// Can't use virtual functions as think functions so this wrapper is needed.
+	void EXPORT CallDoRetireWeapon()
+	{
+		DoRetireWeapon();
+	}
+
+	virtual void DoRetireWeapon();
 	virtual bool ShouldWeaponIdle() { return false; }
 	void Holster() override;
 	virtual bool UseDecrement() { return false; }
@@ -360,7 +373,7 @@ public:
 
 	void PrintState();
 
-	CBasePlayerItem* GetWeaponPtr() override { return (CBasePlayerItem*)this; }
+	CBasePlayerWeapon* GetWeaponPtr() override { return this; }
 	float GetNextAttackDelay(float delay);
 
 	float m_flPumpTime;
@@ -512,7 +525,6 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -1028,7 +1040,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
+	void AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -1120,7 +1132,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
+	void AddToPlayer(CBasePlayer* pPlayer) override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	bool AddDuplicate(CBasePlayerItem* pOriginal) override;
@@ -1242,7 +1254,6 @@ class CWpnGeneric : public CBasePlayerWeapon
 public:
 	void Spawn() override;
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;

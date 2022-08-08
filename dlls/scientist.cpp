@@ -368,13 +368,13 @@ Schedule_t slScientistStartle[] =
 };
 
 
-
+// Marphy Fact Files Fix - Restore fear display animation
 Task_t tlFear[] =
 	{
 		{TASK_STOP_MOVING, (float)0},
 		{TASK_FACE_ENEMY, (float)0},
 		{TASK_SAY_FEAR, (float)0},
-		//	{ TASK_PLAY_SEQUENCE,			(float)ACT_FEAR_DISPLAY		},
+		{TASK_PLAY_SEQUENCE_FACE_ENEMY, (float)ACT_FEAR_DISPLAY},
 };
 
 Schedule_t slFear[] =
@@ -416,12 +416,13 @@ void CScientist::DeclineFollowing()
 
 void CScientist::Scream()
 {
-	if (FOkToSpeak())
-	{
-		Talk(10);
-		m_hTalkTarget = m_hEnemy;
-		PlaySentence("SC_SCREAM", RANDOM_FLOAT(3, 6), VOL_NORM, ATTN_NORM);
-	}
+	// Marphy Fact Files Fix - This speech check always fails during combat, so removing
+	//if ( FOkToSpeak() )
+	//{
+	Talk(10);
+	m_hTalkTarget = m_hEnemy;
+	PlaySentence("SC_SCREAM", RANDOM_FLOAT(3, 6), VOL_NORM, ATTN_NORM);
+	//}
 }
 
 
@@ -458,15 +459,16 @@ void CScientist::StartTask(Task_t* pTask)
 		break;
 
 	case TASK_SAY_FEAR:
-		if (FOkToSpeak())
-		{
-			Talk(2);
-			m_hTalkTarget = m_hEnemy;
-			if (m_hEnemy->IsPlayer())
-				PlaySentence("SC_PLFEAR", 5, VOL_NORM, ATTN_NORM);
-			else
-				PlaySentence("SC_FEAR", 5, VOL_NORM, ATTN_NORM);
-		}
+		// Marphy Fact FIles Fix - This speech check always fails during combat, so removing
+		//if ( FOkToSpeak() )
+		//{
+		Talk(2);
+		m_hTalkTarget = m_hEnemy;
+		if (m_hEnemy->IsPlayer())
+			PlaySentence("SC_PLFEAR", 5, VOL_NORM, ATTN_NORM);
+		else
+			PlaySentence("SC_FEAR", 5, VOL_NORM, ATTN_NORM);
+		//}
 		TaskComplete();
 		break;
 
@@ -504,14 +506,18 @@ void CScientist::RunTask(Task_t* pTask)
 	case TASK_RUN_PATH_SCARED:
 		if (MovementIsComplete())
 			TaskComplete();
-		if (RANDOM_LONG(0, 31) < 8)
+
+		// Marphy Fact Files Fix - Reducing scream (which didn't work before) chance significantly
+		//if ( RANDOM_LONG(0,31) < 8 )
+		if (RANDOM_LONG(0, 63) < 1)
 			Scream();
 		break;
 
 	case TASK_MOVE_TO_TARGET_RANGE_SCARED:
 	{
-		if (RANDOM_LONG(0, 63) < 8)
-			Scream();
+		// Marphy Fact Files Fix - Removing redundant scream
+		//if ( RANDOM_LONG(0,63)< 8 )
+		//Scream();
 
 		if (m_hEnemy == NULL)
 		{
@@ -638,6 +644,11 @@ void CScientist::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 void CScientist::Spawn()
 {
+	if (pev->body == -1)
+	{														 // -1 chooses a random head
+		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS - 1); // pick a head, any head
+	}
+
 	Precache();
 
 	if (pev->model)
@@ -661,11 +672,6 @@ void CScientist::Spawn()
 
 	// White hands
 	pev->skin = 0;
-
-	if (pev->body == -1)
-	{														 // -1 chooses a random head
-		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS - 1); // pick a head, any head
-	}
 
 	// Luther is black, make his hands black
 	if (pev->body == HEAD_LUTHER)
@@ -747,7 +753,7 @@ void CScientist::TalkInit()
 	}
 
 	// get voice for head
-	switch (pev->body % 3)
+	switch (pev->body % NUM_SCIENTIST_HEADS)
 	{
 	default:
 	case HEAD_GLASSES:
@@ -784,6 +790,7 @@ bool CScientist::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
 // of sounds this monster regards. In the base class implementation,
 // monsters care about all sounds, but no scents.
 //=========================================================
+// Marphy Fact Files Fix - Restore scientist's sense of smell
 int CScientist::ISoundMask()
 {
 	return bits_SOUND_WORLD |
@@ -936,6 +943,9 @@ Schedule_t* CScientist::GetSchedule()
 			{
 				m_hEnemy = NULL;
 				pEnemy = NULL;
+
+				// Marphy Fact Files Fix - Fix scientists not disregarding enemy after hiding
+				m_fearTime = gpGlobals->time;
 			}
 		}
 
@@ -1011,11 +1021,37 @@ Schedule_t* CScientist::GetSchedule()
 	case MONSTERSTATE_COMBAT:
 		if (HasConditions(bits_COND_NEW_ENEMY))
 			return slFear; // Point and scream!
+
 		if (HasConditions(bits_COND_SEE_ENEMY))
+		{
+			// Marphy Fact Files Fix - Fix scientists not disregarding enemy after hiding
+			m_fearTime = gpGlobals->time;
 			return slScientistCover; // Take Cover
+		}
 
 		if (HasConditions(bits_COND_HEAR_SOUND))
 			return slTakeCoverFromBestSound; // Cower and panic from the scary sound!
+
+		// Marphy Fact Files Fix - Fix scientists not disregarding enemy after hiding
+		if (pEnemy)
+		{
+			if (HasConditions(bits_COND_SEE_ENEMY))
+				m_fearTime = gpGlobals->time;
+			else if (DisregardEnemy(pEnemy)) // After 15 seconds of being hidden, return to alert
+			{
+				m_hEnemy = NULL;
+				pEnemy = NULL;
+
+				m_fearTime = gpGlobals->time;
+
+				if (IsFollowing())
+				{
+					return slScientistStartle;
+				}
+
+				return slScientistHide; // Hide after disregard
+			}
+		}
 
 		return slScientistCover; // Run & Cower
 		break;
@@ -1062,6 +1098,9 @@ MONSTERSTATE CScientist::GetIdealState()
 				// Strip enemy when going to alert
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 				m_hEnemy = NULL;
+
+				// Marphy Fact Files Fix - Fix scientists not disregarding enemy after hiding
+				m_fearTime = gpGlobals->time;
 				return m_IdealMonsterState;
 			}
 			// Follow if only scared a little

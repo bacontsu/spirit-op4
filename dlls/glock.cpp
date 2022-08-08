@@ -36,18 +36,6 @@ void CGlock::Spawn()
 	FallInit(); // get ready to fall down.
 }
 
-bool CGlock::AddToPlayer(CBasePlayer* pPlayer) //Fix old Half-life bug. G-Cont
-{
-	if (CBasePlayerWeapon::AddToPlayer(pPlayer))
-	{
-		MESSAGE_BEGIN(MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev);
-		WRITE_BYTE(m_iId);
-		MESSAGE_END();
-		return true;
-	}
-	return false;
-}
-
 void CGlock::Holster()
 {
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
