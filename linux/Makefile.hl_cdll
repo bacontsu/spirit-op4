@@ -6,6 +6,7 @@
 HL_SRC_DIR=$(SOURCE_DIR)/cl_dll
 HL_PARTICLEMAN_DIR=$(SOURCE_DIR)/cl_dll/particleman
 HL_SERVER_SRC_DIR=$(SOURCE_DIR)/dlls
+WEAPONS_SRC_DIR=$(HL_SERVER_SRC_DIR)/weapons
 GAME_SHARED_SRC_DIR=$(SOURCE_DIR)/game_shared
 PM_SHARED_SRC_DIR=$(SOURCE_DIR)/pm_shared
 
@@ -15,6 +16,7 @@ PUBLIC_OBJ_DIR=$(HL1_OBJ_DIR)/public
 COMMON_OBJ_DIR=$(HL1_OBJ_DIR)/common
 GAME_SHARED_OBJ_DIR=$(HL1_OBJ_DIR)/game_shared
 HL1_SERVER_OBJ_DIR=$(HL1_OBJ_DIR)/server
+WEAPONS_OBJ_DIR=$(HL1_SERVER_OBJ_DIR)/weapons
 PM_SHARED_OBJ_DIR=$(HL1_OBJ_DIR)/pm_shared
 
 CFLAGS=$(BASE_CFLAGS) $(ARCH_CFLAGS) -DCLIENT_DLL -DCLIENT_WEAPONS -I/usr/include/malloc
@@ -55,7 +57,9 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/GameStudioModelRenderer.o \
 	$(HL1_OBJ_DIR)/geiger.o \
 	$(HL1_OBJ_DIR)/health.o \
+	$(HL1_OBJ_DIR)/hud_flagicons.o \
 	$(HL1_OBJ_DIR)/hud_msg.o \
+	$(HL1_OBJ_DIR)/hud_playerbrowse.o \
 	$(HL1_OBJ_DIR)/hud_redraw.o \
 	$(HL1_OBJ_DIR)/hud_update.o \
 	$(HL1_OBJ_DIR)/in_camera.o \
@@ -69,6 +73,7 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/particlesys.o \
 	$(HL1_OBJ_DIR)/rain.o \
 	$(HL1_OBJ_DIR)/saytext.o \
+	$(HL1_OBJ_DIR)/scoreboard.o \
 	$(HL1_OBJ_DIR)/status_icons.o \
 	$(HL1_OBJ_DIR)/statusbar.o \
 	$(HL1_OBJ_DIR)/studio_util.o \
@@ -84,6 +89,7 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/vgui_MOTDWindow.o \
 	$(HL1_OBJ_DIR)/vgui_SchemeManager.o \
 	$(HL1_OBJ_DIR)/vgui_ScorePanel.o \
+	$(HL1_OBJ_DIR)/vgui_StatsMenuPanel.o \
 	$(HL1_OBJ_DIR)/vgui_TeamFortressViewport.o \
 	$(HL1_OBJ_DIR)/vgui_SpectatorPanel.o \
 	$(HL1_OBJ_DIR)/vgui_teammenu.o \
@@ -96,8 +102,20 @@ HL1_PARTICLEMAN_OBJS = \
 	$(HL1_PARTICLEMAN_OBJ_DIR)/IParticleMan_Active.o \
 	
 DLL_OBJS = \
+	$(WEAPONS_OBJ_DIR)/CDisplacer.o \
+	$(WEAPONS_OBJ_DIR)/CEagle.o \
+	$(WEAPONS_OBJ_DIR)/CGrapple.o \
+	$(WEAPONS_OBJ_DIR)/CGrappleTip.o \
+	$(WEAPONS_OBJ_DIR)/CKnife.o \
+	$(WEAPONS_OBJ_DIR)/CM249.o \
+	$(WEAPONS_OBJ_DIR)/CPenguin.o \
+	$(WEAPONS_OBJ_DIR)/CPipewrench.o \
+	$(WEAPONS_OBJ_DIR)/CShockRifle.o \
+	$(WEAPONS_OBJ_DIR)/CSniperRifle.o \
+	$(WEAPONS_OBJ_DIR)/CSporeLauncher.o \
 	$(HL1_SERVER_OBJ_DIR)/crossbow.o \
 	$(HL1_SERVER_OBJ_DIR)/crowbar.o \
+	$(HL1_SERVER_OBJ_DIR)/ehandle.o \
 	$(HL1_SERVER_OBJ_DIR)/egon.o \
 	$(HL1_SERVER_OBJ_DIR)/gauss.o \
 	$(HL1_SERVER_OBJ_DIR)/glock.o \
@@ -152,6 +170,7 @@ $(HL1_OBJ_DIR):
 
 $(HL1_SERVER_OBJ_DIR):
 	mkdir -p $(HL1_SERVER_OBJ_DIR)
+	mkdir -p $(WEAPONS_OBJ_DIR)
 	mkdir -p $(HL1_SERVER_OBJ_DIR)/wpn_shared
 
 $(PUBLIC_OBJ_DIR):
@@ -175,6 +194,9 @@ $(HL1_PARTICLEMAN_OBJ_DIR)/%.o: $(HL_PARTICLEMAN_DIR)/%.cpp $(filter-out $(wildc
 $(HL1_SERVER_OBJ_DIR)/%.o: $(HL_SERVER_SRC_DIR)/%.cpp $(filter-out $(wildcard  $(HL1_SERVER_OBJ_DIR)),  $(HL1_SERVER_OBJ_DIR))
 	$(DO_CC)
 
+$(WEAPONS_OBJ_DIR)/%.o: $(WEAPONS_SRC_DIR)/%.cpp $(filter-out $(wildcard  $(WEAPONS_OBJ_DIR)),  $(WEAPONS_OBJ_DIR))
+	$(DO_CC)
+	
 $(HL1_OBJ_DIR)/%.o: $(HL_SRC_DIR)/hl/%.cpp $(filter-out $(wildcard  $(HL1_OBJ_DIR)),  $(HL1_OBJ_DIR))
 	$(DO_CC)
 

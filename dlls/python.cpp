@@ -42,6 +42,14 @@ bool CPython::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
+void CPython::IncrementAmmo(CBasePlayer* pPlayer)
+{
+	if (pPlayer->GiveAmmo(1, "357", _357_MAX_CARRY) >= 0)
+	{
+		EMIT_SOUND(pPlayer->edict(), CHAN_STATIC, "ctf/pow_backpack.wav", 0.5, ATTN_NORM);
+	}
+}
+
 void CPython::Spawn()
 {
 	pev->classname = MAKE_STRING("weapon_357"); // hack to allow for old names
@@ -186,7 +194,7 @@ void CPython::PrimaryAttack()
 
 	int flags;
 #if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif

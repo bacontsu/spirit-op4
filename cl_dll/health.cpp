@@ -155,12 +155,21 @@ void CHudHealth::GetPainColor(int& r, int& g, int& b)
 	if (m_iHealth > 25)
 	{
 		UnpackRGB(r, g, b, gHUD.m_iHUDColor);
+
+		r = giR;
+		g = giG;
+		b = giB;
 	}
 	else
 	{
 		r = 250;
 		g = 0;
 		b = 0;
+	}
+
+	if (gHUD.isNightVisionOn())
+	{
+		gHUD.getNightVisionHudItemColor(r, g, b);
 	}
 #endif
 }
@@ -210,6 +219,11 @@ bool CHudHealth::Draw(float flTime)
 		y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
 		x = CrossWidth / 2;
 
+		if (gHUD.isNightVisionOn())
+		{
+			gHUD.getNightVisionHudItemColor(r, g, b);
+		}
+
 		SPR_Set(gHUD.GetSprite(m_HUD_cross), r, g, b);
 		SPR_DrawAdditive(0, x, y, &gHUD.GetSpriteRect(m_HUD_cross));
 
@@ -226,8 +240,24 @@ bool CHudHealth::Draw(float flTime)
 
 		int iHeight = gHUD.m_iFontHeight;
 		int iWidth = HealthWidth / 10;
+
 		UnpackRGB(r, g, b, gHUD.m_iHUDColor); //LRC
 		FillRGBA(x, y, iWidth, iHeight, r, g, b, a);
+
+		int barR, barG, barB;
+
+		if (gHUD.isNightVisionOn())
+		{
+			gHUD.getNightVisionHudItemColor(barR, barG, barB);
+		}
+		else
+		{
+			barR = giR;
+			barG = giG;
+			barB = giB;
+		}
+
+		FillRGBA(x, y, iWidth, iHeight, barR, barG, barB, a);
 	}
 
 	DrawDamage(flTime);
@@ -309,7 +339,15 @@ bool CHudHealth::DrawPain(float flTime)
 	// SPR_Draw top
 	if (m_fAttackFront > 0.4)
 	{
-		GetPainColor(r, g, b);
+		if (gHUD.isNightVisionOn())
+		{
+			gHUD.getNightVisionHudItemColor(r, g, b);
+		}
+		else
+		{
+			GetPainColor(r, g, b);
+		}
+
 		shade = a * V_max(m_fAttackFront, 0.5);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
@@ -324,7 +362,15 @@ bool CHudHealth::DrawPain(float flTime)
 
 	if (m_fAttackRight > 0.4)
 	{
-		GetPainColor(r, g, b);
+		if (gHUD.isNightVisionOn())
+		{
+			gHUD.getNightVisionHudItemColor(r, g, b);
+		}
+		else
+		{
+			GetPainColor(r, g, b);
+		}
+
 		shade = a * V_max(m_fAttackRight, 0.5);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
@@ -339,7 +385,15 @@ bool CHudHealth::DrawPain(float flTime)
 
 	if (m_fAttackRear > 0.4)
 	{
-		GetPainColor(r, g, b);
+		if (gHUD.isNightVisionOn())
+		{
+			gHUD.getNightVisionHudItemColor(r, g, b);
+		}
+		else
+		{
+			GetPainColor(r, g, b);
+		}
+
 		shade = a * V_max(m_fAttackRear, 0.5);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
@@ -354,7 +408,15 @@ bool CHudHealth::DrawPain(float flTime)
 
 	if (m_fAttackLeft > 0.4)
 	{
-		GetPainColor(r, g, b);
+		if (gHUD.isNightVisionOn())
+		{
+			gHUD.getNightVisionHudItemColor(r, g, b);
+		}
+		else
+		{
+			GetPainColor(r, g, b);
+		}
+
 		shade = a * V_max(m_fAttackLeft, 0.5);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
@@ -380,6 +442,9 @@ bool CHudHealth::DrawDamage(float flTime)
 		return true;
 
 	UnpackRGB(r, g, b, gHUD.m_iHUDColor);
+	r = giR;
+	g = giG;
+	b = giB;
 
 	a = (int)(fabs(sin(flTime * 2)) * 256.0);
 

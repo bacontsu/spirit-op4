@@ -22,8 +22,12 @@
 #include "r_efx.h"
 #include "rain.h"
 
+#include "vgui_TeamFortressViewport.h"
+#include "vgui_ScorePanel.h"
+
 #include "particleman.h"
 extern IParticleMan* g_pParticleMan;
+
 
 //LRC - the fogging fog
 FogSettings g_fog;
@@ -31,6 +35,9 @@ FogSettings g_fogPreFade;
 FogSettings g_fogPostFade;
 float g_fFogFadeDuration;
 float g_fFogFadeFraction;
+
+extern int giTeamplay;
+
 
 extern BEAM* pBeam;
 extern BEAM* pBeam2;
@@ -252,10 +259,22 @@ void CHud ::MsgFunc_ClampView(const char* pszName, int iSize, void* pbuf)
 bool CHud::MsgFunc_GameMode(const char* pszName, int iSize, void* pbuf)
 {
 	BEGIN_READ(pbuf, iSize);
-	//Note: this user message could be updated to include multiple gamemodes, so make sure this checks for game mode 1
+
+	//Note: this user message could be updated to include multiple gamemodes
 	//See CHalfLifeTeamplay::UpdateGameMode
 	//TODO: define game mode constants
-	m_Teamplay = READ_BYTE() == 1;
+	m_Teamplay = giTeamplay = READ_BYTE();
+
+	if (gViewPort && !gViewPort->m_pScoreBoard)
+	{
+		gViewPort->CreateScoreBoard();
+		gViewPort->m_pScoreBoard->Initialize();
+
+		if (!gHUD.m_iIntermission)
+		{
+			gViewPort->HideScoreBoard();
+		}
+	}
 
 	return true;
 }

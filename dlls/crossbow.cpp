@@ -266,6 +266,13 @@ bool CCrossbow::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
+void CCrossbow::IncrementAmmo(CBasePlayer* pPlayer)
+{
+	if (pPlayer->GiveAmmo(1, "bolts", BOLT_MAX_CARRY) >= 0)
+	{
+		EMIT_SOUND(pPlayer->edict(), CHAN_STATIC, "ctf/pow_backpack.wav", 0.5, ATTN_NORM);
+	}
+}
 
 bool CCrossbow::Deploy()
 {
@@ -324,7 +331,7 @@ void CCrossbow::FireSniperBolt()
 
 	int flags;
 #if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif
@@ -367,7 +374,7 @@ void CCrossbow::FireBolt()
 
 	int flags;
 #if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif

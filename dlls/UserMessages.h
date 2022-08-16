@@ -67,4 +67,20 @@ inline int gmsgInventory = 0; //AJH Inventory system
 
 inline int gmsgWeapons = 0;
 
+inline int gmsgSpectator = 0;
+inline int gmsgPlayerBrowse = 0;
+inline int gmsgHudColor = 0;
+inline int gmsgFlagIcon = 0;
+inline int gmsgFlagTimer = 0;
+inline int gmsgPlayerIcon = 0;
+inline int gmsgVGUIMenu = 0;
+inline int gmsgAllowSpec = 0;
+inline int gmsgSetMenuTeam = 0;
+inline int gmsgCTFScore = 0;
+inline int gmsgStatsInfo = 0;
+inline int gmsgStatsPlayer = 0;
+inline int gmsgTeamFull = 0;
+inline int gmsgOldWeapon = 0;
+inline int gmsgCustomIcon = 0;
+
 void LinkUserMessages();

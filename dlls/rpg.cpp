@@ -393,6 +393,14 @@ bool CRpg::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
+void CRpg::IncrementAmmo(CBasePlayer* pPlayer)
+{
+	if (pPlayer->GiveAmmo(1, "rockets", ROCKET_MAX_CARRY) >= 0)
+	{
+		EMIT_SOUND(pPlayer->edict(), CHAN_STATIC, "ctf/pow_backpack.wav", 0.5, ATTN_NORM);
+	}
+}
+
 bool CRpg::Deploy()
 {
 	if (m_iClip == 0)
@@ -462,7 +470,7 @@ void CRpg::PrimaryAttack()
 
 		int flags;
 #if defined(CLIENT_WEAPONS)
-		flags = FEV_NOTHOST;
+		flags = UTIL_DefaultPlaybackFlags();
 #else
 		flags = 0;
 #endif

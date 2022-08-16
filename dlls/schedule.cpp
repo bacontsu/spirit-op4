@@ -76,6 +76,23 @@ void CBaseMonster::ChangeSchedule(Schedule_t* pNewSchedule)
 {
 	ASSERT(pNewSchedule != NULL);
 
+	if (m_pSchedule && m_pSchedule->pTasklist && m_pSchedule->pTasklist[m_iScheduleIndex].iTask == TASK_DIE)
+	{
+		const char* className = STRING(pev->classname);
+
+		//TODO: not the correct way to check for missing classname, is like this in vanilla Op4
+		if (className)
+		{
+			ALERT(at_aiconsole, "ChangeSchedule called for dead monster class %s\n", className);
+		}
+		else
+		{
+			ALERT(at_console, "ChangeSchedule called for dead monster\n");
+		}
+
+		return;
+	}
+
 	m_pSchedule = pNewSchedule;
 	m_iScheduleIndex = 0;
 	m_iTaskStatus = TASKSTATUS_NEW;
@@ -545,6 +562,14 @@ void CBaseMonster::RunTask(Task_t* pTask)
 		}
 		break;
 	}
+
+	case TASK_WAIT_FOR_JUMP:
+		if ((pev->flags & FL_ONGROUND) != 0)
+		{
+			if (!HasConditions(bits_COND_TASK_FAILED))
+				TaskIsComplete();
+		}
+		break;
 	}
 }
 
@@ -891,10 +916,36 @@ void CBaseMonster::StartTask(Task_t* pTask)
 			if (!MoveToTarget(ACT_WALK, 2))
 				TaskFail();
 		}
+
+	case TASK_JUMP_TO_TARGET:
+	{
+		if ((m_hTargetEnt->pev->origin - pev->origin).Length() >= 1.0)
+		{
+			if (!m_hTargetEnt || !JumpToTarget(ACT_LEAP, 2.0))
+			{
+				TaskFail();
+				ALERT(at_aiconsole, "%s Failed to reach target!!!\n", STRING(pev->classname));
+				RouteClear();
+			}
+		}
+
+		TaskComplete();
 		break;
 	}
-	case TASK_RUN_TO_SCRIPT:
-	case TASK_WALK_TO_SCRIPT:
+
+	case TASK_WAIT_FOR_JUMP:
+	{
+		if (pev->flags & FL_ONGROUND)
+		{
+			if (!HasConditions(bits_COND_TASK_FAILED))
+				TaskIsComplete();
+		}
+
+		break;
+	}
+
+	case TASK_RUN_TO_TARGET:
+	case TASK_WALK_TO_TARGET:
 	{
 		Activity newActivity;
 
@@ -902,7 +953,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 			TaskComplete();
 		else
 		{
-			if (pTask->iTask == TASK_WALK_TO_SCRIPT)
+			if (pTask->iTask == TASK_WALK_TO_TARGET)
 				newActivity = ACT_WALK;
 			else
 				newActivity = ACT_RUN;
@@ -911,6 +962,14 @@ void CBaseMonster::StartTask(Task_t* pTask)
 				TaskComplete();
 			else
 			{
+				// Is OP4 Should be prioritised?
+				// if (m_hTargetEnt == NULL || !MoveToTarget(newActivity, 2))
+				//{
+				//	TaskFail();
+				//	ALERT(at_aiconsole, "%s Failed to reach target!!!\n", STRING(pev->classname));
+				//	RouteClear();
+				//}
+
 				if (m_pGoalEnt != NULL)
 				{
 					Vector vecDest;
@@ -919,7 +978,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 					if (!MoveToLocation(newActivity, 2, vecDest))
 					{
 						TaskFail();
-						ALERT(at_aiconsole, "%s Failed to reach script!!!\n", STRING(pev->classname));
+						ALERT(at_aiconsole, "%s Failed to reach target!!!\n", STRING(pev->classname));
 						RouteClear();
 					}
 				}
@@ -931,6 +990,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 				}
 			}
 		}
+	}
 		TaskComplete();
 		break;
 	}
@@ -1284,7 +1344,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 	{
 		if (m_pCine->m_iDelay <= 0 && gpGlobals->time >= m_pCine->m_startTime)
 		{
-			TaskComplete(); //LRC - start playing immediately
+			TaskComplete(); // LRC - start playing immediately
 		}
 		else if (!m_pCine->IsAction() && !FStringNull(m_pCine->m_iszIdle))
 		{
@@ -1303,7 +1363,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 	{
 		if (m_pCine->IsAction())
 		{
-			//ALERT(at_console,"PlayScript: setting idealactivity %d\n",m_pCine->m_fAction);
+			// ALERT(at_console,"PlayScript: setting idealactivity %d\n",m_pCine->m_fAction);
 			switch (m_pCine->m_fAction)
 			{
 			case 0:
@@ -1341,7 +1401,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 			if (m_fSequenceFinished)
 				ClearSchedule();
 			pev->framerate = 1.0;
-			//ALERT( at_aiconsole, "Script %s has begun for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
+			// ALERT( at_aiconsole, "Script %s has begun for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
 		}
 		m_scriptState = SCRIPT_PLAYING;
 		break;
@@ -1352,7 +1412,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 		TaskComplete();
 		break;
 	}
-		//LRC
+		// LRC
 	case TASK_END_SCRIPT:
 	{
 		m_pCine->SequenceDone(this);
@@ -1367,7 +1427,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 			// LRC - if it's a teleport script, do the turn too
 			if (m_pCine->m_fMoveTo == 4 || m_pCine->m_fMoveTo == 6)
 			{
-				if (m_pCine->m_fTurnType == 0) //LRC
+				if (m_pCine->m_fTurnType == 0) // LRC
 					pev->angles.y = m_hTargetEnt->pev->angles.y;
 				else if (m_pCine->m_fTurnType == 1)
 					pev->angles.y = UTIL_VecToYaw(m_hTargetEnt->pev->origin - pev->origin);
@@ -1434,6 +1494,7 @@ void CBaseMonster::StartTask(Task_t* pTask)
 	}
 	}
 }
+
 
 //=========================================================
 // GetTask - returns a pointer to the current
@@ -1623,4 +1684,24 @@ Schedule_t* CBaseMonster::GetSchedule()
 	}
 
 	return &slError[0];
+}
+
+bool CBaseMonster::JumpToTarget(Activity movementAct, float waitTime)
+{
+	m_movementGoal = MOVEGOAL_TARGETENT;
+	m_movementActivity = movementAct;
+	m_moveWaitTime = waitTime;
+
+	pev->origin.z += 1;
+
+	if ((pev->flags & FL_ONGROUND) != 0)
+		pev->flags &= ~FL_ONGROUND;
+
+	g_engfuncs.pfnCVarGetFloat("sv_gravity");
+
+	pev->velocity = m_hTargetEnt->pev->origin + Vector(0, 0, 160) - pev->origin;
+
+	pev->velocity.z *= pev->origin.z * sqrt(160.0 / (pev->origin.z * 0.5)) / 160.0;
+
+	return true;
 }

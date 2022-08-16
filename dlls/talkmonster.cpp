@@ -47,6 +47,7 @@ TYPEDESCRIPTION CTalkMonster::m_SaveData[] =
 		DEFINE_FIELD(CTalkMonster, m_flLastSaidSmelled, FIELD_TIME),
 		DEFINE_FIELD(CTalkMonster, m_flStopTalkTime, FIELD_TIME),
 		DEFINE_FIELD(CTalkMonster, m_hTalkTarget, FIELD_EHANDLE),
+		DEFINE_FIELD(CTalkMonster, m_fStartSuspicious, FIELD_BOOLEAN),
 };
 
 IMPLEMENT_SAVERESTORE(CTalkMonster, CBaseMonster);
@@ -1365,6 +1366,15 @@ void CTalkMonster::PrescheduleThink()
 	{
 		SetConditions(bits_COND_CLIENT_UNSEEN);
 	}
+
+	if (m_fStartSuspicious)
+	{
+		if (!HasMemory(bits_MEMORY_PROVOKED))
+		{
+			ALERT(at_console, "Talk Monster Pre-Provoked\n");
+			Remember(bits_MEMORY_PROVOKED);
+		}
+	}
 }
 
 // try to smell something
@@ -1507,12 +1517,17 @@ bool CTalkMonster::KeyValue(KeyValueData* pkvd)
 		m_iszUnUse = ALLOC_STRING(pkvd->szValue);
 		return true;
 	}
-	else if (FStrEq(pkvd->szKeyName, "RefusalSentence")) //LRC
+	else if (FStrEq(pkvd->szKeyName, "suspicious"))
+	{
+		m_fStartSuspicious = atoi(pkvd->szValue);
+		return true;
+	}
+	else if (FStrEq(pkvd->szKeyName, "RefusalSentence")) // LRC
 	{
 		m_iszDecline = ALLOC_STRING(pkvd->szValue);
 		return true;
 	}
-	else if (FStrEq(pkvd->szKeyName, "SpeakAs")) //LRC
+	else if (FStrEq(pkvd->szKeyName, "SpeakAs")) // LRC
 	{
 		m_iszSpeakAs = ALLOC_STRING(pkvd->szValue);
 		return true;

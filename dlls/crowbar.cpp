@@ -129,7 +129,7 @@ void FindHullIntersection(const Vector& vecSrc, TraceResult& tr, const Vector& m
 
 void CCrowbar::PrimaryAttack()
 {
-	if (!Swing(true))
+	if (!Swing(true) && !UTIL_UseOldWeapons())
 	{
 		SetThink(&CCrowbar::SwingAgain);
 		SetNextThink(0.1);
@@ -179,7 +179,7 @@ bool CCrowbar::Swing(bool fFirst)
 
 	if (fFirst)
 	{
-		PLAYBACK_EVENT_FULL(FEV_NOTHOST, m_pPlayer->edict(), m_usCrowbar,
+		PLAYBACK_EVENT_FULL(UTIL_DefaultPlaybackFlags(), m_pPlayer->edict(), m_usCrowbar,
 			0.0, g_vecZero, g_vecZero, 0, 0, 0,
 			0.0, 0, 0.0);
 	}

@@ -61,7 +61,7 @@ extern bool g_iVisibleMouse;
 class CCommandMenu;
 int g_iPlayerClass;
 int g_iTeamNumber;
-int g_iInventory[MAX_ITEMS]; //AJH Inventory system
+int g_iInventory[MAX_ITEMS]; // AJH Inventory system
 int g_iUser1 = 0;
 int g_iUser2 = 0;
 int g_iUser3 = 0;
@@ -111,21 +111,6 @@ const char* sTFClasses[] =
 		"CIVILIAN",
 };
 
-const char* sLocalisedClasses[] =
-	{
-		"#Civilian",
-		"#Scout",
-		"#Sniper",
-		"#Soldier",
-		"#Demoman",
-		"#Medic",
-		"#HWGuy",
-		"#Pyro",
-		"#Spy",
-		"#Engineer",
-		"#Random",
-		"#Civilian",
-};
 
 const char* sTFClassSelection[] =
 	{
@@ -143,7 +128,7 @@ const char* sTFClassSelection[] =
 		"civilian",
 };
 
-char* sLocalisedInventory[MAX_ITEMS] = //AJH Inventory system
+char* sLocalisedInventory[MAX_ITEMS] = // AJH Inventory system
 	{
 		"#Item1",
 		"#Item2",
@@ -157,7 +142,7 @@ char* sLocalisedInventory[MAX_ITEMS] = //AJH Inventory system
 		"#Item10",
 };
 
-char* sInventorySelection[MAX_ITEMS] = //AJH Inventory system
+char* sInventorySelection[MAX_ITEMS] = // AJH Inventory system
 	{
 		"inventory 1",
 		"inventory 2",
@@ -220,15 +205,15 @@ void CCommandMenu::RemoveAllButtons()
 	/*
 	for(int i=0;i<m_iButtons;i++)
 	{
-		CommandButton *pTemp = m_aButtons[i]; 
+		CommandButton *pTemp = m_aButtons[i];
 		m_aButtons[i] = NULL;
-		
+
 		pTemp
 		if(pTemp)
 		{
 			delete(pTemp);
 		}
-		
+
 	}
 	*/
 	removeAllChildren();
@@ -300,7 +285,7 @@ CommandButton* CCommandMenu::FindButtonWithSubmenu(CCommandMenu* pSubMenu)
 			return m_aButtons[i];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 // Recalculate the visible buttons
@@ -317,7 +302,7 @@ bool CCommandMenu::RecalculateVisibles(int iYOffset, bool bHideAll)
 		if ((0 != iClass && iClass != g_iPlayerClass) || (m_aButtons[i]->IsNotValid()) || bHideAll)
 		{
 			m_aButtons[i]->setVisible(false);
-			if (m_aButtons[i]->GetSubMenu() != NULL)
+			if (m_aButtons[i]->GetSubMenu() != nullptr)
 			{
 				(m_aButtons[i]->GetSubMenu())->RecalculateVisibles(0, true);
 			}
@@ -325,7 +310,7 @@ bool CCommandMenu::RecalculateVisibles(int iYOffset, bool bHideAll)
 		else
 		{
 			// If it's got a submenu, force it to check visibilities
-			if (m_aButtons[i]->GetSubMenu() != NULL)
+			if (m_aButtons[i]->GetSubMenu() != nullptr)
 			{
 				if (!(m_aButtons[i]->GetSubMenu())->RecalculateVisibles(0, false))
 				{
@@ -352,7 +337,7 @@ bool CCommandMenu::RecalculateVisibles(int iYOffset, bool bHideAll)
 	{
 		if (m_aButtons[i]->isVisible())
 		{
-			if (m_aButtons[i]->GetSubMenu() != NULL)
+			if (m_aButtons[i]->GetSubMenu() != nullptr)
 				(m_aButtons[i]->GetSubMenu())->RecalculateVisibles(iCurrentY + m_iYOffset, false);
 
 
@@ -542,12 +527,12 @@ TeamFortressViewport::TeamFortressViewport(int x, int y, int wide, int tall) : P
 {
 	gViewPort = this;
 	m_iInitialized = false;
-	m_pTeamMenu = NULL;
-	m_pClassMenu = NULL;
-	m_pScoreBoard = NULL;
-	m_pSpectatorPanel = NULL;
-	m_pCurrentMenu = NULL;
-	m_pCurrentCommandMenu = NULL;
+	m_pTeamMenu = nullptr;
+	m_pClassMenu = nullptr;
+	m_pScoreBoard = nullptr;
+	m_pSpectatorPanel = nullptr;
+	m_pCurrentMenu = nullptr;
+	m_pCurrentCommandMenu = nullptr;
 
 	Initialize();
 	addInputSignal(new CViewPortInputHandler);
@@ -619,7 +604,7 @@ TeamFortressViewport::TeamFortressViewport(int x, int y, int wide, int tall) : P
 
 	float flLabelSize = ((ScreenWidth - (XRES(CAMOPTIONS_BUTTON_X) + 15)) - XRES(24 + 15)) - XRES((15 + OPTIONS_BUTTON_X + 15) + 38);
 
-	m_pCommandMenus[m_PlayerMenu] = new CCommandMenu(NULL, true,
+	m_pCommandMenus[m_PlayerMenu] = new CCommandMenu(nullptr, true,
 		XRES((15 + OPTIONS_BUTTON_X + 15) + 31), PANEL_HEIGHT, flLabelSize, 300);
 	m_pCommandMenus[m_PlayerMenu]->setParent(this);
 	m_pCommandMenus[m_PlayerMenu]->setVisible(false);
@@ -690,7 +675,7 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 
 	int newIndex = m_iNumMenus;
 
-	m_pCommandMenus[newIndex] = new CCommandMenu(NULL, direction, xOffset, yOffset, flButtonSizeX, 300); // This will be resized once we know how many items are in it
+	m_pCommandMenus[newIndex] = new CCommandMenu(nullptr, direction, xOffset, yOffset, flButtonSizeX, 300); // This will be resized once we know how many items are in it
 	m_pCommandMenus[newIndex]->setParent(this);
 	m_pCommandMenus[newIndex]->setVisible(false);
 	m_pCommandMenus[newIndex]->m_flButtonSizeY = flButtonSizeY;
@@ -700,11 +685,11 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 
 	// Read Command Menu from the txt file
 	char token[1024];
-	char* pfile = (char*)gEngfuncs.COM_LoadFile(menuFile, 5, NULL);
+	char* pfile = (char*)gEngfuncs.COM_LoadFile(menuFile, 5, nullptr);
 	if (!pfile)
 	{
 		gEngfuncs.Con_DPrintf("Unable to open %s\n", menuFile);
-		SetCurrentCommandMenu(NULL);
+		SetCurrentCommandMenu(nullptr);
 		return newIndex;
 	}
 
@@ -736,7 +721,7 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 			bool iToggle = false;
 			int iButtonY;
 			bool bGetExtraToken = true;
-			CommandButton* pButton = NULL;
+			CommandButton* pButton = nullptr;
 
 			// We should never be here without a Command Menu
 			if (!m_pCurrentCommandMenu)
@@ -794,8 +779,8 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 
 			// Get the button text
 			pfile = gEngfuncs.COM_ParseFile(pfile, token);
-
-			CHudTextMessage::LocaliseTextString(token, cText, sizeof(cText));
+			strncpy(cText, token, 32);
+			cText[31] = '\0';
 
 			// save off the last button text we've come across (for error reporting)
 			strcpy(szLastButtonText, cText);
@@ -901,8 +886,8 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 		pfile = gEngfuncs.COM_ParseFile(pfile, token);
 	}
 
-	SetCurrentMenu(NULL);
-	SetCurrentCommandMenu(NULL);
+	SetCurrentMenu(nullptr);
+	SetCurrentCommandMenu(nullptr);
 	gEngfuncs.COM_FreeFile(pfile);
 
 	m_iInitialized = true;
@@ -934,8 +919,8 @@ CCommandMenu* TeamFortressViewport::CreateDisguiseSubmenu(CommandButton* pButton
 //-----------------------------------------------------------------------------
 CommandButton* TeamFortressViewport::CreateCustomButton(char* pButtonText, char* pButtonName, int iYOffset)
 {
-	CommandButton* pButton = NULL;
-	CCommandMenu* pMenu = NULL;
+	CommandButton* pButton = nullptr;
+	CCommandMenu* pMenu = nullptr;
 
 
 	// ChangeTeam
@@ -970,7 +955,7 @@ CommandButton* TeamFortressViewport::CreateCustomButton(char* pButtonText, char*
 		pMenu->AddButton(m_pTeamButtons[5]);
 	}
 
-	//AJH Show inventory
+	// AJH Show inventory
 	else if (!strcmp(pButtonName, "!SHOWINVENTORY"))
 	{
 		// Create the inventory menu
@@ -1022,7 +1007,7 @@ void TeamFortressViewport::ShowCommandMenu(int menuIndex)
 	if (!m_iInitialized)
 		return;
 
-	//Already have a menu open.
+	// Already have a menu open.
 	if (m_pCurrentMenu)
 		return;
 
@@ -1106,7 +1091,7 @@ void TeamFortressViewport::HideCommandMenu()
 
 
 	m_flMenuOpenTime = 0.0f;
-	SetCurrentCommandMenu(NULL);
+	SetCurrentCommandMenu(nullptr);
 	UpdateCursorState();
 }
 
@@ -1180,7 +1165,7 @@ void TeamFortressViewport::SetCurrentCommandMenu(CCommandMenu* pNewMenu)
 	m_pCurrentCommandMenu = pNewMenu;
 
 	if (m_pCurrentCommandMenu)
-		m_pCurrentCommandMenu->MakeVisible(NULL);
+		m_pCurrentCommandMenu->MakeVisible(nullptr);
 }
 
 void TeamFortressViewport::UpdateCommandMenu(int menuIndex)
@@ -1199,14 +1184,14 @@ void TeamFortressViewport::UpdateCommandMenu(int menuIndex)
 void TeamFortressViewport::UpdatePlayerMenu(int menuIndex)
 {
 
-	cl_entity_t* pEnt = NULL;
+	cl_entity_t* pEnt = nullptr;
 	float flLabelSize = ((ScreenWidth - (XRES(CAMOPTIONS_BUTTON_X) + 15)) - XRES(24 + 15)) - XRES((15 + OPTIONS_BUTTON_X + 15) + 38);
 	gViewPort->GetAllPlayersInfo();
 
 
 	for (int i = 1; i < MAX_PLAYERS_HUD; i++)
 	{
-		//if ( g_PlayerInfoList[i].name == NULL )
+		// if ( g_PlayerInfoList[i].name == NULL )
 		//	continue; // empty player slot, skip
 
 		pEnt = gEngfuncs.GetEntityByIndex(i);
@@ -1214,7 +1199,7 @@ void TeamFortressViewport::UpdatePlayerMenu(int menuIndex)
 		if (!gHUD.m_Spectator.IsActivePlayer(pEnt))
 			continue;
 
-		//if ( g_PlayerExtraInfo[i].teamname[0] == 0 )
+		// if ( g_PlayerExtraInfo[i].teamname[0] == 0 )
 		//	continue; // skip over players who are not in a team
 
 		SpectButton* pButton = new SpectButton(1, g_PlayerInfoList[pEnt->index].name,
@@ -1253,7 +1238,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		char helpString2[128];
 		char tempString[128];
 		char* name;
-		char* pBottomText = NULL;
+		char* pBottomText = nullptr;
 		int player = 0;
 
 		// check if spectator combinations are still valid
@@ -1267,7 +1252,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 			snprintf(tempString, sizeof(tempString) - 1, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString("#Spec_Duck"));
 			tempString[sizeof(tempString) - 1] = '\0';
 
-			gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(tempString) + 1, tempString);
+			gHUD.m_TextMessage.MsgFunc_TextMsg(nullptr, strlen(tempString) + 1, tempString);
 		}
 
 		sprintf(bottomText, "#Spec_Mode%d", g_iUser1);
@@ -1284,7 +1269,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 
 		// special case in free map and inset off, don't show names
 		if ((g_iUser1 == OBS_MAP_FREE) && 0 == gHUD.m_Spectator.m_pip->value)
-			name = NULL;
+			name = nullptr;
 		else
 			name = g_PlayerInfoList[player].name;
 
@@ -1358,9 +1343,9 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 			 timer	= 0;
 
 		snprintf ( szText, 63, "%d:%02d\n", (timer / 60), (timer % 60) );
-		
+
 		szText[63] = 0;
-				
+
 		m_pSpectatorPanel->m_CurrentTime->setText( szText ); */
 
 		// update spectator panel
@@ -1423,7 +1408,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow(int iTextToShow)
 {
 	char sz[256];
 	const char* cText = "";
-	char* pfile = NULL;
+	char* pfile = nullptr;
 	static const int MAX_TITLE_LENGTH = 64;
 	char cTitle[MAX_TITLE_LENGTH];
 
@@ -1449,7 +1434,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow(int iTextToShow)
 		{
 			const char* level = gEngfuncs.pfnGetLevelName();
 			if (!level)
-				return NULL;
+				return nullptr;
 
 			strcpy(sz, level);
 			char* ch = strchr(sz, '.');
@@ -1472,10 +1457,10 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow(int iTextToShow)
 			}
 		}
 
-		pfile = (char*)gEngfuncs.COM_LoadFile(sz, 5, NULL);
+		pfile = (char*)gEngfuncs.COM_LoadFile(sz, 5, nullptr);
 
 		if (!pfile)
-			return NULL;
+			return nullptr;
 
 		cText = pfile;
 
@@ -1508,7 +1493,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow(int iTextToShow)
 // VGUI Menus
 void TeamFortressViewport::ShowVGUIMenu(int iMenu)
 {
-	CMenuPanel* pNewMenu = NULL;
+	CMenuPanel* pNewMenu = nullptr;
 
 	// Don't open menus in demo playback
 	if (0 != gEngfuncs.pDemoAPI->IsPlayingback())
@@ -1524,7 +1509,7 @@ void TeamFortressViewport::ShowVGUIMenu(int iMenu)
 	if (m_pCurrentMenu)
 	{
 		CMenuPanel* pMenu = m_pCurrentMenu;
-		while (pMenu != NULL)
+		while (pMenu != nullptr)
 		{
 			if (pMenu->GetMenuID() == iMenu)
 				return;
@@ -1535,9 +1520,9 @@ void TeamFortressViewport::ShowVGUIMenu(int iMenu)
 	switch (iMenu)
 	{
 
-	case MENU_CUSTOM: //AJH New customizable menu HUD system
+	case MENU_CUSTOM: // AJH New customizable menu HUD system
 
-		CreateCustomMenu(); //AJH new customizable menu system
+		CreateCustomMenu(); // AJH new customizable menu system
 		pNewMenu = ShowCustomMenu();
 		break;
 
@@ -1650,7 +1635,7 @@ CMenuPanel* TeamFortressViewport::ShowTeamMenu()
 {
 	// Don't open menus in demo playback
 	if (0 != gEngfuncs.pDemoAPI->IsPlayingback())
-		return NULL;
+		return nullptr;
 
 	m_pTeamMenu->Reset();
 	return m_pTeamMenu;
@@ -1672,7 +1657,7 @@ CMenuPanel* TeamFortressViewport::ShowCustomMenu()
 {
 	// Don't open menus in demo playback
 	if (gEngfuncs.pDemoAPI->IsPlayingback())
-		return NULL;
+		return nullptr;
 
 	m_pCustomMenu->Reset();
 	return m_pCustomMenu;
@@ -1680,10 +1665,7 @@ CMenuPanel* TeamFortressViewport::ShowCustomMenu()
 
 void TeamFortressViewport::CreateCustomMenu()
 {
-	// Create the panel
-	m_pCustomMenu = new CCustomMenu(100, false, 0, 0, ScreenWidth, ScreenHeight);
-	m_pCustomMenu->setParent(this);
-	m_pCustomMenu->setVisible(false);
+	
 }
 
 //======================================================================================
@@ -1694,7 +1676,7 @@ CMenuPanel* TeamFortressViewport::ShowClassMenu()
 {
 	// Don't open menus in demo playback
 	if (0 != gEngfuncs.pDemoAPI->IsPlayingback())
-		return NULL;
+		return nullptr;
 
 	m_pClassMenu->Reset();
 	return m_pClassMenu;
@@ -1770,7 +1752,7 @@ void TeamFortressViewport::UpdateCursorState()
 void TeamFortressViewport::UpdateHighlights()
 {
 	if (m_pCurrentCommandMenu)
-		m_pCurrentCommandMenu->MakeVisible(NULL);
+		m_pCurrentCommandMenu->MakeVisible(nullptr);
 }
 
 void TeamFortressViewport::GetAllPlayersInfo()
@@ -2128,7 +2110,7 @@ bool TeamFortressViewport::MsgFunc_ScoreInfo(const char* pszName, int iSize, voi
 		g_PlayerExtraInfo[cl].playerclass = playerclass;
 		g_PlayerExtraInfo[cl].teamnumber = teamnumber;
 
-		//Dont go bellow 0!
+		// Dont go bellow 0!
 		if (g_PlayerExtraInfo[cl].teamnumber < 0)
 			g_PlayerExtraInfo[cl].teamnumber = 0;
 

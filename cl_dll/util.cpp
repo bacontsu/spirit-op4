@@ -39,3 +39,8 @@ HSPRITE LoadSprite(const char* pszName)
 
 	return SPR_Load(sz);
 }
+
+void UTIL_SetOrigin(entvars_t* pev, const Vector& vecOrigin)
+{
+
+}

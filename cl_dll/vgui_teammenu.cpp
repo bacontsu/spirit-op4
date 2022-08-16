@@ -23,6 +23,7 @@
 
 #include "hud.h"
 #include "cl_util.h"
+#include "parsemsg.h"
 #include "vgui_TeamFortressViewport.h"
 
 // Team Menu Dimensions
@@ -44,6 +45,8 @@
 #define TEAMMENU_WINDOW_TEXT_SIZE_Y YRES(178)
 #define TEAMMENU_WINDOW_INFO_X XRES(16)
 #define TEAMMENU_WINDOW_INFO_Y YRES(234)
+#define TEAMMENU_FULL_TOPLEFT_X XRES(215)
+#define TEAMMENU_FULL_TOPLEFT_Y YRES(42)
 
 // Creation
 CTeamMenuPanel::CTeamMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int wide, int tall) : CMenuPanel(iTrans, iRemoveMe, x, y, wide, tall)
@@ -69,12 +72,12 @@ CTeamMenuPanel::CTeamMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int wid
 	pSchemes->getBgColor(hTitleScheme, r, g, b, a);
 	pLabel->setBgColor(r, g, b, a);
 	pLabel->setContentAlignment(vgui::Label::a_west);
-	pLabel->setText("%s", gHUD.m_TextMessage.BufferedLocaliseTextString("#Title_SelectYourTeam"));
+	pLabel->setText("%s", gHUD.m_TextMessage.BufferedLocaliseTextString("#CTFTitle_SelectYourTeam"));
 
 	// Create the Info Window
 	m_pTeamWindow = new CTransparentPanel(255, TEAMMENU_WINDOW_X, TEAMMENU_WINDOW_Y, TEAMMENU_WINDOW_SIZE_X, TEAMMENU_WINDOW_SIZE_Y);
 	m_pTeamWindow->setParent(this);
-	m_pTeamWindow->setBorder(new LineBorder(Color(255 * 0.7, 170 * 0.7, 0, 0)));
+	m_pTeamWindow->setBorder(new LineBorder(Color(0, 112, 0, 0)));
 
 	// Create the Map Name Label
 	m_pMapTitle = new Label("", TEAMMENU_WINDOW_TITLE_X, TEAMMENU_WINDOW_TITLE_Y);
@@ -100,10 +103,10 @@ CTeamMenuPanel::CTeamMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int wid
 	pSchemes->getBgColor(hTeamWindowText, r, g, b, a);
 	m_pBriefing->setBgColor(r, g, b, a);
 
-	m_pBriefing->setText(gHUD.m_TextMessage.BufferedLocaliseTextString("#Map_Description_not_available"));
+	m_pBriefing->setText("Map Description not available.");
 
 	// Team Menu buttons
-	for (int i = 1; i <= 5; i++)
+	for (int i = 1; i <= 3; i++)
 	{
 		char sz[256];
 
@@ -116,11 +119,11 @@ CTeamMenuPanel::CTeamMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int wid
 		m_pButtons[i]->setVisible(false);
 
 		// AutoAssign button uses special case
-		if (i == 5)
+		if (i == 3)
 		{
-			m_pButtons[5]->setBoundKey('5');
-			m_pButtons[5]->setText(gHUD.m_TextMessage.BufferedLocaliseTextString("#Team_AutoAssign"));
-			m_pButtons[5]->setVisible(true);
+			m_pButtons[i]->setBoundKey('3');
+			m_pButtons[i]->setText(gHUD.m_TextMessage.BufferedLocaliseTextString("#CTFTeam_AutoAssign"));
+			m_pButtons[i]->setVisible(true);
 		}
 
 		// Create the Signals
@@ -140,16 +143,32 @@ CTeamMenuPanel::CTeamMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int wid
 	}
 
 	// Create the Cancel button
-	m_pCancelButton = new CommandButton(CHudTextMessage::BufferedLocaliseTextString("#Menu_Cancel"), TEAMMENU_TOPLEFT_BUTTON_X, 0, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y);
+	m_pCancelButton = new CommandButton(CHudTextMessage::BufferedLocaliseTextString("#CTFMenu_Cancel"), TEAMMENU_TOPLEFT_BUTTON_X, 0, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y);
 	m_pCancelButton->setParent(this);
 	m_pCancelButton->addActionSignal(new CMenuHandler_TextWindow(HIDE_TEXTWINDOW));
+	m_pCancelButton->addActionSignal(new CMenuHandler_StringCommand("cancelmenu", true));
 
 	// Create the Spectate button
-	m_pSpectateButton = new SpectateButton(CHudTextMessage::BufferedLocaliseTextString("#Menu_Spectate"), TEAMMENU_TOPLEFT_BUTTON_X, 0, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y, true);
+	m_pSpectateButton = new SpectateButton(CHudTextMessage::BufferedLocaliseTextString("#CTFMenu_Spectate"), TEAMMENU_TOPLEFT_BUTTON_X, 0, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y, true);
 	m_pSpectateButton->setParent(this);
 	m_pSpectateButton->addActionSignal(new CMenuHandler_StringCommand("spectate", true));
-	m_pSpectateButton->setBoundKey('6');
-	m_pSpectateButton->addInputSignal(new CHandler_MenuButtonOver(this, 6));
+	m_pSpectateButton->setBoundKey('4');
+	m_pSpectateButton->addInputSignal(new CHandler_MenuButtonOver(this, 4));
+
+	m_pTeamFull = new TextPanel("Team balancing enabled.  Selected team is full.", TEAMMENU_FULL_TOPLEFT_X, TEAMMENU_FULL_TOPLEFT_Y, TEAMMENU_WINDOW_SIZE_X - TEAMMENU_WINDOW_INFO_X, TEAMMENU_WINDOW_TEXT_SIZE_Y);
+	m_pTeamFull->setParent(this);
+	m_pTeamFull->setFont(pSchemes->getFont(hTeamWindowText));
+	pSchemes->getFgColor(hTeamWindowText, r, g, b, a);
+	m_pTeamFull->setFgColor(r, g, b, a);
+	pSchemes->getBgColor(hTeamWindowText, r, g, b, a);
+	m_pTeamFull->setBgColor(r, g, b, a);
+
+	auto pImage = m_pTeamFull->getTextImage();
+
+	int tfwide, tftall;
+	pImage->getTextSize(tfwide, tftall);
+	m_pTeamFull->setSize(tfwide, tftall);
+	m_pTeamFull->setVisible(false);
 
 	Initialize();
 }
@@ -172,7 +191,7 @@ void CTeamMenuPanel::Update()
 	int iYPos = TEAMMENU_TOPLEFT_BUTTON_Y;
 
 	// Set the team buttons
-	for (int i = 1; i <= 4; i++)
+	for (int i = 1; i <= 2; i++)
 	{
 		if (m_pButtons[i])
 		{
@@ -193,44 +212,46 @@ void CTeamMenuPanel::Update()
 				if (0 == m_iCurrentInfo)
 					SetActiveInfo(i);
 
-				char szPlayerList[(MAX_PLAYER_NAME_LENGTH + 3) * 31]; // name + ", "
+				/*
+				char szPlayerList[ (MAX_PLAYER_NAME_LENGTH + 3) * 31 ];  // name + ", "
 				strcpy(szPlayerList, "\n");
 				// Update the Team Info
 				// Now count the number of teammembers of this class
 				int iTotal = 0;
-				for (int j = 1; j < MAX_PLAYERS_HUD; j++)
+				for ( int j = 1; j < MAX_PLAYERS_HUD; j++ )
 				{
-					if (g_PlayerInfoList[j].name == NULL)
+					if ( g_PlayerInfoList[j].name == NULL )
 						continue; // empty player slot, skip
-					if (0 != g_PlayerInfoList[j].thisplayer)
+					if ( 0 != g_PlayerInfoList[j].thisplayer )
 						continue; // skip this player
-					if (g_PlayerExtraInfo[j].teamnumber != i)
+					if ( g_PlayerExtraInfo[j].teamnumber != i )
 						continue; // skip over players in other teams
 
 					iTotal++;
 					if (iTotal > 1)
-						strncat(szPlayerList, ", ", sizeof(szPlayerList) - strlen(szPlayerList));
-					strncat(szPlayerList, g_PlayerInfoList[j].name, sizeof(szPlayerList) - strlen(szPlayerList));
-					szPlayerList[sizeof(szPlayerList) - 1] = '\0';
+						strncat( szPlayerList, ", ", sizeof(szPlayerList) - strlen(szPlayerList) );
+					strncat( szPlayerList, g_PlayerInfoList[j].name, sizeof(szPlayerList) - strlen(szPlayerList) );
+					szPlayerList[ sizeof(szPlayerList) - 1 ] = '\0';
 				}
 
 				if (iTotal > 0)
 				{
 					// Set the text of the info Panel
-					char szText[((MAX_PLAYER_NAME_LENGTH + 3) * 31) + 256];
+					char szText[ ((MAX_PLAYER_NAME_LENGTH + 3) * 31) + 256 ]; 
 					if (iTotal == 1)
-						sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags);
+						sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
 					else
-						sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags);
-					strncat(szText, szPlayerList, sizeof(szText) - strlen(szText));
-					szText[sizeof(szText) - 1] = '\0';
+						sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+					strncat( szText, szPlayerList, sizeof(szText) - strlen(szText) );
+					szText[ sizeof(szText) - 1 ] = '\0';
 
-					m_pTeamInfoPanel[i]->setText(szText);
+					m_pTeamInfoPanel[i]->setText( szText );
 				}
 				else
 				{
-					m_pTeamInfoPanel[i]->setText("");
+					m_pTeamInfoPanel[i]->setText( "" );
 				}
+				*/
 			}
 			else
 			{
@@ -241,7 +262,7 @@ void CTeamMenuPanel::Update()
 	}
 
 	// Move the AutoAssign button into place
-	m_pButtons[5]->setPos(TEAMMENU_TOPLEFT_BUTTON_X, iYPos);
+	m_pButtons[3]->setPos(TEAMMENU_TOPLEFT_BUTTON_X, iYPos);
 	iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
 
 	// Spectate button
@@ -257,7 +278,7 @@ void CTeamMenuPanel::Update()
 	}
 
 	// If the player is already in a team, make the cancel button visible
-	if (0 != g_iTeamNumber)
+	if (0 != gViewPort->m_iCTFTeamNumber)
 	{
 		m_pCancelButton->setPos(TEAMMENU_TOPLEFT_BUTTON_X, iYPos);
 		iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
@@ -318,14 +339,14 @@ void CTeamMenuPanel::Update()
 bool CTeamMenuPanel::SlotInput(int iSlot)
 {
 	// Check for AutoAssign
-	if (iSlot == 5)
+	if (iSlot == 3)
 	{
-		m_pButtons[5]->fireActionSignal();
+		m_pButtons[3]->fireActionSignal();
 		return true;
 	}
 
 	// Spectate
-	if (iSlot == 6)
+	if (iSlot == 4)
 	{
 		m_pSpectateButton->fireActionSignal();
 		return true;
@@ -361,6 +382,12 @@ void CTeamMenuPanel::paintBackground()
 	if (!m_bUpdatedMapName)
 		Update();
 
+	if (0 != m_flTeamFullReset && m_flTeamFullReset <= gHUD.m_flTime)
+	{
+		m_pTeamFull->setVisible(false);
+		m_flTeamFullReset = 0;
+	}
+
 	CMenuPanel::paintBackground();
 }
 
@@ -370,14 +397,14 @@ void CTeamMenuPanel::SetActiveInfo(int iInput)
 {
 	// Remove all the Info panels and bring up the specified one
 	m_pSpectateButton->setArmed(false);
-	for (int i = 1; i <= 5; i++)
+	for (int i = 1; i <= 3; i++)
 	{
 		m_pButtons[i]->setArmed(false);
 		m_pTeamInfoPanel[i]->setVisible(false);
 	}
 
-	// 6 is Spectate
-	if (iInput == 6)
+	// 4 is Spectate
+	if (iInput == 4)
 	{
 		m_pSpectateButton->setArmed(true);
 	}
@@ -390,4 +417,15 @@ void CTeamMenuPanel::SetActiveInfo(int iInput)
 	m_iCurrentInfo = iInput;
 
 	m_pScrollPanel->validate();
+}
+
+bool CTeamMenuPanel::MsgFunc_TeamFull(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+
+	m_pTeamFull->setVisible(READ_BYTE() != 0);
+
+	m_flTeamFullReset = gHUD.m_flTime + 2.0;
+
+	return true;
 }

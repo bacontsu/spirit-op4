@@ -52,6 +52,8 @@ typedef struct
 
 typedef struct cvar_s cvar_t;
 
+extern int giR, giG, giB;
+
 
 #define HUD_ACTIVE 1
 #define HUD_INTERMISSION 2
@@ -242,6 +244,8 @@ struct extra_player_info_t
 	bool dead;	  // UNUSED currently, spectator UI would like this
 	short teamnumber;
 	char teamname[MAX_TEAM_NAME];
+	short teamid;
+	short flagcaptures;
 };
 
 struct team_info_t
@@ -367,10 +371,13 @@ public:
 	bool MsgFunc_Flashlight(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_FlashBat(const char* pszName, int iSize, void* pbuf);
 
+	void drawNightVision();
+
 private:
 	HSPRITE m_hSprite1;
 	HSPRITE m_hSprite2;
 	HSPRITE m_hBeam;
+	HSPRITE m_nvSprite;
 	Rect* m_prc1;
 	Rect* m_prc2;
 	Rect* m_prcBeam;
@@ -450,6 +457,8 @@ private:
 
 	int m_HUD_title_life;
 	int m_HUD_title_half;
+	int m_HUD_title_opposing;
+	int m_HUD_title_force;
 };
 
 //
@@ -465,11 +474,13 @@ public:
 	void Reset() override;
 	bool Draw(float flTime) override;
 	bool MsgFunc_StatusIcon(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_CustomIcon(const char* pszName, int iSize, void* pbuf);
 
 	enum
 	{
 		MAX_ICONSPRITENAME_LENGTH = MAX_SPRITE_NAME_LENGTH,
-		MAX_ICONSPRITES = 4,
+		MAX_ICONSPRITES = 5,
+		MAX_CUSTOMSPRITES = 6,
 	};
 
 
@@ -478,6 +489,9 @@ public:
 	void EnableIcon(const char* pszIconName, unsigned char red, unsigned char green, unsigned char blue);
 	void DisableIcon(const char* pszIconName);
 
+	void EnableCustomIcon(int nIndex, char* pszIconName, unsigned char red, unsigned char green, unsigned char blue, const Rect& aRect);
+	void DisableCustomIcon(int nIndex);
+
 private:
 	typedef struct
 	{
@@ -485,9 +499,11 @@ private:
 		HSPRITE spr;
 		Rect rc;
 		unsigned char r, g, b;
+		int teamnumber; //Not actually used
 	} icon_sprite_t;
 
 	icon_sprite_t m_IconList[MAX_ICONSPRITES];
+	CHudStatusIcons::icon_sprite_t m_CustomList[MAX_CUSTOMSPRITES];
 };
 
 //
@@ -517,6 +533,89 @@ public:
 	void DrawAll(const Vector& org);
 };
 
+class CHudFlagIcons : public CHudBase
+{
+public:
+	bool Init();
+	bool VidInit();
+	void InitHUDData();
+	bool Draw(float flTime);
+
+	void EnableFlag(const char* pszFlagName, unsigned char team_idx, unsigned char red, unsigned char green, unsigned char blue, unsigned char score);
+	void DisableFlag(const char* pszFlagName, unsigned char team_idx);
+
+	bool MsgFunc_FlagIcon(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_FlagTimer(const char* pszName, int iSize, void* pbuf);
+
+private:
+	enum
+	{
+		MAX_FLAGSPRITENAME_LENGTH = 24,
+		MAX_FLAGSPRITES = 4,
+	};
+
+	struct flag_sprite_t
+	{
+		char szSpriteName[MAX_FLAGSPRITENAME_LENGTH];
+		HSPRITE spr;
+		Rect rc;
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+		unsigned char score;
+	};
+
+
+	flag_sprite_t m_FlagList[MAX_FLAGSPRITES];
+	bool m_bIsTimer;
+	bool m_bTimerReset;
+	float m_flTimeStart;
+	float m_flTimeLimit;
+};
+
+
+class CHudPlayerBrowse : public CHudBase
+{
+public:
+	bool Init();
+	bool VidInit();
+	void InitHUDData();
+	bool Draw(float flTime);
+
+	bool MsgFunc_PlyrBrowse(const char* pszName, int iSize, void* pbuf);
+
+private:
+	enum
+	{
+		MAX_POWERUPSPRITENAME_LENGTH = 15,
+	};
+
+	struct powerup_sprite_t
+	{
+		char szSpriteName[MAX_POWERUPSPRITENAME_LENGTH];
+		HSPRITE spr;
+		Rect rc;
+		int r;
+		int g;
+		int b;
+	};
+
+	float m_flDelayFade;
+	float m_flDelayFadeSprite;
+
+	powerup_sprite_t m_PowerupSprite;
+
+	char m_szLineBuffer[256];
+	char m_szNewLineBuffer[256];
+
+	int m_iTeamNum;
+	int m_iNewTeamNum;
+	int m_iHealth;
+	int m_iArmor;
+	bool m_fFriendly;
+
+};
+
 //
 //-----------------------------------------------------
 //
@@ -536,6 +635,36 @@ typedef struct cl_mirror_s
 } cl_mirror_t;
 
 
+class CHudScoreboard : public CHudBase
+{
+public:
+	bool Init();
+	void InitHUDData();
+	bool VidInit();
+	bool Draw(float flTime);
+	int DrawPlayers(int xoffset, float listslot, int nameoffset = 0, char* team = NULL); // returns the ypos where it finishes drawing
+	void UserCmd_ShowScores();
+	void UserCmd_HideScores();
+	bool MsgFunc_ScoreInfo(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_TeamInfo(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_TeamScore(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_PlayerIcon(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_CTFScore(const char* pszName, int iSize, void* pbuf);
+	void DeathMsg(int killer, int victim);
+
+
+
+	int m_iNumTeams;
+
+	int m_iLastKilledBy;
+	int m_fLastKillTime;
+	int m_iPlayerNum;
+	bool m_iShowscoresHeld;
+
+	struct cvar_s* cl_showpacketloss;
+
+	void GetAllPlayersInfo();
+};
 
 class CHud
 {
@@ -549,6 +678,8 @@ private:
 	float m_flMouseSensitivity;
 	int m_iConcussionEffect;
 
+	bool mNightVisionState;
+
 public:
 	HSPRITE m_hsprCursor;
 	float m_flTime;		  // the current client time
@@ -559,7 +690,7 @@ public:
 	int m_iKeyBits;
 	int m_iHideHUDDisplay;
 	int m_iFOV;
-	bool m_Teamplay;
+	int m_Teamplay;
 	int m_iRes;
 	cvar_t* m_pCvarStealMouse;
 	cvar_t* m_pCvarDraw;
@@ -632,6 +763,7 @@ public:
 	CHudTrain m_Train;
 	CHudFlashlight m_Flash;
 	CHudMessage m_Message;
+	CHudScoreboard m_Scoreboard;
 	CHudStatusBar m_StatusBar;
 	CHudDeathNotice m_DeathNotice;
 	CHudSayText m_SayText;
@@ -640,6 +772,9 @@ public:
 	CHudTextMessage m_TextMessage;
 	CHudStatusIcons m_StatusIcons;
 	CHudParticle m_Particle; // (LRC) -- 30/08/02 November235: Particles to Order
+
+	CHudFlagIcons m_FlagIcons;
+	CHudPlayerBrowse m_PlayerBrowse;
 
 	void Init();
 	void VidInit();
@@ -685,6 +820,17 @@ public:
 	void AddHudElem(CHudBase* p);
 
 	float GetSensitivity();
+
+	bool isNightVisionOn() { return mNightVisionState; }
+
+	void setNightVisionState(bool state);
+
+	void getNightVisionHudItemColor(int& r, int& g, int& b)
+	{
+		r = 255;
+		g = 255;
+		b = 255;
+	}
 };
 
 extern CHud gHUD;

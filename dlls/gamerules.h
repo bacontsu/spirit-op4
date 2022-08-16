@@ -19,7 +19,7 @@
 #pragma once
 
 //LRC
-#define GAME_NAME "Spirit of Half-Life 1.8 alpha1"
+#define GAME_NAME "SOHL 1.8 Opposing Force"
 
 //#include "weapons.h"
 //#include "items.h"
@@ -27,6 +27,7 @@ class CBasePlayerItem;
 class CBasePlayer;
 class CItem;
 class CBasePlayerAmmo;
+class CBaseMonster;
 
 // weapon respawning return codes
 enum
@@ -61,6 +62,14 @@ enum
 	GR_NEUTRAL,
 };
 
+#define ITEM_RESPAWN_TIME 30
+#define WEAPON_RESPAWN_TIME 20
+#define AMMO_RESPAWN_TIME 20
+
+// when we are within this close to running out of entities,  items
+// marked with the ITEM_FLAG_LIMITINWORLD will delay their respawn
+#define ENTITY_INTOLERANCE 100
+
 class CGameRules
 {
 public:
@@ -74,9 +83,10 @@ public:
 
 	// Functions to verify the single/multiplayer status of a game
 	virtual bool IsMultiplayer() = 0;							   // is this a multiplayer game? (either coop or deathmatch)
-	virtual bool IsDeathmatch() = 0;							   //is this a deathmatch game?
+	virtual bool IsDeathmatch() = 0;							   // is this a deathmatch game?
 	virtual bool IsTeamplay() { return false; };				   // is this deathmatch game being played with team rules?
 	virtual bool IsCoOp() = 0;									   // is this a coop game?
+	virtual bool IsCTF() = 0;									   // is this a ctf game?
 	virtual const char* GetGameDescription() { return GAME_NAME; } // this is the game name that gets seen in the server browser
 
 	// Client connection/disconnection
@@ -102,12 +112,14 @@ public:
 	virtual void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer) {}		 // the player has changed userinfo;  can change it now
 
 	// Client kills/scoring
-	virtual int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) = 0;					// how many points do I award whoever kills this player?
+	virtual int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) = 0; // how many points do I award whoever kills this player?
+	virtual int IPointsForMonsterKill(CBasePlayer* pAttacker, CBaseMonster* pKiller) { return 0; }
 	virtual void PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor) = 0; // Called each time a player dies
 	virtual void DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor) = 0;	// Call this from within a GameRules class to report an obituary.
-																									// Weapon retrieval
-	virtual bool CanHavePlayerItem(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon);					// The player is touching an CBasePlayerItem, do I give it to him?
-	virtual void PlayerGotWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon) = 0;				// Called each time a player picks up a weapon from the ground
+	virtual void MonsterKilled(CBaseMonster* pVictim, entvars_t* pKiller, entvars_t* pInflictor) {}
+	// Weapon retrieval
+	virtual bool CanHavePlayerItem(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon);	  // The player is touching an CBasePlayerItem, do I give it to him?
+	virtual void PlayerGotWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon) = 0; // Called each time a player picks up a weapon from the ground
 
 	// Weapon spawn/respawn control
 	virtual int WeaponShouldRespawn(CBasePlayerItem* pWeapon) = 0;	   // should this weapon respawn?
@@ -153,6 +165,11 @@ public:
 	virtual void ChangePlayerTeam(CBasePlayer* pPlayer, const char* pTeamName, bool bKill, bool bGib) {}
 	virtual const char* SetDefaultPlayerTeam(CBasePlayer* pPlayer) { return ""; }
 
+	virtual const char* GetCharacterType(int iTeamNum, int iCharNum) { return ""; }
+	virtual int GetNumTeams() { return 0; }
+	virtual const char* TeamWithFewestPlayers() { return nullptr; }
+	virtual bool TeamsBalanced() { return true; }
+
 	// Sounds
 	virtual bool PlayTextureSounds() { return true; }
 	virtual bool PlayFootstepSounds(CBasePlayer* pl, float fvol) { return true; }
@@ -167,7 +184,7 @@ protected:
 	CBasePlayerItem* FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon);
 };
 
-extern CGameRules* InstallGameRules();
+extern CGameRules* InstallGameRules(CBaseEntity* pWorld);
 
 
 //=========================================================
@@ -191,6 +208,7 @@ public:
 	bool IsMultiplayer() override;
 	bool IsDeathmatch() override;
 	bool IsCoOp() override;
+	bool IsCTF() override { return false; }
 
 	// Client connection/disconnection
 	bool ClientConnected(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128]) override;
@@ -277,6 +295,7 @@ public:
 	bool IsMultiplayer() override;
 	bool IsDeathmatch() override;
 	bool IsCoOp() override;
+	bool IsCTF() override { return false; }
 
 	// Client connection/disconnection
 	// If ClientConnected returns false, the connection is rejected and the user is provided the reason specified in

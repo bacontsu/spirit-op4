@@ -44,6 +44,9 @@ extern Vector v_angles;	   // last view angle
 extern Vector v_cl_angles; // last client/mouse angle
 extern Vector v_sim_org;   // last sim origin
 
+//Same color as in TeamFortressViewport::UpdateSpectatorPanel
+float DefaultPlayerColor[3] = {143 / 255.f, 143 / 255.f, 54 / 255.f};
+
 #if 0 
 const char *GetSpectatorLabel ( int iMode )
 {
@@ -115,7 +118,8 @@ void SpectatorHelp()
 {
 	if (gViewPort)
 	{
-		gViewPort->ShowVGUIMenu(MENU_SPECHELP);
+		//TODO: none of this spectator stuff exists in Op4
+		//gViewPort->ShowVGUIMenu( MENU_SPECHELP );
 	}
 	else
 	{
@@ -182,7 +186,7 @@ bool CHudSpectator::Init()
 	gEngfuncs.pfnAddCommand("spec_decal", SpectatorSpray);
 	gEngfuncs.pfnAddCommand("spec_help", SpectatorHelp);
 	gEngfuncs.pfnAddCommand("spec_menu", SpectatorMenu);
-	gEngfuncs.pfnAddCommand("togglescores", ToggleScores);
+	//gEngfuncs.pfnAddCommand("togglescores", ToggleScores);
 
 	m_drawnames = gEngfuncs.pfnRegisterVariable("spec_drawnames", "1", 0);
 	m_drawcone = gEngfuncs.pfnRegisterVariable("spec_drawcone", "1", 0);
@@ -659,6 +663,12 @@ bool CHudSpectator::Draw(float flTime)
 		}
 
 		color = GetClientColor(i + 1);
+
+		//TODO: this is pretty ugly, need a better way.
+		if (!color)
+		{
+			color = DefaultPlayerColor;
+		}
 
 		// draw the players name and health underneath
 		sprintf(string, "%s", g_PlayerInfoList[i + 1].name);
@@ -1546,7 +1556,9 @@ void CHudSpectator::DrawOverviewEntities()
 
 	z = m_OverviewData.layersHeights[0] * zScale;
 	// get yellow/brown HUD color
+
 	UnpackRGB(ir, ig, ib, gHUD.m_iHUDColor);
+
 	r = (float)ir / 255.0f;
 	g = (float)ig / 255.0f;
 	b = (float)ib / 255.0f;

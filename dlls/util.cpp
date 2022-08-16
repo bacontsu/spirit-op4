@@ -30,14 +30,23 @@
 #include "player.h"
 #include "weapons.h"
 #include "gamerules.h"
+#include "game.h"
 #include "UserMessages.h"
 #include "movewith.h"
 #include "locus.h"
+#include "monsters.h"
 
 float UTIL_WeaponTimeBase()
 {
 #if defined(CLIENT_WEAPONS)
-	return 0.0;
+	if (oldweapons.value == 1)
+	{
+		return gpGlobals->time;
+	}
+	else
+	{
+		return 0.0;
+	}
 #else
 	return gpGlobals->time;
 #endif
@@ -1292,6 +1301,13 @@ void UTIL_SetEdictOrigin(edict_t* pEdict, const Vector& vecOrigin)
 void UTIL_SetOrigin(CBaseEntity* pEntity, const Vector& vecOrigin)
 {
 	SET_ORIGIN(ENT(pEntity->pev), vecOrigin);
+}
+
+void UTIL_SetOrigin(entvars_t* pev, const Vector& vecOrigin)
+{
+	edict_t* ent = ENT(pev);
+	if (ent)
+		SET_ORIGIN(ent, vecOrigin);
 }
 
 void UTIL_ParticleEffect(const Vector& vecOrigin, const Vector& vecDirection, unsigned int ulColor, unsigned int ulCount)
@@ -2990,7 +3006,7 @@ bool CRestore::BufferCheckZString(const char* string)
 	return false;
 }
 
-//for trigger_viewset
+// for trigger_viewset
 bool HaveCamerasInPVS(edict_t* edict)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
@@ -2999,7 +3015,7 @@ bool HaveCamerasInPVS(edict_t* edict)
 		CBasePlayer* pPlayer = (CBasePlayer*)pEntity;
 		if (pPlayer->viewFlags & 1) // custom view active
 		{
-			CBaseEntity* pViewEnt = UTIL_FindEntityByTargetname(NULL, STRING(pPlayer->viewEntity));
+			CBaseEntity* pViewEnt = UTIL_FindEntityByTargetname(nullptr, STRING(pPlayer->viewEntity));
 			if (!pViewEnt)
 			{
 				ALERT(at_error, "bad entity string in CamerasInPVS\n");
@@ -3020,4 +3036,15 @@ bool HaveCamerasInPVS(edict_t* edict)
 		}
 	}
 	return false;
+}
+
+
+bool UTIL_IsMultiplayer()
+{
+	return g_pGameRules->IsMultiplayer();
+}
+
+bool UTIL_IsCTF()
+{
+	return g_pGameRules->IsCTF();
 }

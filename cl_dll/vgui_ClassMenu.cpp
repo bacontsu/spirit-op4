@@ -32,6 +32,7 @@
 
 #include "vgui_int.h"
 #include "vgui_TeamFortressViewport.h"
+#include "vgui_StatsMenuPanel.h"
 
 // Class Menu Dimensions
 #define CLASSMENU_TITLE_X XRES(40)
@@ -87,7 +88,7 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int w
 	// Create the Scroll panel
 	m_pScrollPanel = new CTFScrollPanel(CLASSMENU_WINDOW_X, CLASSMENU_WINDOW_Y, CLASSMENU_WINDOW_SIZE_X, CLASSMENU_WINDOW_SIZE_Y);
 	m_pScrollPanel->setParent(this);
-	//force the scrollbars on, so after the validate clientClip will be smaller
+	// force the scrollbars on, so after the validate clientClip will be smaller
 	m_pScrollPanel->setScrollBarAutoVisible(false, false);
 	m_pScrollPanel->setScrollBarVisible(true, true);
 	m_pScrollPanel->setBorder(new LineBorder(Color(255 * 0.7, 170 * 0.7, 0, 0)));
@@ -95,7 +96,7 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int w
 
 	int clientWide = m_pScrollPanel->getClient()->getWide();
 
-	//turn scrollpanel back into auto show scrollbar mode and validate
+	// turn scrollpanel back into auto show scrollbar mode and validate
 	m_pScrollPanel->setScrollBarAutoVisible(false, true);
 	m_pScrollPanel->setScrollBarVisible(false, false);
 	m_pScrollPanel->validate();
@@ -114,51 +115,61 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int w
 void CClassMenuPanel::Update()
 {
 	// Don't allow the player to join a team if they're not in a team
-	if (0 == g_iTeamNumber)
+	if (0 == gViewPort->m_iCTFTeamNumber)
 		return;
+
+	const auto teamIndex = gViewPort->m_iCTFTeamNumber - 1;
 
 	int iYPos = CLASSMENU_TOPLEFT_BUTTON_Y;
 
 	// Cycle through the rest of the buttons
+	for (int team = 0; team < PC_MAX_TEAMS; ++team)
+	{
+		for (int i = 0; i < PC_RANDOM; i++)
+		{
+			if (team != teamIndex)
+			{
+				m_pButtons[team][i]->setVisible(false);
+			}
+			else
+			{
+				m_pButtons[team][i]->setVisible(true);
+				m_pButtons[team][i]->setPos(CLASSMENU_TOPLEFT_BUTTON_X, iYPos);
+				iYPos += CLASSMENU_BUTTON_SIZE_Y + CLASSMENU_BUTTON_SPACER_Y;
 
-	// If the player already has a class, make the cancel button visible
-	if (0 != g_iPlayerClass)
-	{
-		m_pCancelButton->setPos(CLASSMENU_TOPLEFT_BUTTON_X, iYPos);
-		m_pCancelButton->setVisible(true);
+				// Start with the first option up
+				if (0 == m_iCurrentInfo)
+					SetActiveInfo(i);
+			}
+
+			if (m_pClassImages[team][i])
+			{
+				m_pClassImages[team][i]->setVisible(true);
+			}
+		}
 	}
-	else
-	{
-		m_pCancelButton->setVisible(false);
-	}
+
+	m_pCancelButton->setPos(CLASSMENU_TOPLEFT_BUTTON_X, iYPos);
+	m_pCancelButton->setVisible(true);
 }
 
 //======================================
 // Key inputs for the Class Menu
 bool CClassMenuPanel::SlotInput(int iSlot)
 {
-	if ((iSlot < 0) || (iSlot > 9))
-		return false;
-	if (!m_pButtons[iSlot])
+	if ((iSlot <= 0) || (iSlot > PC_LASTCLASS))
 		return false;
 
-	// Is the button pushable? (0 is special case)
-	if (iSlot == 0)
-	{
-		// Selects Civilian and RandomPC
-		if (gViewPort->GetValidClasses(g_iTeamNumber) == -1)
-		{
-			m_pButtons[0]->fireActionSignal();
-			return true;
-		}
+	//TODO: apparently bugged in vanilla, still uses old indexing code with no second array index
+	ClassButton* button = m_pButtons[gViewPort->m_iCTFTeamNumber - 1][iSlot - 1];
 
-		// Select RandomPC
-		iSlot = 10;
-	}
+	if (!button)
+		return false;
 
-	if (!(m_pButtons[iSlot]->IsNotValid()))
+	// Is the button pushable?
+	if (!(button->IsNotValid()))
 	{
-		m_pButtons[iSlot]->fireActionSignal();
+		button->fireActionSignal();
 		return true;
 	}
 
@@ -189,8 +200,6 @@ void CClassMenuPanel::SetActiveInfo(int iInput)
 	// Remove all the Info panels and bring up the specified one
 	iInput = 0;
 
-	m_pButtons[iInput]->setArmed(true);
-	m_pClassInfoPanel[iInput]->setVisible(true);
 	m_iCurrentInfo = iInput;
 
 	m_pScrollPanel->setScrollValue(0, 0);

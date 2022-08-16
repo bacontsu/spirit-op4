@@ -96,6 +96,14 @@ bool CEgon::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
+void CEgon::IncrementAmmo(CBasePlayer* pPlayer)
+{
+	if (pPlayer->GiveAmmo(1, "uranium", URANIUM_MAX_CARRY) >= 0)
+	{
+		EMIT_SOUND(pPlayer->edict(), CHAN_STATIC, "ctf/pow_backpack.wav", 0.5, ATTN_NORM);
+	}
+}
+
 #define EGON_PULSE_INTERVAL 0.1
 #define EGON_DISCHARGE_INTERVAL 0.1
 

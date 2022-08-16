@@ -43,6 +43,13 @@
 #include "movewith.h"
 #include "items.h"
 
+#include "ctf/CTFGoal.h"
+#include "ctf/CTFGoalFlag.h"
+#include "ctf/ctfplay_gamerules.h"
+
+extern DLL_GLOBAL unsigned int g_ulModelIndexPlayer;
+extern DLL_GLOBAL bool g_fGameOver;
+extern DLL_GLOBAL int g_iSkillLevel;
 DLL_GLOBAL unsigned int g_ulFrameCount;
 
 extern void CopyToBodyQue(entvars_t* pev);
@@ -171,6 +178,12 @@ void ClientKill(edict_t* pEntity)
 
 	CBasePlayer* pl = (CBasePlayer*)CBasePlayer::Instance(pev);
 
+	//Only check for teams in CTF gamemode
+	if ((pl->pev->flags & FL_SPECTATOR) != 0 || (g_pGameRules->IsCTF() && pl->m_iTeamNum == CTFTeam::None))
+	{
+		return;
+	}
+
 	if (pl->m_fNextSuicideTime > gpGlobals->time)
 		return; // prevent suiciding too ofter
 
@@ -207,8 +220,11 @@ void ClientPutInServer(edict_t* pEntity)
 	// Reset interpolation during first frame
 	pPlayer->pev->effects |= EF_NOINTERP;
 
-	pPlayer->pev->iuser1 = 0; // disable any spec modes
-	pPlayer->pev->iuser2 = 0;
+	//Player can be made spectator on spawn, so don't do this
+	/*
+	pPlayer->pev->iuser1 = 0;	// disable any spec modes
+	pPlayer->pev->iuser2 = 0; 
+	*/
 }
 
 #include "voice_gamemgr.h"
@@ -411,8 +427,8 @@ void Host_Say(edict_t* pEntity, bool teamonly)
 	strcat(text, p);
 	strcat(text, "\n");
 
-
-	player->m_flNextChatTime = gpGlobals->time + CHAT_INTERVAL;
+	//TODO: clamp cvar value so it can't be negative
+	player->m_flNextChatTime = gpGlobals->time + spamdelay.value;
 
 	// loop through all players
 	// Start with the first player.
@@ -690,26 +706,30 @@ void ClientCommand(edict_t* pEntity)
 	{
 		player->SelectLastItem();
 	}
-	else if (FStrEq(pcmd, "spectate")) // clients wants to become a spectator
+	//In Opposing Force this is handled only by the CTF gamerules
+#if false
+	else if ( FStrEq( pcmd, "spectate" ) )	// clients wants to become a spectator
 	{
-		// always allow proxies to become a spectator
-		if ((pev->flags & FL_PROXY) != 0 || 0 != allow_spectators.value)
+			// always allow proxies to become a spectator
+		if ( (pev->flags & FL_PROXY) != 0 || 0 != allow_spectators.value  )
 		{
-			edict_t* pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(player);
-			player->StartObserver(pev->origin, VARS(pentSpawnSpot)->angles);
+			edict_t *pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(player);
+			player->StartObserver( pev->origin, VARS(pentSpawnSpot)->angles);
 
 			// notify other clients of player switching to spectator mode
-			UTIL_ClientPrintAll(HUD_PRINTNOTIFY, UTIL_VarArgs("%s switched to spectator mode\n",
-													 (!FStringNull(pev->netname) && STRING(pev->netname)[0] != 0) ? STRING(pev->netname) : "unconnected"));
+			UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n", 
+			 	( !FStringNull(pev->netname) && STRING(pev->netname)[0] != 0 ) ? STRING(pev->netname) : "unconnected" ) );
 		}
 		else
-			ClientPrint(pev, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n");
-	}
-	else if (FStrEq(pcmd, "specmode")) // new spectator mode
+			ClientPrint( pev, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n" );
+			
+	}	
+	else if ( FStrEq( pcmd, "specmode" )  )	// new spectator mode
 	{
-		if (player->IsObserver())
-			player->Observer_SetMode(atoi(CMD_ARGV(1)));
+		if (player->IsObserver() )
+			player->Observer_SetMode( atoi( CMD_ARGV(1) ) );
 	}
+#endif
 	else if (FStrEq(pcmd, "closemenus"))
 	{
 		// just ignore it
@@ -722,6 +742,56 @@ void ClientCommand(edict_t* pEntity)
 	else if (g_pGameRules->ClientCommand(player, pcmd))
 	{
 		// MenuSelect returns true only if the command is properly handled,  so don't print a warning
+	}
+	else if (FStrEq(pcmd, "changeteam"))
+	{
+		if (g_pGameRules->IsCTF())
+		{
+			auto pPlayer = GetClassPtr((CBasePlayer*)pev);
+			if (pPlayer->m_iCurrentMenu == MENU_TEAM)
+			{
+				ClientPrint(pev, HUD_PRINTCONSOLE, "Already in team selection menu.\n");
+			}
+			else
+			{
+				pPlayer->m_iCurrentMenu = MENU_TEAM;
+				pPlayer->Player_Menu();
+			}
+		}
+	}
+	else if (FStrEq(pcmd, "changeclass"))
+	{
+		if (g_pGameRules->IsCTF())
+		{
+			auto pPlayer = GetClassPtr((CBasePlayer*)pev);
+
+			if (pPlayer->m_iNewTeamNum != CTFTeam::None || pPlayer->m_iTeamNum != CTFTeam::None)
+			{
+				if (pPlayer->m_iCurrentMenu == MENU_CLASS)
+				{
+					ClientPrint(pev, HUD_PRINTCONSOLE, "Already in character selection menu.\n");
+				}
+				else
+				{
+					if (pPlayer->m_iNewTeamNum == CTFTeam::None)
+						pPlayer->m_iNewTeamNum = pPlayer->m_iTeamNum;
+
+					pPlayer->m_iCurrentMenu = MENU_CLASS;
+					pPlayer->Player_Menu();
+				}
+			}
+			else
+			{
+				ClientPrint(pev, HUD_PRINTCONSOLE, "No Team Selected.  Use \"changeteam\".\n");
+			}
+		}
+	}
+	else if (FStrEq(pcmd, "flaginfo"))
+	{
+		if (g_pGameRules->IsCTF())
+		{
+			DumpCTFFlagInfo(reinterpret_cast<CBasePlayer*>(GET_PRIVATE(pEntity)));
+		}
 	}
 	else
 	{
@@ -754,6 +824,8 @@ void ClientUserInfoChanged(edict_t* pEntity, char* infobuffer)
 	if (!pEntity->pvPrivateData)
 		return;
 
+	auto player = GetClassPtr((CBasePlayer*)&pEntity->v);
+
 	// msg everyone if someone changes their name,  and it isn't the first time (changing no name to current name)
 	if (!FStringNull(pEntity->v.netname) && STRING(pEntity->v.netname)[0] != 0 && !FStrEq(STRING(pEntity->v.netname), g_engfuncs.pfnInfoKeyValue(infobuffer, "name")))
 	{
@@ -783,8 +855,21 @@ void ClientUserInfoChanged(edict_t* pEntity, char* infobuffer)
 			MESSAGE_END();
 		}
 
+		if (g_pGameRules->IsCTF())
+		{
+			//TODO: in vanilla Op4 this code incorrectly skips the above validation logic if the player is already in a team
+			if (player->m_iTeamNum != CTFTeam::None)
+			{
+				UTIL_LogPrintf("\"%s<%i><%s><%s>\" changed name to \"%s\"\n",
+					STRING(pEntity->v.netname),
+					GETPLAYERUSERID(pEntity),
+					GETPLAYERAUTHID(pEntity),
+					GetTeamName(pEntity),
+					g_engfuncs.pfnInfoKeyValue(infobuffer, "name"));
+			}
+		}
 		// team match?
-		if (g_teamplay)
+		else if (g_teamplay)
 		{
 			UTIL_LogPrintf("\"%s<%i><%s><%s>\" changed name to \"%s\"\n",
 				STRING(pEntity->v.netname),
@@ -804,7 +889,7 @@ void ClientUserInfoChanged(edict_t* pEntity, char* infobuffer)
 		}
 	}
 
-	g_pGameRules->ClientUserInfoChanged(GetClassPtr((CBasePlayer*)&pEntity->v), infobuffer);
+	g_pGameRules->ClientUserInfoChanged(player, infobuffer);
 }
 
 static int g_serveractive = 0;
@@ -1052,6 +1137,8 @@ void ClientPrecache()
 	PRECACHE_SOUND("player/geiger2.wav");
 	PRECACHE_SOUND("player/geiger1.wav");
 
+	PRECACHE_SOUND("ctf/pow_big_jump.wav");
+
 	if (giPrecacheGrunt)
 		UTIL_PrecacheOther("monster_human_grunt");
 }
@@ -1069,6 +1156,7 @@ const char* GetGameDescription()
 		return g_pGameRules->GetGameDescription();
 	else
 		return GAME_NAME;
+
 }
 
 /*
@@ -1345,6 +1433,12 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 
 	state->skin = ent->v.skin;
 	state->effects = ent->v.effects;
+
+	//Remove the night vision illumination effect so other players don't see it
+	if (0 != player && host != ent)
+	{
+		state->effects &= ~EF_BRIGHTLIGHT;
+	}
 
 	// This non-player entity is being moved by the game .dll and not the physics simulation system
 	//  make sure that we interpolate it's position on the client if it moves
@@ -1881,7 +1975,7 @@ void UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* 
 		cd->iuser2 = pev->iuser2;
 	}
 
-
+	cd->iuser4 = pl->m_iItems;
 
 #if defined(CLIENT_WEAPONS)
 	if (0 != sendweapons)
@@ -1899,6 +1993,8 @@ void UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* 
 			cd->ammo_rockets = pl->ammo_rockets;
 			cd->ammo_cells = pl->ammo_uranium;
 			cd->vuser2.x = pl->ammo_hornets;
+			cd->vuser2.y = pl->ammo_spores;
+			cd->vuser2.z = pl->ammo_762;
 
 
 			if (pl->m_pActiveItem)
@@ -2063,5 +2159,8 @@ AllowLagCompensation
 */
 int AllowLagCompensation()
 {
+	if (1 == oldweapons.value)
+		return 0;
+
 	return 1;
 }

@@ -438,7 +438,7 @@ void CTripmine::PrimaryAttack()
 
 	int flags;
 #ifdef CLIENT_WEAPONS
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif

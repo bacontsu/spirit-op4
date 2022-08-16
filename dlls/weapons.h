@@ -23,6 +23,12 @@ class CBasePlayerWeapon;
 
 void DeactivateSatchels(CBasePlayer* pOwner);
 
+int UTIL_DefaultPlaybackFlags();
+
+bool UTIL_DefaultUseDecrement();
+
+bool UTIL_UseOldWeapons();
+
 // Contact Grenade / Timed grenade / Satchel Charge
 class CGrenade : public CBaseMonster
 {
@@ -60,7 +66,6 @@ public:
 	bool m_fRegisteredSound; // whether or not this grenade has issued its DANGER sound to the world sound list yet.
 };
 
-
 /* AJH we don't need to specify this stuff in here. It's now in items.h instead
 // constant items
 #define ITEM_HEALTHKIT 1
@@ -95,6 +100,14 @@ public:
 #define SNARK_WEIGHT 5
 #define SATCHEL_WEIGHT -10
 #define TRIPMINE_WEIGHT -10
+#define EAGLE_WEIGHT 15
+#define SHOCKRIFLE_WEIGHT 15
+#define PIPEWRENCH_WEIGHT 2
+#define M249_WEIGHT 20
+#define DISPLACER_WEIGHT 10
+#define SPORELAUNCHER_WEIGHT 20
+#define SNIPERRIFLE_WEIGHT 10
+#define PENGUIN_WEIGHT 5
 
 // weapon clip/carry ammo capacities
 #define URANIUM_MAX_CARRY 100
@@ -109,6 +122,10 @@ public:
 #define SNARK_MAX_CARRY 15
 #define HORNET_MAX_CARRY 8
 #define M203_GRENADE_MAX_CARRY 10
+#define M249_MAX_CARRY 200
+#define SPORELAUNCHER_MAX_CARRY 20
+#define SNIPERRIFLE_MAX_CARRY 15
+#define PENGUIN_MAX_CARRY 9
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP -1
@@ -128,11 +145,18 @@ public:
 #define SATCHEL_MAX_CLIP WEAPON_NOCLIP
 #define TRIPMINE_MAX_CLIP WEAPON_NOCLIP
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
+#define EAGLE_MAX_CLIP 7
+#define M249_MAX_CLIP 50
+#define SPORELAUNCHER_MAX_CLIP 5
+#define SHOCKRIFLE_MAX_CLIP 10
+#define SNIPERRIFLE_MAX_CLIP 5
+#define PENGUIN_MAX_CLIP 3
 
 // the default amount of ammo that comes with each gun when it spawns
 #define GLOCK_DEFAULT_GIVE 17
 #define PYTHON_DEFAULT_GIVE 6
-#define MP5_DEFAULT_GIVE 25
+#define DEAGLE_DEFAULT_GIVE 7
+#define MP5_DEFAULT_GIVE 50 //Full magazine for Op4
 #define MP5_DEFAULT_AMMO 25
 #define MP5_M203_DEFAULT_GIVE 0
 #define SHOTGUN_DEFAULT_GIVE 12
@@ -145,6 +169,11 @@ public:
 #define TRIPMINE_DEFAULT_GIVE 1
 #define SNARK_DEFAULT_GIVE 5
 #define HIVEHAND_DEFAULT_GIVE 8
+#define M249_DEFAULT_GIVE 50
+#define DISPLACER_DEFAULT_GIVE 40
+#define SPORELAUNCHER_DEFAULT_GIVE 5
+#define SHOCKRIFLE_DEFAULT_GIVE 10
+#define SNIPERRIFLE_DEFAULT_GIVE 5
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE 20
@@ -158,6 +187,10 @@ public:
 #define AMMO_RPGCLIP_GIVE RPG_MAX_CLIP
 #define AMMO_URANIUMBOX_GIVE 20
 #define AMMO_SNARKBOX_GIVE 5
+#define AMMO_M249_GIVE 50
+#define AMMO_EAGLE_GIVE 7
+#define AMMO_SPORE_GIVE 1
+#define AMMO_SNIPERRIFLE_GIVE 5
 
 // bullet types
 typedef enum
@@ -172,6 +205,10 @@ typedef enum
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,
 	BULLET_MONSTER_12MM,
+
+	BULLET_PLAYER_556,
+	BULLET_PLAYER_762,
+	BULLET_PLAYER_EAGLE,
 } Bullet;
 
 
@@ -259,6 +296,8 @@ public:
 
 	virtual int PrimaryAmmoIndex() { return -1; }
 	virtual int SecondaryAmmoIndex() { return -1; }
+
+	virtual void IncrementAmmo(CBasePlayer* pPlayer) {}
 
 	virtual bool UpdateClientData(CBasePlayer* pPlayer) { return false; }
 
@@ -440,6 +479,8 @@ typedef struct
 
 inline MULTIDAMAGE gMultiDamage;
 
+void FindHullIntersection(const Vector& vecSrc, TraceResult& tr, const Vector& mins, const Vector& maxs, edict_t* pEntity);
+
 
 #define LOUD_GUN_VOLUME 1000
 #define NORMAL_GUN_VOLUME 600
@@ -526,6 +567,8 @@ public:
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
 
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
+
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	void GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim);
@@ -537,7 +580,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -583,7 +626,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -610,7 +653,11 @@ class CPython : public CBasePlayerWeapon
 public:
 	void Spawn() override;
 	void Precache() override;
+
+	int iItemSlot() override { return 2; }
+
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	bool Deploy() override;
@@ -621,7 +668,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -650,6 +697,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -663,13 +711,14 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
 	}
 
 private:
+	float m_flNextGrenadeLoad;
 	unsigned short m_usMP5;
 	unsigned short m_usMP52;
 };
@@ -696,6 +745,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	void FireBolt();
 	void FireSniperBolt();
@@ -709,7 +759,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -747,6 +797,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -762,7 +813,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -775,12 +826,12 @@ private:
 
 class CLaserSpot : public CBaseEntity
 {
+public:
 	void Spawn() override;
 	void Precache() override;
 
 	int ObjectCaps() override { return FCAP_DONT_SAVE; }
 
-public:
 	void Suspend(float flSuspendTime);
 	void EXPORT Revive();
 
@@ -815,6 +866,7 @@ public:
 	void Precache() override;
 	void Reload() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	bool CanHolster() override;
@@ -833,7 +885,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -891,6 +943,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	void Holster() override;
@@ -914,7 +967,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -974,6 +1027,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	void Holster() override;
@@ -1007,7 +1061,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -1058,7 +1112,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -1086,6 +1140,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	bool GetItemInfo(ItemInfo* p) override;
+	void IncrementAmmo(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	bool Deploy() override;
@@ -1096,7 +1151,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -1147,7 +1202,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -1188,7 +1243,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif
@@ -1225,7 +1280,7 @@ public:
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
-		return true;
+		return UTIL_DefaultUseDecrement();
 #else
 		return false;
 #endif

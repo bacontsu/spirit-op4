@@ -57,21 +57,38 @@ using qboolean = int;
 #define ARRAYSIZE(p) (sizeof(p) / sizeof(p[0]))
 
 #ifdef WIN32
+#include <malloc.h>
+
 //Avoid the ISO conformant warning
 #define stricmp _stricmp
 #define strnicmp _strnicmp
 #define itoa _itoa
 #define strupr _strupr
+#define strdup _strdup
 
 #define DLLEXPORT __declspec(dllexport)
 #define DLLHIDDEN
+
+#define stackalloc(size) _alloca(size)
+
+//Note: an implementation of stackfree must safely ignore null pointers
+#define stackfree(address)
+
 #else // WIN32
+#include <alloca.h>
+
 #define stricmp strcasecmp
 #define strnicmp strncasecmp
 #define _alloca alloca
 
 #define DLLEXPORT __attribute__((visibility("default")))
 #define DLLHIDDEN __attribute__((visibility("hidden")))
+
+#define stackalloc(size) alloca(size)
+
+//Note: an implementation of stackfree must safely ignore null pointers
+#define stackfree(address)
+
 #endif //WIN32
 
 #define V_min(a, b) (((a) < (b)) ? (a) : (b))

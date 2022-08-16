@@ -37,6 +37,10 @@
 hud_player_info_t g_PlayerInfoList[MAX_PLAYERS_HUD + 1];	// player info from the engine
 extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1]; // additional player info sent directly to the client dll
 
+int giR, giG, giB;
+
+extern int giOldWeapons;
+
 class CHLVoiceStatusHelper : public IVoiceStatusHelper
 {
 public:
@@ -91,6 +95,22 @@ cvar_t* cl_rollspeed = nullptr;
 cvar_t* cl_bobtilt = nullptr;
 
 void ShutdownInput();
+
+int __MsgFunc_HudColor(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+	giR = READ_BYTE();
+	giG = READ_BYTE();
+	giB = READ_BYTE();
+	return 1;
+}
+
+int __MsgFunc_OldWeapon(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+	giOldWeapons = READ_BYTE();
+	return 1;
+}
 
 //DECLARE_MESSAGE(m_Logo, Logo)
 int __MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)
@@ -314,26 +334,28 @@ int __MsgFunc_ServerName(const char* pszName, int iSize, void* pbuf)
 	return 0;
 }
 
-int __MsgFunc_ScoreInfo(const char* pszName, int iSize, void* pbuf)
+/*
+int __MsgFunc_ScoreInfo(const char *pszName, int iSize, void *pbuf)
 {
 	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_ScoreInfo(pszName, iSize, pbuf));
+		return static_cast<int>(gViewPort->MsgFunc_ScoreInfo( pszName, iSize, pbuf ));
 	return 0;
 }
 
-int __MsgFunc_TeamScore(const char* pszName, int iSize, void* pbuf)
+int __MsgFunc_TeamScore(const char *pszName, int iSize, void *pbuf)
 {
 	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_TeamScore(pszName, iSize, pbuf));
+		return static_cast<int>(gViewPort->MsgFunc_TeamScore( pszName, iSize, pbuf ));
 	return 0;
 }
 
-int __MsgFunc_TeamInfo(const char* pszName, int iSize, void* pbuf)
+int __MsgFunc_TeamInfo(const char *pszName, int iSize, void *pbuf)
 {
 	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_TeamInfo(pszName, iSize, pbuf));
+		return static_cast<int>(gViewPort->MsgFunc_TeamInfo( pszName, iSize, pbuf ));
 	return 0;
 }
+*/
 
 int __MsgFunc_Spectator(const char* pszName, int iSize, void* pbuf)
 {
@@ -363,6 +385,7 @@ int __MsgFunc_AllowSpec(const char* pszName, int iSize, void* pbuf)
 	return 0;
 }
 
+
 // This is called every time the DLL is loaded
 void CHud::Init()
 {
@@ -376,6 +399,8 @@ void CHud::Init()
 	HOOK_MESSAGE(ViewMode);
 	HOOK_MESSAGE(SetFOV);
 	HOOK_MESSAGE(Concuss);
+	HOOK_MESSAGE(HudColor);
+	HOOK_MESSAGE(OldWeapon);
 	HOOK_MESSAGE(Weapons);
 	HOOK_MESSAGE(HUDColor);	   //LRC
 	HOOK_MESSAGE(SetFog);	   //LRC
@@ -410,9 +435,11 @@ void CHud::Init()
 	HOOK_MESSAGE(BuildSt);
 	HOOK_MESSAGE(RandomPC);
 	HOOK_MESSAGE(ServerName);
-	HOOK_MESSAGE(ScoreInfo);
-	HOOK_MESSAGE(TeamScore);
-	HOOK_MESSAGE(TeamInfo);
+	/*
+	HOOK_MESSAGE( ScoreInfo );
+	HOOK_MESSAGE( TeamScore );
+	HOOK_MESSAGE( TeamInfo );
+	*/
 
 	HOOK_MESSAGE(Spectator);
 	HOOK_MESSAGE(AllowSpec);
@@ -438,8 +465,12 @@ void CHud::Init()
 	viewFlags = 0;
 	m_iLogo = 0;
 	m_iFOV = 0;
+
 	numMirrors = 0;
 	m_iHUDColor = 0x00FFA000; //255,160,0 -- LRC
+
+	setNightVisionState(false);
+
 
 	CVAR_CREATE("zoom_sensitivity_ratio", "1.2", 0);
 	CVAR_CREATE("cl_autowepswitch", "1", FCVAR_ARCHIVE | FCVAR_USERINFO);
@@ -480,11 +511,14 @@ void CHud::Init()
 	m_Battery.Init();
 	m_Flash.Init();
 	m_Message.Init();
+	m_Scoreboard.Init();
 	m_StatusBar.Init();
 	m_DeathNotice.Init();
 	m_AmmoSecondary.Init();
 	m_TextMessage.Init();
 	m_StatusIcons.Init();
+	m_FlagIcons.Init();
+	m_PlayerBrowse.Init();
 	GetClientVoiceMgr()->Init(&g_VoiceStatusHelper, (vgui::Panel**)&gViewPort);
 	m_Particle.Init(); // (LRC) -- 30/08/02 November235: Particles to Order
 
@@ -648,6 +682,7 @@ void CHud::VidInit()
 	m_Battery.VidInit();
 	m_Flash.VidInit();
 	m_Message.VidInit();
+	m_Scoreboard.VidInit();
 	m_StatusBar.VidInit();
 	m_DeathNotice.VidInit();
 	m_SayText.VidInit();
@@ -655,6 +690,8 @@ void CHud::VidInit()
 	m_AmmoSecondary.VidInit();
 	m_TextMessage.VidInit();
 	m_StatusIcons.VidInit();
+	m_FlagIcons.VidInit();
+	m_PlayerBrowse.VidInit();
 	GetClientVoiceMgr()->VidInit();
 	m_Particle.VidInit(); // (LRC) -- 30/08/02 November235: Particles to Order
 }
@@ -849,4 +886,9 @@ void CHud::AddHudElem(CHudBase* phudelem)
 float CHud::GetSensitivity()
 {
 	return m_flMouseSensitivity;
+}
+
+void CHud::setNightVisionState(bool state)
+{
+	mNightVisionState = state;
 }

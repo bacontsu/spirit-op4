@@ -83,7 +83,19 @@ bool CHudBattery::Draw(float flTime)
 
 	rc.top += m_iHeight * ((float)(100 - (V_min(100, m_iBat))) * 0.01); // battery can go from 0 to 100 so * 0.01 goes from 0 to 1
 
+
 	UnpackRGB(r, g, b, gHUD.m_iHUDColor);
+
+	if (gHUD.isNightVisionOn())
+	{
+		gHUD.getNightVisionHudItemColor(r, g, b);
+	}
+	else
+	{
+		r = giR;
+		g = giG;
+		b = giB;
+	}
 
 	if (!gHUD.HasSuit())
 		return true;

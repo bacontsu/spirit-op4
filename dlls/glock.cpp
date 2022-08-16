@@ -79,6 +79,14 @@ bool CGlock::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
+void CGlock::IncrementAmmo(CBasePlayer* pPlayer)
+{
+	if (pPlayer->GiveAmmo(1, "9mm", _9MM_MAX_CARRY) >= 0)
+	{
+		EMIT_SOUND(pPlayer->edict(), CHAN_STATIC, "ctf/pow_backpack.wav", 0.5, ATTN_NORM);
+	}
+}
+
 bool CGlock::Deploy()
 {
 	// pev->body = 1;
@@ -115,7 +123,7 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 	int flags;
 
 #if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif

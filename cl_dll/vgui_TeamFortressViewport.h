@@ -25,9 +25,12 @@
 #include "vgui_SchemeManager.h"
 
 #define TF_DEFS_ONLY
-#define PC_RANDOM 10
-#define PC_LASTCLASS 10
+
+#define TF_DEFS_ONLY
+#define PC_RANDOM 7
+#define PC_LASTCLASS 7
 #define PC_UNDEFINED 0
+#define PC_MAX_TEAMS 2
 #define MENU_DEFAULT 1
 #define MENU_TEAM 2
 #define MENU_CLASS 3
@@ -37,8 +40,9 @@
 #define MENU_CLASSHELP2 7
 #define MENU_REPEATHELP 8
 #define MENU_SPECHELP 9
-#define MENU_CUSTOM 10 //AJH New Customizable menu HUD system
+#define MENU_CUSTOM 10 // AJH New Customizable menu HUD system
 using namespace vgui;
+
 
 class Cursor;
 class ScorePanel;
@@ -55,15 +59,22 @@ class CClassMenuPanel;
 class CTeamMenuPanel;
 class CCustomMenu; //AJH new customizable menu system
 class TeamFortressViewport;
+class CStatsMenuPanel;
 
 char* GetVGUITGAName(const char* pszName);
 BitmapTGA* LoadTGAForRes(const char* pImageName);
 void ScaleColors(int& r, int& g, int& b, int a);
-extern const char* sTFClassSelection[];
-extern char* sInventorySelection[]; //AJH Inventory selection system
+
+const int StatsTeamsCount = 4;
+
+extern char* sCTFClassSelection[][7];
+extern char* sInventorySelection[]; // AJH Inventory selection system
 extern int sTFValidClassInts[];
-extern const char* sLocalisedClasses[];
-extern char* sLocalisedInventory[]; //AJH Inventory selection system
+// extern const char* sLocalisedClasses[];
+extern char* sLocalisedInventory[]; // AJH Inventory selection system
+extern char* sLocalisedClasses[][7];
+extern const char* sLocalisedStatsTeams[StatsTeamsCount];
+extern const char* sCTFStatsSelection[StatsTeamsCount];
 extern int iTeamColors[5][3];
 extern int iNumberOfTeamColors;
 extern TeamFortressViewport* gViewPort;
@@ -133,6 +144,8 @@ public:
 	{
 		// Do nothing, so the background's left transparent.
 	}
+
+	virtual void setImage(const char* pImageName);
 };
 
 // Command Label
@@ -474,6 +487,7 @@ public:
 };
 
 //==============================================================================
+//NOTE/ called CTFViewport in Op4
 class TeamFortressViewport : public Panel
 {
 private:
@@ -495,13 +509,13 @@ private:
 	int m_iUser3;
 
 	// VGUI Menus
-	void CreateTeamMenu(void);
-	CMenuPanel* ShowTeamMenu(void);
-	void CreateClassMenu(void);
-	CMenuPanel* ShowClassMenu(void);
-	void CreateSpectatorMenu(void);
-	CMenuPanel* ShowCustomMenu(void); //AJH new customizable menu system
-	void CreateCustomMenu(void);	  //AJH new customizable menu system
+	void CreateTeamMenu();
+	CMenuPanel* ShowTeamMenu();
+	void CreateClassMenu();
+	CMenuPanel* ShowClassMenu();
+	void CreateSpectatorMenu();
+	CMenuPanel* ShowCustomMenu(); // AJH new customizable menu system
+	void CreateCustomMenu();	  // AJH new customizable menu system
 
 	// Scheme handler
 	CSchemeManager m_SchemeManager;
@@ -571,6 +585,8 @@ public:
 	void HideVGUIMenu(void);
 	void HideTopMenu(void);
 
+	CMenuPanel* ShowStatsMenu();
+
 	CMenuPanel* CreateTextWindow(int iTextToShow);
 
 	CCommandMenu* CreateSubMenu(CommandButton* pButton, CCommandMenu* pParentMenu, int iYOffset, int iXOffset = 0);
@@ -602,6 +618,10 @@ public:
 	bool MsgFunc_AllowSpec(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_SpecFade(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_ResetFade(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_TeamFull(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_SetMenuTeam(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_StatsInfo(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_StatsPlayer(const char* pszName, int iSize, void* pbuf);
 
 	// Input
 	bool SlotInput(int iSlot);
@@ -614,7 +634,7 @@ public:
 	void* operator new(size_t stAllocateBlock);
 
 public:
-	// VGUI Menus
+// VGUI Menus
 	CMenuPanel* m_pCurrentMenu;
 	CTeamMenuPanel* m_pTeamMenu;
 	CCustomMenu* m_pCustomMenu; //AJH new customizable menu system
@@ -623,8 +643,10 @@ public:
 	int m_SpectatorCameraMenu;
 	int m_PlayerMenu; // a list of current player
 	CClassMenuPanel* m_pClassMenu;
+	CStatsMenuPanel* m_pStatsMenu;
 	ScorePanel* m_pScoreBoard;
 	SpectatorPanel* m_pSpectatorPanel;
+	int m_iCTFTeamNumber; //TODO: add all references
 	char m_szServerName[MAX_SERVERNAME_LENGTH];
 };
 
@@ -708,7 +730,7 @@ public:
 	{
 	}
 
-	virtual void actionPerformed(Panel* panel);
+	void actionPerformed(Panel* panel) override;
 };
 
 class CMenuHandler_PopupSubMenuInput : public InputSignal
@@ -1624,9 +1646,9 @@ public:
 class CClassMenuPanel : public CMenuPanel
 {
 private:
-	CTransparentPanel* m_pClassInfoPanel[PC_LASTCLASS];
+	CTransparentPanel* m_pClassInfoPanel[PC_MAX_TEAMS][PC_LASTCLASS];
 	Label* m_pPlayers[PC_LASTCLASS];
-	ClassButton* m_pButtons[PC_LASTCLASS];
+	ClassButton* m_pButtons[PC_MAX_TEAMS][PC_LASTCLASS];
 	CommandButton* m_pCancelButton;
 	ScrollPanel* m_pScrollPanel;
 
@@ -1639,6 +1661,7 @@ private:
 		STRLENMAX_PLAYERSONTEAM = 128
 	};
 	char m_sPlayersOnTeamString[STRLENMAX_PLAYERSONTEAM];
+
 
 public:
 	CClassMenuPanel(int iTrans, bool iRemoveMe, int x, int y, int wide, int tall);
@@ -1704,6 +1727,9 @@ public:
 	CommandButton* m_pCancelButton;
 	CommandButton* m_pSpectateButton;
 
+	TextPanel* m_pTeamFull;
+	float m_flTeamFullReset;
+
 	int m_iCurrentInfo;
 
 public:
@@ -1721,7 +1747,15 @@ public:
 	{
 		CMenuPanel::Reset();
 		m_iCurrentInfo = 0;
+
+		if( m_flTeamFullReset <= gHUD.m_flTime )
+		{
+			m_pTeamFull->setVisible( false );
+			m_flTeamFullReset = 0;
+		}
 	}
+
+	bool MsgFunc_TeamFull( const char* pszName, int iSize, void* pbuf );
 };
 
 //=========================================================

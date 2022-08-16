@@ -373,12 +373,28 @@ public:
 	*	@brief Drop an item.
 	*	Will return @c nullptr if item dropping is disabled for this NPC.
 	*/
-	CBaseEntity* DropItem(const char* pszItemName, const Vector& vecPos, const Vector& vecAng);
+	CBaseEntity* DropItem(const char* pszItemName, const Vector& vecPos, const Vector& vecAng); // drop an item.
 
-	//LRC
+
+	bool JumpToTarget(Activity movementAct, float waitTime);
+
+	// Shock rifle shock effect
+	float m_flShockDuration;
+	float m_flShockTime;
+	int m_iOldRenderMode;
+	int m_iOldRenderFX;
+	Vector m_OldRenderColor;
+	float m_flOldRenderAmt;
+	bool m_fShockEffect;
+
+	void AddShockEffect(float r, float g, float b, float size, float flShockDuration);
+	void UpdateShockEffect();
+	void ClearShockEffect();
+
+	// LRC
 	bool CalcNumber(CBaseEntity* pLocus, float* OUTresult) override
 	{
-		//LRC 1.8 - health 0 when dead
+		// LRC 1.8 - health 0 when dead
 		if (IsAlive())
 			*OUTresult = pev->health / pev->max_health;
 		else

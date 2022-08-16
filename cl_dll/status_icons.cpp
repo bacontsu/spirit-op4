@@ -26,10 +26,12 @@
 #include "event_api.h"
 
 DECLARE_MESSAGE(m_StatusIcons, StatusIcon);
+DECLARE_MESSAGE(m_StatusIcons, CustomIcon);
 
 bool CHudStatusIcons::Init()
 {
 	HOOK_MESSAGE(StatusIcon);
+	HOOK_MESSAGE(CustomIcon);
 
 	gHUD.AddHudElem(this);
 
@@ -47,6 +49,7 @@ bool CHudStatusIcons::VidInit()
 void CHudStatusIcons::Reset()
 {
 	memset(m_IconList, 0, sizeof m_IconList);
+	memset(m_CustomList, 0, sizeof(m_CustomList));
 	m_iFlags &= ~HUD_ACTIVE;
 }
 
@@ -55,19 +58,44 @@ bool CHudStatusIcons::Draw(float flTime)
 {
 	if (0 != gEngfuncs.IsSpectateOnly())
 		return true;
-	// find starting position to draw from, along right-hand side of screen
-	int x = 5;
-	int y = ScreenHeight / 2;
-
-	// loop through icon list, and draw any valid icons drawing up from the middle of screen
-	for (int i = 0; i < MAX_ICONSPRITES; i++)
 	{
-		if (0 != m_IconList[i].spr)
-		{
-			y -= (m_IconList[i].rc.bottom - m_IconList[i].rc.top) + 5;
+		// find starting position to draw from, along right-hand side of screen
+		int x = 5;
+		int y = ScreenHeight / 2;
 
-			SPR_Set(m_IconList[i].spr, m_IconList[i].r, m_IconList[i].g, m_IconList[i].b);
-			SPR_DrawAdditive(0, x, y, &m_IconList[i].rc);
+		// loop through icon list, and draw any valid icons drawing up from the middle of screen
+		for (int i = 0; i < MAX_ICONSPRITES; i++)
+		{
+			if (0 != m_IconList[i].spr)
+			{
+				y -= (m_IconList[i].rc.bottom - m_IconList[i].rc.top) + 5;
+
+				SPR_Set(m_IconList[i].spr, m_IconList[i].r, m_IconList[i].g, m_IconList[i].b);
+				SPR_DrawAdditive(0, x, y, &m_IconList[i].rc);
+			}
+		}
+	}
+
+	{
+		int y = ScreenHeight / 2;
+
+		for (int i = 0; i < MAX_CUSTOMSPRITES; ++i)
+		{
+			if (i == (MAX_CUSTOMSPRITES / 2))
+			{
+				y = ScreenHeight / 2;
+			}
+
+			const auto& icon = m_CustomList[i];
+
+			if (0 != icon.spr)
+			{
+				const int x = (i < (MAX_CUSTOMSPRITES / 2)) ? 100 : (ScreenWidth - 100);
+
+				gEngfuncs.pfnSPR_Set(icon.spr, icon.r, icon.g, icon.b);
+				gEngfuncs.pfnSPR_DrawAdditive(0, x, y, &icon.rc);
+				y += (icon.rc.bottom - icon.rc.top) + 5;
+			}
 		}
 	}
 
@@ -98,6 +126,37 @@ bool CHudStatusIcons::MsgFunc_StatusIcon(const char* pszName, int iSize, void* p
 	else
 	{
 		DisableIcon(pszIconName);
+	}
+
+	return true;
+}
+
+bool CHudStatusIcons::MsgFunc_CustomIcon(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+
+	const bool ShouldEnable = READ_BYTE() != 0;
+	int index = READ_BYTE();
+
+	if (ShouldEnable)
+	{
+		char* pszIconName = READ_STRING();
+		int r = READ_BYTE();
+		int g = READ_BYTE();
+		int b = READ_BYTE();
+
+		Rect aRect;
+		aRect.left = READ_BYTE();
+		aRect.top = READ_BYTE();
+		aRect.right = READ_BYTE();
+		aRect.bottom = READ_BYTE();
+
+		EnableCustomIcon(index, pszIconName, r, g, b, aRect);
+		m_iFlags |= HUD_ACTIVE;
+	}
+	else
+	{
+		DisableCustomIcon(index);
 	}
 
 	return true;
@@ -159,5 +218,32 @@ void CHudStatusIcons::DisableIcon(const char* pszIconName)
 			memset(&m_IconList[i], 0, sizeof(icon_sprite_t));
 			return;
 		}
+	}
+}
+
+void CHudStatusIcons::EnableCustomIcon(int nIndex, char* pszIconName, unsigned char red, unsigned char green, unsigned char blue, const Rect& aRect)
+{
+	if (nIndex < MAX_CUSTOMSPRITES)
+	{
+		char szTemp[256];
+		sprintf(szTemp, "sprites/%s.spr", pszIconName);
+
+		auto& icon = m_CustomList[nIndex];
+
+		icon.spr = gEngfuncs.pfnSPR_Load(szTemp);
+		icon.rc = aRect;
+		icon.r = red;
+		icon.g = green;
+		icon.b = blue;
+		//TODO: potential overflow
+		strcpy(icon.szSpriteName, pszIconName);
+	}
+}
+
+void CHudStatusIcons::DisableCustomIcon(int nIndex)
+{
+	if (nIndex < MAX_CUSTOMSPRITES)
+	{
+		memset(m_CustomList + nIndex, 0, sizeof(icon_sprite_t));
 	}
 }

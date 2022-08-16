@@ -29,12 +29,32 @@
 #include "soundent.h"
 #include "decals.h"
 #include "gamerules.h"
+#include "game.h"
 #include "UserMessages.h"
 
 #define NOT_USED 255
 
 #define TRACER_FREQ 4 // Tracers fire every fourth bullet
 
+int UTIL_DefaultPlaybackFlags()
+{
+	if (oldweapons.value == 1)
+	{
+		return 0;
+	}
+
+	return FEV_NOTHOST;
+}
+
+bool UTIL_DefaultUseDecrement()
+{
+	return oldweapons.value == 0;
+}
+
+bool UTIL_UseOldWeapons()
+{
+	return oldweapons.value != 0;
+}
 
 //=========================================================
 // MaxAmmoCarry - pass in a name and this function will tell
@@ -315,6 +335,33 @@ void W_Precache()
 
 	// hornetgun
 	UTIL_PrecacheOtherWeapon("weapon_hornetgun");
+
+	UTIL_PrecacheOtherWeapon("weapon_grapple");
+
+	UTIL_PrecacheOtherWeapon("weapon_eagle");
+
+	UTIL_PrecacheOtherWeapon("weapon_pipewrench");
+
+	UTIL_PrecacheOtherWeapon("weapon_m249");
+	UTIL_PrecacheOther("ammo_556");
+
+	UTIL_PrecacheOtherWeapon("weapon_displacer");
+
+	UTIL_PrecacheOtherWeapon("weapon_sporelauncher");
+	UTIL_PrecacheOther("ammo_spore");
+
+	UTIL_PrecacheOtherWeapon("weapon_shockrifle");
+
+	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
+	UTIL_PrecacheOther("ammo_762");
+
+	UTIL_PrecacheOtherWeapon("weapon_knife");
+
+	UTIL_PrecacheOtherWeapon("weapon_penguin");
+
+	PRECACHE_SOUND("weapons/spore_hit1.wav");
+	PRECACHE_SOUND("weapons/spore_hit2.wav");
+	PRECACHE_SOUND("weapons/spore_hit3.wav");
 
 	if (g_pGameRules->IsDeathmatch())
 	{
@@ -758,6 +805,12 @@ void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int body)
 bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry)
 {
 	int iIdAmmo;
+
+	//Don't double for single shot weapons (e.g. RPG)
+	if ((m_pPlayer->m_iItems & CTFItem::Backpack) != 0 && iMaxClip > 1)
+	{
+		iMaxClip *= 2;
+	}
 
 	if (iMaxClip < 1)
 	{
@@ -1443,7 +1496,6 @@ void CBasePlayerWeapon::PrintState()
 
 	ALERT(at_debug, "m_iclip:  %i\n", m_iClip);
 }
-
 
 TYPEDESCRIPTION CRpg::m_SaveData[] =
 	{

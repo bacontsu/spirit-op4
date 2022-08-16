@@ -83,7 +83,13 @@ bool CShotgun::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
-
+void CShotgun::IncrementAmmo(CBasePlayer* pPlayer)
+{
+	if (pPlayer->GiveAmmo(1, "buckshot", BUCKSHOT_MAX_CARRY) >= 0)
+	{
+		EMIT_SOUND(pPlayer->edict(), CHAN_STATIC, "ctf/pow_backpack.wav", 0.5, ATTN_NORM);
+	}
+}
 
 bool CShotgun::Deploy()
 {
@@ -121,7 +127,7 @@ void CShotgun::PrimaryAttack()
 
 	int flags;
 #if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif
@@ -208,7 +214,7 @@ void CShotgun::SecondaryAttack()
 
 	int flags;
 #if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
+	flags = UTIL_DefaultPlaybackFlags();
 #else
 	flags = 0;
 #endif
@@ -275,7 +281,14 @@ void CShotgun::SecondaryAttack()
 
 void CShotgun::Reload()
 {
-	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0 || m_iClip == SHOTGUN_MAX_CLIP)
+	int maxClip = SHOTGUN_MAX_CLIP;
+
+	if ((m_pPlayer->m_iItems & CTFItem::Backpack) != 0)
+	{
+		maxClip *= 2;
+	}
+
+	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0 || m_iClip == maxClip)
 		return;
 
 	// don't reload until recoil is done
@@ -344,7 +357,14 @@ void CShotgun::WeaponIdle()
 		}
 		else if (m_fInSpecialReload != 0)
 		{
-			if (m_iClip != 8 && 0 != m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+			int maxClip = SHOTGUN_MAX_CLIP;
+
+			if ((m_pPlayer->m_iItems & CTFItem::Backpack) != 0)
+			{
+				maxClip *= 2;
+			}
+
+			if (m_iClip != maxClip && 0 != m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
 			{
 				Reload();
 			}
