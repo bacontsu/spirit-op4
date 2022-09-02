@@ -40,7 +40,12 @@ HSPRITE LoadSprite(const char* pszName)
 	return SPR_Load(sz);
 }
 
+// stub functions
 void UTIL_SetOrigin(entvars_t* pev, const Vector& vecOrigin)
 {
 
 }
+
+void SET_MODEL(edict_t* e, const char* model) {}
+int PRECACHE_MODEL(const char* s) { return 0; }
+void GetFallbackDir(char* falldir) {}
