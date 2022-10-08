@@ -136,6 +136,7 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\dlls\client.cpp" />
     <ClCompile Include="..\..\dlls\COFAllyMonster.cpp" />
     <ClCompile Include="..\..\dlls\COFSquadTalkMonster.cpp" />
+    <ClCompile Include="..\..\dlls\colorcor.cpp" />
     <ClCompile Include="..\..\dlls\combat.cpp" />
     <ClCompile Include="..\..\dlls\controller.cpp" />
     <ClCompile Include="..\..\dlls\coopplay_gamerules.cpp" />
