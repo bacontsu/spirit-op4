@@ -21,6 +21,8 @@
 #include "StudioModelRenderer.h"
 #include "GameStudioModelRenderer.h"
 
+#include "colorcor.h"
+
 extern cvar_t* tfc_newmodels;
 
 extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
@@ -1969,6 +1971,16 @@ void CStudioModelRenderer::StudioRenderModel()
 	else
 	{
 		StudioRenderFinal();
+	}
+
+	// Hackery, to draw screen effects after drawing the whole screen
+	if (gEngfuncs.GetViewModel() && gEngfuncs.GetViewModel()->model && m_pCurrentEntity == gEngfuncs.GetViewModel())
+	{
+		gEngfuncs.pTriAPI->RenderMode(kRenderTransAdd);
+
+		gColorCor.ProcessBlackWhite();
+
+		gEngfuncs.pTriAPI->RenderMode(kRenderNormal);
 	}
 }
 

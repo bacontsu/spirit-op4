@@ -372,6 +372,7 @@ public:
 	bool MsgFunc_FlashBat(const char* pszName, int iSize, void* pbuf);
 
 	void drawNightVision();
+	bool m_fOn;
 
 private:
 	HSPRITE m_hSprite1;
@@ -383,7 +384,6 @@ private:
 	Rect* m_prcBeam;
 	float m_flBat;
 	int m_iBat;
-	bool m_fOn;
 	float m_fFade;
 	int m_iWidth; // width of the battery innards
 };

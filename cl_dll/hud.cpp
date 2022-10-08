@@ -457,6 +457,14 @@ void CHud::Init()
 	CVAR_CREATE("cl_viewmodel_bob", "0", FCVAR_ARCHIVE);
 	CVAR_CREATE("cl_viewmodel_sway", "0", FCVAR_ARCHIVE);
 
+	// Color correction
+	CVAR_CREATE("colorcor_r", "1", FCVAR_ARCHIVE);
+	CVAR_CREATE("colorcor_g", "1", FCVAR_ARCHIVE);
+	CVAR_CREATE("colorcor_b", "1", FCVAR_ARCHIVE);
+	CVAR_CREATE("colorcor_alpha", "1.0", FCVAR_ARCHIVE);
+	CVAR_CREATE("colorcor_inverse", "0", FCVAR_ARCHIVE);
+	CVAR_CREATE("colorcor_blackwhite", "0", FCVAR_ARCHIVE);
+
 	//start glow effect --FragBait0
 	CVAR_CREATE("r_glow", "0", FCVAR_ARCHIVE);
 	//CVAR_CREATE("r_glowmode", "0", FCVAR_ARCHIVE ); //AJH this is now redundant

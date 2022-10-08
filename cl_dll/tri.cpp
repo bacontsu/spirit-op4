@@ -26,6 +26,7 @@
 #include "tri.h"
 
 #include "glInclude.h"
+#include "colorcor.h"
 
 extern IParticleMan* g_pParticleMan;
 

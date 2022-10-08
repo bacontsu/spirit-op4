@@ -22,6 +22,7 @@
 #include "cl_util.h"
 #include "netadr.h"
 #include "interface.h"
+#include "colorcor.h"
 //#include "vgui_schememanager.h"
 #include "mp3.h" //AJH - Killars MP3player
 
@@ -175,6 +176,7 @@ void DLLEXPORT HUD_Init()
 
 	gHUD.Init();
 	Scheme_Init();
+	gColorCor.InitScreen();
 }
 
 
@@ -191,7 +193,18 @@ int DLLEXPORT HUD_Redraw(float time, int intermission)
 {
 	//	RecClHudRedraw(time, intermission);
 
+	//if (gHUD.m_Flash.m_fOn)
+		//gHUD.m_Flash.drawNightVision();
+
 	gHUD.Redraw(time, 0 != intermission);
+
+	//if (gHUD.m_Flash.m_fOn)
+		//gHUD.m_Flash.drawNightVision();
+
+	// draw the color correction
+	gColorCor.DrawColorCor();
+	//gHUD.m_Flash.drawNightVision();
+	
 
 	return 1;
 }

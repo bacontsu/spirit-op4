@@ -21,6 +21,8 @@
 #include "vgui_TeamFortressViewport.h"
 #include "vgui_StatsMenuPanel.h"
 
+#include "colorcor.h"
+
 #define MAX_LOGO_FRAMES 56
 
 int grgLogoFrame[MAX_LOGO_FRAMES] =
@@ -98,6 +100,9 @@ bool CHud::Redraw(float flTime, bool intermission)
 	m_flTime = flTime;
 	m_flTimeDelta = (double)m_flTime - m_fOldTime;
 	static float m_flShotTime = 0;
+
+	// draw the color correction
+	//gColorCor.DrawColorCor();
 
 	//LRC - handle fog fading effects. (is this the right place for it?)
 	if (g_fFogFadeDuration)
