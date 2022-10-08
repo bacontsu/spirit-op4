@@ -29,6 +29,9 @@ public:
 
 	unsigned int g_bwtexture;
 
+	float lerpAlpha;
+	float lerpR, lerpG, lerpB;
+
 	CColorCorTexture m_pTextures;
 };
 

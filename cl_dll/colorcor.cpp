@@ -124,9 +124,21 @@ void CColorCor::InitScreen()
 
 void CColorCor::DrawColorCor()
 {
-	m_pTextures.r = CVAR_GET_FLOAT( "colorcor_r" );//was 0.3
-	m_pTextures.g = CVAR_GET_FLOAT( "colorcor_g" );//was 0.3
-	m_pTextures.b = CVAR_GET_FLOAT( "colorcor_b" );//was 0.3
+	float targetR = CVAR_GET_FLOAT("colorcor_r"); // was 0.3
+	lerpR = (targetR * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpR * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
+
+	float targetG = CVAR_GET_FLOAT("colorcor_g"); // was 0.3
+	lerpG = (targetG * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpG * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
+
+	float targetB = CVAR_GET_FLOAT("colorcor_b"); // was 0.3
+	lerpB = (targetB * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpB * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
+
+	float targetAlpha = CVAR_GET_FLOAT("colorcor_alpha"); // was 0.2
+	lerpAlpha = (targetAlpha * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpAlpha * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
+
+	m_pTextures.r = lerpR;
+	m_pTextures.g = lerpG;
+	m_pTextures.b = lerpB;
 
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ZERO);  
@@ -135,7 +147,7 @@ void CColorCor::DrawColorCor()
 	m_pTextures.BindTexture(ScreenWidth,ScreenHeight);
 	m_pTextures.Draw(ScreenWidth,ScreenHeight);
 
-	m_pTextures.alpha = CVAR_GET_FLOAT( "colorcor_alpha" );//was 0.2
+	m_pTextures.alpha = lerpAlpha;
 	m_pTextures.of = 0;
 
 	glDisable(GL_BLEND);
