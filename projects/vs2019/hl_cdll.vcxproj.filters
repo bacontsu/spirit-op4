@@ -76,6 +76,9 @@
     <Filter Include="Source Files\cl_dll\particleman">
       <UniqueIdentifier>{7085339d-2b33-4cdf-846c-0e4c7d33add8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\cl_dll\imgui">
+      <UniqueIdentifier>{36d5d697-550c-4eb9-87d6-5ffc15bae2a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\crossbow.cpp">
@@ -398,6 +401,39 @@
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\colorcor.cpp">
       <Filter>Source Files\cl_dll</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\hud_drawmessage.cpp">
+      <Filter>Source Files\cl_dll</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\backends\imgui_impl_opengl2.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\backends\imgui_impl_sdl.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_demo.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_draw.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_tables.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\misc\fonts\binary_to_compressed_c.cpp">
+      <Filter>Source Files\cl_dll\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -733,6 +769,42 @@
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\colorcor.h">
       <Filter>Header Files\cl_dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\backends\imgui_impl_opengl2.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\backends\imgui_impl_opengl3.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\backends\imgui_impl_opengl3_loader.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\backends\imgui_impl_sdl.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\examples\example_allegro5\imconfig_allegro5.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\examples\libs\glfw\include\GLFW\glfw3.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\examples\libs\glfw\include\GLFW\glfw3native.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imconfig.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imgui.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imgui_internal.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\misc\cpp\imgui_stdlib.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\misc\single_file\imgui_single_file.h">
+      <Filter>Source Files\cl_dll\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

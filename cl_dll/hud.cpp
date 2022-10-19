@@ -533,6 +533,7 @@ void CHud::Init()
 	m_PlayerBrowse.Init();
 	GetClientVoiceMgr()->Init(&g_VoiceStatusHelper, (vgui::Panel**)&gViewPort);
 	m_Particle.Init(); // (LRC) -- 30/08/02 November235: Particles to Order
+	m_PointMessage.Init();
 
 	m_Menu.Init();
 	InitRain();
@@ -706,6 +707,7 @@ void CHud::VidInit()
 	m_PlayerBrowse.VidInit();
 	GetClientVoiceMgr()->VidInit();
 	m_Particle.VidInit(); // (LRC) -- 30/08/02 November235: Particles to Order
+	m_PointMessage.VidInit();
 }
 
 bool CHud::MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)

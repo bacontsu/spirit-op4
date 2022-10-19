@@ -80,6 +80,7 @@ void LinkUserMessages()
 	gmsgInventory = REG_USER_MSG("Inventory", -1); //AJH Inventory system
 
 	gmsgWeapons = REG_USER_MSG("Weapons", 8);
+	gmsgMessage = REG_USER_MSG("PointMsg", -1);
 
 	gmsgSpectator = g_engfuncs.pfnRegUserMsg("Spectator", 2);
 	gmsgStatusIcon = g_engfuncs.pfnRegUserMsg("StatusIcon", -1);

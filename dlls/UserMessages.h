@@ -66,6 +66,7 @@ inline int gmsgRainData = 0;
 inline int gmsgInventory = 0; //AJH Inventory system
 
 inline int gmsgWeapons = 0;
+inline int gmsgMessage = 0;
 
 inline int gmsgSpectator = 0;
 inline int gmsgPlayerBrowse = 0;

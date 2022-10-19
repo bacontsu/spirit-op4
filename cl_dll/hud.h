@@ -616,6 +616,18 @@ private:
 
 };
 
+
+class CPointMessageRenderer : public CHudBase
+{
+public:
+	bool Init() override;
+	bool VidInit() override;
+	void Reset() override;
+	bool Draw(float flTime) override;
+	bool MsgFunc_PointMsg(const char* pszName, int iSize, void* pbuf);
+	
+};
+
 //
 //-----------------------------------------------------
 //
@@ -780,6 +792,7 @@ public:
 	CHudTextMessage m_TextMessage;
 	CHudStatusIcons m_StatusIcons;
 	CHudParticle m_Particle; // (LRC) -- 30/08/02 November235: Particles to Order
+	CPointMessageRenderer m_PointMessage;
 
 	CHudFlagIcons m_FlagIcons;
 	CHudPlayerBrowse m_PlayerBrowse;
