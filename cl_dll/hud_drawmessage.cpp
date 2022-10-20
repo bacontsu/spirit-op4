@@ -29,6 +29,8 @@ struct CClientPointMessage
 {
 	Vector origin;
 	std::string message;
+	bool developerOnly;
+	float maxDistance;
 };
 
 SDL_Window* mainWindow;
@@ -71,6 +73,8 @@ bool CPointMessageRenderer::MsgFunc_PointMsg(const char* pszName, int iSize, voi
 	local.origin.y = READ_COORD();
 	local.origin.z = READ_COORD();
 	local.message = std::string(READ_STRING());
+	local.developerOnly = (bool)READ_BYTE();
+	local.maxDistance = READ_FLOAT();
 
 	// add to our list
 	MessageList.push_back(local);
@@ -112,7 +116,7 @@ bool CPointMessageRenderer::Draw(float flTime)
 			gEngfuncs.pTriAPI->WorldToScreen(MessageList[i].origin, screen);
 			int x = XPROJECT(screen[0]);
 			int y = YPROJECT(screen[1]);
-			ImGui::SetNextWindowPos(ImVec2(x - (len/2), y));
+			ImGui::SetNextWindowPos(ImVec2(x - (len/2), y - (25/2)));
 
 			// check player rotation
 			Vector vecDir = MessageList[i].origin - gEngfuncs.GetLocalPlayer()->curstate.origin;
@@ -122,8 +126,11 @@ bool CPointMessageRenderer::Draw(float flTime)
 			angle.x = 0;
 			AngleVectors(angle, forward, null, null);
 
-			// check if player is facing different way, or the coords are simply out of the screen coord, or way too far ( > 500 units)
-			if (((((x - (len / 2)) > 0) && ((x - (len / 2)) < ScreenWidth)) && ((y > 0) && (y < ScreenHeight))) && DotProduct(forward,vecDir) > 90 && vecDir.Length() < 500)
+			// check if the coords are simply out of the screen coord
+			if (((((x - (len / 2)) > 0) && ((x - (len / 2)) < ScreenWidth)) && ((y > 0) && (y < ScreenHeight)))
+				&& DotProduct(forward, vecDir) > 90										// or player is facing different way,
+				&& vecDir.Length() < MessageList[i].maxDistance							// or way too far (out of radius)
+				&& !(CVAR_GET_FLOAT("developer") == 0 && MessageList[i].developerOnly))	// or if its developer only
 			{
 				ImGui::Begin(std::to_string(i).c_str(), null, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
 				ImGui::Text(MessageList[i].message.c_str());
