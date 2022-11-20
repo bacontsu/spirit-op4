@@ -128,7 +128,23 @@ bool CKnife::Swing(const bool bFirst)
 
 			// player "shoot" animation
 			m_pPlayer->SetAnimation(PLAYER_ATTACK1);
-			SendWeaponAnim(KNIFE_ATTACK1MISS);
+
+			switch (((m_iSwing++) % 2) + 1)
+			{
+			case 0:
+				SendWeaponAnim(KNIFE_ATTACK1MISS);
+				EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/knife1.wav", 1, ATTN_NORM, 0, 94 + RANDOM_LONG(0, 0xF));
+				break;
+			case 1:
+				SendWeaponAnim(KNIFE_ATTACK2HIT);
+				EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/knife2.wav", 1, ATTN_NORM, 0, 94 + RANDOM_LONG(0, 0xF));
+				break;
+			case 2:
+				SendWeaponAnim(KNIFE_ATTACK3HIT);
+				EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/knife3.wav", 1, ATTN_NORM, 0, 94 + RANDOM_LONG(0, 0xF));
+				break;
+			}
+
 		}
 	}
 	else
