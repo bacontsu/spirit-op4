@@ -1972,16 +1972,6 @@ void CStudioModelRenderer::StudioRenderModel()
 	{
 		StudioRenderFinal();
 	}
-
-	// Hackery, to draw screen effects after drawing the whole screen
-	if (gEngfuncs.GetViewModel() && gEngfuncs.GetViewModel()->model && m_pCurrentEntity == gEngfuncs.GetViewModel())
-	{
-		gEngfuncs.pTriAPI->RenderMode(kRenderTransAdd);
-
-		gColorCor.ProcessBlackWhite();
-
-		gEngfuncs.pTriAPI->RenderMode(kRenderNormal);
-	}
 }
 
 /*

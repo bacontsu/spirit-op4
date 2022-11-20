@@ -43,19 +43,14 @@ void CColorCorTexture::BindTexture(int width, int height)
 { 
      glBindTexture(GL_TEXTURE_RECTANGLE_NV, g_texture);
 
-	if (!(gEngfuncs.GetViewModel() && gEngfuncs.GetViewModel()->model))
-	{
-		 if (CVAR_GET_FLOAT("colorcor_blackwhite") == 1)
-		 {
-			 glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_LUMINANCE, 0, 0, ScreenWidth, ScreenHeight, 0);
-		 }
-		 else
-		 {
-			 glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA8, 0, 0, ScreenWidth, ScreenHeight, 0);
-		 }
-	}
+	if (CVAR_GET_FLOAT("colorcor_blackwhite") == 1)
+	 {
+		 glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_LUMINANCE, 0, 0, ScreenWidth, ScreenHeight, 0);
+	 }
 	 else
-		glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA8, 0, 0, ScreenWidth, ScreenHeight, 0);
+	 {
+		 glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA8, 0, 0, ScreenWidth, ScreenHeight, 0);
+	 }
 }
 
 void CColorCorTexture:: Draw(int width, int height)
@@ -155,67 +150,7 @@ void CColorCor::DrawColorCor()
 
 void CColorCor::ProcessBlackWhite()
 {
-	glBlendFunc(GL_SRC_ALPHA, GL_ZERO);
-	glEnable(GL_BLEND);	
 
-	 glBindTexture(GL_TEXTURE_RECTANGLE_NV, g_bwtexture);
-
-	if (CVAR_GET_FLOAT("colorcor_blackwhite") == 1)
-	{
-		glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_LUMINANCE, 0, 0, ScreenWidth, ScreenHeight, 0);
-	}
-	else
-	{
-		glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA8, 0, 0, ScreenWidth, ScreenHeight, 0);
-	}
-
-	// enable some OpenGL stuff
-	glEnable(GL_TEXTURE_RECTANGLE_NV);
-	glColor3f(1, 1, 1);
-	glDisable(GL_DEPTH_TEST);
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0, 1, 1, 0, 0.1, 100);
-
-	glBindTexture(GL_TEXTURE_RECTANGLE_NV, g_bwtexture);
-
-	glColor4f(1, 1, 1, 1);
-
-	int width = ScreenWidth;
-	int height = ScreenHeight;
-	int of = 0;
-
-	glBegin(GL_QUADS);
-	
-	glTexCoord2f(0 - of, 0 - of);
-	glVertex3f(0, 1, -1);
-	glTexCoord2f(0 - of, height + of);
-	glVertex3f(0, 0, -1);
-	glTexCoord2f(width + of, height + of);
-	glVertex3f(1, 0, -1);
-	glTexCoord2f(width + of, 0 - of);
-	glVertex3f(1, 1, -1);
-
-	glEnd();
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-	glDisable(GL_TEXTURE_RECTANGLE_NV);
-	glEnable(GL_DEPTH_TEST);
-
-
-	glDisable(GL_BLEND);
-	
 }
 
 

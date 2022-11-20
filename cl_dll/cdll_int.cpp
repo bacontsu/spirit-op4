@@ -206,7 +206,7 @@ int DLLEXPORT HUD_Redraw(float time, int intermission)
 		//gHUD.m_Flash.drawNightVision();
 
 	// draw the color correction
-	gColorCor.DrawColorCor();
+	//gColorCor.DrawColorCor();
 	//gHUD.m_Flash.drawNightVision();
 	
 

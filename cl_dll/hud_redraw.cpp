@@ -96,6 +96,8 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw(float flTime, bool intermission)
 {
+	gColorCor.DrawColorCor();
+
 	m_fOldTime = m_flTime; // save time of previous redraw
 	m_flTime = flTime;
 	m_flTimeDelta = (double)m_flTime - m_fOldTime;
@@ -252,6 +254,11 @@ bool CHud::Redraw(float flTime, bool intermission)
 	if ((viewFlags & 1) && !(viewFlags & 2)) // custom view active, and flag "draw hud" isnt set
 		return true;
 
+	
+	// BlueNightHawk - This fixes the viewmodel drawing on top of the hud
+	glDepthRange(0.0f, 0.0f);
+
+
 	// draw all registered HUD elements
 	if (0 != m_pCvarDraw->value)
 	{
@@ -294,6 +301,8 @@ bool CHud::Redraw(float flTime, bool intermission)
 
 		SPR_DrawAdditive(i, x, y, NULL);
 	}
+
+	glDepthRange(0.0f, 1.0f);
 
 	/*
 	if ( g_iVisibleMouse )
