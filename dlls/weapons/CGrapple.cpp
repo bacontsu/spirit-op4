@@ -564,7 +564,7 @@ bool CGrapple::GetItemInfo(ItemInfo* p)
 	p->iMaxAmmo2 = WEAPON_NOCLIP;
 	p->iMaxClip = WEAPON_NOCLIP;
 	p->iSlot = 0;
-	p->iPosition = 3;
+	p->iPosition = 4;
 	p->iId = m_iId = WEAPON_GRAPPLE;
 	p->iFlags = 0;
 	p->iWeight = 21;

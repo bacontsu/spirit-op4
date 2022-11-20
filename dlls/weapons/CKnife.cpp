@@ -128,6 +128,7 @@ bool CKnife::Swing(const bool bFirst)
 
 			// player "shoot" animation
 			m_pPlayer->SetAnimation(PLAYER_ATTACK1);
+			SendWeaponAnim(KNIFE_ATTACK1MISS);
 		}
 	}
 	else
@@ -285,7 +286,7 @@ bool CKnife::GetItemInfo(ItemInfo* p)
 	p->iMaxAmmo2 = WEAPON_NOCLIP;
 	p->iMaxClip = WEAPON_NOCLIP;
 	p->iSlot = 0;
-	p->iPosition = 2;
+	p->iPosition = 3;
 	p->iId = m_iId = WEAPON_KNIFE;
 	p->iWeight = 0;
 	return true;
