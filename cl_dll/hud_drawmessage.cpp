@@ -52,7 +52,8 @@ bool CPointMessageRenderer::Init()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
-	(void)io;
+	
+	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
