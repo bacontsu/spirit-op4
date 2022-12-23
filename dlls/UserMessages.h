@@ -84,4 +84,6 @@ inline int gmsgTeamFull = 0;
 inline int gmsgOldWeapon = 0;
 inline int gmsgCustomIcon = 0;
 
+inline int gmsgImpact = 0;
+
 void LinkUserMessages();

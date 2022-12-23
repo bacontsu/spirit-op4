@@ -61,6 +61,224 @@ void VectorAngles(const float* forward, float* angles);
 
 extern cvar_t* cl_lw;
 
+//======================
+
+// PARTICLES START
+
+//======================
+
+void EV_HLDM_Particles(vec_t Pos_X, vec_t Pos_Y, vec_t Pos_Z, float PosNorm_X, float PosNorm_Y, float PosNorm_Z, int DoPuff, int Material)
+
+{
+
+	pmtrace_t tr;
+
+	pmtrace_t* pTrace = &tr;
+
+
+
+	pTrace->endpos.x = Pos_X;
+
+	pTrace->endpos.y = Pos_Y;
+
+	pTrace->endpos.z = Pos_Z;
+
+
+
+	pTrace->plane.normal.x = PosNorm_X;
+
+	pTrace->plane.normal.y = PosNorm_Y;
+
+	pTrace->plane.normal.z = PosNorm_Z;
+
+
+	Vector angles, forward, right, up;
+
+
+
+	VectorAngles(pTrace->plane.normal, angles);
+
+	AngleVectors(angles, forward, up, right);
+
+	forward.z = -forward.z;
+
+
+
+	bool fDoPuffs = false;
+
+	bool fDoSparks = false;
+
+	bool fDoMuzzle = false;
+
+	int a, r, g, b;
+
+	float scale;
+	if (Material == 0) // concrete, tile
+	{
+		fDoSparks = (gEngfuncs.pfnRandomLong(1, 2) == 1);
+
+		fDoPuffs = true;
+
+		fDoMuzzle = false;
+
+		a = 96;
+
+		r = 128;
+
+		g = 128;
+
+		b = 128;
+
+		scale = 0.03;
+	}
+	if (Material == 1) // metal, vent, grate
+	{
+
+		fDoSparks = (gEngfuncs.pfnRandomLong(1, 2) == 1);
+
+		fDoPuffs = false;
+
+		fDoMuzzle = true;
+
+		scale = 0.03;
+	}
+	if (Material == 2) // wood
+
+	{
+		fDoPuffs = true;
+
+		fDoSparks = false;
+
+		fDoMuzzle = false;
+
+		a = 128;
+
+		r = 97;
+
+		g = 86;
+
+		b = 53;
+
+		scale = 0.06;
+	}
+	if (Material == 3) // dirt
+
+	{
+
+		fDoPuffs = true;
+
+		fDoSparks = false;
+
+		fDoMuzzle = false;
+
+		a = 64;
+
+		r = 128;
+
+		g = 128;
+
+		b = 128;
+
+		scale = 0.03;
+	}
+	if (Material == 4) // glass
+
+	{
+
+		fDoPuffs = false;
+
+		fDoSparks = false;
+
+		fDoMuzzle = false;
+
+		scale = 0.03;
+	}
+	if (Material == 5) // computer
+	{
+		fDoPuffs = false;
+
+		fDoSparks = (gEngfuncs.pfnRandomLong(1, 2) == 1);
+
+		fDoMuzzle = false;
+
+		scale = 0.03;
+	}
+	if (DoPuff != 0)
+
+	{
+
+		if (fDoPuffs)
+		{ // get sprite index
+			int iWallsmoke = gEngfuncs.pEventAPI->EV_FindModelIndex("sprites/smokepuff.spr");
+			// create sprite
+			TEMPENTITY* pTemp = gEngfuncs.pEfxAPI->R_TempSprite(pTrace->endpos,
+
+				forward * gEngfuncs.pfnRandomFloat(10, 30) + right * gEngfuncs.pfnRandomFloat(-6, 6) + up * gEngfuncs.pfnRandomFloat(0, 6),
+
+				0.5, iWallsmoke, kRenderTransAdd, kRenderFxNone, 0.35, 0.1, FTENT_SPRANIMATE | FTENT_FADEOUT | FTENT_COLLIDEKILL);
+			if (pTemp)
+			{ // sprite created successfully, adjust some things
+
+				pTemp->fadeSpeed = 1.0;
+
+				pTemp->entity.curstate.framerate = 25.0;
+
+				pTemp->entity.curstate.renderamt = a;
+
+				pTemp->entity.curstate.rendercolor.r = r;
+
+				pTemp->entity.curstate.rendercolor.g = g;
+
+				pTemp->entity.curstate.rendercolor.b = b;
+			}
+		}
+	}
+	if (fDoSparks)
+	{ // make some sparks
+		gEngfuncs.pEfxAPI->R_SparkShower(pTrace->endpos);
+
+		dlight_t* dl = gEngfuncs.pEfxAPI->CL_AllocDlight(0);
+
+		dl->origin = pTrace->endpos;
+
+		dl->color.r = 255; // red
+
+		dl->color.g = 255; // green
+
+		dl->color.b = 128; // blue
+
+		dl->radius = 50;
+
+		dl->decay = 100;
+
+		dl->die = gEngfuncs.GetClientTime() + 1;
+	}
+	if (fDoMuzzle)
+
+	{
+
+		dlight_t* dl = gEngfuncs.pEfxAPI->CL_AllocDlight(0);
+
+		dl->origin = pTrace->endpos;
+
+		dl->color.r = 255; // red
+
+		dl->color.g = 255; // green
+
+		dl->color.b = 128; // blue
+
+		dl->radius = 100;
+
+		dl->die = gEngfuncs.GetClientTime() + 0.01;
+
+
+		gEngfuncs.pEfxAPI->R_MuzzleFlash(pTrace->endpos, 11);
+	}
+}
+//=======================================
+// Particles end
+//=======================================
+
 // play a strike sound based on the texture that was hit by the attack traceline.  VecSrc/VecEnd are the
 // original traceline endpoints used by the attacker, iBulletType is the type of bullet that hit the texture.
 // returns volume of strike instrument (crowbar) to play

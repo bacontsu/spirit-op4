@@ -386,6 +386,29 @@ int __MsgFunc_AllowSpec(const char* pszName, int iSize, void* pbuf)
 }
 
 
+extern void EV_HLDM_Particles(vec_t Pos_X, vec_t Pos_Y, vec_t Pos_Z, float PosNorm_X, float PosNorm_Y, float PosNorm_Z, int DoPuff, int Material);
+int __MsgFunc_Impact(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+
+	int MatType = READ_SHORT();
+	int DoPuffSpr = READ_BYTE();
+
+	vec_t Pos_X, Pos_Y, Pos_Z;
+	float PosNorm_X, PosNorm_Y, PosNorm_Z;
+
+	Pos_X = READ_COORD();
+	Pos_Y = READ_COORD();
+	Pos_Z = READ_COORD();
+	PosNorm_X = READ_COORD();
+	PosNorm_Y = READ_COORD();
+	PosNorm_Z = READ_COORD();
+
+	EV_HLDM_Particles(Pos_X, Pos_Y, Pos_Z, PosNorm_X, PosNorm_Y, PosNorm_Z, DoPuffSpr, MatType);
+
+	return 1;
+}
+
 // This is called every time the DLL is loaded
 void CHud::Init()
 {
@@ -449,6 +472,8 @@ void CHud::Init()
 
 	// VGUI Menus
 	HOOK_MESSAGE(VGUIMenu);
+
+	HOOK_MESSAGE(Impact);
 
 	CVAR_CREATE("hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO); // controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE("hud_takesshots", "0", FCVAR_ARCHIVE);					   // controls whether or not to automatically take screenshots at the end of a round
