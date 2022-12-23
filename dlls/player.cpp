@@ -3500,6 +3500,13 @@ void CBasePlayer::Spawn()
 		if (g_pGameRules->IsCTF())
 			Player_Menu();
 	}
+
+	CVAR_SET_FLOAT("colorcor_inverse", 0);
+	CVAR_SET_FLOAT("colorcor_blackwhite", 0);
+	CVAR_SET_FLOAT("colorcor_r", 1);
+	CVAR_SET_FLOAT("colorcor_g", 1);
+	CVAR_SET_FLOAT("colorcor_b", 1);
+	CVAR_SET_FLOAT("colorcor_alpha", 1);
 }
 
 
