@@ -461,6 +461,23 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 
 		gEngfuncs.pEventAPI->EV_PopPMStates();
 	}
+
+	// wallpuff code
+	int modelindex = gEngfuncs.pEventAPI->EV_FindModelIndex("sprites/smokepuff.spr");
+
+	Vector origin = gEngfuncs.GetViewModel()->attachment[0];
+
+	for (int i = 0; i < cShots; i++)
+	{
+		auto puff = gEngfuncs.pEfxAPI->R_TempSprite(origin, Vector(RANDOM_LONG(-3, 3), RANDOM_LONG(-3, 3), 4),
+			0.3, modelindex, kRenderTransAdd, 0, 0.1, 0.1 /* life in seconds*/, FTENT_SPRANIMATE | FTENT_FADEOUT);
+		if (puff)
+		{
+			puff->fadeSpeed = 1.0;
+			puff->entity.curstate.framerate = 25.0;
+			puff->entity.curstate.renderamt = 0.1 * 255;
+		}
+	}
 }
 
 //======================

@@ -312,6 +312,59 @@ void DLLEXPORT HUD_CreateEntities()
 	GetClientVoiceMgr()->CreateEntities();
 }
 
+/*
+=========================
+HUD_MuzzleFlash
+
+Create Muzzleflash
+=========================
+*/
+void HUD_MuzzleFlash(Vector org, int options, const cl_entity_t* entity)
+{
+	gEngfuncs.pEfxAPI->R_MuzzleFlash(org, options);
+
+	auto uid = std::addressof(entity);
+	float radius = 150.0f / 100.0f;
+
+	if (gEngfuncs.GetViewModel() == entity)
+	{
+		switch (gHUD.CurrentWeapon())
+		{
+		case WEAPON_GLOCK:
+			radius = 1.5f;
+			break;
+		case WEAPON_SHOTGUN:
+			radius = 2.5f;
+			break;
+		case WEAPON_MP5:
+			radius = 2.0f;
+			break;
+		case WEAPON_PYTHON:
+			radius = 2.3f;
+			break;
+		case WEAPON_EAGLE:
+			radius = 2.3f;
+			break;
+		case WEAPON_M249:
+			radius = 2.5f;
+			break;
+		case WEAPON_SNIPERRIFLE:
+			radius = 2.0f;
+			break;
+		}
+		radius += gEngfuncs.pfnRandomFloat(-0.2, 0.2);
+	}
+	dlight_t* dl = gEngfuncs.pEfxAPI->CL_AllocDlight((ulong)uid + entity->index);
+	if (dl)
+	{
+		dl->origin = org;
+		dl->radius = radius * 100.0f;
+		dl->decay = dl->radius * 2.5f;
+		dl->color = {255, 255, 128};
+		dl->die = gEngfuncs.GetClientTime() + (0.01 * dl->decay);
+	}
+}
+
 
 /*
 =========================
@@ -332,19 +385,19 @@ void DLLEXPORT HUD_StudioEvent(const struct mstudioevent_s* event, const struct 
 	{
 	case 5001:
 		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[0], atoi(event->options));
+			HUD_MuzzleFlash((float*)&entity->attachment[0], atoi(event->options), entity);
 		break;
 	case 5011:
 		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[1], atoi(event->options));
+			HUD_MuzzleFlash((float*)&entity->attachment[1], atoi(event->options), entity);
 		break;
 	case 5021:
 		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[2], atoi(event->options));
+			HUD_MuzzleFlash((float*)&entity->attachment[2], atoi(event->options), entity);
 		break;
 	case 5031:
 		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[3], atoi(event->options));
+			HUD_MuzzleFlash((float*)&entity->attachment[3], atoi(event->options), entity);
 		break;
 	case 5002:
 		gEngfuncs.pEfxAPI->R_SparkEffect((float*)&entity->attachment[0], atoi(event->options), -100, 100);

@@ -133,6 +133,13 @@ public:
 	void UserCmd_NextWeapon();
 	void UserCmd_PrevWeapon();
 
+	int CurrentWeapon()
+	{
+		if (m_pWeapon)
+			return m_pWeapon->iId;
+		return 0;
+	}
+
 private:
 	float m_fFade;
 	RGBA m_rgba;
@@ -844,6 +851,11 @@ public:
 	void AddHudElem(CHudBase* p);
 
 	float GetSensitivity();
+
+	int CurrentWeapon()
+	{
+		return m_Ammo.CurrentWeapon();
+	}
 
 	bool isNightVisionOn() { return mNightVisionState; }
 
