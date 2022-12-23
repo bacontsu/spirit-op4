@@ -24,6 +24,7 @@ class CColorCor
 {
 public:
 	void InitScreen(void);
+	void VidInit();
 	void DrawColorCor(void);
 	void ProcessBlackWhite();
 

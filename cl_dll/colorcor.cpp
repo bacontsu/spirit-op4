@@ -19,6 +19,14 @@
 #define GL_TEXTURE_RECTANGLE_NV 0x84F5
 #endif
 
+cvar_t* cvar_red;
+cvar_t* cvar_green;
+cvar_t* cvar_blue;
+cvar_t* cvar_alpha;
+cvar_t* cvar_bnw;
+cvar_t* cvar_inverse;
+cvar_t* cvar_noirmode;
+
 CColorCorTexture::CColorCorTexture() {};
 
 void CColorCorTexture::Init(int width, int height)
@@ -37,13 +45,23 @@ void CColorCorTexture::Init(int width, int height)
 
 	   // free the memory
      delete[] pBlankTex;
+
+	 // Color correction
+	 cvar_red = CVAR_CREATE("colorcor_r", "1", FCVAR_ARCHIVE);
+	 cvar_green = CVAR_CREATE("colorcor_g", "1", FCVAR_ARCHIVE);
+	 cvar_blue = CVAR_CREATE("colorcor_b", "1", FCVAR_ARCHIVE);
+	 cvar_alpha = CVAR_CREATE("colorcor_alpha", "1.0", FCVAR_ARCHIVE);
+	 cvar_inverse =CVAR_CREATE("colorcor_inverse", "0", FCVAR_ARCHIVE);
+	 cvar_bnw = CVAR_CREATE("colorcor_blackwhite", "0", FCVAR_ARCHIVE);
+
+	 cvar_noirmode = CVAR_CREATE("cl_noirmode", "0", FCVAR_ARCHIVE);
 }
 
 void CColorCorTexture::BindTexture(int width, int height)
 { 
      glBindTexture(GL_TEXTURE_RECTANGLE_NV, g_texture);
 
-	if (CVAR_GET_FLOAT("colorcor_blackwhite") == 1)
+	if (cvar_bnw->value == 1 || cvar_noirmode->value == 1)
 	 {
 		 glCopyTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0, GL_LUMINANCE, 0, 0, ScreenWidth, ScreenHeight, 0);
 	 }
@@ -73,7 +91,7 @@ void CColorCorTexture:: Draw(int width, int height)
 
 	 glColor4f(r,g,b,alpha);
 
-	if( CVAR_GET_FLOAT( "colorcor_inverse" ) == 1 )
+	if( cvar_inverse->value == 1 )
 	{
 		glEnable(GL_COLOR_LOGIC_OP);
 		glLogicOp(GL_COPY_INVERTED);
@@ -83,7 +101,7 @@ void CColorCorTexture:: Draw(int width, int height)
 		DrawQuad(width, height,of);
 	glEnd();
 
-	if( CVAR_GET_FLOAT( "colorcor_inverse" ) == 1 )
+	if (cvar_inverse->value == 1)
 	{
 		glDisable(GL_COLOR_LOGIC_OP);
 	}
@@ -117,24 +135,35 @@ void CColorCor::InitScreen()
 	m_pTextures.Init(ScreenWidth,ScreenHeight);
 }
 
+void CColorCor::VidInit()
+{
+
+}
+
 void CColorCor::DrawColorCor()
 {
-	float targetR = CVAR_GET_FLOAT("colorcor_r"); // was 0.3
+	float targetR = cvar_red->value; // was 0.3
 	lerpR = (targetR * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpR * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
 
-	float targetG = CVAR_GET_FLOAT("colorcor_g"); // was 0.3
+	float targetG = cvar_green->value; // was 0.3
 	lerpG = (targetG * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpG * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
 
-	float targetB = CVAR_GET_FLOAT("colorcor_b"); // was 0.3
+	float targetB = cvar_blue->value; // was 0.3
 	lerpB = (targetB * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpB * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
 
-	float targetAlpha = CVAR_GET_FLOAT("colorcor_alpha"); // was 0.2
+	float targetAlpha = cvar_alpha->value; // was 0.2
 	lerpAlpha = (targetAlpha * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpAlpha * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
+
+	if (cvar_noirmode->value == 1)
+	{
+		lerpR = 1.0f;
+		lerpG = 1.0f;
+		lerpB = 1.0f;
+	}
 
 	m_pTextures.r = lerpR;
 	m_pTextures.g = lerpG;
 	m_pTextures.b = lerpB;
-
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ZERO);  
 	glEnable(GL_BLEND);	

@@ -249,6 +249,7 @@ void DLLEXPORT HUD_Reset()
 	//	RecClHudReset();
 
 	gHUD.VidInit();
+	gColorCor.VidInit();
 }
 
 /*
