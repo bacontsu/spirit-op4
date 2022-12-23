@@ -754,37 +754,37 @@ void PM_UpdateStepSound()
 			default:
 			case CHAR_TEX_CONCRETE:
 				fvol = fWalking ? 0.2 : 0.5;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 
 			case CHAR_TEX_METAL:
 				fvol = fWalking ? 0.2 : 0.5;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 
 			case CHAR_TEX_DIRT:
 				fvol = fWalking ? 0.25 : 0.55;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 
 			case CHAR_TEX_VENT:
 				fvol = fWalking ? 0.4 : 0.7;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 
 			case CHAR_TEX_GRATE:
 				fvol = fWalking ? 0.2 : 0.5;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 
 			case CHAR_TEX_TILE:
 				fvol = fWalking ? 0.2 : 0.5;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 
 			case CHAR_TEX_SLOSH:
 				fvol = fWalking ? 0.2 : 0.5;
-				pmove->flTimeStepSound = fWalking ? 400 : 300;
+				pmove->flTimeStepSound = fWalking ? 400 : 415;
 				break;
 			}
 		}
