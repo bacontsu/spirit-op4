@@ -326,6 +326,10 @@ void PM_PlayGroupSound(const char* szValue, int irand, float fvol)
 	pmove->PM_PlaySound(CHAN_BODY, szValue, fvol, ATTN_NORM, 0, PITCH_NORM);
 }
 
+#ifdef CLIENT_DLL
+extern void TiltLadderCamera();
+#endif
+
 void PM_PlayStepSound(int step, float fvol)
 {
 	static int iSkipStep = 0;
@@ -408,6 +412,11 @@ void PM_PlayStepSound(int step, float fvol)
 	// irand - 0,1 for right foot, 2,3 for left foot
 	// used to alternate left and right foot
 	// FIXME, move to player state
+
+#ifdef CLIENT_DLL
+	if (step == STEP_LADDER)
+		TiltLadderCamera();
+#endif
 
 	switch (step)
 	{

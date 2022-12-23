@@ -1990,6 +1990,22 @@ void V_Init()
 	gEngfuncs.pfnAddCommand("hideplayer", CMD_HidePlayer);	 //AJH (Draw player in firstperson mode)
 }
 
+void V_LadderBob()
+{
+	static int i = 0;
+	switch (i)
+	{
+	case 0:
+		i = 1;
+		V_PunchAxis(ROLL, 10);
+		break;
+	case 1:
+		V_PunchAxis(ROLL, -10);
+		i = 0;
+		break;
+	}
+	//gEngfuncs.Con_Printf("bob %i!\n",i);
+}
 
 //#define TRACE_TEST
 #if defined(TRACE_TEST)

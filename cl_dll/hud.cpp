@@ -898,3 +898,9 @@ void CHud::setNightVisionState(bool state)
 {
 	mNightVisionState = state;
 }
+
+extern void V_LadderBob();
+void TiltLadderCamera()
+{
+	V_LadderBob();
+}
