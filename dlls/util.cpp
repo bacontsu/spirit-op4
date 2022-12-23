@@ -38,6 +38,8 @@
 #include "monsters.h"
 #include "PlatformHeaders.h"
 
+#include "filesystem_utils.h"
+
 float UTIL_WeaponTimeBase()
 {
 #if defined(CLIENT_WEAPONS)
@@ -3159,23 +3161,7 @@ void SET_MODEL(edict_t* e, const char* model)
 {
 	if (strlen(model) > 4)
 	{
-		// mod directory
-		char modName[MAX_PATH];
-		g_engfuncs.pfnGetGameDir(modName);
-		strcat(modName, "/");
-		strcat(modName, model);
-
-		// fallback directory
-		char modName2[MAX_PATH];
-		GetFallbackDir(modName2);
-		strcat(modName2, "/");
-		strcat(modName2, model);
-
-		// hl directory (valve)
-		char modName3[MAX_PATH] = "valve/";
-		strcat(modName3, model);
-
-		if (std::filesystem::exists(modName) || std::filesystem::exists(modName2) || std::filesystem::exists(modName3))
+		if (g_pFileSystem->FileExists(model))
 			g_engfuncs.pfnSetModel(e, (char*)model);
 		else
 		{
@@ -3193,26 +3179,15 @@ int PRECACHE_MODEL(const char* s)
 
 	if (strlen(s) > 4)
 	{
-		// mod directory
-		char modName[MAX_PATH];
-		g_engfuncs.pfnGetGameDir(modName);
-		strcat(modName, "/");
-		strcat(modName, s);
 
-		// fallback directory
-		char modName2[MAX_PATH];
-		GetFallbackDir(modName2);
-		strcat(modName2, "/");
-		strcat(modName2, s);
-
-		// hl directory (valve)
-		char modName3[MAX_PATH] = "valve/";
-		strcat(modName3, s);
-
-		if (std::filesystem::exists(modName) || std::filesystem::exists(modName2) || std::filesystem::exists(modName3))
+		if (g_pFileSystem->FileExists(s))
+		{
 			return model = g_engfuncs.pfnPrecacheModel((char*)s);
+		}
 		else
+		{
 			return g_engfuncs.pfnPrecacheModel("models/error.mdl");
+		}
 	}
 	else
 		return model = g_engfuncs.pfnPrecacheModel((char*)s);
