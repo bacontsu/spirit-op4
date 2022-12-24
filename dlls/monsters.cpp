@@ -34,6 +34,8 @@
 #include "soundent.h"
 #include "gamerules.h"
 
+#include "player.h"
+
 #define MONSTER_CUT_CORNER_DIST 8 // 8 means the monster's bounding box is contained without the box of the node in WC
 
 
@@ -2213,16 +2215,37 @@ int CBaseMonster::IRelationship(CBaseEntity* pTarget)
 
 	int iTargClass = pTarget->Classify();
 
-	if (iTargClass == CLASS_PLAYER && m_iPlayerReact) // LRC
+	if (iTargClass == CLASS_PLAYER) // LRC
 	{
-		if (m_iPlayerReact == 1) // Ignore player
-			return R_NO;
-		else if (m_iPlayerReact == 4)
-			return R_HT;
-		else if (m_afMemory & bits_MEMORY_PROVOKED)
-			return R_HT;
-		else
-			return R_NO;
+		// check radius
+		if ((pTarget->pev->origin - pev->origin).Length2D() < 500)
+		{
+			auto pPlayer = static_cast<CBasePlayer*>(pTarget);
+			if (pPlayer)
+			{
+				//ALERT(at_console, "player found!\n");
+				if (!FStringNull(pPlayer->pev->viewmodel))
+				{
+					//ALERT(at_console, "player has a weapon!\n");
+					if (FClassnameIs(pev, "monster_scientist") || FClassnameIs(pev, "monster_alien_slave") || FClassnameIs(pev, "monster_vortigaunt"))
+						return R_HT;
+					else
+						return R_NM;
+				}
+			}
+		}
+
+		if (m_iPlayerReact)
+		{
+			if (m_iPlayerReact == 1) // Ignore player
+				return R_NO;
+			else if (m_iPlayerReact == 4)
+				return R_HT;
+			else if (m_afMemory & bits_MEMORY_PROVOKED)
+				return R_HT;
+			else
+				return R_NO;
+		}
 	}
 
 	return iEnemy[Classify()][iTargClass];

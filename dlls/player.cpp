@@ -4340,7 +4340,16 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 				pEntity->SetThink(&CBaseEntity::SUB_Remove);
 		}
 		break;
+	case 210:
+		if (!m_bIsHolstered)
+		{
+			m_bIsHolstered = true;
+			if (m_pActiveItem)
+				m_pActiveItem->Holster();
+		}
+		break;
 	}
+
 }
 
 //
@@ -4797,6 +4806,26 @@ void CBasePlayer::UpdateClientData()
 		WRITE_BYTE(0);
 		MESSAGE_END();
 		gDisplayTitle = false;
+	}
+
+	// HACKHACK - Process holstering delay here
+	if (m_bIsHolstered == true && !FStringNull(pev->viewmodel) && m_flNextAttack < UTIL_WeaponTimeBase())
+	{
+		pev->viewmodel = NULL;
+		m_pActiveItem = NULL;
+	}
+
+	// check if we're on ladder
+	if (IsOnLadder() && !FStringNull(pev->viewmodel))
+	{
+		if (!m_bIsHolstered)
+		{
+			m_bIsHolstered = true;
+			if (m_pActiveItem)
+				m_pActiveItem->Holster();
+		}
+
+		pev->velocity.z = 0;
 	}
 
 	if (pev->health != m_iClientHealth)

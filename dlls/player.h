@@ -442,6 +442,8 @@ public:
 		m_bIsClimbing = bIsClimbing;
 	}
 
+	bool m_bIsHolstered = false;
+
 private:
 	CRope* m_pRope;
 	float m_flLastClimbTime = 0;
