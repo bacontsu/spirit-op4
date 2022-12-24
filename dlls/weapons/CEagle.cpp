@@ -66,6 +66,7 @@ void CEagle::Spawn()
 bool CEagle::Deploy()
 {
 	m_bSpotVisible = true;
+	m_bLaserActive = true;
 
 	return DefaultDeploy(
 		"models/v_desert_eagle.mdl", "models/p_desert_eagle.mdl",
@@ -76,6 +77,7 @@ bool CEagle::Deploy()
 void CEagle::Holster()
 {
 	m_fInReload = false;
+	m_bLaserActive = false;
 
 #ifndef CLIENT_DLL
 	if (m_pLaser)

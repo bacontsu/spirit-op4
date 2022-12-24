@@ -403,6 +403,7 @@ void CRpg::IncrementAmmo(CBasePlayer* pPlayer)
 
 bool CRpg::Deploy()
 {
+	m_fSpotActive = true;
 	if (m_iClip == 0)
 	{
 		return DefaultDeploy("models/v_rpg.mdl", "models/p_rpg.mdl", RPG_DRAW_UL, "rpg");
@@ -426,13 +427,7 @@ bool CRpg::CanHolster()
 void CRpg::Holster()
 {
 	m_fInReload = false; // cancel any reload in progress.
-
-	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
-
-	if (m_iClip)
-		SendWeaponAnim(RPG_HOLSTER1);
-	else
-		SendWeaponAnim(RPG_HOLSTER2);
+	m_fSpotActive = false;
 
 #ifndef CLIENT_DLL
 	if (m_pSpot)
@@ -441,6 +436,13 @@ void CRpg::Holster()
 		m_pSpot = NULL;
 	}
 #endif
+
+	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
+
+	if (m_iClip)
+		SendWeaponAnim(RPG_HOLSTER1);
+	else
+		SendWeaponAnim(RPG_HOLSTER2);
 }
 
 

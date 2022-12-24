@@ -200,6 +200,8 @@ TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
 		//DEFINE_FIELD( CBasePlayer, m_fOnTarget, FIELD_BOOLEAN ), // Don't need to restore
 		//DEFINE_FIELD( CBasePlayer, m_nCustomSprayFrames, FIELD_INTEGER ), // Don't need to restore
 
+		DEFINE_FIELD(CBasePlayer, m_pHolsteredWep, FIELD_CLASSPTR),
+		DEFINE_FIELD(CBasePlayer, m_bIsHolstered, FIELD_BOOLEAN),
 };
 
 LINK_ENTITY_TO_CLASS(player, CBasePlayer);
@@ -4341,12 +4343,8 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		}
 		break;
 	case 210:
-		if (!m_bIsHolstered)
-		{
-			m_bIsHolstered = true;
-			if (m_pActiveItem)
-				m_pActiveItem->Holster();
-		}
+		if (!IsOnLadder())
+			ToggleHolster();
 		break;
 	}
 
@@ -4669,6 +4667,28 @@ void CBasePlayer::InternalSendSingleAmmoUpdate(int ammoIndex)
 	}
 }
 
+void CBasePlayer::ToggleHolster()
+{
+	if (!m_bIsHolstered)
+	{
+		m_bIsHolstered = true;
+		if (m_pActiveItem)
+		{
+			m_pHolsteredWep = m_pActiveItem;
+			m_pActiveItem->Holster();
+		}
+	}
+	else
+	{
+		m_bIsHolstered = false;
+		if (!m_pActiveItem)
+		{
+			m_pActiveItem = m_pHolsteredWep;
+			m_pActiveItem->Deploy();
+		}
+	}
+}
+
 /*
 =========================================================
 	UpdateClientData
@@ -4822,7 +4842,10 @@ void CBasePlayer::UpdateClientData()
 		{
 			m_bIsHolstered = true;
 			if (m_pActiveItem)
+			{
+				m_pHolsteredWep = m_pActiveItem;
 				m_pActiveItem->Holster();
+			}
 		}
 
 		pev->velocity.z = 0;

@@ -442,7 +442,9 @@ public:
 		m_bIsClimbing = bIsClimbing;
 	}
 
+	void ToggleHolster();
 	bool m_bIsHolstered = false;
+	CBasePlayerItem* m_pHolsteredWep;
 
 private:
 	CRope* m_pRope;
