@@ -116,6 +116,8 @@ public:
 	cvar_t* m_pCvarDeveloper;
 	// Draw entities bone hit boxes, etc?
 	cvar_t* m_pCvarDrawEntities;
+	// Draw engine shadows
+	cvar_t* m_pCvarDrawShadows;
 
 	// The entity which we are currently rendering.
 	cl_entity_t* m_pCurrentEntity;

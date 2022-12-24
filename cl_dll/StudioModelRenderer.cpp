@@ -38,6 +38,19 @@ int m_nPlayerGaitSequences[MAX_PLAYERS];
 // Global engine <-> studio model rendering code interface
 engine_studio_api_t IEngineStudio;
 
+void (*GL_StudioDrawShadow)(void);
+
+__declspec(naked) void ShadowHack(void)
+{
+	_asm
+	{
+        push ebp;
+        mov ebp, esp;
+        push ecx;
+        jmp[GL_StudioDrawShadow];
+	}
+}
+
 /////////////////////
 // Implementation of CStudioModelRenderer.h
 
@@ -53,6 +66,13 @@ void CStudioModelRenderer::Init()
 	m_pCvarHiModels = IEngineStudio.GetCvar("cl_himodels");
 	m_pCvarDeveloper = IEngineStudio.GetCvar("developer");
 	m_pCvarDrawEntities = IEngineStudio.GetCvar("r_drawentities");
+
+	// SHADOWS START
+	// Do this in case valve ever re-enables the original cvar
+	m_pCvarDrawShadows = IEngineStudio.GetCvar("r_shadows");
+
+	if (!m_pCvarDrawShadows) // If couldn't get the cvar pointer create our own
+		m_pCvarDrawShadows = CVAR_CREATE("r_shadows", "1", FCVAR_ARCHIVE);
 
 	m_pChromeSprite = IEngineStudio.GetChromeSprite();
 
@@ -2056,7 +2076,24 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 
 			IEngineStudio.GL_SetRenderMode(rendermode);
 			IEngineStudio.StudioDrawPoints();
-			IEngineStudio.GL_StudioDrawShadow();
+
+			glDepthMask(GL_TRUE);
+
+			// legal implementation of shadows
+			if (m_pCvarDrawShadows->value == 1)
+			{
+				GL_StudioDrawShadow = (void (*)(void))(((unsigned int)IEngineStudio.GL_StudioDrawShadow) + 35);
+
+				if (IEngineStudio.GetCurrentEntity() != gEngfuncs.GetViewModel() && rendermode != kRenderTransAdd)
+				{
+					glDepthMask(GL_FALSE);
+					glEnable(GL_STENCIL_TEST);
+					ShadowHack();
+					glDisable(GL_STENCIL_TEST);
+					glDepthMask(GL_TRUE);
+					glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+				}
+			}
 		}
 	}
 
