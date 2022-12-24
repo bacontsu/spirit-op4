@@ -361,3 +361,16 @@ typedef struct
 
 #define RAD_TO_STUDIO (32768.0 / M_PI)
 #define STUDIO_TO_RAD (M_PI / 32768.0)
+
+// client-side model flags
+#define STUDIO_ROCKET (1 << 0)			// leave a trail
+#define STUDIO_GRENADE (1 << 1)			// leave a trail
+#define STUDIO_GIB (1 << 2)				// leave a trail
+#define STUDIO_ROTATE (1 << 3)			// rotate (bonus items)
+#define STUDIO_TRACER (1 << 4)			// green split trail
+#define STUDIO_ZOMGIB (1 << 5)			// small blood trail
+#define STUDIO_TRACER2 (1 << 6)			// orange split trail + rotate
+#define STUDIO_TRACER3 (1 << 7)			// purple trail
+#define STUDIO_AMBIENT_LIGHT (1 << 8)	// force to use ambient shading
+#define STUDIO_TRACE_HITBOX (1 << 9)	// always use hitbox trace instead of bbox
+#define STUDIO_FORCE_SKYLIGHT (1 << 10) // always grab lightvalues from the sky settings (even if sky is invisible)

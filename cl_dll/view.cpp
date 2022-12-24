@@ -1875,6 +1875,7 @@ void V_CalcThirdPersonRefdef(struct ref_params_s* pparams)
 void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams)
 {
 	//	RecClCalcRefdef(pparams);
+	gHUD.g_pparams = *pparams;
 
 	// intermission / finale rendering
 	if (0 != pparams->intermission)

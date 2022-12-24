@@ -1,6 +1,8 @@
 // studio_model.cpp
 // routines for setting up to draw 3DStudio models
 
+#include <vector>
+#include <string>
 #include "hud.h"
 #include "cl_util.h"
 #include "const.h"
@@ -23,6 +25,9 @@
 
 #include "colorcor.h"
 
+#include "event_api.h"
+#include "pm_defs.h"
+
 extern cvar_t* tfc_newmodels;
 
 extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
@@ -32,6 +37,64 @@ extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
 #define TEAM2_COLOR 250
 #define TEAM3_COLOR 45
 #define TEAM4_COLOR 100
+
+#define SHADOW_NORMAL_VECTOR -0.25f, 0.25, -0.7f
+#define SHADOW_LOD_NEAR 500.0f
+#define SHADOW_LOD_FAR 1100.0f
+
+std::vector<std::string> checkedShadow;
+std::vector<std::string> checkedNotShadow;
+
+bool CanModelCastShadow(char* name)
+{
+	// check if that model is already on our list
+	for (size_t i = 0; i < checkedShadow.size(); i++)
+	{
+		if (!strcmp(checkedShadow[i].c_str(), name))
+		{
+			return true;
+		}
+	}
+
+	// check if that model is already checked, and shouldnt cast shadow
+	for (size_t i = 0; i < checkedNotShadow.size(); i++)
+	{
+		if (!strcmp(checkedNotShadow[i].c_str(), name))
+		{
+			return false;
+		}
+	}
+
+	// if not, check the castshadowlist file and add it to our list
+	char *pfile, *pfile2;
+	pfile = pfile2 = (char*)gEngfuncs.COM_LoadFile("models/castshadowlist.txt", 5, NULL);
+	char token[500];
+
+	if (pfile == nullptr)
+	{
+		return false;
+	}
+
+	while (pfile = gEngfuncs.COM_ParseFile(pfile, token))
+	{
+		if (!stricmp(token, name))
+		{
+			gEngfuncs.COM_FreeFile(pfile2);
+			pfile = pfile2 = nullptr;
+
+			// add to should cast shadow
+			checkedShadow.push_back(name);
+			return true;
+		}
+	}
+
+	gEngfuncs.COM_FreeFile(pfile2);
+	pfile = pfile2 = nullptr;
+
+	// add to shouldnt cast shadow
+	checkedNotShadow.push_back(name);
+	return false;
+}
 
 int m_nPlayerGaitSequences[MAX_PLAYERS];
 
@@ -2041,6 +2104,455 @@ void CStudioModelRenderer::StudioRenderFinal_Software()
 
 /*
 ====================
+StudioSetupModel
+
+based on the body part, figure out which mesh it should be using.
+====================
+*/
+void CStudioModelRenderer::StudioSetupModel(int bodypart)
+{
+	int index;
+
+	IEngineStudio.StudioSetupModel(bodypart, (void**)&m_pBodyPart, (void**)&m_pSubModel);
+
+	// Workaround the fact IEngineStudio.StudioSetupModel is a broken piece of shit
+	// For some reason engine returns bogus pointers so we do the engine logic again here
+
+	if (bodypart > m_pStudioHeader->numbodyparts)
+	{
+		gEngfuncs.Con_DPrintf("StudioSetupModel: no such bodypart %d\n", bodypart);
+		bodypart = 0;
+	}
+
+	m_pBodyPart = (mstudiobodyparts_t*)((byte*)m_pStudioHeader + m_pStudioHeader->bodypartindex) + bodypart;
+
+	index = m_pCurrentEntity->curstate.body / m_pBodyPart->base;
+	index = index % m_pBodyPart->nummodels;
+
+	m_pSubModel = (mstudiomodel_t*)((byte*)m_pStudioHeader + m_pBodyPart->modelindex) + index;
+}
+
+void CStudioModelRenderer::StudioSetShadowVector(float x, float y, float z)
+{
+	m_vShadeVector[0] = x;
+	m_vShadeVector[1] = y;
+	m_vShadeVector[2] = z;
+	VectorNormalize(m_vShadeVector);
+}
+
+/*
+===============
+StudioFxBlend
+
+This routine modulates renderamt according to curstate.renderfx's value
+This is a client side effect and will not be in-sync on machines across a
+network game.
+===============
+*/
+int CStudioModelRenderer::StudioFxBlend(void)
+{
+	int blend = 0;
+	float offset;
+
+	offset = ((int)m_pCurrentEntity->curstate.number) * 363.0; // Use ent index to de-sync these fx
+
+	switch (m_pCurrentEntity->curstate.renderfx)
+	{
+	case kRenderFxPulseSlow:
+		blend = m_pCurrentEntity->curstate.renderamt + 0x10 * sin(m_clTime * 2 + offset);
+		break;
+	case kRenderFxPulseFast:
+		blend = m_pCurrentEntity->curstate.renderamt + 0x10 * sin(m_clTime * 8 + offset);
+		break;
+
+	// JAY: HACK for now -- not time based
+	case kRenderFxFadeSlow:
+		// if( RP_NORMALPASS( ))
+		//{
+		if (m_pCurrentEntity->curstate.renderamt > 0)
+			m_pCurrentEntity->curstate.renderamt -= 1;
+		else
+			m_pCurrentEntity->curstate.renderamt = 0;
+		//}
+		blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxFadeFast:
+
+		if (m_pCurrentEntity->curstate.renderamt > 3)
+			m_pCurrentEntity->curstate.renderamt -= 4;
+		else
+			m_pCurrentEntity->curstate.renderamt = 0;
+
+		blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxSolidSlow:
+
+		if (m_pCurrentEntity->curstate.renderamt < 255)
+			m_pCurrentEntity->curstate.renderamt += 1;
+		else
+			m_pCurrentEntity->curstate.renderamt = 255;
+
+		blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxSolidFast:
+
+		if (m_pCurrentEntity->curstate.renderamt < 252)
+			m_pCurrentEntity->curstate.renderamt += 4;
+		else
+			m_pCurrentEntity->curstate.renderamt = 255;
+
+		blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxStrobeSlow:
+		blend = 20 * sin(m_clTime * 4 + offset);
+		if (blend < 0)
+			blend = 0;
+		else
+			blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxStrobeFast:
+		blend = 20 * sin(m_clTime * 16 + offset);
+		if (blend < 0)
+			blend = 0;
+		else
+			blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxStrobeFaster:
+		blend = 20 * sin(m_clTime * 36 + offset);
+		if (blend < 0)
+			blend = 0;
+		else
+			blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxFlickerSlow:
+		blend = 20 * (sin(m_clTime * 2) + sin(m_clTime * 17 + offset));
+		if (blend < 0)
+			blend = 0;
+		else
+			blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxFlickerFast:
+		blend = 20 * (sin(m_clTime * 16) + sin(m_clTime * 23 + offset));
+		if (blend < 0)
+			blend = 0;
+		else
+			blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	case kRenderFxHologram:
+	case kRenderFxDistort:
+	{
+		Vector tmp;
+		float dist;
+
+		VectorCopy(m_pCurrentEntity->origin, tmp);
+		VectorSubtract(tmp, m_vRenderOrigin, tmp);
+		dist = DotProduct(tmp, m_vNormal);
+
+		// turn off distance fade
+		if (m_pCurrentEntity->curstate.renderfx == kRenderFxDistort)
+			dist = 1;
+
+		if (dist <= 0)
+		{
+			blend = 0;
+		}
+		else
+		{
+			m_pCurrentEntity->curstate.renderamt = 180;
+			if (dist <= 100)
+				blend = m_pCurrentEntity->curstate.renderamt;
+			else
+				blend = (int)((1.0f - (dist - 100) * (1.0f / 400.0f)) * m_pCurrentEntity->curstate.renderamt);
+
+			blend += gEngfuncs.pfnRandomLong(-32, 31);
+		}
+	}
+	break;
+	default:
+		if (m_pCurrentEntity->curstate.rendermode == kRenderNormal)
+			blend = 255;
+		else
+			blend = m_pCurrentEntity->curstate.renderamt;
+		break;
+	}
+
+	if (blend > 255)
+	{
+		blend = 255;
+	}
+	else if (blend < 0)
+	{
+		blend = 0;
+	}
+
+	return blend;
+}
+
+void CStudioModelRenderer::StudioDrawPointsShadow(void)
+{
+	int i, c, k;
+	int nummesh;
+	float lheight;
+	mstudiomesh_t* pmesh;
+	Vector* pstudioverts;
+	short* ptricmds;
+	Vector av;
+	float height;
+	Vector point, lightspot;
+	pmtrace_t tr;
+	Vector trEnd;
+
+	nummesh = m_pSubModel->nummesh;
+	if (nummesh <= 0)
+		return;
+
+	trEnd[0] = m_pCurrentEntity->origin[0];
+	trEnd[1] = m_pCurrentEntity->origin[1];
+	trEnd[2] = m_pCurrentEntity->origin[2] - 4096;
+
+	// Vasia: Workaround the fact we don't have access to the lightspot variable
+	gEngfuncs.pEventAPI->EV_SetTraceHull(2);
+	gEngfuncs.pEventAPI->EV_PlayerTrace(m_pCurrentEntity->origin, trEnd, PM_WORLD_ONLY, -1, &tr);
+
+	// Always at the entity origin
+	lheight = tr.endpos[2];
+	height = lheight + 1.0;
+
+	byte* pvertbone = ((byte*)m_pStudioHeader + m_pSubModel->vertinfoindex);
+	pstudioverts = (Vector*)((byte*)m_pStudioHeader + m_pSubModel->vertindex);
+
+	// Calculate the bone aligned vertices.
+	// Engine does that in StudioDrawPoints
+	for (k = 0; k < m_pSubModel->numverts; k++)
+	{
+		VectorTransform(pstudioverts[k], (*m_pbonetransform)[pvertbone[k]], m_pvVertices[k]);
+	}
+
+	// get pointer to bone index for each vertex
+	for (c = 0; c < nummesh; c++)
+	{
+		pmesh = (mstudiomesh_t*)((byte*)m_pStudioHeader + m_pSubModel->meshindex) + c;
+		ptricmds = (short*)((byte*)m_pStudioHeader + pmesh->triindex);
+
+		while (i = *(ptricmds++))
+		{
+			if (i < 0)
+			{
+				gEngfuncs.pTriAPI->Begin(TRI_TRIANGLE_FAN);
+				i = -i;
+			}
+			else
+			{
+				gEngfuncs.pTriAPI->Begin(TRI_TRIANGLE_STRIP);
+			}
+
+			for (; i > 0; --i, ptricmds += 4)
+			{
+				av = m_pvVertices[ptricmds[0]];
+
+				float lightDistance = av[2] - lheight;
+
+				point[0] = av[0] - m_vShadeVector[0] * lightDistance;
+				point[1] = av[1] - lightDistance * m_vShadeVector[1];
+				point[2] = height;
+
+				gEngfuncs.pTriAPI->Vertex3fv(point);
+			}
+
+			gEngfuncs.pTriAPI->End();
+		}
+	}
+}
+
+void Matrix3x4_OriginFromMatrix(float in[3][4], float* out)
+{
+	out[0] = in[0][3];
+	out[1] = in[1][3];
+	out[2] = in[2][3];
+}
+
+void CStudioModelRenderer::StudioDrawPointsShadowCasted(void)
+{
+	int i, c, k;
+	int nummesh;
+	float lheight;
+	mstudiomesh_t* pmesh;
+	Vector* pstudioverts;
+	short* ptricmds;
+	Vector av;
+	float height;
+	Vector point, lightspot;
+	pmtrace_t tr;
+	Vector trEnd;
+
+	nummesh = m_pSubModel->nummesh;
+	if (nummesh <= 0)
+		return;
+
+	trEnd[0] = m_pCurrentEntity->origin[0];
+	trEnd[1] = m_pCurrentEntity->origin[1];
+	trEnd[2] = m_pCurrentEntity->origin[2] - 4096;
+
+	// Vasia: Workaround the fact we don't have access to the lightspot variable
+	gEngfuncs.pEventAPI->EV_SetTraceHull(2);
+	gEngfuncs.pEventAPI->EV_PlayerTrace(m_pCurrentEntity->origin, trEnd, PM_WORLD_ONLY, -1, &tr);
+
+	// Always at the entity origin
+	lheight = tr.endpos[2];
+	height = lheight;
+
+	byte* pvertbone = ((byte*)m_pStudioHeader + m_pSubModel->vertinfoindex);
+	pstudioverts = (Vector*)((byte*)m_pStudioHeader + m_pSubModel->vertindex);
+
+	// Calculate the bone aligned vertices.
+	// Engine does that in StudioDrawPoints
+	for (k = 0; k < m_pSubModel->numverts; k++)
+	{
+		VectorTransform(pstudioverts[k], (*m_pbonetransform)[pvertbone[k]], m_pvVertices[k]);
+	}
+
+	// get pointer to bone index for each vertex
+	for (c = 0; c < nummesh; c++)
+	{
+		pmesh = (mstudiomesh_t*)((byte*)m_pStudioHeader + m_pSubModel->meshindex) + c;
+		ptricmds = (short*)((byte*)m_pStudioHeader + pmesh->triindex);
+
+		while (i = *(ptricmds++))
+		{
+			if (i < 0)
+			{
+				gEngfuncs.pTriAPI->Begin(TRI_TRIANGLE_FAN);
+				i = -i;
+			}
+			else
+			{
+				gEngfuncs.pTriAPI->Begin(TRI_TRIANGLE_STRIP);
+			}
+
+			for (; i > 0; --i, ptricmds += 4)
+			{
+				av = m_pvVertices[ptricmds[0]];
+
+				float lightDistance = av[2] - lheight;
+
+				point[0] = av[0] - m_vShadeVector[0] * lightDistance;
+				point[1] = av[1] - lightDistance * m_vShadeVector[1];
+				point[2] = height;
+
+				Vector bonepos;
+				Matrix3x4_OriginFromMatrix((*m_pbonetransform)[0], bonepos);
+				Vector VecSrc = bonepos + Vector(0, 0, (m_pCurrentEntity->curstate.maxs.z - m_pCurrentEntity->curstate.mins.z) / 2);
+
+				gEngfuncs.pEventAPI->EV_PlayerTrace(point, point - Vector(0, 0, 8192), PM_WORLD_ONLY, 1, &tr);
+				gEngfuncs.pEventAPI->EV_PlayerTrace(VecSrc, tr.endpos, PM_WORLD_ONLY, 1, &tr);
+
+				if (tr.endpos)
+				{
+					for (int arr = 0; arr < 3; arr++)
+					{
+						point[arr] = tr.endpos[arr];
+					}
+				}
+
+				point = point + (Vector(gHUD.g_pparams.vieworg) - point).Normalize() * 3.5f;
+
+				gEngfuncs.pTriAPI->Vertex3fv(point);
+			}
+
+			gEngfuncs.pTriAPI->End();
+		}
+	}
+}
+
+
+/*
+====================
+StudioRenderShadow
+
+NOTE: I almost made the shadows using TriAPI only but valve fucked me really hard with the fact
+reseting rendermode to normal breaks smoothing on models with multiple bodyparts
+====================
+*/
+void CStudioModelRenderer::StudioRenderShadow(int rendermode)
+{
+	float r_blend = (float)StudioFxBlend() / 255.0;
+
+	glDepthMask(GL_TRUE);
+
+	// Vasia: we have to manually check for the viewmodel because the way engine prevents viewmodel from casting shadow is unavailable
+	if (m_pCvarDrawShadows->value != 0.0 && rendermode != kRenderTransAdd && !(m_pRenderModel->flags & STUDIO_AMBIENT_LIGHT) && m_pCurrentEntity != IEngineStudio.GetViewEntity())
+	{
+		float color = 1.0 - (r_blend * 0.5);
+
+		glDisable(GL_TEXTURE_2D);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+
+		// gEngfuncs.pTriAPI->RenderMode( kRenderTransTexture );
+		// gEngfuncs.pTriAPI->RenderMode( kRenderTransAlpha ); // calling this rendermode will fix z-fighting
+
+		glColor4f(0.0f, 0.0f, 0.0f, 1); // original code, replaced by TriAPI call
+
+		// We parse in the kRenderTransAlpha as a rendermode because it can calculate the color properly for the kRenderTransTexture
+		// gEngfuncs.pTriAPI->Color4fRendermode( 0.0, 0.0, 0.0, 0.5, kRenderTransAlpha );
+
+		glDepthFunc(GL_LESS);
+		glDepthMask(GL_FALSE);
+
+		// Bacontsu - Shadows detail level
+		auto dist = (gEngfuncs.GetLocalPlayer()->curstate.origin - m_pCurrentEntity->curstate.origin).Length();
+		if (m_pCvarDrawShadows->value >= 2)
+		{
+			// if the entity is not too far away from us, draw high detailed shadows that cast to walls
+			if (dist < SHADOW_LOD_NEAR)
+				StudioDrawPointsShadowCasted();
+			// if not, draw normal cheaper shadows
+			else if (dist < SHADOW_LOD_FAR)
+				StudioDrawPointsShadow(); // dont draw shadows for far away models, to save up on resources ( immediate mode OpenGL sucks ass. )
+		}
+		else if (m_pCvarDrawShadows->value == 1)
+		{
+			if (dist < SHADOW_LOD_FAR)
+				StudioDrawPointsShadow();
+		}
+
+		glDepthFunc(GL_LEQUAL);
+		glEnable(GL_TEXTURE_2D);
+
+		// Vasia: Fucking bruh. Here dies my chance of shadows being drawn with TriAPI only
+		// For some reason valve made kRenderNormal reset ShadeModel to flat which affects modelS with multiple bodyparts
+		// gEngfuncs.pTriAPI->RenderMode(kRenderNormal);
+
+		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glShadeModel(GL_SMOOTH);
+	}
+}
+
+void CStudioModelRenderer::StudioRenderEngineShadow(int rendermode)
+{
+	glDepthMask(GL_TRUE);
+
+	// engine shadows
+	if (m_pCvarDrawShadows->value != 0)
+	{
+		GL_StudioDrawShadow = (void (*)(void))(((unsigned int)IEngineStudio.GL_StudioDrawShadow) + 35);
+
+		if (IEngineStudio.GetCurrentEntity() != gEngfuncs.GetViewModel() && rendermode != kRenderTransAdd)
+		{
+			glDepthMask(GL_FALSE);
+			glEnable(GL_STENCIL_TEST);
+			ShadowHack();
+			glDisable(GL_STENCIL_TEST);
+			glDepthMask(GL_TRUE);
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+}
+
+/*
+====================
 StudioRenderFinal_Hardware
 
 ====================
@@ -2065,8 +2577,10 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 	{
 		for (i = 0; i < m_pStudioHeader->numbodyparts; i++)
 		{
-
-			IEngineStudio.StudioSetupModel(i, (void**)&m_pBodyPart, (void**)&m_pSubModel);
+			if (m_pCvarDrawShadows->value > 1)
+				StudioSetupModel(i);
+			else
+				IEngineStudio.StudioSetupModel(i, (void**)&m_pBodyPart, (void**)&m_pSubModel);
 
 			if (m_fDoInterp)
 			{
@@ -2077,22 +2591,12 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 			IEngineStudio.GL_SetRenderMode(rendermode);
 			IEngineStudio.StudioDrawPoints();
 
-			glDepthMask(GL_TRUE);
-
-			// legal implementation of shadows
 			if (m_pCvarDrawShadows->value == 1)
+				StudioRenderEngineShadow(rendermode);
+			else if (m_pCvarDrawShadows->value > 1)
 			{
-				GL_StudioDrawShadow = (void (*)(void))(((unsigned int)IEngineStudio.GL_StudioDrawShadow) + 35);
-
-				if (IEngineStudio.GetCurrentEntity() != gEngfuncs.GetViewModel() && rendermode != kRenderTransAdd)
-				{
-					glDepthMask(GL_FALSE);
-					glEnable(GL_STENCIL_TEST);
-					ShadowHack();
-					glDisable(GL_STENCIL_TEST);
-					glDepthMask(GL_TRUE);
-					glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-				}
+				StudioSetShadowVector(SHADOW_NORMAL_VECTOR);
+				StudioRenderShadow(rendermode);
 			}
 		}
 	}

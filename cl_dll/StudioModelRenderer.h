@@ -186,4 +186,35 @@ public:
 	int mirror_id;
 	bool b_PlayerMarkerParsed;
 	int m_nCachedFrameCount;
+
+	// SHADOWS START
+
+	// Draw shadows with engine's shadow renderer
+	virtual void StudioRenderEngineShadow(int rendermode);
+
+	// Setup the model's submodels and bodyparts
+	virtual void StudioSetupModel(int bodypart);
+
+	// Render hardware shadows
+	virtual void StudioRenderShadow(int rendermode);
+
+	// Draw shadow vertices
+	virtual void StudioDrawPointsShadow(void);
+
+	// Draw shadow vertices, but cast it to walls
+	virtual void StudioDrawPointsShadowCasted(void);
+
+	// Compute model's transparency
+	virtual int StudioFxBlend(void);
+
+	// Set the direction for the model's shadow
+	virtual void StudioSetShadowVector(float x, float y, float z);
+
+	// Direction the model shadow is cast to
+	float m_vShadeVector[3];
+
+	// transformed vertices
+	float m_pvVertices[MAXSTUDIOVERTS][3];
+
+	// SHADOWS END
 };
