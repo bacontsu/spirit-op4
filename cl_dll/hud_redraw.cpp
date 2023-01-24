@@ -96,6 +96,7 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw(float flTime, bool intermission)
 {
+	g_Bloom.Draw();
 	gColorCor.DrawColorCor();
 
 	m_fOldTime = m_flTime; // save time of previous redraw

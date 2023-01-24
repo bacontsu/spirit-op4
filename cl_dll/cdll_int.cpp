@@ -40,6 +40,7 @@
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
+CBloom g_Bloom;
 CMP3 gMP3; //AJH - Killars MP3player
 TeamFortressViewport* gViewPort = NULL;
 

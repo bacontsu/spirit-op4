@@ -558,6 +558,8 @@ void CHud::Init()
 	m_Menu.Init();
 	InitRain();
 
+	g_Bloom.Init();
+
 	MsgFunc_ResetHUD(0, 0, NULL);
 }
 

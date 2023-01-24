@@ -688,6 +688,20 @@ public:
 	void GetAllPlayersInfo();
 };
 
+class CBloom
+{
+public:
+	bool Init(void);
+	void Draw(void);
+	void DrawQuad(int width, int height, int ofsX = 0, int ofsY = 0);
+
+
+private:
+	// TEXTURES
+	unsigned int g_uiScreenTex = 0;
+	unsigned int g_uiGlowTex = 0;
+};
+
 class CHud
 {
 private:
@@ -872,6 +886,7 @@ public:
 };
 
 extern CHud gHUD;
+extern CBloom g_Bloom;
 
 extern int g_iPlayerClass;
 extern int g_iTeamNumber;
