@@ -37,6 +37,7 @@
 hud_player_info_t g_PlayerInfoList[MAX_PLAYERS_HUD + 1];	// player info from the engine
 extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1]; // additional player info sent directly to the client dll
 
+cvar_t* cvar_ladderbob;
 int giR, giG, giB;
 
 extern int giOldWeapons;
@@ -481,6 +482,8 @@ void CHud::Init()
 	// Custom Cvars
 	CVAR_CREATE("cl_viewmodel_bob", "0", FCVAR_ARCHIVE);
 	CVAR_CREATE("cl_viewmodel_sway", "0", FCVAR_ARCHIVE);
+
+	cvar_ladderbob = CVAR_CREATE("cl_ladderbob", "1", FCVAR_ARCHIVE);
 
 	//start glow effect --FragBait0
 	CVAR_CREATE("r_glow", "0", FCVAR_ARCHIVE);
@@ -927,5 +930,6 @@ void CHud::setNightVisionState(bool state)
 extern void V_LadderBob();
 void TiltLadderCamera()
 {
-	V_LadderBob();
+	if (cvar_ladderbob && cvar_ladderbob->value > 0)
+		V_LadderBob();
 }
