@@ -154,11 +154,33 @@ void CColorCor::DrawColorCor()
 	float targetAlpha = cvar_alpha->value; // was 0.2
 	lerpAlpha = (targetAlpha * 0.03f * 300 * gHUD.m_flTimeDelta) + (lerpAlpha * (1.0 - 0.03f * 300 * gHUD.m_flTimeDelta));
 
-	if (cvar_noirmode->value == 1)
+	switch (int(cvar_noirmode->value))
 	{
+	case 1: // BW
 		lerpR = 1.0f;
 		lerpG = 1.0f;
 		lerpB = 1.0f;
+		break;
+	case 2: // GRITTY MODE
+		lerpR = 1.0f;
+		lerpG = 1.0f;
+		lerpB = 0.625f;
+		break;
+	case 3: // FUTURE MODE
+		lerpR = 0.625f;
+		lerpG = 0.625f;
+		lerpB = 1.0f;
+		break;
+	case 4: // GIRLY MODE
+		lerpR = 1.0f;
+		lerpG = 0.625f;
+		lerpB = 0.75f;
+		break;
+	case 5: // BESERKER MODE
+		lerpR = 1.0f;
+		lerpG = 0.125f;
+		lerpB = 0.125f;
+		break;
 	}
 
 	m_pTextures.r = lerpR;
