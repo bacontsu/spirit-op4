@@ -3539,6 +3539,8 @@ void CBasePlayer::Precache()
 	if (gInitHUD)
 		m_fInitHUD = true;
 	Rain_needsUpdate = 1;
+
+	m_bSendMessages = true;
 }
 
 
@@ -4702,6 +4704,12 @@ reflecting all of the HUD state info.
 */
 void CBasePlayer::UpdateClientData()
 {
+	if (m_bSendMessages)
+	{
+		InitializeEntities();
+		m_bSendMessages = false;
+	}
+
 	const bool fullHUDInitRequired = m_fInitHUD != false;
 
 	if (m_fInitHUD)
@@ -5292,6 +5300,27 @@ void CBasePlayer::UpdateCTFHud()
 				g_engfuncs.pfnMessageEnd();
 			}
 		}
+	}
+}
+
+//=========================================================
+// InitializeEntities
+//=========================================================
+void CBasePlayer ::InitializeEntities(void)
+{
+	edict_t* pEdict = g_engfuncs.pfnPEntityOfEntIndex(1);
+	CBaseEntity* pEntity;
+
+	for (int i = 0; i < gpGlobals->maxEntities; i++, pEdict++)
+	{
+		if (pEdict->free)
+			continue;
+
+		pEntity = CBaseEntity::Instance(pEdict);
+		if (!pEntity)
+			break;
+
+		pEntity->SendInitMessages(this);
 	}
 }
 

@@ -20,6 +20,8 @@
 #include "hltv.h"
 #include "Exports.h"
 
+#include "fog.h"
+
 int CL_IsThirdPerson();
 void CL_CameraOffset(float* ofs);
 
@@ -1894,6 +1896,8 @@ void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams)
 	{
 		V_CalcNormalRefdef(pparams);
 	}
+
+	gFog.V_CalcRefDef(pparams);
 
 	/*
 // Example of how to overlay the whole screen with red at 50 % alpha

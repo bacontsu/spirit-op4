@@ -229,6 +229,7 @@ public:
 	float m_flShieldTime;
 	float m_flJumpTime;
 	float m_flNextChatTime;
+	bool m_bSendMessages;
 
 	// usable player items
 	CBasePlayerItem* m_rgpPlayerItems[MAX_ITEM_TYPES];
@@ -389,6 +390,7 @@ public:
 	int GetCustomDecalFrames();
 
 	void TabulateAmmo();
+	virtual void InitializeEntities(void);
 
 	float m_flStartCharge;
 	float m_flAmmoStartCharge;

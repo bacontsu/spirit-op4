@@ -85,5 +85,6 @@ inline int gmsgOldWeapon = 0;
 inline int gmsgCustomIcon = 0;
 
 inline int gmsgImpact = 0;
+inline int gmsgFog = 0; // fog
 
 void LinkUserMessages();

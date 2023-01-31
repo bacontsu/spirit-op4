@@ -270,3 +270,44 @@ public:
 	float Rain_randX, Rain_randY;
 	float fadeTime;
 };
+
+//=========================================================
+// CEnvFog
+//=========================================================
+class CEnvFogNew : public CBaseEntity
+{
+public:
+	void Spawn(void);
+	void SendInitMessages(CBaseEntity* pPlayer = NULL);
+	bool KeyValue(KeyValueData* pkvd);
+	void UpdateFog(bool isOn, bool doBlend, CBaseEntity* pPlayer);
+	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+
+	virtual bool Save(CSave& save);
+	virtual bool Restore(CRestore& restore);
+
+public:
+	static void SetCurrentEndDist(int enddist, float blendtime);
+	static int GetCurrentEndDist(void) { return g_iCurrentEndDist; }
+
+	static void FogThink(void);
+	static bool CheckBBox(edict_t* pplayer, edict_t* pedict);
+
+	static void SetAffectingSkybox(bool state);
+	static bool IsAffectingSkybox() { return g_bAffectSky; };
+
+private:
+	static TYPEDESCRIPTION m_SaveData[];
+
+	int m_iStartDist;
+	int m_iEndDist;
+	float m_flBlendTime;
+	bool m_bActive;
+	bool m_bAffectSky = true;
+
+private:
+	static int g_iCurrentEndDist;
+	static int g_iIdealEndDist;
+	static float g_flBlendDoneTime;
+	static bool g_bAffectSky;
+};

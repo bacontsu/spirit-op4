@@ -28,6 +28,8 @@
 #include "event_api.h"
 #include "pm_defs.h"
 
+#include "fog.h"
+
 extern cvar_t* tfc_newmodels;
 
 extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
@@ -1303,6 +1305,11 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 		// see if the bounding box lets us trivially reject, also sets
 		if (0 == IEngineStudio.StudioCheckBBox())
 		{
+			Vector mins, maxs;
+			StudioGetMinsMaxs(mins, maxs);
+			if (gFog.CullFogBBox(mins, maxs))
+				return 0;
+
 			Vector delta;
 			float dist;
 			VectorSubtract(gHUD.Mirrors[mirror_id].origin, m_pCurrentEntity->origin, delta);
@@ -1413,7 +1420,12 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 			{
 				// see if the bounding box lets us trivially reject, also sets
 				if (!IEngineStudio.StudioCheckBBox()) //no need disabled frustrum cull for "mirroring" models. G-Cont
-					return 0;
+				{
+					Vector mins, maxs;
+					StudioGetMinsMaxs(mins, maxs);
+					if (gFog.CullFogBBox(mins, maxs))
+						return 0;
+				}
 
 				(*m_pModelsDrawn)++;
 				(*m_pStudioModelCount)++; // render data cache cookie
@@ -1766,7 +1778,12 @@ bool CStudioModelRenderer::StudioDrawPlayer(int flags, entity_state_t* pplayer)
 			{
 				// see if the bounding box lets us trivially reject, also sets
 				if (!IEngineStudio.StudioCheckBBox())
-					return 0;
+				{
+					Vector mins, maxs;
+					StudioGetMinsMaxs(mins, maxs);
+					if (gFog.CullFogBBox(mins, maxs))
+						return 0;
+				}
 
 				(*m_pModelsDrawn)++;
 				(*m_pStudioModelCount)++; // render data cache cookie
@@ -1897,7 +1914,12 @@ bool CStudioModelRenderer::StudioDrawPlayer(int flags, entity_state_t* pplayer)
 		{
 			// see if the bounding box lets us trivially reject, also sets
 			if (0 == IEngineStudio.StudioCheckBBox())
-				return false;
+			{
+				Vector mins, maxs;
+				StudioGetMinsMaxs(mins, maxs);
+				if (gFog.CullFogBBox(mins, maxs))
+					return 0;
+			}
 
 			(*m_pModelsDrawn)++;
 			(*m_pStudioModelCount)++; // render data cache cookie
@@ -2627,4 +2649,75 @@ void CStudioModelRenderer::StudioRenderFinal()
 	{
 		StudioRenderFinal_Software();
 	}
+}
+
+/*
+====================
+StudioGetMinsMaxs
+
+====================
+*/
+void CStudioModelRenderer::StudioGetMinsMaxs(Vector& outMins, Vector& outMaxs)
+{
+	if (m_pCurrentEntity->curstate.sequence >= m_pStudioHeader->numseq)
+		m_pCurrentEntity->curstate.sequence = 0;
+
+	// Build full bounding box
+	mstudioseqdesc_t* pseqdesc = (mstudioseqdesc_t*)((byte*)m_pStudioHeader + m_pStudioHeader->seqindex) + m_pCurrentEntity->curstate.sequence;
+
+	Vector vTemp;
+	static Vector vBounds[8];
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (i & 1)
+			vTemp[0] = pseqdesc->bbmin[0];
+		else
+			vTemp[0] = pseqdesc->bbmax[0];
+		if (i & 2)
+			vTemp[1] = pseqdesc->bbmin[1];
+		else
+			vTemp[1] = pseqdesc->bbmax[1];
+		if (i & 4)
+			vTemp[2] = pseqdesc->bbmin[2];
+		else
+			vTemp[2] = pseqdesc->bbmax[2];
+		VectorCopy(vTemp, vBounds[i]);
+	}
+
+	float rotationMatrix[3][4];
+	m_pCurrentEntity->angles[PITCH] = -m_pCurrentEntity->angles[PITCH];
+	AngleMatrix(m_pCurrentEntity->angles, rotationMatrix);
+	m_pCurrentEntity->angles[PITCH] = -m_pCurrentEntity->angles[PITCH];
+
+	for (int i = 0; i < 8; i++)
+	{
+		VectorCopy(vBounds[i], vTemp);
+		VectorRotate(vTemp, rotationMatrix, vBounds[i]);
+	}
+
+	// Set the bounding box
+	outMins = Vector(9999, 9999, 9999);
+	outMaxs = Vector(-9999, -9999, -9999);
+	for (int i = 0; i < 8; i++)
+	{
+		// Mins
+		if (vBounds[i][0] < outMins[0])
+			outMins[0] = vBounds[i][0];
+		if (vBounds[i][1] < outMins[1])
+			outMins[1] = vBounds[i][1];
+		if (vBounds[i][2] < outMins[2])
+			outMins[2] = vBounds[i][2];
+
+		// Maxs
+		if (vBounds[i][0] > outMaxs[0])
+			outMaxs[0] = vBounds[i][0];
+		if (vBounds[i][1] > outMaxs[1])
+			outMaxs[1] = vBounds[i][1];
+		if (vBounds[i][2] > outMaxs[2])
+			outMaxs[2] = vBounds[i][2];
+	}
+
+	VectorAdd(outMins, m_pCurrentEntity->origin, outMins);
+	VectorAdd(outMaxs, m_pCurrentEntity->origin, outMaxs);
 }

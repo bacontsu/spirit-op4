@@ -33,6 +33,7 @@
 #include "demo_api.h"
 #include "vgui_ScorePanel.h"
 #include "rain.h"
+#include "fog.h"
 
 hud_player_info_t g_PlayerInfoList[MAX_PLAYERS_HUD + 1];	// player info from the engine
 extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1]; // additional player info sent directly to the client dll
@@ -559,6 +560,8 @@ void CHud::Init()
 	InitRain();
 
 	g_Bloom.Init();
+	gFog.Init();
+
 
 	MsgFunc_ResetHUD(0, 0, NULL);
 }
@@ -730,6 +733,7 @@ void CHud::VidInit()
 	GetClientVoiceMgr()->VidInit();
 	m_Particle.VidInit(); // (LRC) -- 30/08/02 November235: Particles to Order
 	m_PointMessage.VidInit();
+	gFog.VidInit();
 }
 
 bool CHud::MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)

@@ -27,6 +27,7 @@
 
 #include "glInclude.h"
 #include "colorcor.h"
+#include "fog.h"
 
 extern IParticleMan* g_pParticleMan;
 
@@ -354,6 +355,8 @@ void DLLEXPORT HUD_DrawNormalTriangles()
 	//	RecClDrawNormalTriangles();
 
 	gHUD.m_Spectator.DrawOverview();
+
+	gFog.HUD_DrawNormalTriangles();
 }
 
 
@@ -392,4 +395,6 @@ void DLLEXPORT HUD_DrawTransparentTriangles()
 	ProcessRain();
 	DrawRain();
 	DrawFXObjects();
+
+	gFog.HUD_DrawTransparentTriangles();
 }

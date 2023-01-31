@@ -130,6 +130,7 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\cl_dll\ev_common.cpp" />
     <ClCompile Include="..\..\cl_dll\ev_hldm.cpp" />
     <ClCompile Include="..\..\cl_dll\flashlight.cpp" />
+    <ClCompile Include="..\..\cl_dll\fog.cpp" />
     <ClCompile Include="..\..\cl_dll\GameStudioModelRenderer.cpp" />
     <ClCompile Include="..\..\cl_dll\geiger.cpp" />
     <ClCompile Include="..\..\cl_dll\health.cpp" />
@@ -248,6 +249,7 @@ EXIT /B 0</Command>
     <ClInclude Include="..\..\cl_dll\ev_hldm.h" />
     <ClInclude Include="..\..\cl_dll\fmod.h" />
     <ClInclude Include="..\..\cl_dll\fmod_errors.h" />
+    <ClInclude Include="..\..\cl_dll\fog.h" />
     <ClInclude Include="..\..\cl_dll\GameStudioModelRenderer.h" />
     <ClInclude Include="..\..\cl_dll\glInclude.h" />
     <ClInclude Include="..\..\cl_dll\health.h" />

@@ -47,6 +47,8 @@
 #include "ctf/CTFGoalFlag.h"
 #include "ctf/ctfplay_gamerules.h"
 
+#include "effects.h"
+
 extern DLL_GLOBAL unsigned int g_ulModelIndexPlayer;
 extern DLL_GLOBAL bool g_fGameOver;
 extern DLL_GLOBAL int g_iSkillLevel;
@@ -944,6 +946,9 @@ void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax)
 
 	// Link user messages here to make sure first client can get them...
 	LinkUserMessages();
+
+	// Reset fog when reloading
+	CEnvFogNew::SetCurrentEndDist(0, 0);
 }
 
 // a cached version of gpGlobals->frametime. The engine sets frametime to 0 if the player is frozen... so we just cache it in prethink,
@@ -1024,6 +1029,8 @@ void StartFrame()
 
 	//	CheckDesiredList(); //LRC
 	CheckAssistList(); //LRC
+
+	CEnvFogNew::FogThink();
 }
 
 
@@ -1365,6 +1372,11 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 		{
 			if (ent->v.renderfx != kRenderFxEntInPVS)
 				return 0;
+		}
+
+		if (CEnvFogNew::IsAffectingSkybox() && CEnvFogNew::CheckBBox(host, ent))
+		{
+			return 0;
 		}
 	}
 

@@ -137,3 +137,16 @@ void MatrixCopy(float in[3][4], float out[3][4])
 {
 	memcpy(out, in, sizeof(float) * 3 * 4);
 }
+
+/*
+====================
+VectorRotate
+
+====================
+*/
+void VectorRotate(const float* in1, float in2[3][4], float* out)
+{
+	out[0] = DotProduct(Vector(in1[0], in1[1], in1[2]), Vector(in2[0][0], in2[0][1], in2[0][2]));
+	out[1] = DotProduct(Vector(in1[0], in1[1], in1[2]), Vector(in2[1][0], in2[1][1], in2[1][2]));
+	out[2] = DotProduct(Vector(in1[0], in1[1], in1[2]), Vector(in2[2][0], in2[2][1], in2[2][2]));
+}
