@@ -91,7 +91,7 @@ void CColorCorTexture:: Draw(int width, int height)
 
 	 glColor4f(r,g,b,alpha);
 
-	if( cvar_inverse->value == 1 )
+	if (cvar_inverse->value == 1 || cvar_noirmode->value == 6)
 	{
 		glEnable(GL_COLOR_LOGIC_OP);
 		glLogicOp(GL_COPY_INVERTED);
@@ -101,7 +101,7 @@ void CColorCorTexture:: Draw(int width, int height)
 		DrawQuad(width, height,of);
 	glEnd();
 
-	if (cvar_inverse->value == 1)
+	if (cvar_inverse->value == 1 || cvar_noirmode->value == 6)
 	{
 		glDisable(GL_COLOR_LOGIC_OP);
 	}
@@ -156,6 +156,7 @@ void CColorCor::DrawColorCor()
 
 	switch (int(cvar_noirmode->value))
 	{
+	case 6: // INVERSE MODE
 	case 1: // BW
 		lerpR = 1.0f;
 		lerpG = 1.0f;
