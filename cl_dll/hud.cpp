@@ -486,6 +486,8 @@ void CHud::Init()
 
 	cvar_ladderbob = CVAR_CREATE("cl_ladderbob", "1", FCVAR_ARCHIVE);
 
+	CVAR_CREATE("sv_noclipspeed", "1", FCVAR_ARCHIVE);
+
 	//start glow effect --FragBait0
 	CVAR_CREATE("r_glow", "0", FCVAR_ARCHIVE);
 	//CVAR_CREATE("r_glowmode", "0", FCVAR_ARCHIVE ); //AJH this is now redundant

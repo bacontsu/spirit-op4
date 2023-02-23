@@ -1215,3 +1215,8 @@ void GameDLLShutdown()
 {
 	FileSystem_FreeFileSystem();
 }
+
+float PM_CVAR_GET_FLOAT(const char* sz)
+{
+	return g_engfuncs.pfnCVarGetFloat(sz);
+}

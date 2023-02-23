@@ -149,6 +149,8 @@ static char grgchTextureType[CTEXTURESMAX];
 
 bool g_onladder = false;
 
+float PM_CVAR_GET_FLOAT(const char* sz);
+
 static void PM_InitTrace(trace_t* trace, const Vector& end)
 {
 	memset(trace, 0, sizeof(*trace));
@@ -2575,6 +2577,7 @@ void PM_NoClip()
 	Vector wishvel;
 	float fmove, smove;
 	//	float		currentspeed, addspeed, accelspeed;
+	float speedmultiplier = PM_CVAR_GET_FLOAT("sv_noclipspeed");
 
 	// Copy movement amounts
 	fmove = pmove->cmd.forwardmove;
@@ -2585,9 +2588,9 @@ void PM_NoClip()
 
 	for (i = 0; i < 3; i++) // Determine x and y parts of velocity
 	{
-		wishvel[i] = pmove->forward[i] * fmove + pmove->right[i] * smove;
+		wishvel[i] = pmove->forward[i] * fmove * speedmultiplier + pmove->right[i] * smove * speedmultiplier;
 	}
-	wishvel[2] += pmove->cmd.upmove;
+	wishvel[2] += pmove->cmd.upmove * speedmultiplier;
 
 	VectorMA(pmove->origin, pmove->frametime, wishvel, pmove->origin);
 
