@@ -304,6 +304,7 @@ private:
 	float m_flBlendTime;
 	bool m_bActive;
 	bool m_bAffectSky = true;
+	float m_flFogDensity = 1.0f;
 
 private:
 	static int g_iCurrentEndDist;

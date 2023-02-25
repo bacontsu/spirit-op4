@@ -85,8 +85,9 @@ void CFog::SetGLFog( Vector color )
 	}
 
 	glEnable(GL_FOG);
-	glFogi(GL_FOG_MODE, GL_LINEAR);
-	glFogf(GL_FOG_DENSITY, 0.5);
+	glFogi(GL_FOG_MODE, GL_EXP);
+	glFogf(GL_FOG_DENSITY, 0.0025f * m_flFogDensity);
+	glHint(GL_FOG_HINT, GL_NICEST);
 
 	glFogfv(GL_FOG_COLOR, color);
 	glFogf(GL_FOG_START, m_fogParams.startdist);
@@ -94,7 +95,7 @@ void CFog::SetGLFog( Vector color )
 
 	// Tell the engine too
 	gEngfuncs.pTriAPI->Fog ( color, m_fogParams.startdist, m_fogParams.enddist, TRUE );	
-	gEngfuncs.pTriAPI->FogParams(0.5f, m_bAffectSky);
+	gEngfuncs.pTriAPI->FogParams(0.0025f * m_flFogDensity, m_bAffectSky);
 }
 /*
 ====================
@@ -155,6 +156,8 @@ void CFog::HUD_DrawTransparentTriangles( void )
 {
 	// At this stage we want to set black fog, so beams are faded out
 	SetGLFog(Vector(0, 0, 0));
+
+	//gEngfuncs.Con_Printf("enddist: %i\n", m_fogParams.enddist);
 }
 
 /*
@@ -239,6 +242,7 @@ int CFog::MsgFunc_Fog( const char *pszName, int iSize, void *pBuf )
 
 	float blendtime = READ_COORD();
 	m_bAffectSky = READ_BYTE();
+	m_flFogDensity = READ_FLOAT();
 
 	// If blending, copy current fog params to the blend state if we had any active
 	if(blendtime > 0 && m_fogParams.enddist > 0 && m_fogParams.startdist > 0)

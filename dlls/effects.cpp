@@ -4639,6 +4639,7 @@ TYPEDESCRIPTION CEnvFogNew::m_SaveData[] =
 		DEFINE_FIELD(CEnvFogNew, m_iEndDist, FIELD_INTEGER),
 		DEFINE_FIELD(CEnvFogNew, m_bActive, FIELD_BOOLEAN),
 		DEFINE_FIELD(CEnvFogNew, m_flBlendTime, FIELD_FLOAT),
+		DEFINE_FIELD(CEnvFogNew, m_flFogDensity, FIELD_FLOAT),
 };
 IMPLEMENT_SAVERESTORE(CEnvFogNew, CBaseEntity);
 
@@ -4662,6 +4663,11 @@ bool CEnvFogNew::KeyValue(KeyValueData* pkvd)
 	else if (FStrEq(pkvd->szKeyName, "dontaffectsky"))
 	{
 		m_bAffectSky = !(bool)atoi(pkvd->szValue);
+		return true;
+	}
+	else if (FStrEq(pkvd->szKeyName, "density"))
+	{
+		m_flFogDensity = atof(pkvd->szValue);
 		return true;
 	}
 
@@ -4732,10 +4738,12 @@ void CEnvFogNew::UpdateFog(bool isOn, bool doBlend, CBaseEntity* pPlayer)
 		else
 			WRITE_COORD(0);
 		WRITE_BYTE((int)m_bAffectSky);
+		WRITE_FLOAT(m_flFogDensity);
 		MESSAGE_END();
 	}
 	else if (!m_flBlendTime)
 	{
+		float empty = 0;
 		if (pPlayer)
 			MESSAGE_BEGIN(MSG_ONE, gmsgFog, NULL, pPlayer->pev);
 		else
@@ -4748,6 +4756,7 @@ void CEnvFogNew::UpdateFog(bool isOn, bool doBlend, CBaseEntity* pPlayer)
 		WRITE_BYTE(0);
 		WRITE_COORD(0);
 		WRITE_BYTE(0);
+		WRITE_FLOAT(empty);
 		MESSAGE_END();
 	}
 }

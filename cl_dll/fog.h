@@ -46,6 +46,7 @@ public:
 	void HUD_DrawTransparentTriangles( void );
 
 	bool m_bAffectSky;
+	float m_flFogDensity;
 
 private:
 	fog_params_t m_fogParams;
