@@ -702,6 +702,20 @@ private:
 	unsigned int g_uiGlowTex = 0;
 };
 
+class CWaterRenderer
+{
+public:
+	int Init();
+	int VidInit();
+	int Draw();
+	void DrawQuad(int width, int height, int ofsX, int ofsY);
+	void AnimateWater();
+
+	void LoadWADFiles(void);
+	void FreeWADFiles(void);
+	void LoadWADTextures();
+};
+
 class CHud
 {
 private:
@@ -887,6 +901,7 @@ public:
 
 extern CHud gHUD;
 extern CBloom g_Bloom;
+extern CWaterRenderer g_WaterRenderer;
 
 extern int g_iPlayerClass;
 extern int g_iTeamNumber;

@@ -43,7 +43,7 @@ CHud gHUD;
 CBloom g_Bloom;
 CMP3 gMP3; //AJH - Killars MP3player
 TeamFortressViewport* gViewPort = NULL;
-
+CWaterRenderer g_WaterRenderer;
 
 #include "particleman.h"
 IParticleMan* g_pParticleMan = nullptr;
@@ -200,6 +200,9 @@ int DLLEXPORT HUD_Redraw(float time, int intermission)
 
 	//if (gHUD.m_Flash.m_fOn)
 		//gHUD.m_Flash.drawNightVision();
+
+	g_WaterRenderer.Draw();
+	g_WaterRenderer.AnimateWater();
 
 	gHUD.Redraw(time, 0 != intermission);
 

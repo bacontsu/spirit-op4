@@ -563,7 +563,7 @@ void CHud::Init()
 
 	g_Bloom.Init();
 	gFog.Init();
-
+	g_WaterRenderer.Init();
 
 	MsgFunc_ResetHUD(0, 0, NULL);
 }
@@ -736,6 +736,7 @@ void CHud::VidInit()
 	m_Particle.VidInit(); // (LRC) -- 30/08/02 November235: Particles to Order
 	m_PointMessage.VidInit();
 	gFog.VidInit();
+	g_WaterRenderer.VidInit();
 }
 
 bool CHud::MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)
