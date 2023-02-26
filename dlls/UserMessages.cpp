@@ -101,4 +101,6 @@ void LinkUserMessages()
 
 	gmsgImpact = REG_USER_MSG("Impact", -1);
 	gmsgFog = REG_USER_MSG("Fog", -1);
+
+	gmsgReadable = REG_USER_MSG("Readable", -1);
 }

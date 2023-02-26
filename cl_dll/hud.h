@@ -27,6 +27,7 @@
 #define RGB_REDISH 0x00FF1010	 //255,160,0
 #define RGB_GREENISH 0x0000A000	 //0,160,0
 
+#include <string>
 #include "common_types.h"
 #include "cl_dll.h"
 #include "ammo.h"
@@ -635,8 +636,15 @@ public:
 	void Reset() override;
 	bool Draw(float flTime) override;
 	bool MsgFunc_PointMsg(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_Readable(const char* pszName, int iSize, void* pbuf);
+
+	bool m_bDrawReadable;
+	Vector readableOrg;
+	std::string readablePath;
+	float m_flUseKeyDelay;
 	
 };
+
 
 //
 //-----------------------------------------------------

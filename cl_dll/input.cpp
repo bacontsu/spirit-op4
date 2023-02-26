@@ -462,6 +462,10 @@ void IN_UseDown()
 {
 	KeyDown(&in_use);
 	gHUD.m_Spectator.HandleButtonsDown(IN_USE);
+
+	// close this thing
+	//if (gHUD.m_PointMessage.m_flUseKeyDelay < gEngfuncs.GetAbsoluteTime())
+	gHUD.m_PointMessage.m_bDrawReadable = false;
 }
 void IN_UseUp() { KeyUp(&in_use); }
 void IN_JumpDown()

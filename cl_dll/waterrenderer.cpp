@@ -179,7 +179,7 @@ LoadWADFiles
 */
 void CWaterRenderer::LoadWADFiles(void)
 {
-	const char* szFile[] = {"liquids.wad", "halflife.wad"};
+	const char* szFile[] = {"liquids.wad", "halflife.wad", "textures_prava_fx.wad"};
 
 
 	for (int i = 0; i < ARRAYSIZE(szFile); i++)

@@ -87,4 +87,6 @@ inline int gmsgCustomIcon = 0;
 inline int gmsgImpact = 0;
 inline int gmsgFog = 0; // fog
 
+inline int gmsgReadable = 0; // bacontsu - func_readable
+
 void LinkUserMessages();

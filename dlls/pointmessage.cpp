@@ -77,3 +77,47 @@ void CPointMessage::Think()
 		}
 	}
 }
+
+// func_readable
+class CReadable : public CBaseEntity
+{
+public:
+
+	void Spawn() override;
+	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
+	bool KeyValue(KeyValueData* pkvd) override;
+
+	virtual int ObjectCaps(void)
+	{
+		return (CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE);
+	}
+
+};
+
+
+LINK_ENTITY_TO_CLASS(func_readable, CReadable);
+
+
+bool CReadable::KeyValue(KeyValueData* pkvd)
+{
+	return CBaseEntity::KeyValue(pkvd);
+}
+
+void CReadable::Spawn()
+{
+	pev->movetype = MOVETYPE_PUSH;
+	pev->solid = SOLID_BSP;
+	SET_MODEL(ENT(pev), STRING(pev->model));
+}
+
+void CReadable::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+{
+	// send this entity to activator
+	Vector realOrigin = pev->origin + (pev->maxs + pev->mins) / 2;
+	MESSAGE_BEGIN(MSG_ONE, gmsgReadable, pActivator->pev->origin, pActivator->pev);
+	WRITE_COORD(realOrigin.x);
+	WRITE_COORD(realOrigin.y);
+	WRITE_COORD(realOrigin.z);
+	WRITE_STRING(STRING(pev->message));
+	MESSAGE_END();
+}
