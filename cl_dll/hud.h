@@ -767,6 +767,11 @@ public:
 	float mouse_y;
 	float velz;
 
+	// bacontsu - useable ent marking
+	HSPRITE usableSpr;
+	Rect usableRect;
+	bool m_bDrawUsable;
+
 	ref_params_s g_pparams;
 
 	int m_iFontHeight;

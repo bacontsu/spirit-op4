@@ -471,6 +471,8 @@ public:
 	float Rain_nextFadeUpdate;
 
 	int Rain_needsUpdate;
+
+	int m_iUseEnt;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)

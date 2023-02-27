@@ -99,6 +99,12 @@ bool CHud::Redraw(float flTime, bool intermission)
 	g_Bloom.Draw();
 	gColorCor.DrawColorCor();
 
+	if (m_bDrawUsable)
+	{
+		SPR_Set(usableSpr, 255, 255, 255);
+		SPR_DrawAdditive(0, ScreenWidth / 2 - usableRect.right / 2, ScreenHeight / 2 - usableRect.bottom / 2, &usableRect);
+	}
+
 	m_fOldTime = m_flTime; // save time of previous redraw
 	m_flTime = flTime;
 	m_flTimeDelta = (double)m_flTime - m_fOldTime;

@@ -233,6 +233,14 @@ int __MsgFunc_Inventory(const char* pszName, int iSize, void* pbuf)
 	return 1;
 }
 
+int __MsgFunc_UseEnt(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+	int index = READ_BYTE();
+	gHUD.m_bDrawUsable = index > 0;
+	return 1;
+}
+
 // TFFree Command Menu
 void __CmdFunc_OpenCommandMenu()
 {
@@ -476,6 +484,8 @@ void CHud::Init()
 	HOOK_MESSAGE(VGUIMenu);
 
 	HOOK_MESSAGE(Impact);
+
+	HOOK_MESSAGE(UseEnt);
 
 	CVAR_CREATE("hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO); // controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE("hud_takesshots", "0", FCVAR_ARCHIVE);					   // controls whether or not to automatically take screenshots at the end of a round
@@ -737,6 +747,10 @@ void CHud::VidInit()
 	m_PointMessage.VidInit();
 	gFog.VidInit();
 	g_WaterRenderer.VidInit();
+
+	usableSpr = SPR_Load("sprites/markent.spr");
+	usableRect.bottom = SPR_Height(usableSpr, 0);
+	usableRect.right = SPR_Width(usableSpr, 0);
 }
 
 bool CHud::MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)

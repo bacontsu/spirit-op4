@@ -103,4 +103,5 @@ void LinkUserMessages()
 	gmsgFog = REG_USER_MSG("Fog", -1);
 
 	gmsgReadable = REG_USER_MSG("Readable", -1);
+	gmsgUseEnt = REG_USER_MSG("UseEnt", -1);
 }

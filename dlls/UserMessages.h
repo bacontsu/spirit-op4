@@ -88,5 +88,6 @@ inline int gmsgImpact = 0;
 inline int gmsgFog = 0; // fog
 
 inline int gmsgReadable = 0; // bacontsu - func_readable
+inline int gmsgUseEnt = 0; // bacontsu - mark useable ent
 
 void LinkUserMessages();

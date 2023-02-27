@@ -202,6 +202,7 @@ TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
 
 		DEFINE_FIELD(CBasePlayer, m_pHolsteredWep, FIELD_CLASSPTR),
 		DEFINE_FIELD(CBasePlayer, m_bIsHolstered, FIELD_BOOLEAN),
+		DEFINE_FIELD(CBasePlayer, m_iUseEnt, FIELD_INTEGER),
 };
 
 LINK_ENTITY_TO_CLASS(player, CBasePlayer);
@@ -5196,6 +5197,98 @@ void CBasePlayer::UpdateClientData()
 		MESSAGE_BEGIN(MSG_ONE, SVC_ROOMTYPE, nullptr, edict());
 		WRITE_SHORT((short)m_SndRoomtype); // sequence number
 		MESSAGE_END();
+	}
+
+	CBaseEntity* pObject = NULL;
+	CBaseEntity* pClosest = NULL;
+
+	Vector vecLOS;
+	TraceResult tr;
+
+	float flMaxDot = VIEW_FIELD_NARROW;
+	float flDot;
+
+	UTIL_MakeVectors(pev->v_angle);
+	UTIL_TraceLine(pev->origin + pev->view_ofs, pev->origin + pev->view_ofs + (gpGlobals->v_forward * PLAYER_SEARCH_RADIUS), dont_ignore_monsters, ENT(pev), &tr);
+
+	if (tr.pHit) // use by trace
+	{
+		pObject = CBaseEntity::Instance(tr.pHit);
+		if (!pObject || !(pObject->ObjectCaps() & (FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE)))
+			pObject = NULL;
+	}
+
+	if (!pObject)
+	{
+		while ((pObject = UTIL_FindEntityInSphere(pObject, pev->origin, PLAYER_SEARCH_RADIUS)) != NULL)
+		{
+			if (pObject->ObjectCaps() & (FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE))
+			{
+
+				CBaseMonster* pMonster = pObject->MyMonsterPointer();
+				if (pMonster)
+				{
+					Vector mins, maxs;
+
+					pMonster->ExtractBbox(pMonster->pev->sequence, mins, maxs);
+					vecLOS = (((mins + maxs) * 0.5) + pMonster->pev->origin - (pev->origin + pev->view_ofs));
+					vecLOS = UTIL_ClampVectorToBox(vecLOS, ((mins + maxs) * 0.5));
+				}
+
+				else
+
+				{
+
+					vecLOS = (VecBModelOrigin(pObject->pev) - (pev->origin + pev->view_ofs));
+
+					vecLOS = UTIL_ClampVectorToBox(vecLOS, pObject->pev->size * 0.5);
+				}
+
+
+
+				flDot = DotProduct(vecLOS, gpGlobals->v_forward);
+
+
+
+				if (flDot > flMaxDot || vecLOS == g_vecZero)
+
+				{
+
+					pClosest = pObject;
+
+					flMaxDot = flDot;
+				}
+			}
+		}
+
+		pObject = pClosest;
+
+
+
+		if (pObject) // don't go through walls
+		{
+			UTIL_TraceLine(pObject->Center(), pev->origin + pev->view_ofs, dont_ignore_monsters, ENT(pev), &tr);
+			if (tr.flFraction < 1.0)
+				pObject = NULL;
+		}
+	}
+
+
+	int idx = 0;
+	if (pObject)
+
+		idx = pObject->entindex();
+
+	if (m_iUseEnt != idx)
+	{
+		MESSAGE_BEGIN(MSG_ONE, gmsgUseEnt, NULL, pev);
+		WRITE_BYTE(idx);
+		MESSAGE_END();
+
+		m_iUseEnt = idx;
+
+		// if (!idx) ALERT(at_console, "No usable ent found.\n");
+		// else ALERT(at_console, "Usable ent found.\n");
 	}
 
 	//Handled anything that needs resetting
