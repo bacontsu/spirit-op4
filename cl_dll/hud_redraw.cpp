@@ -22,6 +22,11 @@
 #include "vgui_StatsMenuPanel.h"
 
 #include "colorcor.h"
+#include "triangleapi.h"
+#include "r_studioint.h"
+#include "com_model.h"
+#include "r_efx.h"
+#include "event_api.h"
 
 #define MAX_LOGO_FRAMES 56
 
@@ -38,6 +43,8 @@ extern bool g_iVisibleMouse;
 float HUD_GetFOV();
 
 extern cvar_t* sensitivity;
+
+void HUD_DrawSmoke();
 
 // Think
 void CHud::Think()
@@ -96,6 +103,7 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw(float flTime, bool intermission)
 {
+	HUD_DrawSmoke();
 	g_Bloom.Draw();
 	gColorCor.DrawColorCor();
 
@@ -542,4 +550,114 @@ int CHud::DrawHudNumberReverse(int x, int y, int number, int flags, int r, int g
 	}
 
 	return x;
+}
+
+void HUD_DrawSmoke()
+{
+	//if (gHUD.m_flSmokeLife < gHUD.m_flTime)
+		//return;
+
+	if (gHUD.m_iSmokeFrame == 19)
+		return;
+
+	// World2Screen conversion
+	float screen[2];
+	gEngfuncs.pTriAPI->WorldToScreen(gEngfuncs.GetViewModel()->attachment[0], screen);
+	int x = XPROJECT(screen[0]);
+	int y = YPROJECT(screen[1]);
+
+	y -= 55;
+
+	int width = 192 * 1.2f;
+	int length = 240 * 1.2f;
+
+	int xmin = x - width/2;
+	int xmax = x + width/2;
+	int ymin = y - length/2;
+	int ymax = y + length/2;
+
+	int opacity = 100;
+	Vector color(opacity, opacity, opacity);
+	int mode = kRenderTransAdd;
+
+	static HSPRITE sprite;
+	//static int frame;
+	static float frameUpdate;
+
+	if (frameUpdate < gEngfuncs.GetAbsoluteTime())
+	{
+		if (gHUD.m_iSmokeFrame < 19)
+			gHUD.m_iSmokeFrame++;
+		//else
+			//gHUD.m_iSmokeFrame = 0;
+		frameUpdate = gEngfuncs.GetAbsoluteTime() + 0.075f;
+	}
+
+	if (gHUD.m_iSmokeFrame == 0)
+	{
+		// wallpuff code
+		int modelindex = gEngfuncs.pEventAPI->EV_FindModelIndex("sprites/smokepuff.spr");
+		Vector origin = gEngfuncs.GetViewModel()->attachment[0];
+
+		auto puff = gEngfuncs.pEfxAPI->R_TempSprite(origin, Vector(gEngfuncs.pfnRandomLong(-5, 5), gEngfuncs.pfnRandomLong(-5, 5), 1),
+			0.3, modelindex, kRenderTransAdd, 0, 0.017, 0.2 /* life in seconds*/, FTENT_SPRANIMATE | FTENT_FADEOUT);
+		if (puff)
+		{
+			puff->fadeSpeed = 0.5;
+			puff->entity.curstate.framerate = 15.0;
+			//puff->entity.curstate.renderamt = 0.05 * 255;
+		}
+
+		auto puff2 = gEngfuncs.pEfxAPI->R_TempSprite(origin, Vector(gEngfuncs.pfnRandomLong(-5, 5), gEngfuncs.pfnRandomLong(-5, 5), 1),
+			0.3, modelindex, kRenderTransAdd, 0, 0.017, 0.2 /* life in seconds*/, FTENT_SPRANIMATE | FTENT_FADEOUT);
+		if (puff2)
+		{
+			puff2->fadeSpeed = 0.5;
+			puff2->entity.curstate.framerate = 15.0;
+			//puff2->entity.curstate.renderamt = 0.05 * 255;
+		}
+
+		auto puff3 = gEngfuncs.pEfxAPI->R_TempSprite(origin, Vector(gEngfuncs.pfnRandomLong(-5, 5), gEngfuncs.pfnRandomLong(-5, 5), 1),
+			0.3, modelindex, kRenderTransAdd, 0, 0.017, 0.2/* life in seconds*/, FTENT_SPRANIMATE | FTENT_FADEOUT);
+		if (puff3)
+		{
+			puff3->fadeSpeed = 0.5;
+			puff3->entity.curstate.framerate = 15.0;
+			//puff3->entity.curstate.renderamt = 0.05 * 255;
+		}
+	}
+
+	if (!sprite)
+		sprite = SPR_Load("sprites/muzsmoke2.spr");
+
+	if (!sprite)
+		return;
+
+	// setup
+	gEngfuncs.pTriAPI->RenderMode(mode);
+	gEngfuncs.pTriAPI->Brightness(1.0f);
+	gEngfuncs.pTriAPI->Color4ub(color.x, color.y, color.z, 255);
+	gEngfuncs.pTriAPI->CullFace(TRI_NONE);
+	gEngfuncs.pTriAPI->SpriteTexture((struct model_s*)gEngfuncs.GetSpritePointer(sprite), gHUD.m_iSmokeFrame);
+
+	// start drawing
+	gEngfuncs.pTriAPI->Begin(TRI_QUADS);
+
+	// top left
+	gEngfuncs.pTriAPI->TexCoord2f(0, 0);
+	gEngfuncs.pTriAPI->Vertex3f(xmin, ymin, 0);
+	// bottom left
+	gEngfuncs.pTriAPI->TexCoord2f(0, 1);
+	gEngfuncs.pTriAPI->Vertex3f(xmin, ymax, 0);
+	// bottom right
+	gEngfuncs.pTriAPI->TexCoord2f(1, 1);
+	gEngfuncs.pTriAPI->Vertex3f(xmax, ymax, 0);
+	// top right
+	gEngfuncs.pTriAPI->TexCoord2f(1, 0);
+	gEngfuncs.pTriAPI->Vertex3f(xmax, ymin, 0);
+
+	// end
+	gEngfuncs.pTriAPI->End();
+	gEngfuncs.pTriAPI->RenderMode(kRenderNormal);
+
 }

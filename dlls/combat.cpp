@@ -34,6 +34,8 @@
 #include "UserMessages.h"
 #include "pm_materials.h"
 
+#include "player.h"
+
 extern Vector VecBModelOrigin(entvars_t* pevBModel);
 
 #define GERMAN_GIB_COUNT 4
@@ -1913,6 +1915,12 @@ Vector CBaseEntity::FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector
 		UTIL_BubbleTrail(vecSrc, tr.vecEndPos, (flDistance * tr.flFraction) / 64.0);
 	}
 	ApplyMultiDamage(pev, pevAttacker);
+
+	auto pPlayer = static_cast<CBasePlayer*>(this);
+	if (pPlayer)
+	{
+		pPlayer->m_iHeldShots++;
+	}
 
 	return Vector(x * vecSpread.x, y * vecSpread.y, 0.0);
 }

@@ -241,6 +241,13 @@ int __MsgFunc_UseEnt(const char* pszName, int iSize, void* pbuf)
 	return 1;
 }
 
+int __MsgFunc_Smoke(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+	gHUD.m_iSmokeFrame = 0;
+	return 1;
+}
+
 // TFFree Command Menu
 void __CmdFunc_OpenCommandMenu()
 {
@@ -485,7 +492,9 @@ void CHud::Init()
 
 	HOOK_MESSAGE(Impact);
 
+	// bacontsu
 	HOOK_MESSAGE(UseEnt);
+	HOOK_MESSAGE(Smoke);
 
 	CVAR_CREATE("hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO); // controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE("hud_takesshots", "0", FCVAR_ARCHIVE);					   // controls whether or not to automatically take screenshots at the end of a round

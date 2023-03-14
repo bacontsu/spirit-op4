@@ -102,6 +102,8 @@ void LinkUserMessages()
 	gmsgImpact = REG_USER_MSG("Impact", -1);
 	gmsgFog = REG_USER_MSG("Fog", -1);
 
+	// bacontsu
 	gmsgReadable = REG_USER_MSG("Readable", -1);
 	gmsgUseEnt = REG_USER_MSG("UseEnt", -1);
+	gmsgSmoke = REG_USER_MSG("Smoke", -1);
 }

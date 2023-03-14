@@ -772,6 +772,10 @@ public:
 	Rect usableRect;
 	bool m_bDrawUsable;
 
+	// bacontsu - smoke after rounds
+	float m_flSmokeLife;
+	int m_iSmokeFrame;
+
 	ref_params_s g_pparams;
 
 	int m_iFontHeight;

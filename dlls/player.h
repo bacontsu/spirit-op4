@@ -473,6 +473,8 @@ public:
 	int Rain_needsUpdate;
 
 	int m_iUseEnt;
+
+	int m_iHeldShots;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)

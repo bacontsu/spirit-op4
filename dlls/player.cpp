@@ -203,6 +203,7 @@ TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
 		DEFINE_FIELD(CBasePlayer, m_pHolsteredWep, FIELD_CLASSPTR),
 		DEFINE_FIELD(CBasePlayer, m_bIsHolstered, FIELD_BOOLEAN),
 		DEFINE_FIELD(CBasePlayer, m_iUseEnt, FIELD_INTEGER),
+		DEFINE_FIELD(CBasePlayer, m_iHeldShots, FIELD_INTEGER),
 };
 
 LINK_ENTITY_TO_CLASS(player, CBasePlayer);
@@ -2159,6 +2160,25 @@ void CBasePlayer::PreThink()
 		pev->flags |= FL_ONTRAIN;
 	else
 		pev->flags &= ~FL_ONTRAIN;
+
+	// bacontsu - logic of held shots
+	static bool justShot;
+	if (pev->button & IN_ATTACK)
+	{
+		justShot = true;
+	}
+	else if (justShot)
+	{
+		if (m_iHeldShots > 3)
+		{
+			MESSAGE_BEGIN(MSG_ONE, gmsgSmoke, NULL, pev);
+			MESSAGE_END();
+		}
+
+		m_iHeldShots = 0;
+		justShot = false;
+	}
+
 
 	//We're on a rope. - Solokiller
 	if ((m_afPhysicsFlags & PFLAG_ONROPE) != 0 && m_pRope)
