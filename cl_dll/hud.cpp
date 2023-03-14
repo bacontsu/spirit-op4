@@ -760,6 +760,9 @@ void CHud::VidInit()
 	usableSpr = SPR_Load("sprites/markent.spr");
 	usableRect.bottom = SPR_Height(usableSpr, 0);
 	usableRect.right = SPR_Width(usableSpr, 0);
+
+	if (gHUD.m_iSmokeFrame == 0)
+		m_iSmokeFrame = 19;
 }
 
 bool CHud::MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)
