@@ -213,12 +213,12 @@ bool CPointMessageRenderer::Draw(float flTime)
 	// Draw readable window
 	if (m_bDrawReadable)
 	{
-		Vector2D window(readableWidth, readableHeight + 70);
+		Vector2D window((readableWidth * ScreenHeight / 1080), (readableHeight * ScreenHeight / 1080) + 70);
 
 		ImGui::SetNextWindowPos(ImVec2((ScreenWidth / 2) - (window.x / 2), (ScreenHeight / 2) - (window.y / 2)));
 		ImGui::SetNextWindowSize(ImVec2(window.x, window.y));
 		ImGui::Begin("test", null, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
-		ImGui::Image((void*)(intptr_t)readableTex, ImVec2(readableWidth, readableHeight));
+		ImGui::Image((void*)(intptr_t)readableTex, ImVec2(readableWidth * ScreenHeight / 1080, readableHeight * ScreenHeight / 1080));
 		std::string text = "Press E or walk away to close.";
 		auto windowWidth = ImGui::GetWindowSize().x;
 		auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
