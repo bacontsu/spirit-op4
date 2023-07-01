@@ -778,6 +778,14 @@ public:
 
 	ref_params_s g_pparams;
 
+	// bacontsu - movement system
+	cvar_t* clientmaxspeed;
+	cvar_t* servermaxspeed;
+	bool m_bSprintButtonHeld;
+	int m_iSprintCounter;
+	float m_flSprintUpdate;
+
+
 	int m_iFontHeight;
 	int DrawHudNumber(int x, int y, int iFlags, int iNumber, int r, int g, int b);
 	int DrawHudString(int x, int y, int iMaxX, const char* szString, int r, int g, int b);

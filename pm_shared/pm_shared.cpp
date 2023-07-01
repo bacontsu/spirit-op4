@@ -3014,7 +3014,7 @@ void PM_CheckParamters()
 		  (pmove->cmd.upmove * pmove->cmd.upmove);
 	spd = sqrt(spd);
 
-	maxspeed = pmove->clientmaxspeed; //atof( pmove->PM_Info_ValueForKey( pmove->physinfo, "maxspd" ) );
+	maxspeed = PM_CVAR_GET_FLOAT("cl_maxspeed"); // atof( pmove->PM_Info_ValueForKey( pmove->physinfo, "maxspd" ) );
 	if (maxspeed != 0.0)
 	{
 		pmove->maxspeed = V_min(maxspeed, pmove->maxspeed);

@@ -441,8 +441,16 @@ void IN_MoverightUp()
 	KeyUp(&in_moveright);
 	gHUD.m_Spectator.HandleButtonsUp(IN_MOVERIGHT);
 }
-void IN_SpeedDown() { KeyDown(&in_speed); }
-void IN_SpeedUp() { KeyUp(&in_speed); }
+void IN_SpeedDown() 
+{ 
+	KeyDown(&in_speed); 
+	gHUD.m_bSprintButtonHeld = true;
+}
+void IN_SpeedUp() 
+{ 
+	KeyUp(&in_speed); 
+	gHUD.m_bSprintButtonHeld = false;
+}
 void IN_StrafeDown() { KeyDown(&in_strafe); }
 void IN_StrafeUp() { KeyUp(&in_strafe); }
 
@@ -738,15 +746,24 @@ void DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s* cmd, int active)
 		}
 
 		// adjust for speed key
-		if ((in_speed.state & 1) != 0)
+		if (!(in_speed.state & 1) || gHUD.m_iSprintCounter <= 0)
 		{
-			cmd->forwardmove *= cl_movespeedkey->value;
-			cmd->sidemove *= cl_movespeedkey->value;
-			cmd->upmove *= cl_movespeedkey->value;
+			// clip to walking speed
+			spd = 180.0f;
+
+			// scale the 3 speeds so that the total velocity is not > cl.maxspeed
+			float fmov = sqrt((cmd->forwardmove * cmd->forwardmove) + (cmd->sidemove * cmd->sidemove) + (cmd->upmove * cmd->upmove));
+			if (fmov > spd)
+			{
+				float fratio = spd / fmov;
+				cmd->forwardmove *= fratio;
+				cmd->sidemove *= fratio;
+				cmd->upmove *= fratio;
+			}
 		}
 
 		// clip to maxspeed
-		spd = gEngfuncs.GetClientMaxspeed();
+		spd = gHUD.clientmaxspeed->value;
 		if (spd != 0.0)
 		{
 			// scale the 3 speeds so that the total velocity is not > cl.maxspeed
@@ -860,6 +877,11 @@ int CL_ButtonBits(bool bResetState)
 		bits |= IN_USE;
 	}
 
+	if ((in_speed.state & 3) != 0)
+	{
+		bits |= IN_RUN;
+	}
+
 	if (in_cancel)
 	{
 		bits |= IN_CANCEL;
@@ -919,6 +941,7 @@ int CL_ButtonBits(bool bResetState)
 		in_forward.state &= ~2;
 		in_back.state &= ~2;
 		in_use.state &= ~2;
+		in_speed.state &= ~2;
 		in_left.state &= ~2;
 		in_right.state &= ~2;
 		in_moveleft.state &= ~2;

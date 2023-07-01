@@ -515,6 +515,8 @@ void CHud::Init()
 	CVAR_CREATE("r_glowdark", "2", FCVAR_ARCHIVE);
 	//end glow effect
 
+	clientmaxspeed = CVAR_CREATE("cl_maxspeed", "360", FCVAR_ARCHIVE);
+
 	viewEntityIndex = 0; // trigger_viewset stuff
 	viewFlags = 0;
 	m_iLogo = 0;
@@ -763,6 +765,12 @@ void CHud::VidInit()
 
 	if (gHUD.m_iSmokeFrame == 0)
 		m_iSmokeFrame = 19;
+
+	// bacontsu - movement system
+	servermaxspeed = NULL;
+	m_bSprintButtonHeld = false;
+	m_iSprintCounter = 200;
+	m_flSprintUpdate = 0;
 }
 
 bool CHud::MsgFunc_Logo(const char* pszName, int iSize, void* pbuf)

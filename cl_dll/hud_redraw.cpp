@@ -107,6 +107,36 @@ bool CHud::Redraw(float flTime, bool intermission)
 	g_Bloom.Draw();
 	gColorCor.DrawColorCor();
 
+	// bacontsu - sprinting start
+	if (m_flSprintUpdate < gEngfuncs.GetAbsoluteTime())
+	{
+		if (m_bSprintButtonHeld)
+		{
+			if (m_iSprintCounter >= 0)
+				m_iSprintCounter--;
+		}
+		else if (Vector(g_pparams.simvel).Length2D() < 30.0f)
+		{
+			if (m_iSprintCounter < 200)
+				m_iSprintCounter += 2;
+		}
+
+		m_flSprintUpdate = gEngfuncs.GetAbsoluteTime() + 0.1f;
+	}
+
+	//gEngfuncs.Con_Printf("counter: %i\n", m_iSprintCounter);
+
+	//gEngfuncs.Con_Printf("speed: %f\n", Vector(gHUD.g_pparams.simvel).Length2D());
+	if (!servermaxspeed)
+		servermaxspeed = gEngfuncs.pfnGetCvarPointer("sv_maxspeed");
+	else
+	{
+		if (servermaxspeed->value != 360.0f)
+			EngineClientCmd("sv_maxspeed 360");
+	}
+
+	// bacontsu - sprinting end
+
 	if (m_bDrawUsable)
 	{
 		SPR_Set(usableSpr, 255, 255, 255);
