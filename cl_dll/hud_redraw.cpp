@@ -128,6 +128,7 @@ bool CHud::Redraw(float flTime, bool intermission)
 	//gEngfuncs.Con_Printf("counter: %i\n", m_iSprintCounter);
 	//gEngfuncs.Con_Printf("viewheight: %f\n", gHUD.g_pparams.viewheight[2]);
 	//gEngfuncs.Con_Printf("speed: %f\n", Vector(gHUD.g_pparams.simvel).Length2D());
+	//gEngfuncs.Con_Printf(gHUD.m_bSliding ? "is sliding\n" : "is not sliding\n");
 
 	if (!servermaxspeed)
 		servermaxspeed = gEngfuncs.pfnGetCvarPointer("sv_maxspeed");

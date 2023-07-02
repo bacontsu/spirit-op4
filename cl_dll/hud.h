@@ -784,6 +784,7 @@ public:
 	bool m_bSprintButtonHeld;
 	int m_iSprintCounter;
 	float m_flSprintUpdate;
+	bool m_bSliding;
 
 
 	int m_iFontHeight;

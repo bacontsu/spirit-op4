@@ -784,26 +784,28 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 	}
 
 	// viewbob setting
+	static float BobScaling;
+	BobScaling = lerp(BobScaling, (float)(int)!gHUD.m_bSliding, gHUD.m_flTimeDelta * 10);
 	switch ((int)CVAR_GET_FLOAT("cl_viewmodel_bob"))
 	{
 	case 0:
 		for (i = 0; i < 3; i++)
 		{
-			view->origin[i] += bob * 0.4 * pparams->forward[i];
+			view->origin[i] += bob * 0.4 * pparams->forward[i] * BobScaling;
 		}
 		break;
 	case 1:
 		// throw in a little tilt.
-		view->angles[YAW] -= bob * 0.5;
-		view->angles[ROLL] -= bob * 1;
-		view->angles[PITCH] -= bob * 0.3;
+		view->angles[YAW] -= bob * 0.5 * BobScaling;
+		view->angles[ROLL] -= bob * 1 * BobScaling;
+		view->angles[PITCH] -= bob * 0.3 * BobScaling;
 		break;
 	case 2:
 		for (i = 0; i < 3; i++)
 		{
-			view->origin[i] += bob * 0.7f * pparams->right[i];
+			view->origin[i] += bob * 0.7f * pparams->right[i] * BobScaling;
 		}
-		view->origin[2] -= 0.4f * fabs(bob);
+		view->origin[2] -= 0.4f * fabs(bob) * BobScaling;
 		break;
 	}
 

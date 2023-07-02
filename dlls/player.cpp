@@ -2074,11 +2074,6 @@ void CBasePlayer::UpdateStatusBar()
 #define CLIMB_PUNCH_X -7		 // how far to 'punch' client X axis when climbing
 #define CLIMB_PUNCH_Z 7			 // how far to 'punch' client Z axis when climbing
 
-float lerp(float a, float b, float f)
-{
-	return (a * (1.0 - f)) + (b * f);
-}
-
 void CBasePlayer::PreThink()
 {
 	int buttonsChanged = (m_afButtonLast ^ pev->button); // These buttons have changed this frame
@@ -2187,7 +2182,7 @@ void CBasePlayer::PreThink()
 	// bacontsu - sliding logic
 	float SlidingTime = 1.5f;
 	int SlidingCounter = (int)(SlidingTime / 0.05f);
-	if (pev->velocity.Length2D() > 350.0f && pev->button & IN_DUCK && m_iSlidingStage == 0)
+	if (pev->velocity.Length2D() > 350.0f && (pev->button & IN_DUCK) && m_iSlidingStage == 0 && m_flSlidingCooldown < gpGlobals->time)
 	{
 		m_vecSlidingDir = pev->velocity;
 		m_iSlidingStage = 1;
@@ -2198,7 +2193,10 @@ void CBasePlayer::PreThink()
 	{
 		// check if cancelled
 		if (!(pev->button & IN_DUCK) || pev->velocity.Length2D() < 50.0f)
+		{
 			m_iSlidingStage = 0;
+			m_flSlidingCooldown = gpGlobals->time + 2.0f;
+		}
 
 		// apply sliding - only on ground
 		if (pev->flags & FL_ONGROUND)
@@ -2218,6 +2216,10 @@ void CBasePlayer::PreThink()
 			pev->velocity.y = lerp(pev->velocity.y, m_vecSlidingDir.y * m_flSlidingMultiplier, gpGlobals->frametime * 13);
 			pev->velocity.z -= 100.0f;
 
+			// speed cap
+			if (pev->velocity.Length2D() > 700)
+				pev->velocity = pev->velocity.Normalize() * 700;
+
 			// always decrease multiplier
 			if (m_flSlidingTimer < gpGlobals->time)
 			{
@@ -2231,7 +2233,7 @@ void CBasePlayer::PreThink()
 		}
 	}
 
-	ALERT(at_console, "slidingstage: %i\n", m_iSlidingStage);
+	//ALERT(at_console, "slidingstage: %i\n", m_iSlidingStage);
 
 	//We're on a rope. - Solokiller
 	if ((m_afPhysicsFlags & PFLAG_ONROPE) != 0 && m_pRope)
@@ -4785,6 +4787,11 @@ void CBasePlayer::UpdateClientData()
 	}
 
 	const bool fullHUDInitRequired = m_fInitHUD != false;
+
+	// send player custom data
+	MESSAGE_BEGIN(MSG_ONE, gmsgPlayerData, NULL, pev);
+	WRITE_BYTE(m_iSlidingStage);
+	MESSAGE_END();
 
 	if (m_fInitHUD)
 	{

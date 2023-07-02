@@ -482,6 +482,7 @@ public:
 	float m_flSlidingMultiplier;
 	float m_flSlidingTimer;
 	int m_iSlidingCounter;
+	float m_flSlidingCooldown;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)

@@ -106,4 +106,5 @@ void LinkUserMessages()
 	gmsgReadable = REG_USER_MSG("Readable", -1);
 	gmsgUseEnt = REG_USER_MSG("UseEnt", -1);
 	gmsgSmoke = REG_USER_MSG("Smoke", -1);
+	gmsgPlayerData = REG_USER_MSG("PlayerData", -1);
 }
