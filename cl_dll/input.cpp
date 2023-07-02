@@ -768,7 +768,8 @@ void DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s* cmd, int active)
 		}
 
 		// bacontsu - sprinting 
-		if ((!(in_speed.state & 1) || gHUD.m_iSprintCounter <= 0) && gHUD.g_pparams.viewheight[2] != 12.0f)
+		if ((!(in_speed.state & 1) || gHUD.m_iSprintCounter <= 0 || (in_moveright.state & 1) || (in_moveleft.state & 1) || (in_back.state & 1)) 
+			&& gHUD.g_pparams.viewheight[2] != 12.0f)
 		{
 			// clip to walking speed
 			spd = 180.0f;
