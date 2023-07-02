@@ -472,9 +472,16 @@ public:
 
 	int Rain_needsUpdate;
 
+	// bacontsu
 	int m_iUseEnt;
-
 	int m_iHeldShots;
+
+	// bacontsu - movement system
+	int m_iSlidingStage;
+	Vector m_vecSlidingDir;
+	float m_flSlidingMultiplier;
+	float m_flSlidingTimer;
+	int m_iSlidingCounter;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)

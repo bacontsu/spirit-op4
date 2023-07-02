@@ -2074,6 +2074,11 @@ void CBasePlayer::UpdateStatusBar()
 #define CLIMB_PUNCH_X -7		 // how far to 'punch' client X axis when climbing
 #define CLIMB_PUNCH_Z 7			 // how far to 'punch' client Z axis when climbing
 
+float lerp(float a, float b, float f)
+{
+	return (a * (1.0 - f)) + (b * f);
+}
+
 void CBasePlayer::PreThink()
 {
 	int buttonsChanged = (m_afButtonLast ^ pev->button); // These buttons have changed this frame
@@ -2179,6 +2184,54 @@ void CBasePlayer::PreThink()
 		justShot = false;
 	}
 
+	// bacontsu - sliding logic
+	float SlidingTime = 1.5f;
+	int SlidingCounter = (int)(SlidingTime / 0.05f);
+	if (pev->velocity.Length2D() > 350.0f && pev->button & IN_DUCK && m_iSlidingStage == 0)
+	{
+		m_vecSlidingDir = pev->velocity;
+		m_iSlidingStage = 1;
+		m_iSlidingCounter = SlidingCounter;
+	}
+
+	if (m_iSlidingStage == 1)
+	{
+		// check if cancelled
+		if (!(pev->button & IN_DUCK) || pev->velocity.Length2D() < 50.0f)
+			m_iSlidingStage = 0;
+
+		// apply sliding - only on ground
+		if (pev->flags & FL_ONGROUND)
+		{
+
+			// if forward is pressed, slowly change the dir
+			if (pev->button & IN_FORWARD)
+			{
+				Vector forward;
+				AngleVectors(pev->angles, &forward, nullptr, nullptr);
+
+				for (int i = 0; i < 3; i++)
+					m_vecSlidingDir[i] = lerp(m_vecSlidingDir[i], forward[i] * 500, gpGlobals->frametime);
+			}
+
+			pev->velocity.x = lerp(pev->velocity.x, m_vecSlidingDir.x * m_flSlidingMultiplier, gpGlobals->frametime * 13);
+			pev->velocity.y = lerp(pev->velocity.y, m_vecSlidingDir.y * m_flSlidingMultiplier, gpGlobals->frametime * 13);
+			pev->velocity.z -= 100.0f;
+
+			// always decrease multiplier
+			if (m_flSlidingTimer < gpGlobals->time)
+			{
+				if (m_iSlidingCounter > 0)
+					m_iSlidingCounter--;
+
+				m_flSlidingMultiplier = 2.5f * (float)m_iSlidingCounter / (float)SlidingCounter;
+
+				m_flSlidingTimer = gpGlobals->time + 0.05f;
+			}
+		}
+	}
+
+	ALERT(at_console, "slidingstage: %i\n", m_iSlidingStage);
 
 	//We're on a rope. - Solokiller
 	if ((m_afPhysicsFlags & PFLAG_ONROPE) != 0 && m_pRope)
