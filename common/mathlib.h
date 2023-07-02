@@ -114,6 +114,18 @@ inline float lerp(float a, float b, float f)
 	return (a * (1.0 - f)) + (b * f);
 }
 
+// up / down
+#ifndef PITCH
+#define PITCH 0
+#endif // !PITCH
+
+#ifndef YAW
+#define YAW 1
+#endif // !YAW
+
+#ifndef ROLL
+#define ROLL 2
+#endif // !ROLL
 
 
 #define BOX_ON_PLANE_SIDE(emins, emaxs, p)                                                                 \

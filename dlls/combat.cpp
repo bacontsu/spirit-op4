@@ -1795,6 +1795,16 @@ Vector CBaseEntity::FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector
 	Vector vecUp = gpGlobals->v_up;
 	float x = 0, y = 0, z;
 
+	UTIL_MakeVectors(pev->v_angle);
+	if (IsPlayer())
+	{
+		auto m_pPlayer = static_cast<CBasePlayer*>(this);
+		if (m_pPlayer)
+		{
+			vecSrc = vecSrc + gpGlobals->v_right * m_pPlayer->leanAngle;
+		}
+	}
+
 	if (pevAttacker == NULL)
 		pevAttacker = pev; // the default attacker is ourselves
 

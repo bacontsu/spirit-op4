@@ -809,6 +809,26 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 		break;
 	}
 
+	// bacontsu - Leaning
+	static float leanLerp = 0;
+	leanLerp = lerp(leanLerp, gHUD.m_flLeanAngle, gHUD.m_flTimeDelta * 7.0f);
+
+	// apply rotation
+	pparams->viewangles[ROLL] += leanLerp;
+	view->angles[ROLL] += leanLerp;
+
+	// apply peeking
+	for (int i = 0; i < 3; i++)
+	{
+		pparams->vieworg[i] += pparams->right[i] * leanLerp;
+		view->origin[i] += pparams->right[i] * leanLerp;
+	}
+
+	// bacontsu - sliding
+	static float slidelerp = 0;
+	slidelerp = lerp(slidelerp, gHUD.m_bSliding ? -15 : 0, gHUD.m_flTimeDelta * 5.0f);
+	view->angles[ROLL] += slidelerp * 2.5f;
+	pparams->viewangles[ROLL] += slidelerp;
 
 	VectorCopy(view->angles, view->curstate.angles);
 

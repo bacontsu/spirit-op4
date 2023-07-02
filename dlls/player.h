@@ -483,6 +483,12 @@ public:
 	float m_flSlidingTimer;
 	int m_iSlidingCounter;
 	float m_flSlidingCooldown;
+
+	void LeaningThink();
+	bool isLeaning;
+	int leanMode; // 0 - none	1 - left	2 - right
+	float leanAngle;
+	TraceResult leanRightTr, leanLeftTr;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)

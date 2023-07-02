@@ -584,6 +584,11 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 	int iShot;
 	bool tracer;
 
+	for (int i = 0; i < 3; i++)
+	{
+		vecSrc[i] += gHUD.m_flLeanAngle * right[i];
+	}
+	
 	for (iShot = 1; iShot <= cShots; iShot++)
 	{
 		Vector vecDir, vecEnd;
@@ -683,7 +688,7 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 	// wallpuff code
 	int modelindex = gEngfuncs.pEventAPI->EV_FindModelIndex("sprites/smokepuff.spr");
 
-	Vector origin = gEngfuncs.GetViewModel()->attachment[0];
+	Vector origin = gHUD.m_vecViewmodelAttach[0];
 
 	for (int i = 0; i < cShots; i++)
 	{

@@ -2039,6 +2039,12 @@ void CStudioModelRenderer::StudioCalcAttachments()
 	{
 		VectorTransform(pattachment[i].org, (*m_plighttransform)[pattachment[i].bone], m_pCurrentEntity->attachment[i]);
 	}
+
+	if (m_pCurrentEntity == gEngfuncs.GetViewModel())
+	{
+		for (int i = 0; i < 4; i++)
+			gHUD.m_vecViewmodelAttach[i] = m_pCurrentEntity->attachment[i];
+	}
 }
 
 /*

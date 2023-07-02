@@ -1128,6 +1128,7 @@ void ClientPrecache()
 	PRECACHE_MODEL("models/player.mdl");
 	PRECACHE_MODEL("models/error.mdl");
 	PRECACHE_MODEL("sprites/smokepuff.spr");
+	PRECACHE_SOUND("player/playerslide.wav");
 
 	// hud sounds
 

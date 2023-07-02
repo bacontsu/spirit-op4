@@ -252,6 +252,7 @@ int __MsgFunc_PlayerData(const char* pszName, int iSize, void* pbuf)
 {
 	BEGIN_READ(pbuf, iSize);
 	gHUD.m_bSliding = READ_BYTE();
+	gHUD.m_flLeanAngle = READ_FLOAT();
 	return 1;
 }
 

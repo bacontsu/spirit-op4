@@ -2187,6 +2187,7 @@ void CBasePlayer::PreThink()
 		m_vecSlidingDir = pev->velocity;
 		m_iSlidingStage = 1;
 		m_iSlidingCounter = SlidingCounter;
+		EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/playerslide.wav", 1, ATTN_NORM);
 	}
 
 	if (m_iSlidingStage == 1)
@@ -2195,7 +2196,7 @@ void CBasePlayer::PreThink()
 		if (!(pev->button & IN_DUCK) || pev->velocity.Length2D() < 50.0f)
 		{
 			m_iSlidingStage = 0;
-			m_flSlidingCooldown = gpGlobals->time + 2.0f;
+			m_flSlidingCooldown = gpGlobals->time + 0.5f;
 		}
 
 		// apply sliding - only on ground
@@ -2234,6 +2235,86 @@ void CBasePlayer::PreThink()
 	}
 
 	//ALERT(at_console, "slidingstage: %i\n", m_iSlidingStage);
+	// bacontsu - sliding end
+
+	// bacontsu - leaning start
+	if (!IsOnLadder())
+	{
+		Vector right, up;
+		AngleVectors(pev->angles, nullptr, &right, &up);
+		right.z = 0;
+		right.Normalize();
+
+		// left leaning
+		if (pev->button & IN_LEFT)
+		{
+			// first scan
+			Vector vecSrc = pev->origin + up * 50;
+			Vector vecEnd = vecSrc - right * 100;
+			UTIL_TraceLine(vecSrc, vecEnd, ignore_monsters, ENT(pev), &leanLeftTr);
+			vecEnd = leanLeftTr.vecEndPos;
+
+			// second scan
+			if (leanLeftTr.flFraction < 1)
+			{
+				vecSrc = leanLeftTr.vecEndPos;
+				vecEnd = vecSrc + right * 10;
+			}
+
+			Vector ang;
+			VectorAngles((vecEnd - pev->origin).Normalize(), ang);
+
+			leanAngle = ang[PITCH] - 75;
+
+			if (leanAngle < -30.0f)
+				leanAngle = -30.0f;
+
+			if (leanAngle > 0)
+				leanAngle = 0;
+
+			isLeaning = true;
+			leanMode = 1;
+		}
+
+		// right leaning
+		else if (pev->button & IN_RIGHT)
+		{
+			// first scan
+			Vector vecSrc = pev->origin + up * 50;
+			Vector vecEnd = vecSrc + right * 100;
+			UTIL_TraceLine(vecSrc, vecEnd, ignore_monsters, ENT(pev), &leanRightTr);
+			vecEnd = leanRightTr.vecEndPos;
+
+			// second scan
+			if (leanRightTr.flFraction < 1)
+			{
+				vecSrc = leanRightTr.vecEndPos;
+				vecEnd = vecSrc - right * 10;
+			}
+
+			Vector ang;
+			VectorAngles((vecEnd - pev->origin).Normalize(), ang);
+
+			leanAngle = 75 - ang[PITCH];
+
+			if (leanAngle < 0)
+				leanAngle = 0;
+
+			if (leanAngle > 30.0f)
+				leanAngle = 30.0f;
+
+			isLeaning = true;
+			leanMode = 2;
+		}
+		// ALERT(at_console, "%f", leanAngle);
+		else if (isLeaning)
+		{
+			isLeaning = false;
+			leanMode = 0;
+			leanAngle = 0.0f;
+		}
+	}
+	// bacontsu - leaning end
 
 	//We're on a rope. - Solokiller
 	if ((m_afPhysicsFlags & PFLAG_ONROPE) != 0 && m_pRope)
@@ -4791,6 +4872,7 @@ void CBasePlayer::UpdateClientData()
 	// send player custom data
 	MESSAGE_BEGIN(MSG_ONE, gmsgPlayerData, NULL, pev);
 	WRITE_BYTE(m_iSlidingStage);
+	WRITE_FLOAT(leanAngle);
 	MESSAGE_END();
 
 	if (m_fInitHUD)

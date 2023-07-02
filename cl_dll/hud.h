@@ -785,6 +785,8 @@ public:
 	int m_iSprintCounter;
 	float m_flSprintUpdate;
 	bool m_bSliding;
+	float m_flLeanAngle;
+	Vector m_vecViewmodelAttach[4];
 
 
 	int m_iFontHeight;
