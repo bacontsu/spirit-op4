@@ -124,9 +124,11 @@ bool CHud::Redraw(float flTime, bool intermission)
 		m_flSprintUpdate = gEngfuncs.GetAbsoluteTime() + 0.1f;
 	}
 
+	// DEBUGGING
 	//gEngfuncs.Con_Printf("counter: %i\n", m_iSprintCounter);
-
+	//gEngfuncs.Con_Printf("viewheight: %f\n", gHUD.g_pparams.viewheight[2]);
 	//gEngfuncs.Con_Printf("speed: %f\n", Vector(gHUD.g_pparams.simvel).Length2D());
+
 	if (!servermaxspeed)
 		servermaxspeed = gEngfuncs.pfnGetCvarPointer("sv_maxspeed");
 	else

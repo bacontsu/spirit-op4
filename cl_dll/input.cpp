@@ -745,8 +745,8 @@ void DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s* cmd, int active)
 			cmd->forwardmove -= cl_backspeed->value * CL_KeyState(&in_back);
 		}
 
-		// adjust for speed key
-		if (!(in_speed.state & 1) || gHUD.m_iSprintCounter <= 0)
+		// bacontsu - sprinting 
+		if ((!(in_speed.state & 1) || gHUD.m_iSprintCounter <= 0) && gHUD.g_pparams.viewheight[2] != 12.0f)
 		{
 			// clip to walking speed
 			spd = 180.0f;
