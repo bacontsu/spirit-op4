@@ -204,6 +204,17 @@ TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
 		DEFINE_FIELD(CBasePlayer, m_bIsHolstered, FIELD_BOOLEAN),
 		DEFINE_FIELD(CBasePlayer, m_iUseEnt, FIELD_INTEGER),
 		DEFINE_FIELD(CBasePlayer, m_iHeldShots, FIELD_INTEGER),
+
+		DEFINE_FIELD(CBasePlayer, m_iSlidingStage, FIELD_INTEGER),
+		DEFINE_FIELD(CBasePlayer, m_vecSlidingDir, FIELD_VECTOR),
+		DEFINE_FIELD(CBasePlayer, m_flSlidingMultiplier, FIELD_FLOAT),
+		DEFINE_FIELD(CBasePlayer, m_flSlidingTimer, FIELD_TIME),
+		DEFINE_FIELD(CBasePlayer, m_iSlidingCounter, FIELD_INTEGER),
+		DEFINE_FIELD(CBasePlayer, m_flSlidingCooldown, FIELD_TIME),
+
+		DEFINE_FIELD(CBasePlayer, isLeaning, FIELD_BOOLEAN),
+		DEFINE_FIELD(CBasePlayer, leanMode, FIELD_INTEGER),
+		DEFINE_FIELD(CBasePlayer, leanAngle, FIELD_FLOAT),
 };
 
 LINK_ENTITY_TO_CLASS(player, CBasePlayer);
