@@ -110,7 +110,7 @@ bool CHud::Redraw(float flTime, bool intermission)
 	// bacontsu - sprinting start
 	if (m_flSprintUpdate < gEngfuncs.GetAbsoluteTime())
 	{
-		if (m_bSprintButtonHeld)
+		if (m_bIsSprinting)
 		{
 			if (m_iSprintCounter >= 0)
 				m_iSprintCounter--;

@@ -525,6 +525,7 @@ void CHud::Init()
 	//end glow effect
 
 	clientmaxspeed = CVAR_CREATE("cl_maxspeed", "360", FCVAR_ARCHIVE);
+	cl_movement_toggle_mode = CVAR_CREATE("cl_movement_mode", "1", FCVAR_ARCHIVE);
 
 	viewEntityIndex = 0; // trigger_viewset stuff
 	viewFlags = 0;

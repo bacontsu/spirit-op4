@@ -768,7 +768,21 @@ void DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s* cmd, int active)
 		}
 
 		// bacontsu - sprinting 
-		if ((!(in_speed.state & 1) || gHUD.m_iSprintCounter <= 0 || (in_moveright.state & 1) || (in_moveleft.state & 1) || (in_back.state & 1)) 
+		static bool walking = true;
+
+		if ((int)gHUD.cl_movement_toggle_mode->value == 1)
+		{
+			if (in_speed.state & 1)
+				walking = false;
+			else if (!walking && Vector(gHUD.g_pparams.simvel).Length2D() < 320.0f)
+				walking = true;
+		}
+		else
+		{
+			walking = (!(in_speed.state & 1));
+		}
+
+		if ((walking || gHUD.m_iSprintCounter <= 0 || (in_moveright.state & 1) || (in_moveleft.state & 1) || (in_back.state & 1)) 
 			&& gHUD.g_pparams.viewheight[2] != 12.0f)
 		{
 			// clip to walking speed
@@ -783,7 +797,9 @@ void DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s* cmd, int active)
 				cmd->sidemove *= fratio;
 				cmd->upmove *= fratio;
 			}
+			walking = true;
 		}
+		gHUD.m_bIsSprinting = !walking;
 
 		// clip to maxspeed
 		spd = gHUD.clientmaxspeed->value;

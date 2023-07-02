@@ -782,11 +782,13 @@ public:
 	cvar_t* clientmaxspeed;
 	cvar_t* servermaxspeed;
 	bool m_bSprintButtonHeld;
+	bool m_bIsSprinting;
 	int m_iSprintCounter;
 	float m_flSprintUpdate;
 	bool m_bSliding;
 	float m_flLeanAngle;
 	Vector m_vecViewmodelAttach[4];
+	cvar_t* cl_movement_toggle_mode;
 
 
 	int m_iFontHeight;
