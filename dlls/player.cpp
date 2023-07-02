@@ -2191,7 +2191,7 @@ void CBasePlayer::PreThink()
 	}
 
 	// bacontsu - sliding logic
-	float SlidingTime = 1.5f;
+	float SlidingTime = 1.25f;
 	int SlidingCounter = (int)(SlidingTime / 0.05f);
 	if (pev->velocity.Length2D() > 350.0f && (pev->button & IN_DUCK) && m_iSlidingStage == 0 && m_flSlidingCooldown < gpGlobals->time)
 	{
