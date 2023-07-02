@@ -2226,7 +2226,7 @@ void CBasePlayer::PreThink()
 				if (m_iSlidingCounter > 0)
 					m_iSlidingCounter--;
 
-				m_flSlidingMultiplier = 2.5f * (float)m_iSlidingCounter / (float)SlidingCounter;
+				m_flSlidingMultiplier = 2.25f * (float)m_iSlidingCounter / (float)SlidingCounter;
 
 				m_flSlidingTimer = gpGlobals->time + 0.05f;
 			}
