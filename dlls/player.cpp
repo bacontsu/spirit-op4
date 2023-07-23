@@ -2203,9 +2203,22 @@ void CBasePlayer::PreThink()
 
 	if (m_iSlidingStage == 1)
 	{
+		Vector right, up;
+		AngleVectors(pev->angles, nullptr, &right, &up);
+		Vector vecSrc = pev->origin + up * 30;
+		Vector vecEnd = vecSrc + pev->velocity.Normalize() * 30;
+		UTIL_TraceHull(vecSrc, vecEnd, dont_ignore_monsters, 50, ENT(pev), &m_slidingTr);
+		bool blockedByWall = m_slidingTr.flFraction < 1.0;
+
 		// check if cancelled
-		if (!(pev->button & IN_DUCK) || pev->velocity.Length2D() < 50.0f)
+		if (!(pev->button & IN_DUCK) || blockedByWall || pev->velocity.Length2D() < 50.0f)
 		{
+			if (blockedByWall)
+			{
+				pev->punchangle.x -= 10;
+				pev->punchangle.z += 20;
+			}
+
 			m_iSlidingStage = 0;
 			m_flSlidingCooldown = gpGlobals->time + 0.5f;
 		}

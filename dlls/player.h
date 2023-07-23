@@ -483,6 +483,7 @@ public:
 	float m_flSlidingTimer;
 	int m_iSlidingCounter;
 	float m_flSlidingCooldown;
+	TraceResult m_slidingTr;
 
 	bool isLeaning;
 	int leanMode; // 0 - none	1 - left	2 - right
