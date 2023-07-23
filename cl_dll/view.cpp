@@ -811,12 +811,12 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 
 	// bacontsu - Leaning
 	static float leanLerp = 0;
-	leanLerp = lerp(leanLerp, gHUD.m_flLeanAngle * 20.0f / 30.0f, gHUD.m_flTimeDelta * 7.0f);
+	leanLerp = lerp(leanLerp, gHUD.m_flLeanAngle, gHUD.m_flTimeDelta * 7.0f);
 	//gEngfuncs.Con_DPrintf("angle: %f\n", gHUD.m_flLeanAngle);
 
 	// apply rotation
-	pparams->viewangles[ROLL] += leanLerp;
-	view->angles[ROLL] += leanLerp;
+	pparams->viewangles[ROLL] += leanLerp * 17.0f / 30.0f;
+	view->angles[ROLL] += leanLerp * 17.0f / 30.0f;
 
 	// apply peeking
 	for (int i = 0; i < 3; i++)
