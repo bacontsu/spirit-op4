@@ -790,6 +790,8 @@ public:
 	Vector m_vecViewmodelAttach[4];
 	cvar_t* cl_movement_toggle_mode;
 
+	// bacontsu - completely toggles viewroll
+	cvar_t* cl_enable_viewroll;
 
 	int m_iFontHeight;
 	int DrawHudNumber(int x, int y, int iFlags, int iNumber, int r, int g, int b);

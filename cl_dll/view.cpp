@@ -437,7 +437,7 @@ void V_CalcViewRoll(struct ref_params_s* pparams)
 	if (!viewentity)
 		return;
 
-	side = V_CalcRoll(viewentity->angles, pparams->simvel, cl_rollangle->value, cl_rollspeed->value);
+	side = V_CalcRoll(viewentity->angles, pparams->simvel, (bool)(int)gHUD.cl_enable_viewroll->value ? cl_rollangle->value : 0, cl_rollspeed->value);
 
 	pparams->viewangles[ROLL] += side;
 
