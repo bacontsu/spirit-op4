@@ -542,6 +542,7 @@ void CWaterRenderer::AnimateWater()
 			glVertex3f(1, 1, -1);
 			glEnd();
 			glPopMatrix();
+
 			// update water texture
 			glBindTexture(GL_TEXTURE_2D, waterBuffer[i].pointer->gl_texturenum);
 			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, waterBuffer[i].tex_width, waterBuffer[i].tex_height, 0);
@@ -551,6 +552,9 @@ void CWaterRenderer::AnimateWater()
 	glViewport(0, 0, ScreenWidth, ScreenHeight);
 	glBindTexture(GL_TEXTURE_RECTANGLE_NV, screenHandler);
 	glColor4f(1, 1, 1, 1);
+	glBegin(GL_QUADS);
+	DrawQuad(ScreenWidth, ScreenHeight, 0, 0);
+	glEnd();
 	glBegin(GL_QUADS);
 	DrawQuad(ScreenWidth, ScreenHeight, 0, 0);
 	glEnd();
