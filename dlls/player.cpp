@@ -57,6 +57,7 @@
 #include "client.h"
 
 #include "rope/CRope.h"
+#include "doors.h"
 
 // #define DUCKFIX
 
@@ -2209,6 +2210,21 @@ void CBasePlayer::PreThink()
 		Vector vecEnd = vecSrc + pev->velocity.Normalize() * 30;
 		UTIL_TraceHull(vecSrc, vecEnd, dont_ignore_monsters, 50, ENT(pev), &m_slidingTr);
 		bool blockedByWall = m_slidingTr.flFraction < 1.0;
+
+		// check if we're hitting destroyable doors
+		if (blockedByWall && !FNullEnt(m_slidingTr.pHit))
+		{
+			auto pEnt = CBaseEntity::Instance(m_slidingTr.pHit);
+			if (pEnt && (!strncmp(STRING(pEnt->pev->classname), "func_door", 9) || !strcmp(STRING(pEnt->pev->classname), "momentary_door")))
+			{
+				auto pDoor = static_cast<CBaseDoor*>(pEnt);
+				if (pDoor && pDoor->pev->spawnflags & SF_DOOR_DESTROYABLE)
+				{
+					pDoor->DestroyDoor(this);
+					blockedByWall = false;
+				}
+			}
+		}
 
 		// check if cancelled
 		if (!(pev->button & IN_DUCK) || blockedByWall || pev->velocity.Length2D() < 50.0f)

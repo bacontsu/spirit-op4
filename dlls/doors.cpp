@@ -33,66 +33,6 @@ extern void SetMovedir(entvars_t* ev);
 #define noiseMoving noise1
 #define noiseArrived noise2
 
-class CBaseDoor : public CBaseToggle
-{
-public:
-	void Spawn() override;
-	void Precache() override;
-	void PostSpawn() override;
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	void Blocked(CBaseEntity* pOther) override;
-
-
-	int ObjectCaps() override
-	{
-		if (pev->spawnflags & SF_ITEM_USE_ONLY)
-		{
-			return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE |
-				   (m_iDirectUse ? FCAP_ONLYDIRECT_USE : 0);
-		}
-		else
-			return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION);
-	};
-	bool Save(CSave& save) override;
-	bool Restore(CRestore& restore) override;
-
-	static TYPEDESCRIPTION m_SaveData[];
-
-	void SetToggleState(int state) override;
-
-	// used to selectivly override defaults
-	void EXPORT DoorTouch(CBaseEntity* pOther);
-
-	// local functions
-	bool DoorActivate();
-	void EXPORT DoorGoUp();
-	void EXPORT DoorGoDown();
-	void EXPORT DoorHitTop();
-	void EXPORT DoorHitBottom();
-
-	byte m_bHealthValue; // some doors are medi-kit doors, they give players health
-
-	byte m_bMoveSnd; // sound a door makes while moving
-	byte m_bStopSnd; // sound a door makes when it stops
-
-	locksound_t m_ls; // door lock sounds
-
-	byte m_bLockedSound; // ordinals from entity selection
-	byte m_bLockedSentence;
-	byte m_bUnlockedSound;
-	byte m_bUnlockedSentence;
-
-	bool m_iOnOffMode;
-	bool m_iImmediateMode;
-
-	bool m_iDirectUse;
-
-	float m_fAcceleration; //AJH
-	float m_fDeceleration; //AJH
-	bool m_iSpeedMode;	   //AJH for changing door speeds
-};
-
 
 TYPEDESCRIPTION CBaseDoor::m_SaveData[] =
 	{
@@ -113,6 +53,8 @@ TYPEDESCRIPTION CBaseDoor::m_SaveData[] =
 		DEFINE_FIELD(CBaseDoor, m_fAcceleration, FIELD_FLOAT), //AJH
 		DEFINE_FIELD(CBaseDoor, m_fDeceleration, FIELD_FLOAT), //AJH
 		DEFINE_FIELD(CBaseDoor, m_iSpeedMode, FIELD_BOOLEAN),  //AJH for changing door speeds
+
+		DEFINE_FIELD(CBaseDoor, m_idShard, FIELD_INTEGER), // bacontsu - destroyable doors
 };
 
 IMPLEMENT_SAVERESTORE(CBaseDoor, CBaseToggle);
@@ -484,6 +426,12 @@ void CBaseDoor::SetToggleState(int state)
 void CBaseDoor::Precache()
 {
 	const char* pszSound;
+
+	// precache breaking sound
+	PRECACHE_SOUND("debris/bustcrate1.wav");
+
+	// precache gib model
+	m_idShard = PRECACHE_MODEL("models/woodgibs.mdl");
 
 	// set the door's "in-motion" sound
 	switch (m_bMoveSnd)
@@ -1091,6 +1039,56 @@ void CBaseDoor::Blocked(CBaseEntity* pOther)
 	}
 }
 
+// bacontsu - breakable door
+void CBaseDoor::DestroyDoor(CBaseEntity* pDestroyer)
+{
+	// screenshake
+	Vector realOrigin = pev->origin + (pev->maxs + pev->mins) / 2;
+	pev->size = pev->maxs - pev->mins;
+	UTIL_ScreenShake(realOrigin, 100, 10, 0.5f, 300);
+
+	// door breaking
+	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustcrate1.wav", 1, ATTN_NORM, 0, 100);
+
+	// gibs
+	Vector vecVelocity = pDestroyer->pev->velocity;
+	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, realOrigin);
+	WRITE_BYTE(TE_BREAKMODEL);
+
+	// position
+	WRITE_COORD(realOrigin.x);
+	WRITE_COORD(realOrigin.y);
+	WRITE_COORD(realOrigin.z);
+
+	// size
+	WRITE_COORD(pev->size.x);
+	WRITE_COORD(pev->size.y);
+	WRITE_COORD(pev->size.z);
+
+	// velocity
+	WRITE_COORD(vecVelocity.x);
+	WRITE_COORD(vecVelocity.y);
+	WRITE_COORD(vecVelocity.z);
+
+	// randomization
+	WRITE_BYTE(10);
+
+	// Model
+	WRITE_SHORT(m_idShard); // model id#
+
+	// # of shards
+	WRITE_BYTE(0); // let client decide
+
+	// duration
+	WRITE_BYTE(25); // 2.5 seconds
+
+	// flags
+	WRITE_BYTE(BREAK_WOOD);
+	MESSAGE_END();
+
+	// remove this entity
+	UTIL_Remove(this);
+}
 
 /*QUAKED FuncRotDoorSpawn (0 .5 .8) ? START_OPEN REVERSE  
 DOOR_DONT_LINK TOGGLE X_AXIS Y_AXIS
@@ -1482,3 +1480,4 @@ void CMomentaryDoor::StopMoveSound()
 	EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), 1, ATTN_NORM);
 	SetThink(nullptr);
 }
+
