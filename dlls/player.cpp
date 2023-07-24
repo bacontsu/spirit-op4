@@ -2206,7 +2206,7 @@ void CBasePlayer::PreThink()
 	{
 		Vector right, up;
 		AngleVectors(pev->angles, nullptr, &right, &up);
-		Vector vecSrc = pev->origin + up * 30;
+		Vector vecSrc = pev->origin + up * 14;
 		Vector vecEnd = vecSrc + pev->velocity.Normalize() * 30;
 		UTIL_TraceHull(vecSrc, vecEnd, dont_ignore_monsters, 50, ENT(pev), &m_slidingTr);
 		bool blockedByWall = m_slidingTr.flFraction < 1.0;
@@ -2223,6 +2223,11 @@ void CBasePlayer::PreThink()
 					pDoor->DestroyDoor(this);
 					blockedByWall = false;
 				}
+			} 
+			else if (pEnt && FClassnameIs(pEnt->pev, "func_breakable"))
+			{
+				pEnt->TakeDamage(this->pev, this->pev, pEnt->pev->health * 1.2f, DMG_GENERIC);
+				blockedByWall = false;
 			}
 		}
 
