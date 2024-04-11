@@ -157,7 +157,7 @@ int CWaterRenderer::Init()
 	LoadWADTextures();
 	FreeWADFiles();
 
-	m_pCvarDrawAnimatedWater = CVAR_CREATE("r_animate_water", "1", FCVAR_ARCHIVE);
+	//m_pCvarDrawAnimatedWater = CVAR_CREATE("r_animate_water", "1", FCVAR_ARCHIVE);
 
 	return 1;
 }
@@ -452,6 +452,8 @@ void CWaterRenderer::DrawQuad(int width, int height, int ofsX, int ofsY)
 
 void CWaterRenderer::AnimateWater()
 {
+	return;
+
 	if (m_pCvarDrawAnimatedWater->value <= 0)
 		return;
 
