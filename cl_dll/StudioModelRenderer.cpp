@@ -132,12 +132,15 @@ void CStudioModelRenderer::Init()
 	m_pCvarDeveloper = IEngineStudio.GetCvar("developer");
 	m_pCvarDrawEntities = IEngineStudio.GetCvar("r_drawentities");
 
+	/*
 	// SHADOWS START
 	// Do this in case valve ever re-enables the original cvar
 	m_pCvarDrawShadows = IEngineStudio.GetCvar("r_shadows");
 
 	if (!m_pCvarDrawShadows) // If couldn't get the cvar pointer create our own
 		m_pCvarDrawShadows = CVAR_CREATE("r_shadows", "1", FCVAR_ARCHIVE);
+
+		*/
 
 	m_pChromeSprite = IEngineStudio.GetChromeSprite();
 
@@ -2605,9 +2608,11 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 	{
 		for (i = 0; i < m_pStudioHeader->numbodyparts; i++)
 		{
+			/*
 			if (m_pCvarDrawShadows->value > 1)
 				StudioSetupModel(i);
 			else
+			*/
 				IEngineStudio.StudioSetupModel(i, (void**)&m_pBodyPart, (void**)&m_pSubModel);
 
 			if (m_fDoInterp)
@@ -2619,6 +2624,7 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 			IEngineStudio.GL_SetRenderMode(rendermode);
 			IEngineStudio.StudioDrawPoints();
 
+			/*
 			if (m_pCvarDrawShadows->value == 1)
 				StudioRenderEngineShadow(rendermode);
 			else if (m_pCvarDrawShadows->value > 1)
@@ -2626,6 +2632,7 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 				StudioSetShadowVector(SHADOW_NORMAL_VECTOR);
 				StudioRenderShadow(rendermode);
 			}
+			*/
 		}
 	}
 
