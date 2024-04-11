@@ -73,6 +73,8 @@ void CColorCorTexture::BindTexture(int width, int height)
 
 void CColorCorTexture:: Draw(int width, int height)
 {
+	return;
+
 	 // enable some OpenGL stuff
      glEnable(GL_TEXTURE_RECTANGLE_NV);     
      glColor3f(1,1,1);
